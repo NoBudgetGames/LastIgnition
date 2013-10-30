@@ -3,6 +3,11 @@ using System.Collections;
 
 public class Car : MonoBehaviour {
 	
+	//nur zu testzwcken
+	public float MotorTorque = 20;
+	public float BreakTorque = 20;
+	public float SteerAngle = 30;
+	
 	//Motor, Schaltung
 	//Drehmomentkennline des Fahrzeuges. X-Achse entspricht Umdrehungen pro Minute (RPM), Y-Achse enstspricht der daraus resultierende Drehmonent in Newtonmeter
 	public AnimationCurve EngineTorqueCurve;
@@ -70,10 +75,12 @@ public class Car : MonoBehaviour {
 		if(Input.GetKey(KeyCode.UpArrow))
 		{
 			//Gas geben, Drehmoment wird auf reifen übertragen, nur wenen Reifen boden berühren
-			if(wheels[2].isGrounded || wheels[3].isGrounded)
+			if(wheels[0].isGrounded || wheels[1].isGrounded)
 			{
-				wheels[2].motorTorque = 20;
-				wheels[3].motorTorque = 20;
+				wheels[0].motorTorque = MotorTorque;
+				wheels[1].motorTorque = MotorTorque;
+				//wheels[2].motorTorque = MotorTorque;
+				//wheels[3].motorTorque = MotorTorque;
 			}
 		}
 		
@@ -81,20 +88,20 @@ public class Car : MonoBehaviour {
 		{
 			if(wheels[3].isGrounded || wheels[2].isGrounded)
 			{
-				wheels[2].brakeTorque = 20;
-				wheels[3].brakeTorque = 20;
+				wheels[2].brakeTorque = BreakTorque;
+				wheels[3].brakeTorque = BreakTorque;
 			}
 		}
 		
 		if(Input.GetKey(KeyCode.RightArrow))
 		{
-			wheels[0].steerAngle = 30;
-			wheels[1].steerAngle = 30;
+			wheels[0].steerAngle = SteerAngle;
+			wheels[1].steerAngle = SteerAngle;
 		}
 		if(Input.GetKey(KeyCode.LeftArrow))
 		{
-			wheels[0].steerAngle = -30;
-			wheels[1].steerAngle = -30;
+			wheels[0].steerAngle = -SteerAngle;
+			wheels[1].steerAngle = -SteerAngle;
 		}
 		resetTorque();
 		
@@ -105,8 +112,8 @@ public class Car : MonoBehaviour {
 	{
 		foreach(WheelCollider wheel in wheels)
 		{
-			wheel.brakeTorque = Mathf.Lerp(wheel.brakeTorque, 0f, 0.5f);
-			wheel.motorTorque = Mathf.Lerp(wheel.motorTorque, 0f, 0.5f);
+			wheel.brakeTorque = Mathf.Lerp(wheel.brakeTorque, 0f, 0.2f);
+			wheel.motorTorque = Mathf.Lerp(wheel.motorTorque, 0f, 0.2f);
 			wheel.steerAngle = Mathf.Lerp(wheel.steerAngle, 0f, 0.2f);
 		}
 	}
