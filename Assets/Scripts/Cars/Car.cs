@@ -39,6 +39,10 @@ public class Car : MonoBehaviour {
 	
 	//Referenzen zu den Reifen
 	public Wheel[] wheels;
+	//liste mit lenkrädern
+	private Wheel[] steerWheels;
+	//liste mit beschleiunigungsrädern
+	private Wheel[] driveWheels;
 	
 /*	momentan nicht in gebrauch
 	//WheelFrictionCurves, sollten für alle Reifen gleich sein. Um das nicht ständig ändern zu müssen, wird das an einer zentralen Stelle gepsichert 
@@ -46,32 +50,34 @@ public class Car : MonoBehaviour {
 	private WheelFrictionCurve forwardFrictionCurve;
 	private WheelFrictionCurve sidewaysFrictionCurve;
 	
+*/	
 	//Werte im Bezug auf den Controller
 	// Wert für den durchgedrückten Gaspedal, von -1 (rückwärts) bis 1 (vorwärts)
 	private float throttle = 0.0f;
 	//Wert für den Lenker, von -1 bis 1
 	private float steer = 0.0f;
 	//Zeit, wie lange die Kuplung noch nicht drin ist, falls > 0 keine Motorkraft auf Reifen
-	private float gearChange = 0.0f;
+	//private float gearChange = 0.0f;
+/*	
 	
 	//Aktuelle Werte
 	//aktueller Gang
 	private int currentGear = 0;
 	//aktuelle Umdrehungen des Motors pro Minute
 	private float currentRPM = 1000;
+*/	
 	//kann das Auto steuern? (Räder auf dem Boden?)
 	private bool canSteer;
 	//kann das Auto beschleunigen?
 	private bool canDrive;
-*/	
-	void Awake()
-	{
-		
-		
-	}
+
 	
 	// Use this for initialization
 	void Start () {
+		
+		//füge der Liste die richtigen Wheels zu
+
+		
 		//Massezemtrum sollte weiter vorne und weiter unten liegen, daher Referenz auf eine anderes in der Hierariche plaziertes Objekt
 		//rigidbody.centerOfMass = CenterOfMass.transform.position;
 		
@@ -85,17 +91,30 @@ public class Car : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
+	// Update is called regularly 
 	void FixedUpdate () {
 		//relative Geschwindigkeit ausrechnen, 
 		//Vector3 relativeVelocity = rigidbody.velocity;
 		
-		getInput();
+		checkStatus();
+		applyTractionForces();
 		
 	
 	}
 	
-	private void ApplyResistanceForces(Vector3 relativeVelocity)
+	public void setThrottle(float th)
+	{
+		throttle = th;
+	}
+	
+	public void setSteer(float st)
+	{
+		steer = st;
+	}
+	
+	
+	//in dieser Methode werden die Widerstandskräfte berechent
+	private void applyResistanceForces(Vector3 relativeVelocity)
 	{
 		//Rollwiderstand
 		//Ground.getRollingResistanceCoefficient(); Rollwiederstandkoefizient ist abhängig vom Untergrund
@@ -103,7 +122,7 @@ public class Car : MonoBehaviour {
 		float GroundCoefRR = 1f;
 		//Rollwiderstandswert = Rollwiederstandskoeffizient * Masse * Gravitation
 		float CoefRR = GroundCoefRR * rigidbody.mass * 9.81f;
-		//Rollwiderstandskraft, ist entgegengesetzt der Fahrtrichtung des Autos
+		//Rollwiderstandskraft, ist entgegengesetzt der aktuellen Fahrtrichtung des Autos
 		Vector3 RollingResistanceForce = -Mathf.Sign(relativeVelocity.z) * transform.forward * CoefRR;
 		
 		
@@ -113,61 +132,61 @@ public class Car : MonoBehaviour {
 		
 	}
 	
-	private void getInput()
-	{
-		
-		if(Input.GetKey(KeyCode.UpArrow))
-		{
-			//Gas geben, Drehmoment wird auf reifen übertragen, nur wenen Reifen boden berühren
-			if(wheels[0].GetComponent<WheelCollider>().isGrounded || wheels[1].GetComponent<WheelCollider>().isGrounded)
-			{
-				wheels[0].GetComponent<WheelCollider>().motorTorque = MotorTorque;
-				wheels[1].GetComponent<WheelCollider>().motorTorque = MotorTorque;
-				//wheels[2].motorTorque = MotorTorque;
-				//wheels[3].motorTorque = MotorTorque;
-			}
-		}
-		
-		if(Input.GetKey(KeyCode.DownArrow))
-		{
-			if(wheels[3].GetComponent<WheelCollider>().isGrounded || wheels[2].GetComponent<WheelCollider>().isGrounded)
-			{
-				wheels[2].GetComponent<WheelCollider>().brakeTorque = BreakTorque;
-				wheels[3].GetComponent<WheelCollider>().brakeTorque = BreakTorque;
-			}
-		}
-		
-		if(Input.GetKey(KeyCode.RightArrow))
-		{
-			wheels[0].GetComponent<WheelCollider>().steerAngle = SteerAngle;
-			//wheels[0].wheelGraphic.rotation.y = SteerAngle;
-			wheels[1].GetComponent<WheelCollider>().steerAngle = SteerAngle;
-			//wheels[1].wheelGraphic.rotation.y = SteerAngle;
-		}
-		if(Input.GetKey(KeyCode.LeftArrow))
-		{
-			wheels[0].GetComponent<WheelCollider>().steerAngle = -SteerAngle;
-			//wheels[0].wheelGraphic.rotation.y = -SteerAngle;
-			wheels[1].GetComponent<WheelCollider>().steerAngle = -SteerAngle;
-			//wheels[1].wheelGraphic.rotation.y = -SteerAngle;
-		}
-		resetTorque();
-		
-	}
 	
-	//alle Werte werden wirder auf 0 gesetzt, damit es zu keiner dauerhaften Beschleunigung kommt
-	private void resetTorque()
+	//diese Methode überprüft, ob die Räder des Fahrzeugs den Boden berühren
+	private void checkStatus()
 	{
-		float accelSmooth = 26f;
-		float steerSmooth = 9f;
+		//es wird angenommen, das die Rädern den Boden berühren, sobald einer der Reifen den Boden nicht berüht
+		//kann das Fahrzeug nicht lenken bzw. beschleunigen
+		
 		
 		foreach(Wheel wheel in wheels)
 		{
-			wheel.GetComponent<WheelCollider>().brakeTorque = Mathf.Lerp(wheel.GetComponent<WheelCollider>().brakeTorque, 0f, accelSmooth * Time.deltaTime);
-			wheel.GetComponent<WheelCollider>().motorTorque = Mathf.Lerp(wheel.GetComponent<WheelCollider>().motorTorque, 0f, accelSmooth * Time.deltaTime);
-			wheel.GetComponent<WheelCollider>().steerAngle = Mathf.Lerp(wheel.GetComponent<WheelCollider>().steerAngle, 0f, steerSmooth * Time.deltaTime);
-			//wheel.wheelGraphic.rotation.y = Mathf.Lerp(wheel.wheelGraphic.rotation.y, 0f, 0.2f);
+			//überprüfe die lenkräder
+			if(!wheel.canSteer())
+			{
+				canSteer = false;
+			}
+			//überprüfe die beschlunigungsräder
+			if(!wheel.canDrive())
+			{
+				canDrive = false;
+			}
+			
 		}
+		
+		canSteer = true;
+		canDrive = true;
+	}
+	
+	private void applyTractionForces()
+	{
+
+		//Gas geben, Drehmoment wird auf reifen übertragen, nur wenen Reifen boden berühren
+		if(canDrive && throttle > 0.0)
+		{
+			wheels[0].GetComponent<WheelCollider>().motorTorque = MotorTorque * throttle;
+			wheels[1].GetComponent<WheelCollider>().motorTorque = MotorTorque * throttle;
+			//wheels[2].motorTorque = MotorTorque;
+			//wheels[3].motorTorque = MotorTorque;
+		}
+		
+		//bremsen
+		if(canDrive  && throttle < 0.0)
+		{
+			wheels[2].GetComponent<WheelCollider>().brakeTorque = BreakTorque * -throttle;
+			wheels[3].GetComponent<WheelCollider>().brakeTorque = BreakTorque * -throttle;
+		}
+		
+		//lenken
+		if(canSteer)
+		{
+			wheels[0].GetComponent<WheelCollider>().steerAngle = SteerAngle * steer;
+			//wheels[0].wheelGraphic.rotation.y = SteerAngle;
+			wheels[1].GetComponent<WheelCollider>().steerAngle = SteerAngle * steer;
+			//wheels[1].wheelGraphic.rotation.y = SteerAngle;
+		}
+		
 	}
 	
 }
