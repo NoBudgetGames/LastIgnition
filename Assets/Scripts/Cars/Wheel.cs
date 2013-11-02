@@ -25,17 +25,4 @@ public class Wheel : MonoBehaviour {
 	void Update () {
 	
 	}
-	
-	//überprüpft, ob das Rad den Boden berührt und beschleunigen kann
-	public bool canDrive()
-	{
-		return GetComponent<WheelCollider>().isGrounded && driveWheel;
-	}
-	
-	//überprüpft, ob das Rad den Boden berührt und lenken kann
-	public bool canSteer()
-	{
-		return GetComponent<WheelCollider>().isGrounded && steerWheel;
-	}
-	
 }

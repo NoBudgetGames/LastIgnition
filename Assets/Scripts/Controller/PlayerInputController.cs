@@ -3,12 +3,15 @@ using System.Collections;
 
 /*
  * der InputController diest dazu, den Input vom SPieler auf das Fahrzeug zu übertragen
- * Diese Klasse ist für Spieler 1 zuständig
+ * Die Nummer des Spielers ist von einen String abhängig, somit muss nur eine Klasse geschreiben werden
  */
-public class PlayerOneInputController : MonoBehaviour {
+public class PlayerInputController : MonoBehaviour {
 	
 	//referenzt auf Fahrzeug,
 	public Car car;
+	//Einfüge String für Input, "One" für Spieler 1, "Two" für Spieler 2
+	public string playerString = "One";
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -23,15 +26,9 @@ public class PlayerOneInputController : MonoBehaviour {
 	// Update is called regularly
 	void FixedUpdate()
 	{
-		
 		//hier wird der Input behandelt und auf car übertragen
-		
-		car.setThrottle(Input.GetAxis("PlayerOneThrottle"));
-		car.setSteer(Input.GetAxis("PlayerOneSteer"));
-
-		
-		
-		
+		car.setThrottle(Input.GetAxis("Player" + playerString + "Throttle"));
+		car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
 	}
 	
 }
