@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /*
- * Diese Klasse enthält alle Autorelevanten Daten. 
+ * Diese Klasse enthält alle relevanten Daten eines Autos. 
  * Außerdem verarbeitet sie den Input eines Controller Scripts, dies kann ein Spieler oder eine KI sein.
  *
  */
@@ -15,6 +15,19 @@ public class Car : MonoBehaviour {
 	public float MotorTorque = 20;
 	public float BreakTorque = 20;
 	public float SteerAngle = 30;
+	
+	//um nicht jedes Rad neu ändern zu müssen, werden hier die Daten geändert
+	//der Radius des Reifen
+	public float wheelRadius;
+	//die maximale Länge der Feder im auseinander gezogenen ZUstand
+	public float suspensionDistance;
+	//Dämpfungswert für die Feder
+	public float suspensionDamper;
+	//die Kraft, die die Feder aushalten kann, am Motor meistens stärker, hier für vorne
+	public float suspensionSpringFront;
+	//die Kraft, die die Feder aushalten kann, am Motor meistens stärker, hier für hinten
+	public float suspensionSpringRear;
+	
 	
 	
 /*	Momentan nicht in Gebrauch
@@ -28,6 +41,11 @@ public class Car : MonoBehaviour {
 	public float[] GearRatio = {2.3f, 1.8f, 1.25f, 1.0f, 0.7f, 0.5f};
 	//Werte für die Gangschaltung, damit sie weiss ab welcher Umdrehungszahl sie höher schalten soll
 	public float[] RPMToGearUp = {3000, 3000, 3000, 3000, 4500};
+	
+	//höhster lenkwinkel
+	public maxSteerAngle = 30;
+	//kleinster Lenkwikel
+	public minSteerAngle = 10;
 	
 	//Werte für Wiederstandskräfte
 	//Wert für Luftwiederstand beim geradeaus fahren, setzt sich unter anderen aus Luftdichte und Fläche zusammen
@@ -44,6 +62,10 @@ public class Car : MonoBehaviour {
 	private List<Wheel> steerWheels;
 	//liste mit beschleiunigungsrädern
 	private List<Wheel> driveWheels;
+	
+	//WheelFrictionCurves
+	private WheelFrictionCurve forwardWFC;
+	private WheelFrictionCurve sidewaysWFC;
 	
 /*	momentan nicht in gebrauch
 	//WheelFrictionCurves, sollten für alle Reifen gleich sein. Um das nicht ständig ändern zu müssen, wird das an einer zentralen Stelle gepsichert 
@@ -67,26 +89,28 @@ public class Car : MonoBehaviour {
 	//aktuelle Umdrehungen des Motors pro Minute
 	private float currentRPM = 1000;
 */	
+	//referenz auf aktuelles Objekt
+	private Transform thisTransform;
+	//referenz auf eigenens rigidBody
+	private Rigidbody thisRigidBody;
+	
+	
+	void Awake()
+	{
+		thisTransform = transform;
+		thisRigidBody = rigidbody;
+	}
+	
 	// Use this for initialization
 	void Start () {
-		driveWheels = new List<Wheel>();
-		steerWheels = new List<Wheel>();
 		
-		//füge der Liste die richtigen Wheels zu
-		foreach(Wheel wheel in wheels)
-		{
-			if(wheel.driveWheel)
-			{
-				driveWheels.Add(wheel);
-			}
-			if(wheel.steerWheel)
-			{
-				steerWheels.Add(wheel);
-			}
-		}
+		//richte die Räder ein
+		setupWheels();
+		
 		
 		//Massezemtrum sollte weiter vorne und weiter unten liegen, daher Referenz auf eine anderes in der Hierariche plaziertes Objekt
 		//rigidbody.centerOfMass = CenterOfMass.transform.position;
+		thisRigidBody.centerOfMass = CenterOfMass.localPosition;
 		
 		//setForwardFrictionCurve(float asymSlip, float asymValue, float exSlip, float exValue, float stiff);
 
@@ -103,7 +127,7 @@ public class Car : MonoBehaviour {
 		//relative Geschwindigkeit ausrechnen, 
 		//Vector3 relativeVelocity = rigidbody.velocity;
 		
-		applyTractionForces();
+		applyMotorTorque();
 	}
 	
 	//Der Wert wird vom InputPlayerXXController geändert
@@ -118,6 +142,58 @@ public class Car : MonoBehaviour {
 		steer = st;
 	}
 	
+	private void setupWheels()
+	{
+		driveWheels = new List<Wheel>();
+		steerWheels = new List<Wheel>();
+		setupWFC();
+		
+		//füge der Liste die richtigen Wheels zu und übertrage Federwerte
+		foreach(Wheel wheel in wheels)
+		{
+			if(wheel.isFrontWheel)
+			{
+				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringFront, wheelRadius);
+				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
+			}
+			else
+			{
+				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringRear, wheelRadius);
+				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
+			}
+			
+			if(wheel.isDriveWheel)
+			{
+				driveWheels.Add(wheel);
+			}
+			if(wheel.isSteerWheel)
+			{
+				steerWheels.Add(wheel);
+			}
+		}
+	}
+	
+	
+	private void setupWFC()
+	{
+		//normales geradeaus fahren
+		forwardWFC = new WheelFrictionCurve();
+		forwardWFC.asymptoteSlip = 2.0f;
+		forwardWFC.asymptoteValue = 400f;
+		forwardWFC.extremumSlip = 0.5f;
+		forwardWFC.extremumValue = 6000;
+		forwardWFC.stiffness = 1.0f;
+		
+		//seitliches rutschen/bewegen
+		sidewaysWFC = new WheelFrictionCurve();
+		sidewaysWFC.asymptoteSlip = 2.0f;
+		sidewaysWFC.asymptoteValue = 150f;
+		sidewaysWFC.extremumSlip = 1f;
+		sidewaysWFC.extremumValue = 350;
+		sidewaysWFC.stiffness = 1.0f;
+		
+			
+	}
 	
 	//in dieser Methode werden die Widerstandskräfte berechent
 	private void applyResistanceForces(Vector3 relativeVelocity)
@@ -137,11 +213,10 @@ public class Car : MonoBehaviour {
 		//Vector3 DragForce = CDrag * 
 	}
 	
-	private void applyTractionForces()
+	private void applyMotorTorque()
 	{
-
 		//Gas geben, Drehmoment wird auf reifen übertragen, nur wenen Reifen boden berühren
-		if(throttle > 0.0)
+		if(throttle >= 0.0)
 		{
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
