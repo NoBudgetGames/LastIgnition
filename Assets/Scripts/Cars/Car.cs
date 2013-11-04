@@ -17,8 +17,6 @@ public class Car : MonoBehaviour {
 	public float SteerAngle = 30;
 	
 	//um nicht jedes Rad neu ändern zu müssen, werden hier die Daten geändert
-	//der Radius des Reifen
-	public float wheelRadius;
 	//die maximale Länge der Feder im auseinander gezogenen ZUstand
 	public float suspensionDistance;
 	//Dämpfungswert für die Feder
@@ -124,10 +122,11 @@ public class Car : MonoBehaviour {
 	
 	// Update is called regularly 
 	void FixedUpdate () {
-		//relative Geschwindigkeit ausrechnen, 
-		//Vector3 relativeVelocity = rigidbody.velocity;
+		//relative Geschwindigkeit ausrechnen, von WorldSpace zu LocalSpace
+		Vector3 relativeVelocity = transform.InverseTransformDirection(rigidbody.velocity);
 		
-		applyMotorTorque();
+		applyMotorTorque(relativeVelocity);
+		applySteering();
 	}
 	
 	//Der Wert wird vom InputPlayerXXController geändert
@@ -153,12 +152,12 @@ public class Car : MonoBehaviour {
 		{
 			if(wheel.isFrontWheel)
 			{
-				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringFront, wheelRadius);
+				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringFront);
 				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
 			}
 			else
 			{
-				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringRear, wheelRadius);
+				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringRear);
 				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
 			}
 			
@@ -199,7 +198,7 @@ public class Car : MonoBehaviour {
 	private void applyResistanceForces(Vector3 relativeVelocity)
 	{
 		//Rollwiderstand
-		//Ground.getRollingResistanceCoefficient(); Rollwiederstandkoefizient ist abhängig vom Untergrund
+		//Rollwiederstandkoefizient ist abhängig vom Untergrund
 		//eventuell kannman auch die Layer bestimmen, auf dem der Wagen fährt
 		float GroundCoefRR = 1f;
 		//Rollwiderstandswert = Rollwiederstandskoeffizient * Masse * Gravitation
@@ -207,23 +206,41 @@ public class Car : MonoBehaviour {
 		//Rollwiderstandskraft, ist entgegengesetzt der aktuellen Fahrtrichtung des Autos
 		Vector3 RollingResistanceForce = -Mathf.Sign(relativeVelocity.z) * transform.forward * CoefRR;
 		
+		//Rollwiderstand wird nur hinzugefügt, wenn alle Räden den Boden berühren
+		bool wheelsAreGrounded = true;
+		//gucke, ob eines der Räder den Boden nicht berüht
+		foreach(Wheel wheel in wheels)
+		{
+			if(!wheel.wheelCol.isGrounded)
+			{
+				wheelsAreGrounded = false;
+			}
+		}
+		if(wheelsAreGrounded)
+		{
+			rigidbody.AddForce(RollingResistanceForce, ForceMode.Impulse);
+		}
 		
 		//Luftwiderstand
 		//Luftwiderstandswert CDrag = 0.5 * Luftwiderstandskoeffiezient * Luftdichte * Fläche in Fahrtrichtung
 		//Vector3 DragForce = CDrag * 
 	}
 	
-	private void applyMotorTorque()
+	private void applyMotorTorque(Vector3 relVelocity)
 	{
+		
 		//Gas geben, Drehmoment wird auf reifen übertragen, nur wenen Reifen boden berühren
-		if(throttle >= 0.0)
+		if(throttle > 0.0)
 		{
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
-				if(wheel.GetComponent<WheelCollider>().isGrounded)
+				//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
+				wheel.wheelCol.brakeTorque = 0f;
+				wheel.wheelCol.motorTorque = 0f;
+				if(wheel.wheelCol.isGrounded)
 				{
-					wheel.GetComponent<WheelCollider>().motorTorque = MotorTorque * throttle;
+					wheel.wheelCol.motorTorque = MotorTorque * throttle;
 				}
 			}
 		}
@@ -231,22 +248,51 @@ public class Car : MonoBehaviour {
 		//bremsen
 		if(throttle < 0.0)
 		{
-			//gehe jedes Rad durch und bremse
-			foreach(Wheel wheel in wheels)
+			//mit der Bremstaste soll das auch auch rückwärts fahren können, daher muss geprüft werden, ob sich das Auto rückwärts bewegt
+			//falls ja, bewege rückwärts, falls nein, bremse
+			//kann man prüfen, in dem man sich die Z Komponente der relativen Geschwindigkeit anschaut
+			
+			//falls größer 0, bremse
+			if(relVelocity.z > 0)
 			{
-				if(wheel.GetComponent<WheelCollider>().isGrounded)
+				//gehe jedes Rad durch und bremse
+				foreach(Wheel wheel in wheels)
 				{
-					wheel.GetComponent<WheelCollider>().brakeTorque = BreakTorque * -throttle;
+					//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
+					wheel.wheelCol.brakeTorque = 0f;
+					wheel.wheelCol.motorTorque = 0f;
+					if(wheel.wheelCol.isGrounded)
+					{
+						wheel.wheelCol.brakeTorque = BreakTorque * -throttle;
+					}
+				}
+			}
+			//sonst fahre rückwärts
+			else
+			{
+				//geh jedes DriveWheel durch und füge Drehmoment hinzu
+				foreach(Wheel wheel in driveWheels)
+				{
+					//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
+					wheel.wheelCol.brakeTorque = 0f;
+					wheel.wheelCol.motorTorque = 0f;
+					if(wheel.wheelCol.isGrounded)
+					{
+						wheel.wheelCol.motorTorque = MotorTorque * throttle;
+					}
 				}
 			}
 		}
-		
+	}
+	
+	private void applySteering()
+	{
 		//lenken, gehe jedes SteerWheel durch und lenke
 		foreach(Wheel wheel in steerWheels)
 		{
-			if(wheel.GetComponent<WheelCollider>().isGrounded)
+			if(wheel.wheelCol.isGrounded)
 			{
-				wheel.GetComponent<WheelCollider>().steerAngle = SteerAngle * steer;
+				wheel.wheelCol.steerAngle = SteerAngle * steer;
 			}
 		}
 	}
