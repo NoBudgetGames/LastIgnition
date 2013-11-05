@@ -2,8 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cars\Car.cs">
     <Files>
-      <File FileName="Assets\Scripts\Cars\Car.cs" Line="219" Column="17" />
-      <File FileName="Assets\Scripts\Cars\Wheel.cs" Line="23" Column="3" />
+      <File FileName="Assets\Scripts\Cars\Car.cs" Line="378" Column="87" />
+      <File FileName="Assets\Scripts\Cars\Wheel.cs" Line="64" Column="55" />
       <File FileName="Assets\Scripts\Controller\PlayerInputController.cs" Line="21" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
