@@ -16,6 +16,8 @@ public class RocketLauncher : MonoBehaviour
 		if(Input.GetMouseButtonDown(0)){
 			GameObject rocket = (GameObject) GameObject.Instantiate(rocketPrefab);
 			rocket.transform.position = this.transform.position;
+			rocket.transform.rotation = this.transform.rotation;
+			rocket.GetComponent<Rocket>().parent = transform.parent.gameObject;
 		}
 	}
 }
