@@ -3,17 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 /*
- * Diese Klasse enthält alle relevanten Daten eines Autos. 
+ * Diese Klasse enthält alle relevanten Daten eines Autos. z.B. die Kennlinie der Motors (verhältniss Drehzahl zu Drehmoment)
+ * oder die Übersetzungsverhältnsse der Getriebes, es wird ein Gangwechsel simuliert, Widerstandskräfte werden hinzugefügt 
  * Außerdem verarbeitet sie den Input eines Controller Scripts, dies kann ein Spieler oder eine KI sein.
- * Hier findet Gangwechslen statt, es werden Widerstandskräfte hinzugefügt
- *
+ * Daneben hat jedes Autos auch Lebenspunkte, die bei Kollisionen oder durch Waffen verringert werden
+ * Dazu gibt es noch mehrere Modele, die in abhängigkeit der Lebenspunkte ausgetauscht werden
  */
 
 
 public class Car : MonoBehaviour {
 	
-	//nur zu testzwcken
- 	public float SteerAngle = 30;
 	
 	//um nicht jedes Rad neu ändern zu müssen, werden hier die Daten geändert
 	//die maximale Länge der Feder im auseinander gezogenen ZUstand
@@ -37,25 +36,28 @@ public class Car : MonoBehaviour {
 	//Übersetzungswerte der Schaltung, kleiner Gang = hohe Übersetzung, hoher Gang = kleine Übersetzung, erster Wert ist Rückwärtsgang
 	public float[] gearRatio = {-1.5f, 2.3f, 1.8f, 1.25f, 1.0f, 0.7f, 0.5f};
 	//Werte für die Gangschaltung, damit sie weiss ab welcher Umdrehungszahl sie höher schalten soll
-	public float[] RPMToGearUp = {3000, 3000, 3000, 3000, 3000, 4500};
+	public float[] RPMToGearUp = {3000, 3000, 3000, 3000, 3000, 3500};
 	//Werte für die Gangschaltung, damit sie weiss ab welcher Umdrehungszahl sie runter schalten soll
-	public float[] RPMToGearDown = {3000, 2000, 2500, 2500, 2500, 4500};
+	public float[] RPMToGearDown = {3000, 2000, 2500, 2500, 2500, 2500};
 	//Verstärung des Differenzials
 	public float differentialMultiplier = 3f;
 	//kraft des Bremspedals
 	public float breakTorque = 20;
+	//der Rutschmultiplikator für das Seitfärtsfahren, wir mit dem stiffnesswert der sideWFC verrechnet
+	public float slipMultiplier = 0.7f;
 	
-/*	
 	//höhster lenkwinkel
-	public maxSteerAngle = 30;
+	public float maxSteerAngle = 40;
 	//kleinster Lenkwikel
-	public minSteerAngle = 10;
-*/	
+	public float minSteerAngle = 15;
+
 	//Werte für Wiederstandskräfte
 	//Wert für Luftwiederstand beim geradeaus fahren, setzt sich unter anderen aus Luftdichte und Fläche zusammen
+/*	
 	public float CDrag = 0.4f;
 	//Multiplier für seitlichen Luftwiederstand
 	public float sideDragMultiplier = 1.0f;
+*/	
 	//Motorbremse
 	public float engineBreakingMultiplier = 0.5f;
 
@@ -69,8 +71,18 @@ public class Car : MonoBehaviour {
 	//liste mit beschleiunigungsrädern
 	private List<Wheel> driveWheels;
 	
+	//Liste der Schadensmodelle
+	//Frontmodelle
+	public GameObject[] frontDamageModels;
+	//Heckmodelle
+	public GameObject[] rearDamageModels;
+	//linke Modelle (Türen?)
+	public GameObject[] leftDamageModels;
+	//rechte Modelle
+	public GameObject[] rightDamageModels;
+	
 	//WheelFrictionCurves, sollten für alle Reifen gleich sein. Um das nicht ständig ändern zu müssen, wird das an einer zentralen
-	//Stelle gepsichert und an die Reifen weitergegeben
+	//Stelle gespeichert und an die Reifen weitergegeben
 	//vorwärtsfahren
 	private WheelFrictionCurve forwardWFC;
 	//seitwärsfahren
@@ -89,12 +101,29 @@ public class Car : MonoBehaviour {
 	private float currentRPM = 1000;
 	//Timer für den letzten Gangwechsel
 	private float gearChangeTimer = 0;
+	//momentaner Lenkwinkel,abhängig von der Geschwindigkeit
+	//private float currentSteerAngle = maxSteerAngle;
 	
+	//Health Werte
+	//der eigentliche, allgemeine Heatlh Wert
+	private int health = 100;
+	//Health Wert für die Front, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int frontHealth = 100;
+	//Health Wert für den Heck, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int rearHealth = 100;
+	//Health Wert für die linke Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int leftHealth = 100;
+	//Health Wert für die rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int rightHealth = 100;
+	//Healthwert des Motors
+	private int engineHealth = 100;
+	//Healtwert der Lenkung
+	private int steerHealth = 100;
+		
 	//referenz auf aktuelles Objekt
 	private Transform thisTransform;
 	//referenz auf eigenens rigidBody
 	private Rigidbody thisRigidBody;
-	
 	
 	void Awake()
 	{
@@ -103,16 +132,13 @@ public class Car : MonoBehaviour {
 	}
 	
 	// Use this for initialization
-	void Start () {		
-		//richte die Räder ein
+	void Start () 
+	{		
+		//richtet die Räder ein
 		setupWheels();
 
 		//Massezemtrum sollte weiter vorne und weiter unten liegen, daher Referenz auf eine anderes in der Hierariche plaziertes Objekt
-		//rigidbody.centerOfMass = CenterOfMass.transform.position;
 		thisRigidBody.centerOfMass = CenterOfMass.localPosition;
-		
-		//setForwardFrictionCurve(float asymSlip, float asymValue, float exSlip, float exValue, float stiff);
-
 	}
 	
 	// Update is called once per frame
@@ -131,7 +157,7 @@ public class Car : MonoBehaviour {
 		//Zeit seit den letzten Gangwechsel verringern
 		gearChangeTimer-= Time.deltaTime;
 		
-		//applyResistanceForces(relativeVelocity);
+		applyResistanceForces(relativeVelocity);
 		//updateWFC();
 		
 		//nur Beschleinigung hinzufügen, wenn der Gang nicht gewechselt wird
@@ -140,15 +166,13 @@ public class Car : MonoBehaviour {
 			applyMotorTorque(relativeVelocity);	
 		}
 		
-		applyMotorTorque(relativeVelocity);	
-		
 		applyBrakeTorque(relativeVelocity);
 		calculateRPM();
 		updateGear(relativeVelocity);
 		
-		applySteering();
+		applySteering(relativeVelocity);
 		
-		Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM);
+		//Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + relativeVelocity.magnitude);
 	}
 	
 	//Der Wert wird vom InputPlayerXXController geändert
@@ -163,10 +187,66 @@ public class Car : MonoBehaviour {
 		steer = st;
 	}
 	
+	//diese Methode verarbeitet den Schaden, der auf das Auto ausgeübt wurde, wird vom DamageController aufgerufen
+	public void applyDamage(int damageAmount, int direction)
+	{
+		//Schaden von den Lebenspunkten abziehen
+		health -= damageAmount;
+		
+		//falls das Auto keine Lebenspunkte mehr hat, explodiert das Auto und der TrackManager wird benachrichtigt
+		if(health <= 0)
+		{
+			
+		}
+		
+		//zunächst muss geschaut werden, an welcher Stelle der Schaden angerichtet werden soll
+		switch (direction)
+		{
+			case (int)DamageDirection.FRONT:
+				setupFrontDamage(damageAmount);
+				break;
+		}
+			
+	}
+	
+	//in dieser Methode wird das errechnet, welches der Schadensmodelle aktuell dargestellet werden soll
+	private void setupFrontDamage(int damageAmount)
+	{
+		frontHealth -= damageAmount;
+		
+		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
+		int damageModelNumber = 0;
+		
+		//ab welchen Lebenspunkten soll das Model geändert werden?
+		if(frontHealth >= 60)
+		{	
+			damageModelNumber = 0;
+		}
+		else if(frontHealth >= 30)
+		{	
+			damageModelNumber = 1;
+		}
+		else
+		{
+			damageModelNumber = 2;	
+		}
+		for(int i = 0; i < frontDamageModels.Length; i++)
+		{
+		
+			frontDamageModels[i].gameObject.SetActive(false);
+			if(damageModelNumber == i)
+			{
+				frontDamageModels[i].gameObject.SetActive(true);
+			}
+		}
+	}
+	
+	//diese Methode richtet die Reifen ein und fügt sie den richtigen Listen zu
 	private void setupWheels()
 	{
 		driveWheels = new List<Wheel>();
 		steerWheels = new List<Wheel>();
+
 		setupWFC();
 		
 		//füge der Liste die richtigen Wheels zu und übertrage Federwerte
@@ -193,16 +273,8 @@ public class Car : MonoBehaviour {
 			}
 		}
 	}
-	
-	private void getInput()
-	{
-		/*
-		//sollte aber nicht kleiner als 0.5 werden
-		float engineDamageModifier = EngineHealt / 100;
-		
-		*/
-	}
-	
+
+	//diese Methode initialisiert alle WheelFrictionCurves
 	private void setupWFC()
 	{
 		//normales geradeaus fahren
@@ -219,7 +291,7 @@ public class Car : MonoBehaviour {
 		sidewaysWFC.asymptoteValue = 150f;
 		sidewaysWFC.extremumSlip = 1f;
 		sidewaysWFC.extremumValue = 350;
-		sidewaysWFC.stiffness = 1.0f;
+		sidewaysWFC.stiffness = 1.0f * slipMultiplier;
 		
 			
 	}
@@ -246,7 +318,8 @@ public class Car : MonoBehaviour {
 				wheelsAreGrounded = false;
 			}
 		}
-		if(wheelsAreGrounded)
+		//bei niedrigen Geschwindigkeiten soll kein Rollwiederstand erzeugt werden
+		if(wheelsAreGrounded && (relativeVelocity.z > 10 || relativeVelocity.z < -10))
 		{
 			rigidbody.AddForce(RollingResistanceForce, ForceMode.Impulse);
 		}
@@ -257,13 +330,15 @@ public class Car : MonoBehaviour {
 		//Vector3 DragForce = CDrag * 
 	}
 	
-	//die WheelFrictionCurves werden abhängig vom Status des Fahrzeugs verädert (Handbremse, etc...), aber auch abhängig vom Untergrund
+	//die WheelFrictionCurves sollen abhängig vom Status des Fahrzeugs (Handbremse, etc...) und abhängig des gerade befahrenens 
+	//Untergrunds verändert werden (dies kann man mit dem stiffness-wert der WFC verändert werden)
 	private void updateWFC()
 	{
 		
 	}
 	
-	//in dieser Methode wird die Motorkraft (Drehmoment) auf die Reifen übertragen
+	//in dieser Methode wird die Motorkraft (Drehmoment) aus der Drehzahl des Motors errechnet , mit der Gangschaltung multipliziert und 
+	//auf die Reifen übertragen
 	private void applyMotorTorque(Vector3 relVelocity)
 	{
 		
@@ -273,53 +348,54 @@ public class Car : MonoBehaviour {
 		
 	
 		//vorwärts fahren
-		if(throttle > 0.0)
+		if(throttle > 0.0f)
 		{
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
-				//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
-				wheel.wheelCol.brakeTorque = 0f;
-				wheel.wheelCol.motorTorque = motorTorque;
+					//werte reseten, da sich das Auto möglicherweise noch fortbewegt/bremst, da er noch den Wert vom vorherigen Frame hat
+					//verurschat ein paar selstsame Fehler
+					wheel.wheelCol.brakeTorque = 0f;
+					wheel.wheelCol.motorTorque = motorTorque;	
 			}
 		}
 		
-		//rückwärtsfahren, nur wenn Bremstaste gedrückt wurde und die geschwindigkeit kleiner 0 ist
-		if(throttle < 0.0 && relVelocity.z <= 0)
+		//rückwärtsfahren
+		//mit der Bremstaste soll man auch rückwärts fahren können, daher muss geprüft werden, ob sich das Auto rückwärts bewegt
+		//kann man prüfen, in dem man sich die Z Komponente der relativen Geschwindigkeit anschaut
+		if(throttle < 0.0f && relVelocity.z <= 0.1f)
 		{
-			//mit der Bremstaste soll das auch auch rückwärts fahren können, daher muss geprüft werden, ob sich das Auto rückwärts bewegt
-			//kann man prüfen, in dem man sich die Z Komponente der relativen Geschwindigkeit anschaut
-			
-			Debug.Log("RÜCKWÄRTS");
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
-				//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
-				wheel.wheelCol.brakeTorque = 0f;
-				//0.1 ist ein Faktor um beim rückwärtsfahren die Kraft zu verringern
-				wheel.wheelCol.motorTorque = -motorTorque * 0.1f;
+					//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
+					wheel.wheelCol.brakeTorque = 0f;
+					//0.1 ist ein Faktor um beim rückwärtsfahren die Kraft zu verringern, das Auto soll rückwärtsfahrend schließlich 
+					//keine neuen Geschwindigkeitsrekorde aufstellen
+					wheel.wheelCol.motorTorque = -motorTorque * 0.1f;
 			}
 		}
 	}
 	
 	//in dieser Methode wird gebremst
+	//zum einen mit dem Bremspedal/-taste, 
+	//zum anderen mit der Motorbremse
 	private void applyBrakeTorque(Vector3 relVelocity)
 	{
 		//es soll nur mit dem Bremspedal gebremst werden, wenn sich das Auto vorwärts bewegt
-		if(throttle < 0.0 && relVelocity.z >0)
+		if(throttle < 0.0f && relVelocity.z > 0.1f)
 		{
 			//gehe jedes Rad durch und bremse
 			foreach(Wheel wheel in wheels)
 			{
 				//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
-
-				
+				wheel.wheelCol.motorTorque = 0;
 				wheel.wheelCol.brakeTorque = breakTorque * -throttle;
 			}	
 		}
 		
-		//Motorbremse
-		if(throttle == 0.0f)
+		//Motorbremse, nur wenn kein Gas gegeben wirdoder  nicht gebremst wird oder keine niedrige Geschwindigkeit vorhanden ist
+		if(throttle == 0.0f && (relVelocity.z > 10 || relVelocity.z < -10))
 		{
 			foreach(Wheel wheel in driveWheels)
 			{
@@ -332,17 +408,19 @@ public class Car : MonoBehaviour {
 		
 	}
 	
-	//diesse Methode errechnet die momentane Motordrehzahl in anhängigkeit der reifen
+	//diesse Methode errechnet die momentane Motordrehzahl in abhängigkeit eines der DriveWheels (weil die mit dem Motor verbunden sind)
 	private void calculateRPM()
 	{
 		foreach(Wheel wheel in driveWheels)
 		{
-			//berechne die RPM abhängig von der Rad umdrehung, da die Reifen mit dem Motor verbunden sind
-			currentRPM = Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier;
+			//berechne die RPM abhängig von der umdrehungszahl des Rades, da die Reifen mit dem Motor verbunden sind
+			//faktor am Ende ist um die sonst niedrigen Drehzahlen etwas zu kompensieren
+			currentRPM = Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier * 1.0f;
 			//es reicht wenn man ein Rad hat
 			break;
 		}
 		
+		//die Motordrehzahl soll nicht weniger als 1000 sein (sonst würd im Reallife der Motor ausgehen)
 		if(currentRPM < 1000)
 		{
 			currentRPM = 1000;
@@ -353,7 +431,7 @@ public class Car : MonoBehaviour {
 	private void updateGear(Vector3 relVelocity)
 	{
 		//falls die vorwärts Geschwindigkeit relativ niedrig ist (nach einen Crash z.B.), wird wieder in den ersten Gang gewechslt
-		if(relVelocity.z > 0 && relVelocity.z < 5)
+		if(relVelocity.z > 0 && relVelocity.magnitude < 10)
 		{
 			currentGear = 1;
 			return;
@@ -370,32 +448,38 @@ public class Car : MonoBehaviour {
 		{
 			currentGear++;
 			//Gang wurde gewechselt, bis dahin darf kein motorTorque auf die Reifen übertragen werden (siehe FixedUpdate)
-			gearChangeTimer = 0.5f;
+			gearChangeTimer = 0.25f;
 		}
 		else
 		{
 			//beim bremsen und wenn die Motordrehzahl niedrig ist soll der Gang runtergeschalter werden, aber nur wenn man sich vorwärts bewegt
-			if(relVelocity.z > 0 && currentGear > 1 && currentRPM < RPMToGearDown[currentGear-1] && throttle <= 0.0f) //
+			if(relVelocity.z > 0 && currentGear > 1 && currentRPM < RPMToGearDown[currentGear-1]) //
 			{
 				currentGear--;
-				gearChangeTimer = 0.5f;	
+				gearChangeTimer = 0.25f;	
 			}
 			//hier wird der Rückwärtsgang eingelegt
 			else if(relVelocity.z <= 0 && throttle <= 0.0f)
 			{
 				currentGear = 0;
-				gearChangeTimer = 0.5f;
+				gearChangeTimer = 0.25f;
 			}
 		}
 	}
 	
-	//in dieser Methode wird das Auto gelenkt
-	private void applySteering()
+	//in dieser Methode wird das Auto gelenkt und der Schaden auf die Lenkung übertragen
+	private void applySteering(Vector3 relVelocity)
 	{
+		
+		//Lenkwinkel abhängig von Geschwindigkeit, sonst zu starke Lenkung bei hohen Geschwindigkeiten
+		float currentSteerAngle = Mathf.Lerp(maxSteerAngle, minSteerAngle, relVelocity.magnitude/100 * 0.5f);
+		Debug.Log ("SteerAngle " + currentSteerAngle);
+	
+		
 		//lenken, gehe jedes SteerWheel durch und lenke
 		foreach(Wheel wheel in steerWheels)
 		{
-			wheel.wheelCol.steerAngle = SteerAngle * steer;
+			wheel.wheelCol.steerAngle = currentSteerAngle * steer;
 		}
 	}
 }

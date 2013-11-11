@@ -7,19 +7,21 @@ using System.Collections;
  */
 public class PlayerInputController : MonoBehaviour {
 	
-	//referenzt auf Fahrzeug,
-	public Car car;
+	//referenz auf Fahrzeug,
+	private Car car;
 	//Einfüge String für Input, "One" für Spieler 1, "Two" für Spieler 2
 	public string playerString = "One";
 	
 	
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+	{
+		car = GetComponent<Car>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
 	}
 	
