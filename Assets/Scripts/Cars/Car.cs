@@ -157,7 +157,7 @@ public class Car : MonoBehaviour {
 		//Zeit seit den letzten Gangwechsel verringern
 		gearChangeTimer-= Time.deltaTime;
 		
-		applyResistanceForces(relativeVelocity);
+		//applyResistanceForces(relativeVelocity);
 		//updateWFC();
 		
 		//nur Beschleinigung hinzufügen, wenn der Gang nicht gewechselt wird
@@ -172,7 +172,7 @@ public class Car : MonoBehaviour {
 		
 		applySteering(relativeVelocity);
 		
-		//Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + relativeVelocity.magnitude);
+		Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + relativeVelocity.magnitude);
 	}
 	
 	//Der Wert wird vom InputPlayerXXController geändert
@@ -411,14 +411,17 @@ public class Car : MonoBehaviour {
 	//diesse Methode errechnet die momentane Motordrehzahl in abhängigkeit eines der DriveWheels (weil die mit dem Motor verbunden sind)
 	private void calculateRPM()
 	{
+		currentRPM = 0;
+		int size = 0;
 		foreach(Wheel wheel in driveWheels)
 		{
 			//berechne die RPM abhängig von der umdrehungszahl des Rades, da die Reifen mit dem Motor verbunden sind
 			//faktor am Ende ist um die sonst niedrigen Drehzahlen etwas zu kompensieren
-			currentRPM = Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier * 1.0f;
-			//es reicht wenn man ein Rad hat
-			break;
+			currentRPM += Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier * 1.0f;
+			size++;
 		}
+		//bereche den Durchschnitt der driveWheels
+		currentRPM /= size;
 		
 		//die Motordrehzahl soll nicht weniger als 1000 sein (sonst würd im Reallife der Motor ausgehen)
 		if(currentRPM < 1000)
@@ -443,8 +446,19 @@ public class Car : MonoBehaviour {
 			return;
 		}
 		
+		bool grounded = true;
+		foreach(Wheel wheel in wheels)
+		{
+			//falls eines der Reifen den Boden nicht berührt soll nicht höher geschaltet werden
+			if(!wheel.wheelCol.isGrounded)
+			{
+				grounded = false;
+				break;
+			}
+		}
+		
 		//Gang höher schalten wenn nicht der letzt Gang erreicht wurde, die Drehzahl hoch ist und man Gas gibt
-		if(currentGear < RPMToGearUp.Length && currentRPM > RPMToGearUp[currentGear] && throttle > 0.0)
+		if(currentGear < RPMToGearUp.Length && currentRPM > RPMToGearUp[currentGear] && throttle > 0.0 && grounded == true)
 		{
 			currentGear++;
 			//Gang wurde gewechselt, bis dahin darf kein motorTorque auf die Reifen übertragen werden (siehe FixedUpdate)
@@ -473,7 +487,7 @@ public class Car : MonoBehaviour {
 		
 		//Lenkwinkel abhängig von Geschwindigkeit, sonst zu starke Lenkung bei hohen Geschwindigkeiten
 		float currentSteerAngle = Mathf.Lerp(maxSteerAngle, minSteerAngle, relVelocity.magnitude/100 * 0.5f);
-		Debug.Log ("SteerAngle " + currentSteerAngle);
+		//Debug.Log ("SteerAngle " + currentSteerAngle * steer);
 	
 		
 		//lenken, gehe jedes SteerWheel durch und lenke

@@ -15,7 +15,7 @@ public class StabilizerBar: MonoBehaviour {
 	//referenz auf rechts Rad
 	public Wheel rightWheel;
 	//Stärke der Stabilizierkraft
-	public float stabilizierMultiplier = 5000f;
+	private float stabilizierMultiplier;
 	//referenz auf rigidbody
 	private Rigidbody thisRigidBody;
 	
@@ -23,6 +23,7 @@ public class StabilizerBar: MonoBehaviour {
 	void Start () 
 	{
 		thisRigidBody = rigidbody;
+		stabilizierMultiplier = leftWheel.wheelCol.suspensionSpring.spring;
 	}
 	
 	// Update is called once per frame
