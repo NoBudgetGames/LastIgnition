@@ -21,6 +21,8 @@ public class CarColission : MonoBehaviour
 		if(colission.relativeVelocity.magnitude >10.0f){
 			this.GetComponent<DestructibleObject>().receiveDamage(baseDamage*colission.relativeVelocity.magnitude);
 		}
+			rigidbody.AddForce((colission.relativeVelocity*0.5f),ForceMode.VelocityChange);
+		
 	}
 }
 

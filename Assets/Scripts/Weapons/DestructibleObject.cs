@@ -15,7 +15,7 @@ public class DestructibleObject : MonoBehaviour
 	void Update ()
 	{
 		if(health<=0.0f)
-			this.gameObject.SetActive(false);
+			GameObject.Destroy(this.gameObject);
 	}
 	
 	public void receiveDamage(float dmg){
