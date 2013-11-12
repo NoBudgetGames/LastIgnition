@@ -23,7 +23,7 @@ public class StabilizerBar: MonoBehaviour {
 	void Start () 
 	{
 		thisRigidBody = rigidbody;
-		stabilizierMultiplier = leftWheel.wheelCol.suspensionSpring.spring;
+		stabilizierMultiplier = leftWheel.wheelCol.suspensionSpring.spring * 0.8f;
 	}
 	
 	// Update is called once per frame
@@ -33,9 +33,6 @@ public class StabilizerBar: MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		//WheelHit enthält Infos über den Zusammenstoß mit dem Boden des Reifens
-		WheelHit wheelHit;
-		
 		//wie weit würde die linke Feder der Aufhängung zusammengedrückt?
 		float suspensionCompressionLeft = leftWheel.getSuspensionFactor();
 		//wie weit wurde die rechte Feder der Aufhängung zusammengedrückt?
@@ -47,11 +44,12 @@ public class StabilizerBar: MonoBehaviour {
 		//die Kraft ist also vorzeichenbehaftet, je nach dem in welcher Schräglage sich das Auto befindet
 		float stabilizierForce = (suspensionCompressionLeft - suspensionCompressionRight) * stabilizierMultiplier;
 
-		//die Kraft soll nur aufgewendet werden, wenn der Reifen den Boden berührt. Falls der Reifen den Boden nicht berührt, ist es eh schon zu spät ;)
+		//die Kraft soll nur aufgewendet werden, wenn beide Reifen den Boden berührt. Falls der Reifen den Boden nicht berührt, ist es eh schon zu spät ;)
 		if(leftWheel.wheelCol.isGrounded)
 		{
 			//füge eine Kraft auf den Reifen hinzu, der ihm nach unten drückt, - da vorzeichenbehaftet für linke Seite
 			thisRigidBody.AddForceAtPosition(leftWheel.transform.up * -stabilizierForce, leftWheel.transform.position);
+			
 		}
 		if(rightWheel.wheelCol.isGrounded)
 		{

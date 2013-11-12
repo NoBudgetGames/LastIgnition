@@ -7,8 +7,8 @@ using System.Collections;
  * grapischen Objekt (das sich um die eigene y-Achse rotiert), muss ein Objekt dazwischen schalten, um den Reifen auch um die Lenkachse zu drehen.
  */
 
-public class Wheel : MonoBehaviour {
-	
+public class Wheel : MonoBehaviour 
+{
 	//Referenz auf GrafikObjekt, benötigt um es zu rotieren
 	public Transform tireGraphic;
 	//wird dieser Reifen zur Lenkung verwendet?
@@ -17,11 +17,13 @@ public class Wheel : MonoBehaviour {
 	public bool isDriveWheel = false;
 	//ist dies ein Vorderrad? die Federn der Aufhängung am Motor sind in der Regel stärker als die anderen (meistens vorne)
 	public bool isFrontWheel = false;
-	//referenz auf den WheelCollider, sollte nicht verändert werden
+	//referenz auf den WheelCollider, sollte nicht verändert werden, nur public um von aussen zuzugreifen
 	public WheelCollider wheelCol;
 	
 	//die Räder benötigen ein zusätzliches Gameobject, das dazwischen geschaltet ist, um eine korrekte aufhängung und Lenkung darzustellen
 	private GameObject steerGraphic;
+	
+//// START UND UPDATE METHODEN
 	
 	// Use this for initialization
 	void Awake()
@@ -31,12 +33,12 @@ public class Wheel : MonoBehaviour {
 	
 	void Start () 
 	{
-			//hier wird ein Objekt dazwischen geschaltet
-			steerGraphic = new GameObject(transform.name + "SteerColumn");
-			steerGraphic.transform.position = tireGraphic.transform.position;
-			steerGraphic.transform.rotation = tireGraphic.transform.rotation;
-			steerGraphic.transform.parent = tireGraphic.parent;
-			tireGraphic.parent = steerGraphic.transform;
+		//hier wird ein Objekt dazwischen geschaltet
+		steerGraphic = new GameObject(transform.name + "SteerColumn");
+		steerGraphic.transform.position = tireGraphic.transform.position;
+		steerGraphic.transform.rotation = tireGraphic.transform.rotation;
+		steerGraphic.transform.parent = tireGraphic.parent;
+		tireGraphic.parent = steerGraphic.transform;
 	}
 	
 	// Update is called once per frame
@@ -50,7 +52,6 @@ public class Wheel : MonoBehaviour {
 		{
 			//die position des Rades soll vom Berührungspunkt durch den Radradius nach oben verschoben sein
 			steerGraphic.transform.localPosition = wheelCol.transform.up * (wheelCol.radius + wheelCol.transform.InverseTransformPoint(wheelHit.point).y);
-			
 		}
 		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt
 		else
@@ -70,24 +71,9 @@ public class Wheel : MonoBehaviour {
 			steerGraphic.transform.localEulerAngles = tempRot;	
 		}
 	}
-	
-	//diese Methode liefert den prozentuealen Wert zurück, wie sehr die Feder zusammengedrückt ist
-	//Wert ist zwischen 0.0 (zusammengrdückt) und 1.0 (auseinandergezogen) 
-	public float getSuspensionFactor()
-	{
-		//falls der Reifen den Boden berührt soll erechne Faktor
-		if(wheelCol.isGrounded)
-		{
-			//momentaner abstand / sollabstand. Soll nicht kleiner als 0 sein (passiert wenn die Feder zu stark gedrückt ist)
-			return Mathf.Clamp01((wheelCol.transform.InverseTransformPoint(wheelCol.transform.position).y - steerGraphic.transform.localPosition.y) / wheelCol.suspensionDistance);
-		}
-		//ansonsten liefere 1.0f zurück (Feder ist gedehnt)
-		else
-		{
-			return 1.0f;
-		}
-	}
-	
+
+//// SETUP METHODEN
+
 	//richtet die Werte der Aufhängung/Feder ein
 	public void setSpringValues(float distance, float damper, float springForce)
 	{
@@ -112,5 +98,24 @@ public class Wheel : MonoBehaviour {
 	{
 		wheelCol.forwardFriction = FWFC;
 		wheelCol.sidewaysFriction = SWFC;
+	}
+
+//// GET METHODEN
+	
+	//diese Methode liefert den prozentuealen Wert zurück, wie sehr die Feder zusammengedrückt ist
+	//Wert ist zwischen 0.0 (zusammengrdückt) und 1.0 (auseinandergezogen) 
+	public float getSuspensionFactor()
+	{
+		//falls der Reifen den Boden berührt soll erechne Faktor
+		if(wheelCol.isGrounded)
+		{
+			//momentaner abstand / sollabstand. Soll nicht kleiner als 0 sein (passiert wenn die Feder zu stark gedrückt ist)
+			return (wheelCol.transform.InverseTransformPoint(wheelCol.transform.position).y - steerGraphic.transform.localPosition.y) / wheelCol.suspensionDistance;
+		}
+		//ansonsten liefere 1.0f zurück (Feder ist gedehnt)
+		else
+		{
+			return 1.0f;
+		}
 	}
 }
