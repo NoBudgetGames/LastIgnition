@@ -393,11 +393,11 @@ public class Car : MonoBehaviour
 			}
 		}
 		//bei niedrigen Geschwindigkeiten soll kein Rollwiederstand erzeugt werden
+		
 		if(wheelsAreGrounded && (relativeVelocity.z > 10 || relativeVelocity.z < -10))
 		{
 			rigidbody.AddForce(RollingResistanceForce, ForceMode.Impulse);
 		}
-		
 		//Angular Drag soll größer sein, wenn das Auto eine hohe Geschwindigkeit hat
 		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 100;	
 		
