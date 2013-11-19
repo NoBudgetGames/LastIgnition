@@ -8,10 +8,12 @@ using System.Collections;
 
 public class PlayerInputController : MonoBehaviour 
 {
-	//referenz auf Fahrzeug,
-	private Car car;
 	//Einfüge String für Input, "One" für Spieler 1, "Two" für Spieler 2
 	public string playerString = "One";
+	//Wird ein Controller benutz oder nicht?
+	public bool usingController = false;
+	//referenz auf Fahrzeug,
+	private Car car;
 	
 	// Use this for initialization
 	void Start () 
@@ -19,20 +21,30 @@ public class PlayerInputController : MonoBehaviour
 		car = GetComponent<Car>();
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
-	
 	// Update is called regularly
 	void FixedUpdate()
 	{
-		//hier wird der Input behandelt und auf car übertragen
-		car.setThrottle(Input.GetAxis("Player" + playerString + "Throttle"));
-		car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
-		car.resetCar(Input.GetAxis("Player" + playerString + "ResetCar"));
-		car.setHandbrake(Input.GetAxis("Player" + playerString + "Handbrake"));
+		//falls Tastatur benutzt wird
+		if(usingController == false)
+		{
+			car.setThrottle(Input.GetAxis("Player" + playerString + "ThrottleKey"));
+			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
+			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCarKey"));
+			car.setHandbrake(Input.GetAxis("Player" + playerString + "HandbrakeKey"));	
+		}
+		//falls Controller benutzt wird
+		else
+		{
+			car.setThrottle(Input.GetAxis("Player" + playerString + "Throttle"));
+			car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
+			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCar"));
+			car.setHandbrake(Input.GetAxis("Player" + playerString + "Handbrake"));	
+		}
+		
+		if(Input.GetKeyDown(KeyCode.F))
+		{
+			car.applyVisualDamage(5, (int)DamageDirection.FRONT);
+			car.applyDamage(5);
+		}
 	}
-	
 }
