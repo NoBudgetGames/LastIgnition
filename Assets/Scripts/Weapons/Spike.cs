@@ -18,8 +18,8 @@ public class Spike : MonoBehaviour
 	{
 		damage = 20.0f;
 		speed = 10.0f;
-		force = 500.0f;
-		maxDistance = 20.0f;
+		force = 1500.0f;
+		maxDistance = 10.0f;
 		elapsedTime = 0.0f;
 		startingRotation = transform.rotation;
 	}
@@ -28,16 +28,15 @@ public class Spike : MonoBehaviour
 	void Update ()
 	{
 		elapsedTime += Time.deltaTime;
-		float travelledDistance = (startingPosition-transform.position).magnitude;
-		if(travelledDistance <= maxDistance){
-			this.transform.position = parent.transform.position;
-			this.transform.rotation = startingRotation;
+		if(elapsedTime < 5.0f){
+			this.transform.position = parent.transform.position +this.transform.up * maxDistance;
+			//this.transform.rotation = startingRotation;
 			if(spikeNumber == 1){
-				this.transform.Rotate(this.transform.forward,-parent.transform.eulerAngles.y-90.0f,Space.Self);
+				this.transform.Rotate(parent.transform.up,+10.0f,Space.World);
 			} else {
-				this.transform.Rotate(this.transform.forward,-parent.transform.eulerAngles.y+90.0f,Space.Self);
+				this.transform.Rotate(parent.transform.up,+10.0f,Space.World);
 			}
-			this.transform.position += (this.transform.up * speed * elapsedTime);
+			//this.transform.position += (this.transform.up * speed * elapsedTime);
 		} else {
 			GameObject.Destroy(this.gameObject);
 		}

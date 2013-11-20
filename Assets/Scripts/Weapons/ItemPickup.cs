@@ -30,7 +30,7 @@ public class ItemPickup : MonoBehaviour
 	}
 	//Wenn das Item berührt wurde wird die Waffe des Fahrers erneuert und das Item deaktiviert
 	void OnTriggerEnter(Collider other){
-		CarInventory inv = other.GetComponent<CarInventory>();
+		CarInventory inv = other.transform.parent.GetComponentInChildren<CarInventory>();
 		if(inv != null){
 			inv.activateWeapon(optainableWeapon);
 			//this.gameObject.SetActive(false);
