@@ -47,9 +47,9 @@ public class Car : MonoBehaviour
 	public float slipMultiplier = 0.7f;
 	
 	//höhster lenkwinkel
-	public float maxSteerAngle = 40;
+	public float maxSteerAngle = 30;
 	//kleinster Lenkwikel
-	public float minSteerAngle = 15;
+	public float minSteerAngle = 12;
 
 	//Werte für Wiederstandskräfte
 	//Motorbremse
@@ -82,10 +82,13 @@ public class Car : MonoBehaviour
 	public List<Wheel> wheels;
 	//Referent auf loses Rad
 	public GameObject loseWheel;
+	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
+	public GameObject wheelSphereCol;
 	//liste mit lenkrädern
 	private List<Wheel> steerWheels;
 	//liste mit beschleiunigungsrädern
 	private List<Wheel> driveWheels;
+	
 	
 	//referenz auf aktuelles Objekt
 	private Transform thisTransform;
@@ -371,7 +374,7 @@ public class Car : MonoBehaviour
 		//call by reference durch ref
 		if(wheelToDestroy != null)
 		{
-			removeWheelFromList(ref wheelToDestroy);	
+			removeWheelFromList(ref wheelToDestroy);
 		}
 	}
 	
@@ -390,6 +393,10 @@ public class Car : MonoBehaviour
 		//neues Rad um in der Welt rumzufliegen
 		GameObject.Instantiate(loseWheel, wheel.transform.position, wheel.transform.rotation);
 				
+		//den Collider dahin stellen, wo 
+		wheelSphereCol.transform.localPosition = wheel.transform.localPosition;
+		
+		
 		//Rad aus Liste entfernen und löschen
 		wheels.Remove(wheel);
 		wheel.transform.parent = null;
@@ -400,9 +407,11 @@ public class Car : MonoBehaviour
 	//diese Methode lässt alle Reifen entfernen
 	private void explodeCar()
 	{
+		wheelSphereCol.SetActive(false);
 		//solange noch reifen drin sind, enfferne sie
 		while(wheels.Count != 0)
 		{
+			//immer das erste Elemebt löschen
 			Wheel wheelToDestroy = wheels[0];
 			removeWheelFromList(ref wheelToDestroy);
 		}
@@ -646,7 +655,7 @@ public class Car : MonoBehaviour
 		sidewaysHandbrakeWFC.asymptoteValue = 150f;
 		sidewaysHandbrakeWFC.extremumSlip = 1f;
 		sidewaysHandbrakeWFC.extremumValue = 350;
-		sidewaysHandbrakeWFC.stiffness = 0.7f * slipMultiplier;	
+		sidewaysHandbrakeWFC.stiffness = 0.5f * slipMultiplier;	
 	}
 
 //// PHYSIK BERECHNUNGEN, FAHRZEUG WERTE
@@ -775,13 +784,19 @@ public class Car : MonoBehaviour
 		int size = 0;
 		foreach(Wheel wheel in driveWheels)
 		{
-			//berechne die RPM abhängig von der umdrehungszahl des Rades, da die Reifen mit dem Motor verbunden sind
-			//faktor am Ende ist um die sonst niedrigen Drehzahlen etwas zu kompensieren, denn dass Auto schaltet ziemlich spät
-			currentRPM += Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier * (Mathf.Abs(throttle) + 0.8f);
-			size++;
+			//falls sich das Rad in der Luft befindet soll es nicht zu Berechnung beitragen
+			if(wheel.wheelCol.isGrounded)
+			{
+				//berechne die RPM abhängig von der umdrehungszahl des Rades, da die Reifen mit dem Motor verbunden sind
+				currentRPM += Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier;
+				size++;	
+			}	
 		}
 		//bereche den Durchschnitt der driveWheels
-		currentRPM /= size;
+		if(size != 0)
+		{
+			currentRPM /= size;	
+		}
 
 		//die Motordrehzahl soll nicht weniger als 1000 sein (sonst würd im Reallife der Motor ausgehen)
 		if(currentRPM < 1000)
@@ -874,7 +889,7 @@ public class Car : MonoBehaviour
 				{
 					motorTorque = motorTorque * 0.1f;
 				}
-				wheel.wheelCol.motorTorque = motorTorque;	
+				wheel.wheelCol.motorTorque = motorTorque;		
 			}
 		}
 		//rückwärtsfahren
@@ -895,7 +910,7 @@ public class Car : MonoBehaviour
 	//in dieser Methode wird gebremst, zum einen mit dem Bremspedal/-taste, zum anderen mit der Motorbremse
 	private void applyBrakeTorque(Vector3 relVelocity)
 	{
-		//falls die Handbremse gezogen wird, soll auf jeden Reifen eine hohe Bremskraft ausgeübt werden
+		//falls die Handbremse gezogen wird, soll auf jeden Reifendie maximale Bremskraft ausgeübt werden
 		if(handbrake)
 		{
 			foreach(Wheel wheel in wheels)
