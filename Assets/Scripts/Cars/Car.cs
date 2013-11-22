@@ -54,6 +54,9 @@ public class Car : MonoBehaviour
 	//Werte für Wiederstandskräfte
 	//Motorbremse
 	public float engineBrakingMultiplier = 0.5f;
+	//Wert für Schaden an diesen Fahrzeug bei einer Kollision
+	public float crashDamage = 0.1f;
+
 /*	
  	//Wert für Luftwiederstand beim geradeaus fahren, setzt sich unter anderen aus Luftdichte und Fläche zusammen
 	public float CDrag = 0.4f;
@@ -77,6 +80,14 @@ public class Car : MonoBehaviour
 	public GameObject[] leftDamageModels;
 	//rechte Modelle
 	public GameObject[] rightDamageModels;
+	//vordere linke Modelle
+	public GameObject[] frontLeftDamageModels;
+	//vordere rechte Modelle
+	public GameObject[] frontRightDamageModels;
+	//hintere linke Modelle
+	public GameObject[] rearLeftDamageModels;
+	//hintere rechte Modelle
+	public GameObject[] rearRightDamageModels;
 	
 	//Referenzen zu den Reifen
 	public List<Wheel> wheels;
@@ -88,7 +99,6 @@ public class Car : MonoBehaviour
 	private List<Wheel> steerWheels;
 	//liste mit beschleiunigungsrädern
 	private List<Wheel> driveWheels;
-	
 	
 	//referenz auf aktuelles Objekt
 	private Transform thisTransform;
@@ -140,9 +150,9 @@ public class Car : MonoBehaviour
 	private bool hasLostWheel = false;
 
 //// HEALTH
-	
-	//der eigentliche, allgemeine Heatlh Wert
-	private int health = 100;
+
+	//gesamter Health Wert
+	private float health = 100f;
 	//Health Wert für die Front, wird benötigt um das korrekte Schadensmodel anzuzeigen
 	private int frontHealth = 100;
 	//Health Wert für den Heck, wird benötigt um das korrekte Schadensmodel anzuzeigen
@@ -151,6 +161,15 @@ public class Car : MonoBehaviour
 	private int leftHealth = 100;
 	//Health Wert für die rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
 	private int rightHealth = 100;
+	//Health Wert für die vordere linke Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int frontLeftHealth = 100;
+	//Health Wert für die vordere rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int frontRightHealth = 100;
+	//Health Wert für die hintere linke Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int rearLeftHealth = 100;
+	//Health Wert für die hintere rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+	private int rearRightHealth = 100;
+
 /*
 	//Healthwert des Motors
 	private int engineHealth = 100;
@@ -213,7 +232,7 @@ public class Car : MonoBehaviour
 		//Lenkung hinzufügen		
 		applySteering(relativeVelocity);
 		
-		Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + relativeVelocity.magnitude);		
+		//Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + relativeVelocity.magnitude);		
 	}
 
 //// GET METHODEN
@@ -235,8 +254,8 @@ public class Car : MonoBehaviour
 	{
 		return currentGear;
 	}
-	
-	//liefert aktuellen Lebenspunkte zurück
+
+	//liefert aktuellen Gang zurück
 	public float getHealth()
 	{
 		return health;
@@ -297,80 +316,33 @@ public class Car : MonoBehaviour
 	}
 	
 //// SCHADENSMODELLE AUFSETZEN, EXPLODIEREN
-	
-	//diese Methode verarbeitet den Schaden, der auf das Auto ausgeübt wurde, wird von außerhalb aufgerufen
-	public void applyDamage(int damageAmount)
+
+	public void applyDamage(DamageDirection direction, float damageAmount)
 	{
-		//Schaden von den Lebenspunkten abziehen
-		health -= damageAmount;
-		//falls das Auto keine Lebenspunkte mehr hat, explodiert das Auto und der TrackManager wird benachrichtigt
-		if(health <= 0)
+		health -= damageAmount;	
+		Debug.Log ("Health " + health);
+		//Wenn die Lebenspunkte 0 erreichen wird das Objekt zerstört
+		if(health<=0.0f)
 		{
 			explodeCar();
 		}
+		applyVisualDamage(direction, (int)damageAmount);
 	}
-	
+
 	//diese Methode sorgt dafür, dass das Auto einen Reifen verliert
-	//es wird geguckt, welcher Bereich des Autos am meisten Schaden hat und an der Stelle ein reifen entfernt
-	private void loseAWheel()
+	private void loseAWheel(DamageDirection direction)
 	{
 		Wheel wheelToDestroy = null;
-
-		//soll ein Vorderrad entfernt werden?
-		if(frontHealth <= rearHealth)
-		{
-			//je nach dem wo mehr Schaden entstanden is
-			if(leftHealth <= rightHealth)
+		hasLostWheel = true;
+		//gehe durch jedes Rad durch und such dasd richtige raus
+		foreach(Wheel wheel in wheels)
+		{	
+			if(wheel.direction == direction)
 			{
-				//alle Räder durch gehen und sich das richtige Rad raussuchen
-				foreach(Wheel wheel in wheels)
-				{	
-					if(wheel.isLeftWheel && wheel.isFrontWheel)
-					{
-						wheelToDestroy = wheel;
-						break;
-					}
-				}
-			}
-			else
-			{
-				foreach(Wheel wheel in wheels)
-				{	
-					if(!wheel.isLeftWheel && wheel.isFrontWheel)
-					{
-						wheelToDestroy = wheel;
-						break;
-					}
-				}
+				wheelToDestroy = wheel;
+				break;
 			}
 		}
-		//ansonsten Hinterrad entfernen
-		else
-		{
-			if(leftHealth <= rightHealth)
-			{
-				foreach(Wheel wheel in wheels)
-				{	
-					if(wheel.isLeftWheel && !wheel.isFrontWheel)
-					{
-						wheelToDestroy = wheel;
-						break;
-					}
-				}
-			}
-			else
-			{
-				foreach(Wheel wheel in wheels)
-				{	
-					if(!wheel.isLeftWheel && !wheel.isFrontWheel)
-					{
-						wheelToDestroy = wheel;
-						break;
-					}
-				}
-			}
-		}
-		
 		//call by reference durch ref
 		if(wheelToDestroy != null)
 		{
@@ -396,7 +368,6 @@ public class Car : MonoBehaviour
 		//den Collider dahin stellen, wo 
 		wheelSphereCol.transform.localPosition = wheel.transform.localPosition;
 		
-		
 		//Rad aus Liste entfernen und löschen
 		wheels.Remove(wheel);
 		wheel.transform.parent = null;
@@ -405,7 +376,7 @@ public class Car : MonoBehaviour
 	}
 	
 	//diese Methode lässt alle Reifen entfernen
-	private void explodeCar()
+	public void explodeCar()
 	{
 		wheelSphereCol.SetActive(false);
 		//solange noch reifen drin sind, enfferne sie
@@ -415,27 +386,37 @@ public class Car : MonoBehaviour
 			Wheel wheelToDestroy = wheels[0];
 			removeWheelFromList(ref wheelToDestroy);
 		}
-			
 	}
 	
-	
 	//diese Methode verarbeitet den Schaden und schaut, aus welcher Richtung er kam und ruf entsprechende Methode auf
-	public void applyVisualDamage(int damageAmount, int direction)
+	private void applyVisualDamage(DamageDirection direction, int damageAmount)
 	{
 		//zunächst muss geschaut werden, an welcher Stelle der Schaden angerichtet werden soll
 		switch (direction)
 		{
-			case (int)DamageDirection.FRONT:
+			case DamageDirection.FRONT:
 				setupFrontDamage(damageAmount);
 				break;
-			case (int)DamageDirection.REAR:
+			case DamageDirection.REAR:
 				setupRearDamage(damageAmount);
 				break;
-			case (int)DamageDirection.RIGHT:
+			case DamageDirection.RIGHT:
 				setupRightDamage(damageAmount);
 				break;
-			case (int)DamageDirection.LEFT:
+			case DamageDirection.LEFT:
 				setupLeftDamage(damageAmount);
+				break;
+			case DamageDirection.FRONT_LEFT:
+				setupFrontLeftDamage(damageAmount);
+				break;
+			case DamageDirection.FRONT_RIGHT:
+				setupFrontRightDamage(damageAmount);
+				break;
+			case DamageDirection.REAR_LEFT:
+				setupRearLeftDamage(damageAmount);
+				break;
+			case DamageDirection.REAR_RIGHT:
+				setupRearRightDamage(damageAmount);
 				break;
 		}
 	}
@@ -444,10 +425,8 @@ public class Car : MonoBehaviour
 	private void setupFrontDamage(int damageAmount)
 	{
 		frontHealth -= damageAmount;
-
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		
 		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(frontHealth >= 60)
 		{	
@@ -469,23 +448,14 @@ public class Car : MonoBehaviour
 				frontDamageModels[i].gameObject.SetActive(true);
 			}
 		}
-		
-		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
-		if(hasLostWheel == false && frontHealth <= 15)
-		{
-			loseAWheel();
-			hasLostWheel = true;
-		}
 	}
 	
 	//in dieser Methode wird das graphische Objekt für den Heck des Autos aktiviert
 	private void setupRearDamage(int damageAmount)
 	{
 		rearHealth -= damageAmount;
-
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
-		int damageModelNumber = 0;
-		
+		int damageModelNumber = 0;	
 		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(rearHealth >= 60)
 		{	
@@ -507,23 +477,14 @@ public class Car : MonoBehaviour
 				rearDamageModels[i].gameObject.SetActive(true);
 			}
 		}
-		
-		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
-		if(hasLostWheel == false && rearHealth <= 15)
-		{
-			loseAWheel();
-			hasLostWheel = true;
-		}
 	}
 	
 	//in dieser Methode wird das graphische Objekt für die linke  Seite des Autos aktiviert
 	private void setupLeftDamage(int damageAmount)
 	{
 		leftHealth -= damageAmount;
-
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		
 		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(leftHealth >= 60)
 		{	
@@ -545,23 +506,14 @@ public class Car : MonoBehaviour
 				leftDamageModels[i].gameObject.SetActive(true);
 			}
 		}
-		
-		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
-		if(hasLostWheel == false && leftHealth <= 15)
-		{
-			loseAWheel();
-			hasLostWheel = true;
-		}
 	}
 	
-	//in dieser Methode wird das graphische Objekt für die linke  Seite des Autos aktiviert
+	//in dieser Methode wird das graphische Objekt für die rechte Seite des Autos aktiviert
 	private void setupRightDamage(int damageAmount)
 	{
 		rightHealth -= damageAmount;
-
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		
 		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(rightHealth >= 60)
 		{	
@@ -583,15 +535,144 @@ public class Car : MonoBehaviour
 				rightDamageModels[i].gameObject.SetActive(true);
 			}
 		}
-		
-		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
-		if(hasLostWheel == false && rightHealth <= 15)
+	}
+
+	//in dieser Methode wird das graphische Objekt für die vordere linke  Seite des Autos aktiviert
+	private void setupFrontLeftDamage(int damageAmount)
+	{
+		frontLeftHealth -= damageAmount;
+		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
+		int damageModelNumber = 0;
+		//ab welchen Lebenspunkten soll das Model geändert werden?
+		if(frontLeftHealth >= 60)
+		{	
+			damageModelNumber = 0;
+		}
+		else if(frontLeftHealth >= 30)
+		{	
+			damageModelNumber = 1;
+		}
+		else
 		{
-			loseAWheel();
-			hasLostWheel = true;
+			damageModelNumber = 2;	
+		}
+		for(int i = 0; i < frontLeftDamageModels.Length; i++)
+		{
+			frontLeftDamageModels[i].gameObject.SetActive(false);
+			if(damageModelNumber == i)
+			{
+				frontLeftDamageModels[i].gameObject.SetActive(true);
+			}
+		}
+		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
+		if(hasLostWheel == false && frontLeftHealth <= 15)
+		{
+			loseAWheel(DamageDirection.FRONT_LEFT);
 		}
 	}
-	
+
+	//in dieser Methode wird das graphische Objekt für die vordere rechte Seite des Autos aktiviert
+	private void setupFrontRightDamage(int damageAmount)
+	{
+		frontRightHealth -= damageAmount;
+		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
+		int damageModelNumber = 0;
+		//ab welchen Lebenspunkten soll das Model geändert werden?
+		if(frontRightHealth >= 60)
+		{	
+			damageModelNumber = 0;
+		}
+		else if(frontRightHealth >= 30)
+		{	
+			damageModelNumber = 1;
+		}
+		else
+		{
+			damageModelNumber = 2;	
+		}
+		for(int i = 0; i < frontRightDamageModels.Length; i++)
+		{
+			frontRightDamageModels[i].gameObject.SetActive(false);
+			if(damageModelNumber == i)
+			{
+				frontLeftDamageModels[i].gameObject.SetActive(true);
+			}
+		}
+		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
+		if(hasLostWheel == false && frontRightHealth <= 15)
+		{
+			loseAWheel(DamageDirection.FRONT_RIGHT);
+		}
+	}
+
+	//in dieser Methode wird das graphische Objekt für die hintere linke  Seite des Autos aktiviert
+	private void setupRearLeftDamage(int damageAmount)
+	{
+		rearLeftHealth -= damageAmount;
+		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
+		int damageModelNumber = 0;
+		//ab welchen Lebenspunkten soll das Model geändert werden?
+		if(rearLeftHealth >= 60)
+		{	
+			damageModelNumber = 0;
+		}
+		else if(rearLeftHealth >= 30)
+		{	
+			damageModelNumber = 1;
+		}
+		else
+		{
+			damageModelNumber = 2;	
+		}
+		for(int i = 0; i < rearLeftDamageModels.Length; i++)
+		{
+			rearLeftDamageModels[i].gameObject.SetActive(false);
+			if(damageModelNumber == i)
+			{
+				rearLeftDamageModels[i].gameObject.SetActive(true);
+			}
+		}
+		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
+		if(hasLostWheel == false && rearLeftHealth <= 15)
+		{
+			loseAWheel(DamageDirection.REAR_LEFT);
+		}
+	}
+
+	//in dieser Methode wird das graphische Objekt für die hintere rechte Seite des Autos aktiviert
+	private void setupRearRightDamage(int damageAmount)
+	{
+		rearRightHealth -= damageAmount;
+		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
+		int damageModelNumber = 0;
+		//ab welchen Lebenspunkten soll das Model geändert werden?
+		if(rearRightHealth >= 60)
+		{	
+			damageModelNumber = 0;
+		}
+		else if(rearRightHealth >= 30)
+		{	
+			damageModelNumber = 1;
+		}
+		else
+		{
+			damageModelNumber = 2;	
+		}
+		for(int i = 0; i < rearRightDamageModels.Length; i++)
+		{
+			rearRightDamageModels[i].gameObject.SetActive(false);
+			if(damageModelNumber == i)
+			{
+				rearRightDamageModels[i].gameObject.SetActive(true);
+			}
+		}
+		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
+		if(hasLostWheel == false && rearRightHealth <= 15)
+		{
+			loseAWheel(DamageDirection.REAR_LEFT);
+		}
+	}
+
 //// RÄDER EINRICHTEN
 	
 	//diese Methode richtet die Reifen ein und fügt sie den richtigen Listen zu

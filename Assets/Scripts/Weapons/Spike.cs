@@ -43,10 +43,20 @@ public class Spike : MonoBehaviour
 	}
 	
 	void OnTriggerEnter(Collider other){
-		DestructibleObject obj = other.GetComponent<DestructibleObject>();
+		AbstractDestructibleObject  obj = other.GetComponent<AbstractDestructibleObject >();
 		if(obj != null && other.gameObject != parent){
 			obj.receiveDamage(damage);
-			obj.rigidbody.AddForce(this.transform.up*force);
+			//falls es ein Auto ist muss über die DestructibleCarPart auf den Rigidbody zugegriffen werden
+			if(obj.GetComponent<DestructibleCarPart>())
+			{
+				obj.GetComponent<DestructibleCarPart>().car.rigidbody.AddForce(this.transform.up * force);
+			}
+			//ansonsten ganz normal
+			else
+			{
+				obj.rigidbody.AddForce(this.transform.up*force);	
+			}
+
 			//GameObject.Destroy(this.gameObject);
 		}
 	}

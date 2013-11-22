@@ -9,6 +9,10 @@ public enum DamageDirection
 	FRONT, 
 	REAR, 
 	LEFT, 
-	RIGHT
+	RIGHT,
+	FRONT_LEFT,
+	FRONT_RIGHT,
+	REAR_LEFT,
+	REAR_RIGHT
 };
 

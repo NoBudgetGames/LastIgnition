@@ -21,6 +21,8 @@ public class Wheel : MonoBehaviour
 	public bool isLeftWheel = false;
 	//referenz auf den WheelCollider, sollte nicht verändert werden, nur public um von aussen zuzugreifen
 	public WheelCollider wheelCol;
+	//DamageDirection
+	public DamageDirection direction;
 	
 	//die Räder benötigen ein zusätzliches Gameobject, das dazwischen geschaltet ist, um eine korrekte aufhängung und Lenkung darzustellen
 	private GameObject steerGraphic;

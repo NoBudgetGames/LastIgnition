@@ -40,7 +40,7 @@ public class Rocket : MonoBehaviour
 		foreach(Collider col in affectedObjects){
 			if(col.rigidbody)
 				col.rigidbody.AddExplosionForce(force,explosionPosition,radius);
-			DestructibleObject destr = col.GetComponent<DestructibleObject>();
+			AbstractDestructibleObject destr = col.GetComponent<AbstractDestructibleObject>();
 			if(destr != null)
 				destr.receiveDamage(damage);
 		}

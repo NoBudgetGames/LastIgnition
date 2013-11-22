@@ -43,8 +43,8 @@ public class PlayerInputController : MonoBehaviour
 		
 		if(Input.GetKeyDown(KeyCode.F))
 		{
-			car.applyVisualDamage(5, (int)DamageDirection.FRONT);
-			car.applyDamage(5);
+			DestructibleObject dest = GetComponent<DestructibleObject>();
+			dest.receiveDamage(5);
 		}
 	}
 }

@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 33: {fileID: 3300002}
   - 23: {fileID: 2300002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 33: {fileID: 3300004}
   - 23: {fileID: 2300004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400000}
   - 146: {fileID: 14600000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RearRightWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400002}
   - 146: {fileID: 14600002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontRightWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - 4: {fileID: 400010}
   - 33: {fileID: 3300006}
   - 23: {fileID: 2300006}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestAutoMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - 4: {fileID: 400012}
   - 33: {fileID: 3300008}
   - 23: {fileID: 2300008}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400014}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CenterOfMassDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - 4: {fileID: 400016}
   - 114: {fileID: 11400004}
   - 146: {fileID: 14600004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontLeftWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   - 92: {fileID: 9200000}
   - 124: {fileID: 12400000}
   - 81: {fileID: 8100000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400018}
   - 114: {fileID: 11400016}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestAuto
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - 4: {fileID: 400022}
   - 114: {fileID: 11400010}
   - 146: {fileID: 14600006}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RearLeftWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CenterOfMass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - 114: {fileID: 11400022}
   - 114: {fileID: 11400020}
   - 114: {fileID: 11400024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaponTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400028}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BodyModels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,8 +268,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 400030}
   - 65: {fileID: 6500000}
-  m_Layer: 0
-  m_Name: Collider
+  - 54: {fileID: 5400002}
+  - 114: {fileID: 11400026}
+  m_Layer: 8
+  m_Name: FrontCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +285,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CenterOfMasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +300,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400034}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +315,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400036}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +333,7 @@ GameObject:
   - 33: {fileID: 3300012}
   - 23: {fileID: 2300012}
   - 95: {fileID: 9500000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +348,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400040}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +364,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400042}
   - 135: {fileID: 13500000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SphereCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,6 +662,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!23 &2300000
 Renderer:
   m_ObjectHideFlags: 1
@@ -678,6 +681,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &2300002
 Renderer:
   m_ObjectHideFlags: 1
@@ -696,6 +702,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &2300004
 Renderer:
   m_ObjectHideFlags: 1
@@ -714,6 +723,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &2300006
 Renderer:
   m_ObjectHideFlags: 1
@@ -732,6 +744,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &2300008
 Renderer:
   m_ObjectHideFlags: 1
@@ -750,6 +765,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &2300010
 Renderer:
   m_ObjectHideFlags: 1
@@ -768,6 +786,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &2300012
 Renderer:
   m_ObjectHideFlags: 1
@@ -786,6 +807,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &3300000
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -850,6 +874,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!54 &5400002
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100030}
+  serializedVersion: 2
+  m_Mass: 1.00000001e-07
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!65 &6500000
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -860,8 +899,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.5, y: 4, z: 21}
-  m_Center: {x: 0, y: .430000007, z: .419999987}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!81 &8100000
 AudioListener:
   m_ObjectHideFlags: 1
@@ -878,6 +917,7 @@ Behaviour:
   m_Enabled: 1
 --- !u!95 &9500000
 Animator:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -888,6 +928,7 @@ Animator:
   m_CullingMode: 1
   m_ApplyRootMotion: 1
   m_AnimatePhysics: 0
+  m_HasTransformHierarchy: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -905,6 +946,7 @@ MonoBehaviour:
   isFrontWheel: 0
   isLeftWheel: 0
   wheelCol: {fileID: 0}
+  direction: 7
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -922,6 +964,7 @@ MonoBehaviour:
   isFrontWheel: 1
   isLeftWheel: 0
   wheelCol: {fileID: 0}
+  direction: 5
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -939,6 +982,7 @@ MonoBehaviour:
   isFrontWheel: 1
   isLeftWheel: 1
   wheelCol: {fileID: 0}
+  direction: 4
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1038,6 +1082,7 @@ MonoBehaviour:
   maxSteerAngle: 35
   minSteerAngle: 10
   engineBrakingMultiplier: .5
+  crashDamage: .100000001
   CenterOfMass: {fileID: 400024}
   CenterOfMassDown: {fileID: 400014}
   frontDamageModels:
@@ -1046,6 +1091,10 @@ MonoBehaviour:
   rearDamageModels: []
   leftDamageModels: []
   rightDamageModels: []
+  frontLeftDamageModels: []
+  frontRightDamageModels: []
+  rearLeftDamageModels: []
+  rearRightDamageModels: []
   wheels:
   - {fileID: 11400004}
   - {fileID: 11400002}
@@ -1070,6 +1119,7 @@ MonoBehaviour:
   isFrontWheel: 0
   isLeftWheel: 1
   wheelCol: {fileID: 0}
+  direction: 6
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1155,6 +1205,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spikePrefab: {fileID: 0}
+--- !u!114 &11400026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
+  car: {fileID: 11400008}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
