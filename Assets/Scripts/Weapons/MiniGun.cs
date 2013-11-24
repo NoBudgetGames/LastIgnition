@@ -28,11 +28,14 @@ public class MiniGun : MonoBehaviour {
 				timer = 0.0f;
 				RaycastHit hit;
 				if(Physics.Raycast(transform.position,transform.forward,out hit,30)){
-					AbstractDestructibleObject obj = hit.collider.GetComponent<AbstractDestructibleObject >();
-					if(obj != null){
-						obj.receiveDamage(5.0f);
-					} else {
-						Debug.Log("Fail!");	
+					Debug.DrawLine (transform.position, hit.point);
+					if(hit.collider.GetComponent<AbstractDestructibleObject>())
+					{
+						hit.collider.GetComponent<AbstractDestructibleObject>().receiveDamage(5.0f);
+					} 
+					else 
+					{
+						Debug.Log("Minigun hit something, but could't apply damage!");	
 					}
 				}
 			}

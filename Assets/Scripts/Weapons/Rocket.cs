@@ -42,7 +42,15 @@ public class Rocket : MonoBehaviour
 				col.rigidbody.AddExplosionForce(force,explosionPosition,radius);
 			AbstractDestructibleObject destr = col.GetComponent<AbstractDestructibleObject>();
 			if(destr != null)
+			{
 				destr.receiveDamage(damage);
+				if(col.GetComponent<DestructibleCarPart>())
+				{
+					col.GetComponent<DestructibleCarPart>().car.rigidbody.AddExplosionForce(force * 2,explosionPosition,radius);
+				}
+			}
+
+				
 		}
 		GameObject.Destroy(this.gameObject);
 		

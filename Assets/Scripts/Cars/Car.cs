@@ -320,13 +320,13 @@ public class Car : MonoBehaviour
 	public void applyDamage(DamageDirection direction, float damageAmount)
 	{
 		health -= damageAmount;	
-		Debug.Log ("Health " + health);
 		//Wenn die Lebenspunkte 0 erreichen wird das Objekt zerstört
+		applyVisualDamage(direction, (int)damageAmount);
 		if(health<=0.0f)
 		{
 			explodeCar();
 		}
-		applyVisualDamage(direction, (int)damageAmount);
+
 	}
 
 	//diese Methode sorgt dafür, dass das Auto einen Reifen verliert
@@ -375,7 +375,7 @@ public class Car : MonoBehaviour
 		GameObject.Destroy(wheel.gameObject);
 	}
 	
-	//diese Methode lässt alle Reifen entfernen
+	//diese Methode lässt das Auto explodieren, und alle Reifen entfernen
 	public void explodeCar()
 	{
 		wheelSphereCol.SetActive(false);
@@ -385,6 +385,11 @@ public class Car : MonoBehaviour
 			//immer das erste Elemebt löschen
 			Wheel wheelToDestroy = wheels[0];
 			removeWheelFromList(ref wheelToDestroy);
+		}
+		//gehe durch alle Schadenszonen durch und füge (visuellen )schaden hinzu
+		foreach(DamageDirection direction in DamageDirection.GetValues(typeof(DamageDirection)))
+		{
+			applyVisualDamage(direction, 200);
 		}
 	}
 	

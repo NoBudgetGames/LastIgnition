@@ -18,7 +18,7 @@ public class Spike : MonoBehaviour
 	{
 		damage = 20.0f;
 		speed = 10.0f;
-		force = 1500.0f;
+		force = 15000.0f;
 		maxDistance = 10.0f;
 		elapsedTime = 0.0f;
 		startingRotation = transform.rotation;
@@ -47,9 +47,9 @@ public class Spike : MonoBehaviour
 		if(obj != null && other.gameObject != parent){
 			obj.receiveDamage(damage);
 			//falls es ein Auto ist muss über die DestructibleCarPart auf den Rigidbody zugegriffen werden
-			if(obj.GetComponent<DestructibleCarPart>())
+			if(other.GetComponent<DestructibleCarPart>())
 			{
-				obj.GetComponent<DestructibleCarPart>().car.rigidbody.AddForce(this.transform.up * force);
+				other.GetComponent<DestructibleCarPart>().car.rigidbody.AddForce(this.transform.up * force, ForceMode.Impulse);
 			}
 			//ansonsten ganz normal
 			else

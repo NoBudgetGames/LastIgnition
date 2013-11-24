@@ -17,8 +17,6 @@ public class Wheel : MonoBehaviour
 	public bool isDriveWheel = false;
 	//ist dies ein Vorderrad? die Federn der Aufhängung am Motor sind in der Regel stärker als die anderen (meistens vorne)
 	public bool isFrontWheel = false;
-	//is es ein linker Reifen?
-	public bool isLeftWheel = false;
 	//referenz auf den WheelCollider, sollte nicht verändert werden, nur public um von aussen zuzugreifen
 	public WheelCollider wheelCol;
 	//DamageDirection

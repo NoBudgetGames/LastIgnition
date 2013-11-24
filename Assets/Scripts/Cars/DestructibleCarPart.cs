@@ -16,6 +16,5 @@ public class DestructibleCarPart : AbstractDestructibleObject
 	public override void receiveDamage(float damage)
 	{
 		car.applyDamage(direction, damage);
-		Debug.Log ("CAR PART " + car.getHealth());
 	}
 }
