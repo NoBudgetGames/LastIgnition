@@ -28,7 +28,6 @@ public class MiniGun : MonoBehaviour {
 				timer = 0.0f;
 				RaycastHit hit;
 				if(Physics.Raycast(transform.position,transform.forward,out hit,30)){
-					Debug.DrawLine (transform.position, hit.point);
 					if(hit.collider.GetComponent<AbstractDestructibleObject>())
 					{
 						hit.collider.GetComponent<AbstractDestructibleObject>().receiveDamage(5.0f);
