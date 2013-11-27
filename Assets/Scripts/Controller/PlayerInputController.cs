@@ -14,11 +14,13 @@ public class PlayerInputController : MonoBehaviour
 	public bool usingController = false;
 	//referenz auf Fahrzeug,
 	private Car car;
+	private CarInventory inv;
 	
 	// Use this for initialization
 	void Start () 
 	{
 		car = GetComponent<Car>();
+		inv = GetComponentInChildren<CarInventory>();
 	}
 	
 	// Update is called regularly
@@ -31,6 +33,7 @@ public class PlayerInputController : MonoBehaviour
 			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCarKey"));
 			car.setHandbrake(Input.GetAxis("Player" + playerString + "HandbrakeKey"));	
+			inv.setFiring(Input.GetAxis("Player" + playerString + "FireKey"));	
 		}
 		//falls Controller benutzt wird
 		else

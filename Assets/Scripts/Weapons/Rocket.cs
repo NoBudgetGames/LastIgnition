@@ -29,9 +29,7 @@ public class Rocket : MonoBehaviour
 	}
 	
 	void OnTriggerEnter(Collider other){
-		//Rakete zündet nicht beim Parent Objekt
-		if(other.gameObject == parent)
-			return;
+
 		//Von der Explosionsposition der Rakete aus werden mittels einer Sphere alle Objekte
 		//im Explosionsradius erfasst. Objekte die zerstörbar sind erhalten Schaden, Objekte 
 		//mit einem Rigidbody werden zurückgeworfen (abhängig von der Masse)

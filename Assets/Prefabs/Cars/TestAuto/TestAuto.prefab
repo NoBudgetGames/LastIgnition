@@ -310,7 +310,7 @@ GameObject:
   - 4: {fileID: 400036}
   - 114: {fileID: 11400018}
   m_Layer: 0
-  m_Name: Spikes
+  m_Name: MineThrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,6 +1064,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100128
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400128}
+  - 114: {fileID: 11400040}
+  m_Layer: 0
+  m_Name: Spikes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -1184,7 +1200,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1414.67664, y: 3.97183228, z: 611.551636}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400028}
@@ -1230,6 +1246,7 @@ Transform:
   m_Children:
   - {fileID: 400046}
   - {fileID: 400044}
+  - {fileID: 400128}
   - {fileID: 400036}
   m_Father: {fileID: 400020}
 --- !u!4 &400028
@@ -1299,7 +1316,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: .0872802734, y: 4.32305717, z: -9.28234863}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400026}
@@ -1831,6 +1848,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400122}
+--- !u!4 &400128
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400026}
 --- !u!20 &2000000
 Camera:
   m_ObjectHideFlags: 1
@@ -3131,7 +3159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51fa12322e583d45af8b4bc0c44ee6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedWeapon: 0
+  equippedWeapon: {fileID: 11400018}
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3140,10 +3168,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c72ba61dd529540bf7e284118c2188, type: 3}
+  m_Script: {fileID: 11500000, guid: c9b10062735989649a2b00168fda476d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spikePrefab: {fileID: 100000, guid: c840f610d6c045d4cb2d2f753064ae41, type: 2}
+  minePrefab: {fileID: 100000, guid: 73feb47014c9e8143a74e96352767561, type: 2}
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3271,6 +3299,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 5
   car: {fileID: 11400008}
+--- !u!114 &11400040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c72ba61dd529540bf7e284118c2188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spikePrefab: {fileID: 100000, guid: c840f610d6c045d4cb2d2f753064ae41, type: 2}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

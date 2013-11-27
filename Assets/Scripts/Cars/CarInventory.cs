@@ -4,58 +4,75 @@ using System.Collections;
 public class CarInventory : MonoBehaviour
 {
 	
-	public WeaponType equippedWeapon;
+	public Weapon equippedWeapon;
 	
-	MiniGun minigunComp;
-	RocketLauncher rocketLauncherComp;
-	SpikeHandle spikeHandleComp;
+	Weapon minigunComp;
+	Weapon rocketLauncherComp;
+	Weapon spikeHandleComp;
+	Weapon mineThrowerComp;
+
+	bool firing;
+	float lastInput;
 	// Use this for initialization
 	void Start ()
 	{
-		equippedWeapon = WeaponType.NONE;
+		lastInput = 0.0f;
+		firing = false;
+		equippedWeapon = null;
 		minigunComp = this.GetComponentInChildren<MiniGun>();
 		rocketLauncherComp = this.GetComponentInChildren<RocketLauncher>();
 		spikeHandleComp = this.GetComponentInChildren<SpikeHandle>();
+		mineThrowerComp = this.GetComponentInChildren<MineThrower>();
 		activateWeapon(WeaponType.NONE);
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		
-	}
-	
-	public void activateWeapon(WeaponType weapon){
-		switch(equippedWeapon){
-			case WeaponType.NONE:
-				break;
-			case WeaponType.MINIGUN:
-				minigunComp.enabled = false;
-				break;
-			case WeaponType.ROCKET_LAUNCHER:
-				rocketLauncherComp.enabled = false;
-				break;
-			case WeaponType.SPIKES:
-				spikeHandleComp.enabled = false;
-				break;
+		if(equippedWeapon != null){
+			equippedWeapon.setFiring(firing);
 		}
-		equippedWeapon = weapon;
+		firing = false;
+
+	}
+
+	public void setFiring(float input){
+		if(lastInput != input){
+			if(input > 0.9f)
+				firing = true;
+			else 
+				firing = false;
+
+			lastInput = input;
+		}
+	}
+
+	public void activateWeapon(WeaponType weapon){
+
 		switch(weapon){
 			case WeaponType.NONE:
-				minigunComp.enabled = false;
-				rocketLauncherComp.enabled = false;
-				spikeHandleComp.enabled = false;
+				equippedWeapon = null;
 				break;
 			case WeaponType.MINIGUN:
-				minigunComp.enabled = true;
+				equippedWeapon = minigunComp;
 				break;
 			case WeaponType.ROCKET_LAUNCHER:
-				rocketLauncherComp.enabled = true;
+				equippedWeapon = rocketLauncherComp;
 				break;
 			case WeaponType.SPIKES:
-				spikeHandleComp.enabled = true;
+				equippedWeapon = spikeHandleComp;
 				break;
+			case WeaponType.MINE_THROWER:
+				equippedWeapon = mineThrowerComp;
+			break;
 		}
+
+		if(equippedWeapon != null)
+			equippedWeapon.reset();
+	}
+
+	public void increaseAmmo(){
+		equippedWeapon.increase();
 	}
 }
 

@@ -30,13 +30,23 @@ public class ItemPickup : MonoBehaviour
 	}
 	//Wenn das Item berührt wurde wird die Waffe des Fahrers erneuert und das Item deaktiviert
 	void OnTriggerEnter(Collider other){
-		CarInventory inv = other.transform.parent.GetComponentInChildren<CarInventory>();
-		if(inv != null){
-			inv.activateWeapon(optainableWeapon);
-			//this.gameObject.SetActive(false);
-			objectUsed = true;
-			this.renderer.enabled = false;
-			this.collider.enabled = false;
+		if(!objectUsed){
+			CarInventory inv = other.transform.root.GetComponentInChildren<CarInventory>();
+			if(inv != null){
+				if(inv.equippedWeapon != null){
+					if(inv.equippedWeapon.weaponType != optainableWeapon){
+						inv.activateWeapon(optainableWeapon);
+					} else {
+						inv.increaseAmmo();
+					}
+				} else {
+					inv.activateWeapon(optainableWeapon);
+				}
+
+				objectUsed = true;
+				this.renderer.enabled = false;
+				this.collider.enabled = false;
+			}
 		}
 	}
 }

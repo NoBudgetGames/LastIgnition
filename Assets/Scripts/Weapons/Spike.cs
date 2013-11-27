@@ -12,10 +12,12 @@ public class Spike : MonoBehaviour
 	public int spikeNumber;
 	
 	float elapsedTime;
+	float angle;
 	Quaternion startingRotation;
 	// Use this for initialization
 	void Start ()
 	{
+		angle = 10.0f;
 		damage = 20.0f;
 		speed = 10.0f;
 		force = 15000.0f;
@@ -30,11 +32,17 @@ public class Spike : MonoBehaviour
 		elapsedTime += Time.deltaTime;
 		if(elapsedTime < 5.0f){
 			this.transform.position = parent.transform.position +this.transform.up * maxDistance;
-			//this.transform.rotation = startingRotation;
+			this.transform.rotation = parent.transform.rotation;
+			this.transform.Rotate(this.transform.forward,-parent.transform.eulerAngles.x+90.0f,Space.Self);
+			
 			if(spikeNumber == 1){
-				this.transform.Rotate(parent.transform.up,+10.0f,Space.World);
+				this.transform.Rotate(parent.transform.up,+angle+180.0f,Space.World);
 			} else {
-				this.transform.Rotate(parent.transform.up,+10.0f,Space.World);
+				this.transform.Rotate(parent.transform.up,+angle,Space.World);
+			}
+			angle += 10.0f;
+			if(angle >= 360.0f){
+				angle = 0.0f;
 			}
 			//this.transform.position += (this.transform.up * speed * elapsedTime);
 		} else {
@@ -44,7 +52,7 @@ public class Spike : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other){
 		AbstractDestructibleObject  obj = other.GetComponent<AbstractDestructibleObject >();
-		if(obj != null && other.gameObject != parent){
+		if(obj != null && other.transform.root.gameObject != parent){
 			obj.receiveDamage(damage);
 			//falls es ein Auto ist muss über die DestructibleCarPart auf den Rigidbody zugegriffen werden
 			if(other.GetComponent<DestructibleCarPart>())

@@ -6,7 +6,8 @@ public enum WeaponType
 	NONE,
 	MINIGUN,
 	ROCKET_LAUNCHER,
-	SPIKES
+	SPIKES,
+	MINE_THROWER
 }
 
 
