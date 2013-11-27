@@ -26,7 +26,6 @@ public class MiniGun : Weapon {
 		//Wenn der Timer sein Limit erreicht hat wird ein Raycast ausgeführt der in gerader Richtung nach
 		//Vorne verläuft, das erste Objekt das getroffen wird erhält schaden
 		//EVTL SPRAY EINFÜGEN
-<<<<<<< HEAD
 		if(ammo > 0){
 			if(firing){
 				timer+=Time.deltaTime;
@@ -44,21 +43,6 @@ public class MiniGun : Weapon {
 						{
 							Debug.Log("Minigun hit something, but could't apply damage!");	
 						}
-=======
-		if(firing){
-			timer+=Time.deltaTime;
-			if(timer>=0.1f){
-				timer = 0.0f;
-				RaycastHit hit;
-				if(Physics.Raycast(transform.position,transform.forward,out hit,30)){
-					if(hit.collider.GetComponent<AbstractDestructibleObject>())
-					{
-						hit.collider.GetComponent<AbstractDestructibleObject>().receiveDamage(5.0f);
-					} 
-					else 
-					{
-						Debug.Log("Minigun hit something, but could't apply damage!");	
->>>>>>> c152e1fe880177553df6550e395c779bec065bd0
 					}
 				}
 			}
