@@ -12,9 +12,15 @@ public class PlayerInputController : MonoBehaviour
 	public string playerString = "One";
 	//Wird ein Controller benutz oder nicht?
 	public bool usingController = false;
+	//refernz auf die Kamera Transforms
+	public GameObject[] cameras;
 	//referenz auf Fahrzeug,
 	private Car car;
+<<<<<<< HEAD
 	private CarInventory inv;
+=======
+
+>>>>>>> c152e1fe880177553df6550e395c779bec065bd0
 	
 	// Use this for initialization
 	void Start () 
@@ -22,8 +28,7 @@ public class PlayerInputController : MonoBehaviour
 		car = GetComponent<Car>();
 		inv = GetComponentInChildren<CarInventory>();
 	}
-	
-	// Update is called regularly
+
 	void FixedUpdate()
 	{
 		//falls Tastatur benutzt wird
@@ -32,8 +37,13 @@ public class PlayerInputController : MonoBehaviour
 			car.setThrottle(Input.GetAxis("Player" + playerString + "ThrottleKey"));
 			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCarKey"));
+<<<<<<< HEAD
 			car.setHandbrake(Input.GetAxis("Player" + playerString + "HandbrakeKey"));	
 			inv.setFiring(Input.GetAxis("Player" + playerString + "FireKey"));	
+=======
+			car.setHandbrake(Input.GetButton("Player" + playerString + "HandbrakeKey"));
+			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCameraKey"));
+>>>>>>> c152e1fe880177553df6550e395c779bec065bd0
 		}
 		//falls Controller benutzt wird
 		else
@@ -41,13 +51,39 @@ public class PlayerInputController : MonoBehaviour
 			car.setThrottle(Input.GetAxis("Player" + playerString + "Throttle"));
 			car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCar"));
-			car.setHandbrake(Input.GetAxis("Player" + playerString + "Handbrake"));	
+			car.setHandbrake(Input.GetButton("Player" + playerString + "Handbrake"));	
+			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCamera"));
 		}
-		
-		if(Input.GetKeyDown(KeyCode.F))
+	}
+
+	//diese Methode geht durch die enzelnen Kameras durch
+	private void cycleCamera(bool cam)
+	{
+		if(cam)
 		{
-			DestructibleObject dest = GetComponent<DestructibleObject>();
-			dest.receiveDamage(5);
+			//gehe durch das Array durch und aktiviere die richtige Kamera
+			for (int i = 0; i < cameras.Length; i++)
+			{
+				//suche die momentan verwendetet Kamera und aktiviere die nächste
+				if(cameras[i].activeSelf == true)
+				{
+					//falls momentane Kamera nicht das letzte Element im Array ist
+					if(i+1 < cameras.Length)
+					{
+						cameras[i].SetActive(false);
+						cameras[i+1].SetActive(true);
+						return;
+					}
+					//ansonsten gehe zum Anfang zurück
+					else
+					{
+						cameras[i].SetActive(false);
+						cameras[0].SetActive(true);
+						return;
+					}
+				}
+			}
 		}
+
 	}
 }

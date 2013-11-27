@@ -54,7 +54,7 @@ public class Car : MonoBehaviour
 	//Werte für Wiederstandskräfte
 	//Motorbremse
 	public float engineBrakingMultiplier = 0.5f;
-	//Wert für Schaden an diesen Fahrzeug bei einer Kollision
+	//Wert für Schaden einen anderen Auto bei einer Kollision
 	public float crashDamage = 0.1f;
 
 /*	
@@ -91,8 +91,16 @@ public class Car : MonoBehaviour
 	
 	//Referenzen zu den Reifen
 	public List<Wheel> wheels;
-	//Referent auf loses Rad
+	//Referenz auf loses Rad 
 	public GameObject loseWheel;
+	//referenz auf linke Tür
+	public GameObject leftDoor;
+	//referenz auf rechte Tür
+	public GameObject rightDoor;
+	//referenz auf Motorhaube
+	public GameObject frontDoor;
+	//referenz auf Kofferraumtür
+	public GameObject rearDoor;
 	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
 	public GameObject wheelSphereCol;
 	//liste mit lenkrädern
@@ -100,9 +108,9 @@ public class Car : MonoBehaviour
 	//liste mit beschleiunigungsrädern
 	private List<Wheel> driveWheels;
 	
-	//referenz auf aktuelles Objekt
+	//referenz auf aktuelles Objekt, ist einfacher die Referenz zu setzen anstadt mit GetComponent die Komponente zu suchen
 	private Transform thisTransform;
-	//referenz auf eigenens rigidBody
+	//referenz auf eigenens rigidBody, 
 	private Rigidbody thisRigidBody;
 	
 //// WHEELFRICTIONCURVES
@@ -242,6 +250,12 @@ public class Car : MonoBehaviour
 	{
 		return currentVelocity;
 	}
+
+	//liefert den Geschwindigkeitsvektor zurück
+	public Vector3 getVelocityVector()
+	{
+		return thisRigidBody.velocity;
+	}
 	
 	//liefert aktuelle Drehzahl zurück
 	public float getRPM()
@@ -259,6 +273,12 @@ public class Car : MonoBehaviour
 	public float getHealth()
 	{
 		return health;
+	}
+
+	//ist das Auto gerade am rückwärtsfahren?
+	public bool isCarReversing()
+	{
+		return isReversing;
 	}
 	
 //// INPUT METHODEN
@@ -303,9 +323,9 @@ public class Car : MonoBehaviour
 	}
 	
 	//in dieser Methode wird überprüft, ob die Handbremse betätigt wurde, wird vom InputControlle aufgerufen
-	public void setHandbrake(float handBrake)
+	public void setHandbrake(bool handBrake)
 	{
-		if(handBrake > 0.0f)
+		if(handBrake)
 		{
 			handbrake = true;
 		}
@@ -365,7 +385,7 @@ public class Car : MonoBehaviour
 		//neues Rad um in der Welt rumzufliegen
 		GameObject.Instantiate(loseWheel, wheel.transform.position, wheel.transform.rotation);
 				
-		//den Collider dahin stellen, wo 
+		//den Collider dahin stellen, wo vorher das Rad war (um ein absenken des Auto an dieser Stelle zu verhindern)
 		wheelSphereCol.transform.localPosition = wheel.transform.localPosition;
 		
 		//Rad aus Liste entfernen und löschen
@@ -374,8 +394,21 @@ public class Car : MonoBehaviour
 		//hier muss explizit auf das dazugehörige gameObject zugegriffen werden
 		GameObject.Destroy(wheel.gameObject);
 	}
-	
-	//diese Methode lässt das Auto explodieren, und alle Reifen entfernen
+
+	//diese Methode löst die Tür vom Auto
+	private void removeDoor(GameObject door)
+	{
+		//falls die noch nicht entfernt wurde
+		if(door.GetComponent<HingeJoint>() != null)
+		{
+			//auszuhaltende Kraft soll 0 sein
+			door.GetComponent<HingeJoint>().breakForce = 0;
+			//damit man mi einer gerigen Kraft die TÜr lösen kann
+			door.GetComponent<Rigidbody>().AddForceAtPosition(door.transform.up, door.transform.position);
+		}
+	}
+
+	//diese Methode lässt das Auto explodieren, alle Reifen und Türen entfernen
 	public void explodeCar()
 	{
 		wheelSphereCol.SetActive(false);
@@ -391,6 +424,10 @@ public class Car : MonoBehaviour
 		{
 			applyVisualDamage(direction, 200);
 		}
+		removeDoor(frontDoor);
+ 		removeDoor(rearDoor);
+		removeDoor(rightDoor);
+		removeDoor(leftDoor);
 	}
 	
 	//diese Methode verarbeitet den Schaden und schaut, aus welcher Richtung er kam und ruf entsprechende Methode auf
@@ -445,6 +482,7 @@ public class Car : MonoBehaviour
 		{
 			damageModelNumber = 2;	
 		}
+		//gehe durch die Damage Models durch und aktiviere das richtige
 		for(int i = 0; i < frontDamageModels.Length; i++)
 		{
 			frontDamageModels[i].gameObject.SetActive(false);
@@ -452,6 +490,11 @@ public class Car : MonoBehaviour
 			{
 				frontDamageModels[i].gameObject.SetActive(true);
 			}
+		}
+		//falls das Auto berits schaden hat, wird die Tür aktiviert, damit sie in Kurven auch aufgehen kann
+		if(damageModelNumber >= 1)
+		{
+			frontDoor.SetActive(true);
 		}
 	}
 	
@@ -482,6 +525,10 @@ public class Car : MonoBehaviour
 				rearDamageModels[i].gameObject.SetActive(true);
 			}
 		}
+		if(damageModelNumber >= 1)
+		{
+			rearDoor.SetActive(true);
+		}
 	}
 	
 	//in dieser Methode wird das graphische Objekt für die linke  Seite des Autos aktiviert
@@ -509,7 +556,12 @@ public class Car : MonoBehaviour
 			if(damageModelNumber == i)
 			{
 				leftDamageModels[i].gameObject.SetActive(true);
+
 			}
+		}
+		if(damageModelNumber >= 1)
+		{
+			leftDoor.SetActive(true);
 		}
 	}
 	
@@ -539,6 +591,10 @@ public class Car : MonoBehaviour
 			{
 				rightDamageModels[i].gameObject.SetActive(true);
 			}
+		}
+		if(damageModelNumber >= 1)
+		{
+			rightDoor.SetActive(true);
 		}
 	}
 
@@ -725,7 +781,7 @@ public class Car : MonoBehaviour
 		forwardWFC.asymptoteValue = 400f;
 		forwardWFC.extremumSlip = 0.5f;
 		forwardWFC.extremumValue = 6000;
-		forwardWFC.stiffness = 0.9f;
+		forwardWFC.stiffness = 0.98f;
 		
 		//seitliches rutschen/bewegen
 		sidewaysWFC = new WheelFrictionCurve();
@@ -733,7 +789,7 @@ public class Car : MonoBehaviour
 		sidewaysWFC.asymptoteValue = 150f;
 		sidewaysWFC.extremumSlip = 1f;
 		sidewaysWFC.extremumValue = 350;
-		sidewaysWFC.stiffness = 0.9f * slipMultiplier;	
+		sidewaysWFC.stiffness = 0.98f * slipMultiplier;	
 		
 		//seitliches rutschen falls die Handbremse benutzt wird, dadurch kann das Auto besser um die Kurve driften und Donuts fahren
 		sidewaysHandbrakeWFC = new WheelFrictionCurve();
@@ -806,14 +862,54 @@ public class Car : MonoBehaviour
 	{
 		//Rollwiderstand
 		//Rollwiederstandkoefizient ist abhängig vom Untergrund, eventuell kannman auch die Layer bestimmen, auf dem der Wagen fährt
-		float GroundCoefRR = 0.015f;
+		//gehe durch jedes Rad durch und bestimme die Layer auf der er fährt
+		float GroundCoefRR = 0.0f;
+		int size = 0;
+		foreach(Wheel wheel in wheels)
+		{
+			//falls sich das Rad in der Luft befindet soll es nicht zur Berechnung beitragen
+			WheelHit hit;
+
+			if(wheel.wheelCol.GetGroundHit(out hit))
+			{
+				//schau auf welcher Layer der Refien fährt
+				int layer = hit.collider.transform.gameObject.layer;
+				//switch erlaubt keine abfragen wie "case LayerMask.NameToLayer("Default"):", daher feste Werte
+				//Compiler Error CS0150: A constant value is expected
+				switch(layer)
+				{
+					case 9:
+						GroundCoefRR = 0.07f; //fester Sand, SandNormal
+						break;
+					case 10:
+						GroundCoefRR = 0.3f; //loser Sand, SandLose
+						break;
+					case 11:
+						GroundCoefRR = 0.02f; //Schotter, Rubble
+						break;
+					case 12:
+						GroundCoefRR = 0.05f; //Erdweg, Dirt
+						break;
+					default:
+						GroundCoefRR = 0.015f; //asphalt, Default Layer
+						break;
+				}
+				size++;	
+			}	
+		}
+		//bereche den Durchschnitt der wheels
+		if(size != 0)
+		{
+			GroundCoefRR /= size;	
+		}
+
 		//Rollwiderstandswert = Rollwiederstandskoeffizient * Masse * Gravitation
 		float CoefRR = GroundCoefRR * rigidbody.mass * 9.81f;
 		//Rollwiderstandskraft, ist entgegengesetzt der aktuellen Fahrtrichtung des Autos
 		Vector3 RollingResistanceForce = -Mathf.Sign(relativeVelocity.z) * thisTransform.forward * CoefRR;
 		
 		//bei niedrigen Geschwindigkeiten soll kein Rollwiederstand erzeugt werden
-		if(areAllWheelsGrounded && (relativeVelocity.z > 10 || relativeVelocity.z < -10))
+		if(isOneWheelGrounded && (relativeVelocity.z > 10 || relativeVelocity.z < -10))
 		{
 			thisRigidBody.AddForce(RollingResistanceForce, ForceMode.Impulse);
 		}
@@ -824,7 +920,7 @@ public class Car : MonoBehaviour
 		//falls sich das Auto in der Luft befindet, soll der Luftwiederstand steigen
 		if(areAllWheelsGrounded == false)
 		{
-			thisRigidBody.drag = 0.5f;
+			thisRigidBody.drag = 0.4f;
 		}
 		//Luftwiderstand
 		//Luftwiderstandswert CDrag = 0.5 * Luftwiderstandskoeffiezient * Luftdichte * Fläche in Fahrtrichtung
@@ -915,7 +1011,7 @@ public class Car : MonoBehaviour
 			//Gang wurde gewechselt, bis dahin darf kein motorTorque auf die Reifen übertragen werden (siehe FixedUpdate)
 			gearChangeTimer = 0.25f;
 		}
-		//beim nicht gasgeben und wenn die Motordrehzahl niedrig ist soll der Gang runtergeschalter werden, aber nur wenn man sich vorwärts bewegt
+		//wenn die Motordrehzahl niedrig ist soll der Gang runtergeschalter werden, aber nur wenn der zweite oder höher Gänge eingelegt sind
 		else if(currentGear > 1 && currentRPM < RPMToGearDown[currentGear-1]) //
 		{
 			currentGear--;
@@ -957,7 +1053,7 @@ public class Car : MonoBehaviour
 		//Straße relativ zum Auto ändert. Um das zu vermeiden wird geschaut, ob sich die Neigung des Autos gegenüber dem letzten Frame geändert hat.
 		//Diese Änderung wird mit der Motorkraft verrechnet um diese abzuschwächen
 		//Keine X komponente da seitliche Drehung nicht berücksichtigt werden soll
-		Vector3 currentForward = new Vector3 (0.0f, thisTransform.transform.forward.y,thisTransform.transform.forward.z);
+		Vector3 currentForward = new Vector3(0.0f, thisTransform.transform.forward.y,thisTransform.transform.forward.z);
 		//winkel zwischen vorwärtsvektor aus dem letzten Frame und den aktuellen.
 		float inclinationChange = Vector3.Angle(previousInclination, currentForward);
 		previousInclination = currentForward;
@@ -973,7 +1069,8 @@ public class Car : MonoBehaviour
 				wheel.wheelCol.brakeTorque = 0f;
 				if(inclinationChange > 0.2)
 				{
-					motorTorque = motorTorque * 0.1f;
+					//um die beschleinigung zu minimieren wird sie abhängig vom Winkel verkleinert
+					motorTorque = motorTorque * Mathf.Lerp(0.2f, 0.01f, inclinationChange);
 				}
 				wheel.wheelCol.motorTorque = motorTorque;		
 			}

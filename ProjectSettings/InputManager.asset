@@ -133,6 +133,7 @@ InputManager:
     axis: 0
     joyNum: 1
   - serializedVersion: 3
+<<<<<<< HEAD
     m_Name: PlayerOneFireKey
     descriptiveName: Player One Fire Key
     descriptiveNegativeName: 
@@ -143,6 +144,34 @@ InputManager:
     gravity: 1000
     dead: .00100000005
     sensitivity: 1000
+=======
+    m_Name: PlayerOneChangeCameraKey
+    descriptiveName: Player One Change Camera Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: c
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .0149999997
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: PlayerOneChangeCamera
+    descriptiveName: Player One Change Camera
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 3
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .0149999997
+    sensitivity: 3
+>>>>>>> c152e1fe880177553df6550e395c779bec065bd0
     snap: 1
     invert: 0
     type: 0
