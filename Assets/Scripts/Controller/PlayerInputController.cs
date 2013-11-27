@@ -82,10 +82,17 @@ public class PlayerInputController : MonoBehaviour
 			}
 		}
 	}
-
-	public void addCamera(Camera cam)
+/*
+	//fügt eine weitere Camera der Liste hinzu
+	public void addCamera(GameObject cam)
 	{
-		GameObject[] tempCam = new GameObject[cameras.Length];
+		GameObject[] tempCam = new GameObject[cameras.Length + 1];
 		for(int i = 0; i < cameras.Length; i++)
+		{
+			tempCam[i] = cameras[i];
+		}
+		tempCam[cameras.Length + 1] = cam;
+		cameras = tempCam;
 	}
+*/	
 }

@@ -88,6 +88,8 @@ public class Car : MonoBehaviour
 	public GameObject[] rearLeftDamageModels;
 	//hintere rechte Modelle
 	public GameObject[] rearRightDamageModels;
+	//Glass SchadensModelle
+	public GameObject[] glassDamageModels;
 	
 	//Referenzen zu den Reifen
 	public List<Wheel> wheels;
@@ -177,6 +179,11 @@ public class Car : MonoBehaviour
 	private int rearLeftHealth = 100;
 	//Health Wert für die hintere rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
 	private int rearRightHealth = 100;
+	//Healthwert ab dem das zweite Schadensmodell angezeigt werden soll (erste Schadensmodell ist kein Schaden)
+	private int secondDamageModel = 70;
+	//Healthwert ab dem das dritte Schadensmodell angezeigt werden soll (erste Schadensmodell ist kein Schaden)
+	private int thirdDamageModel = 30;
+
 
 /*
 	//Healthwert des Motors
@@ -337,11 +344,20 @@ public class Car : MonoBehaviour
 	
 //// SCHADENSMODELLE AUFSETZEN, EXPLODIEREN
 
+	//diese Methode behandelt den Schaden der einzelnen DestructibleCarParts
 	public void applyDamage(DamageDirection direction, float damageAmount)
 	{
 		health -= damageAmount;	
-		//Wenn die Lebenspunkte 0 erreichen wird das Objekt zerstört
+
+		//die Scheiben sollen als erstes kaputt gehen
+		if(health < 90)
+		{
+			glassDamageModels[0].SetActive(false);
+			glassDamageModels[1].SetActive(true);
+		}
 		applyVisualDamage(direction, (int)damageAmount);
+
+		//Wenn die Lebenspunkte 0 sind, soll das Auto explodieren und alle refen verlieren
 		if(health<=0.0f)
 		{
 			explodeCar();
@@ -470,11 +486,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(frontHealth >= 60)
+		if(frontHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(frontHealth >= 30)
+		else if(frontHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -505,11 +521,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;	
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(rearHealth >= 60)
+		if(rearHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(rearHealth >= 30)
+		else if(rearHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -538,11 +554,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(leftHealth >= 60)
+		if(leftHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(leftHealth >= 30)
+		else if(leftHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -556,7 +572,6 @@ public class Car : MonoBehaviour
 			if(damageModelNumber == i)
 			{
 				leftDamageModels[i].gameObject.SetActive(true);
-
 			}
 		}
 		if(damageModelNumber >= 1)
@@ -572,11 +587,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(rightHealth >= 60)
+		if(rightHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(rightHealth >= 30)
+		else if(rightHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -605,11 +620,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(frontLeftHealth >= 60)
+		if(frontLeftHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(frontLeftHealth >= 30)
+		else if(frontLeftHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -639,11 +654,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(frontRightHealth >= 60)
+		if(frontRightHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(frontRightHealth >= 30)
+		else if(frontRightHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -673,11 +688,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(rearLeftHealth >= 60)
+		if(rearLeftHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(rearLeftHealth >= 30)
+		else if(rearLeftHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
@@ -707,11 +722,11 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
-		if(rearRightHealth >= 60)
+		if(rearRightHealth >= secondDamageModel)
 		{	
 			damageModelNumber = 0;
 		}
-		else if(rearRightHealth >= 30)
+		else if(rearRightHealth >= thirdDamageModel)
 		{	
 			damageModelNumber = 1;
 		}
