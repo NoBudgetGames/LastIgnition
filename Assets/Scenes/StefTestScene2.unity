@@ -1710,6 +1710,10 @@ Prefab:
       propertyPath: targetCar
       value: 
       objectReference: {fileID: 1065144439}
+    - target: {fileID: 2000000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
   m_RootGameObject: {fileID: 928724431}
@@ -3364,7 +3368,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 1
+    height: .5
   near clip plane: .300000012
   far clip plane: 10000
   field of view: 60
