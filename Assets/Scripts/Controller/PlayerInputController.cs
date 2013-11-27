@@ -16,8 +16,11 @@ public class PlayerInputController : MonoBehaviour
 	public GameObject[] cameras;
 	//referenz auf Fahrzeug,
 	private Car car;
+<<<<<<< HEAD
 	private CarInventory inv;
+=======
 
+>>>>>>> c152e1fe880177553df6550e395c779bec065bd0
 	
 	// Use this for initialization
 	void Start () 
@@ -34,13 +37,13 @@ public class PlayerInputController : MonoBehaviour
 			car.setThrottle(Input.GetAxis("Player" + playerString + "ThrottleKey"));
 			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCarKey"));
-
+<<<<<<< HEAD
 			car.setHandbrake(Input.GetAxis("Player" + playerString + "HandbrakeKey"));	
 			inv.setFiring(Input.GetAxis("Player" + playerString + "FireKey"));	
-
+=======
 			car.setHandbrake(Input.GetButton("Player" + playerString + "HandbrakeKey"));
 			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCameraKey"));
-
+>>>>>>> c152e1fe880177553df6550e395c779bec065bd0
 		}
 		//falls Controller benutzt wird
 		else
