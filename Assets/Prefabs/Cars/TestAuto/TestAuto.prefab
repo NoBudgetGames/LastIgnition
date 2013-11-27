@@ -3780,15 +3780,6 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 100128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c72ba61dd529540bf7e284118c2188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spikePrefab: {fileID: 100000, guid: c840f610d6c045d4cb2d2f753064ae41, type: 2}
-=======
   m_GameObject: {fileID: 100132}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -3836,7 +3827,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 0
   car: {fileID: 11400008}
->>>>>>> c152e1fe880177553df6550e395c779bec065bd0
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
