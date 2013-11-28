@@ -905,6 +905,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400108}
   - 65: {fileID: 6500014}
+  - 114: {fileID: 11400050}
   m_Layer: 8
   m_Name: CollisionTrigger
   m_TagString: Untagged
@@ -4136,6 +4137,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154b72597d18da040b6ca82d34195d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11400050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4995e6154faa8794682e7d4a0a975a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 11400008}
 --- !u!124 &12400002
 Behaviour:
   m_ObjectHideFlags: 1
