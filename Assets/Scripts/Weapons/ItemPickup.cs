@@ -35,12 +35,13 @@ public class ItemPickup : MonoBehaviour
 			if(inv != null){
 				if(inv.equippedWeapon != null){
 					if(inv.equippedWeapon.weaponType != optainableWeapon){
-						inv.activateWeapon(optainableWeapon);
-					} else {
-						inv.increaseAmmo();
-					}
+						inv.increaseAmmo(optainableWeapon);
+						if(inv.equippedWeapon.remainingAmmo() <= 0)
+							inv.activateWeapon(optainableWeapon);
+					} 
 				} else {
 					inv.activateWeapon(optainableWeapon);
+					inv.increaseAmmo(optainableWeapon);
 				}
 
 				objectUsed = true;

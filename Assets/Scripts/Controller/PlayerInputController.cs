@@ -36,7 +36,9 @@ public class PlayerInputController : MonoBehaviour
 			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCarKey"));
 
-			inv.setFiring(Input.GetAxis("Player" + playerString + "FireKey"));	
+			inv.setFiring(Input.GetButton("Player" + playerString + "FireKey"));
+			inv.prevWeapon(Input.GetButton("Player" + playerString + "CycleWeaponDownKey"));
+			inv.nextWeapon(Input.GetButton("Player" + playerString + "CycleWeaponUpKey"));
 
 			car.setHandbrake(Input.GetButton("Player" + playerString + "HandbrakeKey"));
 			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCameraKey"));

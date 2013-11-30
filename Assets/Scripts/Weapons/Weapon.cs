@@ -42,6 +42,10 @@ public abstract class Weapon : MonoBehaviour
 				ammo = maxAmmo;
 		}
 	}
+
+	public int remainingAmmo(){
+		return ammo;
+	}
 }
 
 
