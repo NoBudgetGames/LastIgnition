@@ -82,7 +82,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		{
 			if(playerName.Equals("One"))
 			{
-				//(left: float, top: float, width: float, height: float)
+				//(left, top, width, height)
 				cam.rect = new Rect(0, 0, 1.0f, 0.5f);
 			}
 			else if(playerName.Equals("Two"))

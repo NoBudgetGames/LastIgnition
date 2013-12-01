@@ -4,7 +4,12 @@ using System.Collections;
 public class CarCollision : MonoBehaviour
 {
 	//referenz auf dieses Auto
-	public Car car;
+	private Car car;
+
+	void Start()
+	{
+		car = transform.parent.gameObject.GetComponent<Car>();
+	}
 
 	//Diese Methode soll nur aufgerufen werden, wenn das Auto mit anderen Objecten Kollidiert, 
 	//Waffen werden von diesen Trigger nicht erkannt, da sie in einer anderen Layer liegen (layer-base collision detection)

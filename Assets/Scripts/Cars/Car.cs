@@ -796,7 +796,7 @@ public class Car : MonoBehaviour
 		forwardWFC.asymptoteValue = 400f;
 		forwardWFC.extremumSlip = 0.5f;
 		forwardWFC.extremumValue = 6000;
-		forwardWFC.stiffness = 0.98f;
+		forwardWFC.stiffness = 1.0f;
 		
 		//seitliches rutschen/bewegen
 		sidewaysWFC = new WheelFrictionCurve();
@@ -804,7 +804,7 @@ public class Car : MonoBehaviour
 		sidewaysWFC.asymptoteValue = 150f;
 		sidewaysWFC.extremumSlip = 1f;
 		sidewaysWFC.extremumValue = 350;
-		sidewaysWFC.stiffness = 0.98f * slipMultiplier;	
+		sidewaysWFC.stiffness = 1.0f * slipMultiplier;	
 		
 		//seitliches rutschen falls die Handbremse benutzt wird, dadurch kann das Auto besser um die Kurve driften und Donuts fahren
 		sidewaysHandbrakeWFC = new WheelFrictionCurve();
@@ -1068,11 +1068,11 @@ public class Car : MonoBehaviour
 		//Straße relativ zum Auto ändert. Um das zu vermeiden wird geschaut, ob sich die Neigung des Autos gegenüber dem letzten Frame geändert hat.
 		//Diese Änderung wird mit der Motorkraft verrechnet um diese abzuschwächen
 		//Keine X komponente da seitliche Drehung nicht berücksichtigt werden soll
-		Vector3 currentForward = new Vector3(0.0f, thisTransform.transform.forward.y,thisTransform.transform.forward.z);
+		Vector3 currentForward = new Vector3(0.0f, thisTransform.transform.forward.y, thisTransform.transform.forward.z);
 		//winkel zwischen vorwärtsvektor aus dem letzten Frame und den aktuellen.
 		float inclinationChange = Vector3.Angle(previousInclination, currentForward);
 		previousInclination = currentForward;
-	
+
 		//gas geben
 		if(isAccelearting)
 		{
@@ -1085,7 +1085,7 @@ public class Car : MonoBehaviour
 				if(inclinationChange > 0.2)
 				{
 					//um die beschleinigung zu minimieren wird sie abhängig vom Winkel verkleinert
-					motorTorque = motorTorque * Mathf.Lerp(0.2f, 0.01f, inclinationChange);
+					motorTorque = motorTorque * Mathf.Lerp(0.5f, 0.1f, inclinationChange);
 				}
 				wheel.wheelCol.motorTorque = motorTorque;		
 			}

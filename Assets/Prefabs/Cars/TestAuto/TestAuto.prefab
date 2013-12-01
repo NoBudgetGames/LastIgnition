@@ -3761,7 +3761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerString: One
-  usingController: 0
+  usingController: 1
   cameras:
   - {fileID: 0}
   - {fileID: 0}
@@ -4148,7 +4148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4995e6154faa8794682e7d4a0a975a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 11400008}
 --- !u!124 &12400002
 Behaviour:
   m_ObjectHideFlags: 1

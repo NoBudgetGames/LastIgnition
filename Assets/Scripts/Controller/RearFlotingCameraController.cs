@@ -24,26 +24,35 @@ public class RearFlotingCameraController : MonoBehaviour
 	void FixedUpdate()
 	{
 		//Zielposition ist hinterm Auto bzw. vorm AUto beim Rückwärtsfahren
-		Vector3 targetPosition = transform.position;
-		//falls am rückwärtsfahren ist Kamera vor dem Auto
-		if(targetCar.isCarReversing())
-		{
-			targetPosition = targetCar.transform.TransformPoint(0, 0, distance);
-		}
-		//ansonsten hinterm Auto
-		else
-		{
-			targetPosition = targetCar.transform.TransformPoint(0, 0, -distance);
-		}
+		Vector3 targetPosition = targetCar.transform.position;
 
-
-
-		//nach unten raycasten um zu guckenn, ob die Kamera leicht über dem Auto sein soll, nur wen Fahrzeuf nahe am Boden ist
+		//nach unten raycasten um zu guckenn, ob die Kamera leicht über dem Auto ist,nur wen Fahrzeuf nahe am Boden ist
 		RaycastHit hit;
 		if(Physics.Raycast(transform.position, -transform.up, out hit, height))
 		{
+			//falls am rückwärtsfahren ist Kamera vor dem Auto
+			if(targetCar.isCarReversing())
+			{
+				targetPosition = targetCar.transform.TransformPoint(0, Vector3.up.y + height, distance);
+			}
+			//ansonsten hinterm Auto
+			else
+			{
+				targetPosition = targetCar.transform.TransformPoint(0, 0, -distance);
+			}
 			//y Position ist um height nach oben verschoben (überm Boden), Lerp von 0.7 da sonst die Kamera hin und her springt
-			targetPosition.y = Mathf.Lerp (targetPosition.y, hit.point.y + height, 0.7f);
+			targetPosition.y = Mathf.Lerp(targetPosition.y, hit.point.y + height, 0.7f);
+		}
+		//falls sich das Auto in der Luft befindet
+		else
+		{
+			//ziel Position soll in negativer Geschwindigkeitsrichtung sein
+			Vector3 negVelocity = Vector3.Normalize(new Vector3 (targetCar.rigidbody.velocity.x, 0.0f, targetCar.rigidbody.velocity.z));
+			//richtiger Abstadd zum Auto
+			negVelocity *= distance;
+			//richtige Höhe zum Auto
+			negVelocity.y = -height;
+			targetPosition = targetCar.transform.position - negVelocity;
 		}
 	
 		//momentane Position soll langsam der Zielposition angepasst werden

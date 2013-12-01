@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /*
@@ -50,7 +50,8 @@ public class PlayerInputController : MonoBehaviour
 			car.setThrottle(Input.GetAxis("Player" + playerString + "Throttle"));
 			car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCar"));
-			car.setHandbrake(Input.GetButton("Player" + playerString + "Handbrake"));	
+			car.setHandbrake(Input.GetButton("Player" + playerString + "Handbrake"));
+			inv.setFiring(Input.GetAxis ("Player" + playerString + "Fire"));	
 			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCamera"));
 		}
 	}
@@ -71,14 +72,14 @@ public class PlayerInputController : MonoBehaviour
 					{
 						cameras[i].SetActive(false);
 						cameras[i+1].SetActive(true);
-						return;
+						break;
 					}
 					//ansonsten gehe zum Anfang zurück
 					else
 					{
 						cameras[i].SetActive(false);
 						cameras[0].SetActive(true);
-						return;
+						break;
 					}
 				}
 			}

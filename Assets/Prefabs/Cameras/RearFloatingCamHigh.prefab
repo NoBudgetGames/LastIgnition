@@ -86,8 +86,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCar: {fileID: 0}
-  dampingZ: 40
-  dampingX: 50
+  dampingZ: 10
+  dampingX: 15
   distance: 30
   height: 25
   viewHeight: 7
