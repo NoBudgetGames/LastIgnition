@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: a307e96254ffed546b29d198fb9c9371
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - carPrefab: {fileID: 100020, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
+  - camPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -12,8 +12,11 @@ public class PlayerInputController : MonoBehaviour
 	public string playerString = "One";
 	//Wird ein Controller benutz oder nicht?
 	public bool usingController = false;
-	//refernz auf die Kamera Transforms
-	public GameObject[] cameras;
+	//refernz auf den CameraController
+	public CameraController cameraCtrl;
+	//referenz auf weitere Kameras, z.B. die Kamere auf der Motorhaube
+	//reihenfolge: Motorhaube | Kofferraum
+	public Transform[] additionalCameras;
 	//referenz auf Fahrzeug,
 	private Car car;
 
@@ -35,14 +38,14 @@ public class PlayerInputController : MonoBehaviour
 			car.setThrottle(Input.GetAxis("Player" + playerString + "ThrottleKey"));
 			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCarKey"));
+			car.setHandbrake(Input.GetButton("Player" + playerString + "HandbrakeKey"));
 
 			inv.setFiring(Input.GetButton("Player" + playerString + "FireKey"));
-			inv.prevWeapon(Input.GetButton("Player" + playerString + "CycleWeaponDownKey"));
-			inv.nextWeapon(Input.GetButton("Player" + playerString + "CycleWeaponUpKey"));
+			inv.prevWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponDownKey"));
+			inv.nextWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponUpKey"));
 
-			car.setHandbrake(Input.GetButton("Player" + playerString + "HandbrakeKey"));
-			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCameraKey"));
-
+			cameraCtrl.lookBack(Input.GetButton("Player" + playerString + "LookBackKey"));
+			cameraCtrl.cycleCamera(Input.GetAxis("Player" + playerString + "ChangeCameraKey"));
 		}
 		//falls Controller benutzt wird
 		else
@@ -51,51 +54,13 @@ public class PlayerInputController : MonoBehaviour
 			car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
 			car.resetCar(Input.GetAxis("Player" + playerString + "ResetCar"));
 			car.setHandbrake(Input.GetButton("Player" + playerString + "Handbrake"));
-			inv.setFiring(Input.GetAxis ("Player" + playerString + "Fire"));	
-			cycleCamera(Input.GetButtonDown("Player" + playerString + "ChangeCamera"));
-		}
-	}
 
-	//diese Methode geht durch die enzelnen Kameras durch
-	private void cycleCamera(bool cam)
-	{
-		if(cam)
-		{
-			//gehe durch das Array durch und aktiviere die richtige Kamera
-			for (int i = 0; i < cameras.Length; i++)
-			{
-				//suche die momentan verwendetet Kamera und aktiviere die nächste
-				if(cameras[i].activeSelf == true)
-				{
-					//falls momentane Kamera nicht das letzte Element im Array ist
-					if(i+1 < cameras.Length)
-					{
-						cameras[i].SetActive(false);
-						cameras[i+1].SetActive(true);
-						break;
-					}
-					//ansonsten gehe zum Anfang zurück
-					else
-					{
-						cameras[i].SetActive(false);
-						cameras[0].SetActive(true);
-						break;
-					}
-				}
-			}
+			inv.setFiring(Input.GetButton("Player" + playerString + "Fire"));
+			inv.prevWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponDown"));
+			inv.nextWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponUp"));
+
+			cameraCtrl.lookBack(Input.GetButton("Player" + playerString + "LookBack"));
+			cameraCtrl.cycleCamera(Input.GetAxis("Player" + playerString + "ChangeCamera"));
 		}
 	}
-/*
-	//fügt eine weitere Camera der Liste hinzu
-	public void addCamera(GameObject cam)
-	{
-		GameObject[] tempCam = new GameObject[cameras.Length + 1];
-		for(int i = 0; i < cameras.Length; i++)
-		{
-			tempCam[i] = cameras[i];
-		}
-		tempCam[cameras.Length + 1] = cam;
-		cameras = tempCam;
-	}
-*/	
 }

@@ -13,9 +13,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	//Referenz auf die Auto Prefab
 	public GameObject carPrefab;
 	//referenz auf die RearFloatingCamLow Prefab
-	public GameObject rearCamLowPrefab;
-	//referenz auf die RearFloatingCamHIgh Prefab
-	public GameObject rearCamHighPrefab;
+	public GameObject camPrefab;
 	//Liste mit Spielern
 	private List<GameObject> playerList;
 
@@ -37,43 +35,70 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				Debug.Log ("PLAYER " + obj.GetComponent<PlayerInputController>().playerString + " HAD HIS LAST IGNITION!");
 			}
 		}
+		if(Input.GetKey(KeyCode.O))
+		{
+			reInstanciatePlayer("One");
+		}
+		if(Input.GetKey(KeyCode.P))
+		{
+			reInstanciatePlayer("Two");
+		}
 	}
 
-	//diese Methode instanziert einen neuen Spieler
+	//resete das Auto des SPielers (FULL HEALTH)
+	private void reInstanciatePlayer(string playerName)
+	{
+		GameObject player = new GameObject();
+		//finde den richtigen Spieler aus der Liste
+		foreach(GameObject obj in playerList)
+		{
+			if(obj.GetComponent<PlayerInputController>().playerString.Equals(playerName))
+			{
+				player = obj;
+				break;
+			}
+		}
+		if(player != null)
+		{
+			//gehe jede Kamera durch und zerstöre sie
+			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl);
+			
+			//instanszere einen neuen Spieler
+			instaciateNewPlayer(spawnPoints[0], playerName);
+
+			playerList.Remove(player);
+			//zerstöre den Spieler
+			GameObject.Destroy(player);
+		}
+	}
+
+	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
 	private void instaciateNewPlayer(Transform trans, string playerName)
 	{
 		//neues Auto
 		GameObject player = (GameObject)GameObject.Instantiate(carPrefab, trans.position, trans.rotation);
-		//niedrige Kamera
-		GameObject camLow = (GameObject)GameObject.Instantiate(rearCamLowPrefab);
-		//hohe Kamera
-		GameObject camHigh = (GameObject)GameObject.Instantiate(rearCamHighPrefab);
 
-		//die targets der Kameras müssen referenziert werden
-		camLow.GetComponent<RearFlotingCameraController>().targetCar = player.GetComponent<Car>();
-		camHigh.GetComponent<RearFlotingCameraController>().targetCar = player.GetComponent<Car>();
+		GameObject camObj = (GameObject)GameObject.Instantiate(camPrefab, trans.position, trans.rotation);
+		CameraController cam = camObj.GetComponent<CameraController>();
 
 		//der InputController muss wissen, welchen Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
 		input.playerString = playerName;
+		//Kamera muss aufgesetzt werden
+		player.GetComponent<PlayerInputController>().cameraCtrl = cam;
+		cam.targetCar = player.GetComponent<Car>();
+		//erstes Element ist Motorhaubenkamera
+		cam.hoodCamera = input.additionalCameras[0];
+		//zweites Element ist Kofferraumkamera
+		cam.hoodCameraLookBack = input.additionalCameras[1];
+		setCamera(cam.GetComponent<Camera>(), playerName);
+		playerList.Add(player);
 
-		//nur zum testen
+		//Spieler 2 hat keine Tasten auf der Tastatur, nur solange noch Tastatur benötigt wird
 		if(playerName.Equals("Two"))
 		{
 			input.usingController = true;
 		}
-
-		input.cameras[0] = camLow;
-		input.cameras[1] = camHigh;
-
-		foreach(GameObject obj in input.cameras)
-		{
-			Camera cam = obj.GetComponent<Camera>();
-			setCamera(cam, playerName);
-		}
-		input.cameras[2].SetActive(false);
-		camHigh.SetActive(false);
-		playerList.Add(player);
 	}
 
 	private void setCamera(Camera cam, string playerName)
