@@ -3714,7 +3714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerString: One
-  usingController: 0
+  usingController: 1
   cameraCtrl: {fileID: 1895203055}
   additionalCameras:
   - {fileID: 1964881923}
@@ -4623,12 +4623,12 @@ MonoBehaviour:
   targetCar: {fileID: 1529541168}
   hoodCamera: {fileID: 1964881923}
   hoodCameraLookBack: {fileID: 2042255112}
-  floatingCamDampingZ: 30
-  floatingCamDampingX: 20
-  distanceToTarget: 20
+  floatingCamDampingZ: 50
+  floatingCamDampingX: 25
+  distanceToTarget: 12
   heightOnGround: 10
-  viewHeight: 2
-  highCamMultiplier: 1.5
+  viewHeight: 4
+  highCamMultiplier: 2
 --- !u!81 &1895203056
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4667,9 +4667,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: .5
     width: 1
-    height: 1
+    height: .5
   near clip plane: .300000012
   far clip plane: 10000
   field of view: 60
