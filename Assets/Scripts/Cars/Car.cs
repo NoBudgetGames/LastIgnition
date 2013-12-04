@@ -179,9 +179,9 @@ public class Car : MonoBehaviour
 	private int rearLeftHealth = 100;
 	//Health Wert für die hintere rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
 	private int rearRightHealth = 100;
-	//Healthwert ab dem das zweite Schadensmodell angezeigt werden soll (erste Schadensmodell ist kein Schaden)
+	//Healthwert ab dem das zweite Schadensmodell angezeigt werden soll (erste Schadensmodell hat keinen sichtbaren Schaden)
 	private int secondDamageModelHealthLimit = 70;
-	//Healthwert ab dem das dritte Schadensmodell angezeigt werden soll (erste Schadensmodell ist kein Schaden)
+	//Healthwert ab dem das dritte Schadensmodell angezeigt werden soll (erste Schadensmodell hat keinen sichtbaren Schaden)
 	private int thirdDamageModelHealthLimit = 30;
 
 /*
@@ -207,14 +207,17 @@ public class Car : MonoBehaviour
 		//Massezemtrum sollte weiter vorne und weiter unten liegen, daher Referenz auf eine anderes in der Hierariche plaziertes Objekt
 		thisRigidBody.centerOfMass = CenterOfMassDown.localPosition;
 		
-		//richtige Schadensmodelle aktivieren
-		applyVisualDamage(0, (int)DamageDirection.FRONT);
+		//richtige Schadensmodell aktivieren, gehe durch jede Schadesnzone durch und füge 0 Schaden
+		foreach(DamageDirection direction in DamageDirection.GetValues(typeof(DamageDirection)))
+		{
+			applyVisualDamage(direction, 0);
+		}
 	}
 	
 	//in dieser Methode werden die Physikberechnungen durchgeführt
 	void FixedUpdate () 
 	{
-		//relative Geschwindigkeit ausrechnen, von WorldSpace zu LocalSpace
+		//relative Geschwindigkeit des Fahrzeugs im eigenen LocalSpace umrechnen, von WorldSpace zu LocalSpace
 		Vector3 relativeVelocity = transform.InverseTransformDirection(rigidbody.velocity);
 		//momentane Geschwindigkeit
 		currentVelocity = relativeVelocity.magnitude;
@@ -246,7 +249,6 @@ public class Car : MonoBehaviour
 		//Lenkung hinzufügen		
 		applySteering(relativeVelocity);
 
-
 		//Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + currentVelocity);		
 	}
 
@@ -258,7 +260,7 @@ public class Car : MonoBehaviour
 		return currentVelocity;
 	}
 
-	//liefert den Geschwindigkeitsvektor zurück
+	//liefert den Geschwindigkeitsvektor in WorldSpace zurück
 	public Vector3 getVelocityVector()
 	{
 		return thisRigidBody.velocity;
@@ -276,7 +278,7 @@ public class Car : MonoBehaviour
 		return currentGear;
 	}
 
-	//liefert aktuellen Gang zurück
+	//liefert Lebenspunkte zurück
 	public float getHealth()
 	{
 		return health;
@@ -296,16 +298,16 @@ public class Car : MonoBehaviour
 		throttle = th;
 	}
 	
-	//Der Wert wird vom InputPlayerXXController geändert
+	//Der Wert wird vom InputPlayerController geändert
 	public void setSteer(float st)
 	{
 		steer = st;
 	}
 	
 	//in dieser Methode wird das Auto nach einen Unfall (wenn er z.B. auf dem Dach liegt) wieder auf die Straße gesetzt
-	public void resetCar(float reset)
+	public void resetCar(bool reset)
 	{
-		if(reset > 0.0f)
+		if(reset)
 		{
 			//falls das Auto auf dem Dach oder schief liegt wird es wieder zurückgesetzt
 			Vector3 tempAngles = thisTransform.eulerAngles;
@@ -329,7 +331,7 @@ public class Car : MonoBehaviour
 		}
 	}
 	
-	//in dieser Methode wird überprüft, ob die Handbremse betätigt wurde, wird vom InputControlle aufgerufen
+	//in dieser Methode wird überprüft, ob die Handbremse betätigt wurde, wird vom InputController aufgerufen
 	public void setHandbrake(bool handBrake)
 	{
 		if(handBrake)
@@ -355,6 +357,7 @@ public class Car : MonoBehaviour
 			glassDamageModels[0].SetActive(false);
 			glassDamageModels[1].SetActive(true);
 		}
+		//für den sichtbaren Schaden sind keine float Werte nötig
 		applyVisualDamage(direction, (int)damageAmount);
 
 		//Wenn die Lebenspunkte 0 sind, soll das Auto explodieren und alle refen verlieren
@@ -362,7 +365,6 @@ public class Car : MonoBehaviour
 		{
 			explodeCar();
 		}
-
 	}
 
 	//diese Methode sorgt dafür, dass das Auto einen Reifen verliert
@@ -419,7 +421,7 @@ public class Car : MonoBehaviour
 		{
 			//auszuhaltende Kraft soll 0 sein
 			door.GetComponent<HingeJoint>().breakForce = 0;
-			//damit man mi einer gerigen Kraft die TÜr lösen kann
+			//damit man mit einer gerigen Kraft die TÜr lösen kann
 			door.GetComponent<Rigidbody>().AddForceAtPosition(door.transform.up, door.transform.position);
 		}
 	}
@@ -758,7 +760,7 @@ public class Car : MonoBehaviour
 		steerWheels = new List<Wheel>();
 		setupWFC();
 		
-		//füge der Liste die richtigen Wheels zu und übertrage Federwerte
+		//ordne dem  Wheel der richtigen Liste zu und übertrage Federwerte und WFCs
 		foreach(Wheel wheel in wheels)
 		{
 			wheel.wheelCol.motorTorque = 0f;
@@ -928,6 +930,7 @@ public class Car : MonoBehaviour
 		{
 			thisRigidBody.AddForce(RollingResistanceForce, ForceMode.Impulse);
 		}
+
 		//Angular Drag soll größer sein, wenn das Auto eine hohe Geschwindigkeit hat
 		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 100;
 		
@@ -1061,58 +1064,31 @@ public class Car : MonoBehaviour
 	//auf die Reifen übertragen
 	private void applyMotorTorque(Vector3 relVelocity)
 	{
-		//Drehmoment, der auch auf die Reifen übertragen wird. 
-		float motorTorque = Mathf.Abs(throttle) * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * differentialMultiplier * transmissionEfficiency;
-
-/*		// VARIANTE 1:
-		//DasAuto beschleunigt plötzlich an einen Hügel. Das ist ein Bug im WheelCollider von Unity. Der Fehler tritt nur auf, wenn sich die neigung der 
-		//Straße relativ zum Auto ändert. Um das zu vermeiden wird geschaut, ob sich die Neigung des Autos gegenüber dem letzten Frame geändert hat.
-		//Diese Änderung wird mit der Motorkraft verrechnet um diese abzuschwächen
-		//Keine X komponente da seitliche Drehung nicht berücksichtigt werden soll
-		Vector3 currentForward = new Vector3(0.0f, thisTransform.transform.forward.y, thisTransform.transform.forward.z);
-		//winkel zwischen vorwärtsvektor aus dem letzten Frame und den aktuellen.
-		float inclinationChange = Vector3.Angle(previousInclination, currentForward);
-		previousInclination = currentForward;
-
-		//VARIANTE 2:
-		//es wird geschaut, die sehr das Auto insgesamt in z-Richtuing geneigt ist. Abhängig davon wird die Motorkraft reduziert
-
-		//Vorwärtsvektor des Autos (samt Neigung)
-		Vector3 currentForward = new Vector3(0.0f, thisTransform.transform.forward.y, thisTransform.transform.forward.z);
-		//vorwärtsvektor des Autos am Boden
-		Vector3 groundForward =  new Vector3(0.0f, 0.0f, thisTransform.transform.forward.z);
-		float inclinationChange = Vector3.Angle(groundForward, currentForward);
-
-		Debug.Log ("Inc " + inclinationChange + "  " + inclinationChange / 30);
-
-		//in for Schleife:
-		//VaRiante 1 	
-		if(inclinationChange > 0.2)
+		//gaspedal gedrückt?
+		if(isAccelearting || isReversing)
 		{
-			//um die beschleinigung zu minimieren wird sie abhängig vom Winkel verkleinert
-			motorTorque = motorTorque * Mathf.Lerp(0.5f, 0.1f, inclinationChange);
-		}
+			//um das plötzliche beschleunigen des Autos an Hügeln zu verhindern (Unity Bug, siehe
+			//http://forum.unity3d.com/threads/120091-Edy-s-Vehicle-Physics-official-thread/page6?p=1054085&viewfull=1#post1054085 )
+			//wird in dieser Variante des Fixes geschaut, wie die momentane Beschleinigung ist. Sollte sie einen Wert überschreiten, wird das Auto 
+			//einfach abgebremst
+			
+			//beschleiunigung = DeltaV / DeltaT
+			float deltaAccelleration = (currentVelocity - previousVel) / Time.fixedDeltaTime;
+			previousVel = currentVelocity;
+			//maximal Zulässige Beschleunigung
+			int maxAccelleration = 60;
 
-		//Variante 2
-		//um die beschleinigung zu minimieren wird sie abhängig vom Winkel verkleinert
-		//motorTorque = motorTorque * Mathf.Lerp(1.0f, 0.01f, inclinationChange / 30);
-*/
+			//Drehmoment, der auch auf die Reifen übertragen wird. 
+			float motorTorque = Mathf.Abs(throttle) * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * differentialMultiplier * transmissionEfficiency;
 
-		//um das plötzliche beschleunigen des Autos an Hügeln zu verhindern (Unity Bug, siehe
-		//http://forum.unity3d.com/threads/120091-Edy-s-Vehicle-Physics-official-thread/page6?p=1054085&viewfull=1#post1054085 )
-		//wird in dieser Variante geschaut, wie die momentane Beschleinigung ist. Sollte sie einen Wert überschreiten, wird das Auto 
-		//einfach abgebremst
-		
-		//beschleiunigung = DeltaV / DeltaT
-		float deltaAccelleration = Mathf.Abs((currentVelocity - previousVel) / Time.fixedDeltaTime);
-		//Debug.Log ("AccellChange " + deltaAccelleration + "   " + deltaAccelleration/60);
-		previousVel = currentVelocity;
-		//maximal Zulässige Beschleunigung
-		int maxAccelleration = 60;
+			//falls wir am rückwärtsfahren sind, soll die Motorkraft negativ sein
+			if(isReversing)
+			{
+				motorTorque = -motorTorque;
+				//beim rückwärtafahren entstehen größere Beschleunigungen, Ursache noch nicht gefunden
+				maxAccelleration *= 2;
+			}
 
-		//gas geben
-		if(isAccelearting)
-		{
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
@@ -1120,24 +1096,11 @@ public class Car : MonoBehaviour
 				//verurschat ein paar selstsame Fehler
 				wheel.wheelCol.brakeTorque = 0f;
 				//sollte die maximal zugelasse Beschleunigung überschreitten werden, bremsen wir einfach
-				if(deltaAccelleration > maxAccelleration)
+				if(deltaAccelleration > maxAccelleration && isReversing == false)
 				{
-					wheel.wheelCol.brakeTorque = Mathf.Lerp (0.0f, 1000, deltaAccelleration / maxAccelleration);
+					wheel.wheelCol.brakeTorque = Mathf.Lerp(0.0f, 1000, deltaAccelleration / maxAccelleration);
 				}
 				wheel.wheelCol.motorTorque = motorTorque;		
-			}
-		}
-		//rückwärtsfahren
-		else if(isReversing)
-		{
-			foreach(Wheel wheel in driveWheels)
-			{
-				wheel.wheelCol.brakeTorque = 0f;
-				if(deltaAccelleration > maxAccelleration)
-				{
-					wheel.wheelCol.brakeTorque = Mathf.Lerp (0.0f, 1000, deltaAccelleration / maxAccelleration);
-				}
-				wheel.wheelCol.motorTorque = -motorTorque;
 			}
 		}
 	}

@@ -8,6 +8,7 @@ public class CarCollision : MonoBehaviour
 
 	void Start()
 	{
+		//Car Komponente ist in der Hierachie eins weiter oben
 		car = transform.parent.gameObject.GetComponent<Car>();
 	}
 

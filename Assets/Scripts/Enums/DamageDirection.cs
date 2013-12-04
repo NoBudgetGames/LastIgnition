@@ -6,6 +6,7 @@
 
 public enum DamageDirection
 {
+	NONE = -1,
 	FRONT, 
 	REAR, 
 	LEFT, 

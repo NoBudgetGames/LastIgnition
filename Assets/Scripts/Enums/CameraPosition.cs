@@ -5,6 +5,7 @@
 
 public enum CameraPosition
 {
+	NONE = -1,
 	REAR_FLOATING_LOW,
 	REAR_FLOATING_HIGH,
 	HOOD,

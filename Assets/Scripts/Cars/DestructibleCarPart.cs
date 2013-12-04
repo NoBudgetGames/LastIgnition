@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* Diese Klasse ist ein trigger, der den ankommenden Schaden auffängt und an die Car Klasse weiterleitet
- * An jeden Auto gib es mehrere davon
-*/
+/* 
+ * Diese KLasse it eine Implementierung der abstrackten KLasse AbstractDestructableObject
+ * Sie ist für die einzelnen Schadeszonen des Autos dar, sie ist ein trigger, der den ankommenden 
+ * Schaden auffängt und an die Car Klasse weiterleitet, welche auch die Lebenspunkt enthält
+ */
 
 public class DestructibleCarPart : AbstractDestructibleObject
 {

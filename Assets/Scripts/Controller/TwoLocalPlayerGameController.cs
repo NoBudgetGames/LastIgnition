@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 /*
  * Diese Klasse initialisiert die Fahrzeuge für den lokalen 2 Spieler "CooP"
+ * Die Autos werden werden an ihren Startpositionen gespawnt
+ * Falls ein Auto kaputt ist, kann man es wieder neu  spawnen (llerdings erstmal nur zu testzwecken)
  */
 
 public class TwoLocalPlayerGameController : MonoBehaviour 
@@ -12,8 +14,6 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	public Transform[] spawnPoints;
 	//Referenz auf die Auto Prefab
 	public GameObject carPrefab;
-	//referenz auf die RearFloatingCamLow Prefab
-	public GameObject camPrefab;
 	//Liste mit Spielern
 	private List<GameObject> playerList;
 
@@ -45,7 +45,29 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		}
 	}
 
+	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
+	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
+	private void instaciateNewPlayer(Transform trans, string playerName)
+	{
+		//neues Auto
+		GameObject player = (GameObject)GameObject.Instantiate(carPrefab, trans.position, trans.rotation);
+
+		//der InputController muss wissen, welcher Spieler er gerade ist
+		PlayerInputController input = player.GetComponent<PlayerInputController>();
+		input.playerString = playerName;
+		//Kamera muss aufgesetzt werden
+		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
+		playerList.Add(player);
+
+		//Spieler 2 hat keine Tasten auf der Tastatur, nur solange noch Tastatur benötigt wird
+		if(playerName.Equals("Two"))
+		{
+			input.usingController = true;
+		}
+	}
+
 	//resete das Auto des SPielers (FULL HEALTH)
+	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
 	private void reInstanciatePlayer(string playerName)
 	{
 		GameObject player = new GameObject();
@@ -60,47 +82,29 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		}
 		if(player != null)
 		{
-			//gehe jede Kamera durch und zerstöre sie
+			//zerstöre die Kamera
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl);
-			
-			//instanszere einen neuen Spieler
-			instaciateNewPlayer(spawnPoints[0], playerName);
-
+			//lösche den Spieler aus der Liste
 			playerList.Remove(player);
 			//zerstöre den Spieler
 			GameObject.Destroy(player);
+			
+			//instanszere einen neuen Spieler
+			if(playerName.Equals("One"))
+			{
+				//spieler 1 an ersten Spawnpunkt
+				instaciateNewPlayer(spawnPoints[0], playerName);
+			}
+			else
+			{
+				//spieler 2 an zweiten Spawnpunkt
+				instaciateNewPlayer(spawnPoints[1], playerName);
+			}
 		}
 	}
 
-	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
-	private void instaciateNewPlayer(Transform trans, string playerName)
-	{
-		//neues Auto
-		GameObject player = (GameObject)GameObject.Instantiate(carPrefab, trans.position, trans.rotation);
-
-		GameObject camObj = (GameObject)GameObject.Instantiate(camPrefab, trans.position, trans.rotation);
-		CameraController cam = camObj.GetComponent<CameraController>();
-
-		//der InputController muss wissen, welchen Spieler er gerade ist
-		PlayerInputController input = player.GetComponent<PlayerInputController>();
-		input.playerString = playerName;
-		//Kamera muss aufgesetzt werden
-		player.GetComponent<PlayerInputController>().cameraCtrl = cam;
-		cam.targetCar = player.GetComponent<Car>();
-		//erstes Element ist Motorhaubenkamera
-		cam.hoodCamera = input.additionalCameras[0];
-		//zweites Element ist Kofferraumkamera
-		cam.hoodCameraLookBack = input.additionalCameras[1];
-		setCamera(cam.GetComponent<Camera>(), playerName);
-		playerList.Add(player);
-
-		//Spieler 2 hat keine Tasten auf der Tastatur, nur solange noch Tastatur benötigt wird
-		if(playerName.Equals("Two"))
-		{
-			input.usingController = true;
-		}
-	}
-
+	//diese Methode setzt die Kamerahöhe auf die richtigen Werte, abhängig vom Spieler
+	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
 	private void setCamera(Camera cam, string playerName)
 	{
 		if(cam != null)

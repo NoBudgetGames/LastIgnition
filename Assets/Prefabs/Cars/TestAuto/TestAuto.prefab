@@ -3742,10 +3742,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerString: One
   usingController: 1
-  cameraCtrl: {fileID: 11400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-  additionalCameras:
+  cameraCtrlPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
+  additionalCameraPositions:
   - {fileID: 400140}
   - {fileID: 400116}
+  cameraCtrl: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3808,7 +3809,7 @@ MonoBehaviour:
     m_PostInfinity: 2
   transmissionEfficiency: .699999988
   gearRatio:
-  - 2
+  - 1
   - 2.70000005
   - 1.89999998
   - 1.45000005
@@ -3828,7 +3829,7 @@ MonoBehaviour:
   - 2000
   differentialMultiplier: 2.5
   brakeTorque: 700
-  slipMultiplier: .699999988
+  slipMultiplier: .800000012
   maxSteerAngle: 35
   minSteerAngle: 10
   engineBrakingMultiplier: .5

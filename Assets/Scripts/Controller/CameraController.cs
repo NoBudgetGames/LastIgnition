@@ -24,8 +24,12 @@ public class CameraController : MonoBehaviour
 	public float heightOnGround = 10.0f;
 	//Höhe über dem Auto, wo die Kamera hingucken soll
 	public float viewHeight = 2.0f;
-	//multiplikator für die Hohe Verfolgerkamera
-	public float highCamMultiplier = 1.5f;
+	//Entfernung zum Ziel für ferne Kamera
+	public float distanceToTargetHigh = 15.0f;
+	//mindestabstand zum Boden  für ferne Kamera
+	public float heightOnGroundHigh = 12.0f;
+	//Höhe über dem Auto, wo die Kamera hingucken soll, für ferne Kamera
+	public float viewHeightHigh = 3.0f;
 
 	//an welcher Position befindet sich die Kamera?
 	private CameraPosition camPos = CameraPosition.REAR_FLOATING_LOW;
@@ -36,12 +40,6 @@ public class CameraController : MonoBehaviour
 	//stellt changed eine Hilfvariable dar um festzustellen, ob die Kamera schon geändert wurde, solange der Spieler
 	//den D-Pad noch nach unten drückt
 	private bool changed = false;
-
-	void Start()
-	{
-		//chasingCam(false, lookingBack);
-		//transform.parent = null;
-	}
 
 	//in dieser Methode wird die Kamera position errechnet
 	//FixedUpdate da die Kameraposition sonst leicht "ruckelt"
@@ -118,68 +116,52 @@ public class CameraController : MonoBehaviour
 		int lookingBackInt = 1;
 		if(lookingBack == true)
 		{
-			//mal 2 da die Kamera zu nach am Auto ist
-			lookingBackInt = -2;
+			lookingBackInt = -1;
 		}
 
-		//Multiplikator für die hohe Verfolgerkamera
-		float highCamDistanceFloat = 1.0f;
-		float highCamHeightFloat = 1.0f;
+		float distance = distanceToTarget;
+		float height = heightOnGround;
+		float targetHeight = viewHeight;
+		//falls die hohe Kamera benutzt werden soll, solen andee Werte verwendet werden
 		if(highCam)
 		{
-			highCamDistanceFloat = highCamMultiplier;
-			highCamHeightFloat = highCamMultiplier * 0.8f;
+			distance = distanceToTargetHigh;
+			height = heightOnGroundHigh;
+			targetHeight = viewHeightHigh;
 		}
 
-		//Zielposition ist hinterm Auto bzw. vorm AUto beim Rückwärtsfahren
-		Vector3 targetPosition = targetCar.transform.position;
-
-		//nach unten raycasten um zu guckenn, ob die Kamera leicht über dem Auto ist,nur wen Fahrzeuf nahe am Boden ist
+		//Zielposition ist erstmal hint dem Auto
+		Vector3 targetPosition = targetCar.transform.TransformPoint(0.0f, height/2, -distance * lookingBackInt);
+		//nach unten raycasten um zu guckenn, ob die Kamera zu nah am Boden ist
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position, -transform.up, out hit, heightOnGround * highCamHeightFloat))
+		if(Physics.Raycast(targetPosition, -transform.up, out hit, height))
 		{
-			//falls wir ganz langsam sind, soll die Kamera hinterm Auto sein
-			if(targetCar.getVelocity() < 1.0f)
-			{
-				targetPosition = targetCar.transform.TransformPoint(0.0f, 0.0f, -distanceToTarget * highCamDistanceFloat);
-			}
-			//falls am rückwärtsfahren ist Kamera vor dem Auto
-			else if(targetCar.isCarReversing())
-			{
-				targetPosition = targetCar.transform.TransformPoint(0.0f, 0.0f, distanceToTarget * highCamDistanceFloat * lookingBackInt);
-			}
-			//ansonsten hinterm Auto
-			else
-			{
-				targetPosition = targetCar.transform.TransformPoint(0.0f, 0.0f, -distanceToTarget * highCamDistanceFloat * lookingBackInt);
-			}
 			//y Position ist um height nach oben verschoben (überm Boden), 
-			targetPosition.y = Mathf.Lerp(targetPosition.y, hit.point.y + heightOnGround * highCamHeightFloat, 0.9f);
+			targetPosition.y = Mathf.Lerp(targetPosition.y, hit.point.y + height, 0.9f);
 		}
-		//falls sich das Auto in der Luft befindet
-		else
+		//falls die geschwindigkeit nicht sehr niedrig ist und die Kamera zu weit weg vom Boden ist
+		else if(targetCar.getVelocity() > 0.5f)
 		{
 			//ziel Position soll in negativer Geschwindigkeitsrichtung sein
 			Vector3 negVelocity = Vector3.Normalize(new Vector3 (targetCar.rigidbody.velocity.x, 0.0f, targetCar.rigidbody.velocity.z));
 			//richtiger Abstadd zum Auto
-			negVelocity *= distanceToTarget * lookingBackInt;
+			negVelocity *= distance * lookingBackInt;
 			//richtige Höhe zum Auto
-			negVelocity.y = -heightOnGround * highCamDistanceFloat;
+			negVelocity.y = -height/2;
 			targetPosition = targetCar.transform.position - negVelocity;
 		}
 
 		//momentane Position soll langsam der Zielposition angepasst werden
-		//nur wenn die Geschwindigkeit nicht sehr klein ist
 		Vector3 tmpPos = transform.position;
 		tmpPos.x = Mathf.Lerp(tmpPos.x, targetPosition.x, Time.deltaTime * floatingCamDampingX);
-		tmpPos.y = targetPosition.y; //Mathf.Lerp(tmpPos.y, targetPosition.y, 0.7f);
+		tmpPos.y = targetPosition.y; //Mathf.Lerp(tmpPos.y, targetPosition.y, 0.9f);
 		tmpPos.z = Mathf.Lerp(tmpPos.z, targetPosition.z, Time.deltaTime * floatingCamDampingZ);
 		transform.position = tmpPos;
 
 		//aktuallisiere die rotation
 		//die Kamera soll nicht direkt auf das AUto gucken, sondern ein bischen darüber
 		Vector3 tmpLookPos = new Vector3(targetCar.transform.position.x, targetCar.transform.position.y, targetCar.transform.position.z);
-		tmpLookPos.y += viewHeight * highCamHeightFloat;
+		tmpLookPos.y += targetHeight;
 		transform.LookAt(tmpLookPos);
 	}
 }

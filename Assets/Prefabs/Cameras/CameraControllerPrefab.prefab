@@ -44,7 +44,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: .5
+    y: 0
     width: 1
     height: .5
   near clip plane: .300000012
@@ -89,11 +89,13 @@ MonoBehaviour:
   hoodCamera: {fileID: 0}
   hoodCameraLookBack: {fileID: 0}
   floatingCamDampingZ: 50
-  floatingCamDampingX: 25
+  floatingCamDampingX: 35
   distanceToTarget: 12
-  heightOnGround: 5
-  viewHeight: 4
-  highCamMultiplier: 2
+  heightOnGround: 7
+  viewHeight: 3
+  distanceToTargetHigh: 20
+  heightOnGroundHigh: 12
+  viewHeightHigh: 3
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

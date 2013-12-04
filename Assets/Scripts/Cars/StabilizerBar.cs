@@ -8,8 +8,8 @@ using System.Collections;
  * auch wenn wir das vermutlich nich benötigen. Sonst wäre das ein bischen eklig geworden, das im Car-Script abzuprüfen
  */
 
-public class StabilizerBar: MonoBehaviour {
-	
+public class StabilizerBar: MonoBehaviour 
+{
 	//referenz auf linkes Rad
 	public Wheel leftWheel;
 	//referenz auf rechts Rad
@@ -23,6 +23,7 @@ public class StabilizerBar: MonoBehaviour {
 	void Start () 
 	{
 		thisRigidBody = rigidbody;
+		//die maximal übertragene Kraft soll etwas niedriger sein als die Stärke (Kraft) der Feder
 		stabilizierMultiplier = leftWheel.wheelCol.suspensionSpring.spring * 0.8f;
 	}
 	
@@ -47,7 +48,6 @@ public class StabilizerBar: MonoBehaviour {
 			{
 				//füge eine Kraft auf den Reifen hinzu, der ihm nach unten drückt, - da vorzeichenbehaftet für linke Seite
 				thisRigidBody.AddForceAtPosition(leftWheel.transform.up * -stabilizierForce, leftWheel.transform.position);
-				
 			}
 			if(rightWheel.wheelCol.isGrounded)
 			{

@@ -104,7 +104,7 @@ public class Wheel : MonoBehaviour
 
 //// GET METHODEN
 	
-	//diese Methode liefert den prozentuealen Wert zurück, wie sehr die Feder zusammengedrückt ist
+	//diese Methode liefert den prozentualen Wert zurück, wie sehr die Feder zusammengedrückt ist
 	//Wert ist zwischen 0.0 (zusammengrdückt) und 1.0 (auseinandergezogen) 
 	public float getSuspensionFactor()
 	{

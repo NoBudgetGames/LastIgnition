@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-/* diese KLasse it eine Implementierung ds Interfaces IDestructableObject
+/* diese KLasse it eine Implementierung der abstrackten KLasse AbstractDestructableObject
  * sie ist für alle Standard Objekte gedacht
  */
 
