@@ -35,11 +35,11 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				Debug.Log ("PLAYER " + obj.GetComponent<PlayerInputController>().playerString + " HAD HIS LAST IGNITION!");
 			}
 		}
-		if(Input.GetKey(KeyCode.O))
+		if(Input.GetKeyDown(KeyCode.O))
 		{
 			reInstanciatePlayer("One");
 		}
-		if(Input.GetKey(KeyCode.P))
+		if(Input.GetKeyDown(KeyCode.P))
 		{
 			reInstanciatePlayer("Two");
 		}
@@ -67,10 +67,10 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	}
 
 	//resete das Auto des SPielers (FULL HEALTH)
-	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
+	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
 	private void reInstanciatePlayer(string playerName)
 	{
-		GameObject player = new GameObject();
+		GameObject player = new GameObject("PLayerToDestroy");
 		//finde den richtigen Spieler aus der Liste
 		foreach(GameObject obj in playerList)
 		{
@@ -83,11 +83,13 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		if(player != null)
 		{
 			//zerstöre die Kamera
-			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl);
+			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 			//lösche den Spieler aus der Liste
 			playerList.Remove(player);
 			//zerstöre den Spieler
-			GameObject.Destroy(player);
+			//Anmerkung: die Transform Komponente lässt sich nicht zerstören und bleibt daher noch in der der 
+			//Szene übrig
+			GameObject.Destroy(player.gameObject);
 			
 			//instanszere einen neuen Spieler
 			if(playerName.Equals("One"))

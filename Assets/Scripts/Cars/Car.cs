@@ -932,7 +932,7 @@ public class Car : MonoBehaviour
 		}
 
 		//Angular Drag soll größer sein, wenn das Auto eine hohe Geschwindigkeit hat
-		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 100;
+		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 50;
 		
 		thisRigidBody.drag = 0.1f;
 		//falls sich das Auto in der Luft befindet, soll der Luftwiederstand steigen
@@ -1120,7 +1120,7 @@ public class Car : MonoBehaviour
 				else
 				{
 					//mehr Bremskraft auf Hinterreifen
-					wheel.wheelCol.brakeTorque = brakeTorque * 2;
+					wheel.wheelCol.brakeTorque = brakeTorque;
 				}
 			}	
 		}
