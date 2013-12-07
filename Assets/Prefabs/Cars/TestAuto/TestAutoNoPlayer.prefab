@@ -181,9 +181,8 @@ GameObject:
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400016}
-  - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: TestAuto
+  m_Name: TestAutoNoPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1412,12 +1411,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400028}
-  - {fileID: 400128}
   - {fileID: 400032}
   - {fileID: 400040}
   - {fileID: 400108}
-  - {fileID: 400026}
   - {fileID: 400034}
+  - {fileID: 400026}
+  - {fileID: 400128}
   m_Father: {fileID: 0}
 --- !u!4 &400022
 Transform:
@@ -3729,24 +3728,6 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   direction: 4
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d37c46bb092e0f34c9635bed05dde72f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerString: One
-  usingController: 1
-  cameraCtrlPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-  additionalCameraPositions:
-  - {fileID: 400140}
-  - {fileID: 400116}
-  cameraCtrl: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3859,6 +3840,10 @@ MonoBehaviour:
   rightDoor: {fileID: 100134}
   frontDoor: {fileID: 100132}
   rearDoor: {fileID: 100130}
+  frontBumperPrefab: {fileID: 100002, guid: 745cf67c839cef64f8d9a51a6cadb106, type: 2}
+  rearBumperPrefab: {fileID: 100002, guid: 245cca6be5a22414ebf9901881b893d4, type: 2}
+  leftExhaustPrefab: {fileID: 100002, guid: 3acfc912341e16942931322890e42b9d, type: 2}
+  rightExhaustPrefab: {fileID: 100002, guid: 0d26d35463ea11f49a84193a71e591b1, type: 2}
   wheelSphereCol: {fileID: 100042}
 --- !u!114 &11400010
 MonoBehaviour:
@@ -3914,7 +3899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51fa12322e583d45af8b4bc0c44ee6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedWeapon: {fileID: 11400018}
+  equippedWeapon: {fileID: 0}
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1

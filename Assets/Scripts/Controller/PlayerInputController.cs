@@ -14,7 +14,7 @@ public class PlayerInputController : MonoBehaviour
 	public string playerString = "One";
 	//Wird ein Controller benutz oder nicht?
 	public bool usingController = false;
-	//refernz auf die CameraControllerPrefab, NICHT VERÄNDERN!
+	//refernz auf die CameraControllerPrefab, wird instanziert, NICHT VERÄNDERN!
 	public GameObject cameraCtrlPrefab;
 	//referenz auf weitere Kameras, z.B. die Kamere auf der Motorhaube
 	//reihenfolge wichtig! 1. Motorhaube | 2. Kofferraum

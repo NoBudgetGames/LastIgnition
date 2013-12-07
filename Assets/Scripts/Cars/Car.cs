@@ -103,6 +103,14 @@ public class Car : MonoBehaviour
 	public GameObject frontDoor;
 	//referenz auf Kofferraumtür
 	public GameObject rearDoor;
+	//referenz auf vordere Stoßstange
+	public GameObject frontBumperPrefab;
+	//referenz auf hintere Stoßstange
+	public GameObject rearBumperPrefab;
+	//referenz auf linken Auspuff
+	public GameObject leftExhaustPrefab;
+	//referenz auf rechten Auspuff
+	public GameObject rightExhaustPrefab;
 	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
 	public GameObject wheelSphereCol;
 	//liste mit lenkrädern
@@ -156,6 +164,12 @@ public class Car : MonoBehaviour
 	private float currentVelocity = 0.0f;
 	//hat das Auto schon einen Reifen verloren?
 	private bool hasLostWheel = false;
+	//hat das Auto die vordere Stoßstange verloren?
+	private bool hasLostFrontBumper = false;
+	//hat das Auto die hintere Stoßstange verloren?
+	private bool hasLostRearBumper = false;
+	//hat das Auto die Auspüffe verloren?
+	private bool hasLostExhausts = false;
 	//Geschwindigkeit im vorherigen Frame
 	private float previousVel = 0.0f;
 
@@ -248,8 +262,6 @@ public class Car : MonoBehaviour
 		calculateRPM();
 		//Lenkung hinzufügen		
 		applySteering(relativeVelocity);
-
-		//Debug.Log ("Gear: " + currentGear + " RPM: " + currentRPM + " Velocity: " + currentVelocity);		
 	}
 
 //// GET METHODEN
@@ -488,17 +500,32 @@ public class Car : MonoBehaviour
 		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
 		//ab welchen Lebenspunkten soll das Model geändert werden?
+		//erstes Modell wenn Lebenspunkte zwischen 100 und secondDamageModelHealthLimit
 		if(frontHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
 		}
+		//zweites Modell wenn Lebenspunkte zwischen secondDamageModelHealthLimit und thirdDamageModelHealthLimit
 		else if(frontHealth >= thirdDamageModelHealthLimit)
 		{	
 			damageModelNumber = 1;
+			//falls das Auto noch nicht die vordere Stoßstange verloren hat
+			if(hasLostFrontBumper == false)
+			{
+				hasLostFrontBumper = true;
+				GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
+			}
 		}
+		//ansonsten sind die Lebenspunkt unterhalb von thirdDamageModelHealthLimit und somit wird das 3. Schadensmodel angezeigt
 		else
 		{
 			damageModelNumber = 2;	
+			//falls das Auto noch nicht die vordere Stoßstange verloren hat
+			if(hasLostFrontBumper == false)
+			{
+				hasLostFrontBumper = true;
+				GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
+			}
 		}
 		//gehe durch die Damage Models durch und aktiviere das richtige
 		for(int i = 0; i < frontDamageModels.Length; i++)
@@ -520,9 +547,7 @@ public class Car : MonoBehaviour
 	private void setupRearDamage(int damageAmount)
 	{
 		rearHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;	
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(rearHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
@@ -530,10 +555,28 @@ public class Car : MonoBehaviour
 		else if(rearHealth >= thirdDamageModelHealthLimit)
 		{	
 			damageModelNumber = 1;
+			if(hasLostRearBumper == false)
+			{
+				hasLostRearBumper = true;
+				GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
+			}
 		}
 		else
 		{
 			damageModelNumber = 2;	
+			//falls die Auspüffe noch nichr verloren wurden
+			if(hasLostExhausts == false)
+			{
+				hasLostExhausts = true;
+				GameObject.Instantiate(rightExhaustPrefab, thisTransform.position, thisTransform.rotation);
+				GameObject.Instantiate(leftExhaustPrefab, thisTransform.position, thisTransform.rotation);
+			}
+			//falls Stoßstange nocht nicht verloren
+			if(hasLostRearBumper == false)
+			{
+				hasLostRearBumper = true;
+				GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
+			}
 		}
 		for(int i = 0; i < rearDamageModels.Length; i++)
 		{
@@ -553,9 +596,7 @@ public class Car : MonoBehaviour
 	private void setupLeftDamage(int damageAmount)
 	{
 		leftHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(leftHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
@@ -586,9 +627,7 @@ public class Car : MonoBehaviour
 	private void setupRightDamage(int damageAmount)
 	{
 		rightHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(rightHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
@@ -615,13 +654,11 @@ public class Car : MonoBehaviour
 		}
 	}
 
-	//in dieser Methode wird das graphische Objekt für die vordere linke  Seite des Autos aktiviert
+	//in dieser Methode wird das graphische Objekt für die vordere linke Seite des Autos aktiviert
 	private void setupFrontLeftDamage(int damageAmount)
 	{
 		frontLeftHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(frontLeftHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
@@ -653,9 +690,7 @@ public class Car : MonoBehaviour
 	private void setupFrontRightDamage(int damageAmount)
 	{
 		frontRightHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(frontRightHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
@@ -687,9 +722,7 @@ public class Car : MonoBehaviour
 	private void setupRearLeftDamage(int damageAmount)
 	{
 		rearLeftHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(rearLeftHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
@@ -721,9 +754,7 @@ public class Car : MonoBehaviour
 	private void setupRearRightDamage(int damageAmount)
 	{
 		rearRightHealth -= damageAmount;
-		//Der Index des zu darstellenden Models, 0 = kein Schaden, 1 = mehr schaden usw...
 		int damageModelNumber = 0;
-		//ab welchen Lebenspunkten soll das Model geändert werden?
 		if(rearRightHealth >= secondDamageModelHealthLimit)
 		{	
 			damageModelNumber = 0;
