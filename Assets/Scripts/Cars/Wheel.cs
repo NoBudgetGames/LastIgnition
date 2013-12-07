@@ -74,6 +74,12 @@ public class Wheel : MonoBehaviour
 		}
 	}
 
+	//in dieser MEthode werden die Skidmarks gerendert
+	void FixedUpdate()
+	{
+
+	}
+
 //// SETUP METHODEN
 
 	//richtet die Werte der Aufhängung/Feder ein
@@ -95,11 +101,48 @@ public class Wheel : MonoBehaviour
 	}
 	
 	//in dieser Methode werden die WheelFrictionCurves übergeben, man kann sie auch noch nachträlich ändern, z.B. im beim 
-	//benutzen der Handbremse ein anderes Verhalten zu haben
-	public void setFrictionCurves(WheelFrictionCurve FWFC, WheelFrictionCurve SWFC)
+	//benutzen der Handbremse oder einen anderen Untergrund ein anderes Verhalten zu haben
+	public void setFrictionCurves(WheelFrictionCurve forward, WheelFrictionCurve sideways)
 	{
-		wheelCol.forwardFriction = FWFC;
-		wheelCol.sidewaysFriction = SWFC;
+		//falls sich das Rad in der Luft befindet soll es nicht zur Berechnung beitragen
+		WheelHit hit;
+		if(wheelCol.GetGroundHit(out hit))
+		{
+			//schau auf welcher Layer der Refien fährt
+			int layer = hit.collider.transform.gameObject.layer;
+			//switch erlaubt keine abfragen wie "case LayerMask.NameToLayer("Default"):", daher feste Werte
+			//Compiler Error CS0150: A constant value is expected
+			switch(layer)
+			{
+			case 9:
+				forward.stiffness *= 0.8f; //fester Sand, SandNormal
+				sideways.stiffness *= 0.8f;
+				break;
+			case 10:
+				forward.stiffness *= 0.6f; //loser Sand, SandLose
+				sideways.stiffness *= 0.8f;
+				break;
+			case 11:
+				forward.stiffness *= 0.75f; //Schotter, Rubble
+				sideways.stiffness *= 0.65f;
+				break;
+			case 12:
+				forward.stiffness *= 0.8f; //Erdweg, Dirt
+				sideways.stiffness *= 0.7f;
+				break;
+			case 13:
+				forward.stiffness *= 0.7f; //Grass, Grass
+				sideways.stiffness *= 0.7f;
+				break;
+			default:
+				//asphalt, Default Layer (mach nichts)
+				break;
+			}
+			wheelCol.forwardFriction = forward;
+			wheelCol.sidewaysFriction = sideways;
+		}
+		wheelCol.forwardFriction = forward;
+		wheelCol.sidewaysFriction = sideways;
 	}
 
 //// GET METHODEN

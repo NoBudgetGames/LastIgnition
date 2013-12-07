@@ -886,7 +886,6 @@ public class Car : MonoBehaviour
 		{
 			//falls sich das Rad in der Luft befindet soll es nicht zur Berechnung beitragen
 			WheelHit hit;
-
 			if(wheel.wheelCol.GetGroundHit(out hit))
 			{
 				//schau auf welcher Layer der Refien fährt
@@ -907,6 +906,9 @@ public class Car : MonoBehaviour
 					case 12:
 						GroundCoefRR = 0.05f; //Erdweg, Dirt
 						break;
+					case 13:
+						GroundCoefRR = 0.08f; //Grass, Grass
+						break;
 					default:
 						GroundCoefRR = 0.015f; //asphalt, Default Layer
 						break;
@@ -921,7 +923,7 @@ public class Car : MonoBehaviour
 		}
 
 		//Rollwiderstandswert = Rollwiederstandskoeffizient * Masse * Gravitation
-		float CoefRR = GroundCoefRR * rigidbody.mass * 9.81f;
+		float CoefRR = GroundCoefRR * rigidbody.mass * Physics.gravity.y; //  9.81f;
 		//Rollwiderstandskraft, ist entgegengesetzt der aktuellen Fahrtrichtung des Autos
 		Vector3 RollingResistanceForce = -Mathf.Sign(relativeVelocity.z) * thisTransform.forward * CoefRR;
 		
@@ -938,7 +940,7 @@ public class Car : MonoBehaviour
 		//falls sich das Auto in der Luft befindet, soll der Luftwiederstand steigen
 		if(areAllWheelsGrounded == false)
 		{
-			thisRigidBody.drag = 0.4f;
+			thisRigidBody.drag = 0.2f;
 		}
 		//Luftwiderstand
 		//Luftwiderstandswert CDrag = 0.5 * Luftwiderstandskoeffiezient * Luftdichte * Fläche in Fahrtrichtung

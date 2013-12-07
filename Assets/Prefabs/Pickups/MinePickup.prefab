@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b953d6c6e4de04ab8d7f2948ce34a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optainableWeapon: 2
+  optainableWeapon: 3
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
