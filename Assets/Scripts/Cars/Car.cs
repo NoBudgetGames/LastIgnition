@@ -95,6 +95,8 @@ public class Car : MonoBehaviour
 	public List<Wheel> wheels;
 	//Referenz auf loses Rad 
 	public GameObject loseWheel;
+	//referenz auf das Lenkrad (zweite in der Hierachie über dem Mesh-Objekt)
+	public GameObject steeringWheel;
 	//referenz auf linke Tür
 	public GameObject leftDoor;
 	//referenz auf rechte Tür
@@ -226,6 +228,15 @@ public class Car : MonoBehaviour
 		{
 			applyVisualDamage(direction, 0);
 		}
+	}
+
+	//in dieser Methode wird das Lenkrad gedreht
+	void Update()
+	{
+		//hier muss eine temporäre Variable erstellt werden
+		Vector3 tempRot = steeringWheel.transform.localEulerAngles;
+		tempRot.z = -steer * 120;
+		steeringWheel.transform.localEulerAngles = tempRot;	
 	}
 	
 	//in dieser Methode werden die Physikberechnungen durchgeführt
