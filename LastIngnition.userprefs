@@ -1,26 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Controller\PlayerInputController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cars\HUD.cs">
     <Files>
-      <File FileName="LastIngnition.sln" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Controller\RearFlotingCameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Controller\PlayerInputController.cs" Line="82" Column="5" />
-      <File FileName="Assets\Scripts\Cars\CarInventory.cs" Line="105" Column="30" />
-      <File FileName="Assets\Scripts\Weapons\MineThrower.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\RocketLauncher.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\AbstractDestructibleObject.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\DestructibleObject.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cars\DestructibleCarPart.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\ItemPickup.cs" Line="45" Column="39" />
-      <File FileName="Assets\Scripts\Weapons\MiniGun.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\SpikeHandle.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\Spike.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cars\Car.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\Weapon.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\Rocket.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Weapons\Mine.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enums\WeaponType.cs" Line="12" Column="19" />
-      <File FileName="Assets\Scripts\Controller\GameController.cs" Line="33" Column="1" />
+      <File FileName="Assets\Scripts\Cars\HUD.cs" Line="40" Column="23" />
+      <File FileName="Assets\Scripts\Controller\PlayerInputController.cs" Line="64" Column="29" />
+      <File FileName="Assets\Scripts\GUI\MainMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cars\HUD.cs" Line="7" Column="10" />
+      <File FileName="Assets\Scripts\Controller\CameraController.cs" Line="134" Column="1" />
+      <File FileName="Assets\Scripts\Controller\TwoLocalPlayerGameController.cs" Line="76" Column="27" />
+      <File FileName="Assets\Scripts\Cars\StabilizerBar.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cars\CarInventory.cs" Line="6" Column="2" />
+      <File FileName="Assets\Scripts\Cars\CarCollision.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cars\Car.cs" Line="607" Column="3" />
+      <File FileName="Assets\Scripts\Weapons\Weapon.cs" Line="24" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

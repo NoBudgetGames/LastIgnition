@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CarInventory : MonoBehaviour
 {
+
 	
 	public Weapon equippedWeapon;
 	int equippedWeaponNumber;
@@ -38,7 +39,7 @@ public class CarInventory : MonoBehaviour
 		allWeapons[(int)WeaponType.MINE_THROWER] = mineThrowerComp;
 		allWeapons[(int)WeaponType.SPIKES] = spikeHandleComp;
 
-		activateWeapon(WeaponType.NONE);
+		activateWeapon(WeaponType.MINIGUN);
 		equippedWeaponNumber = (int)WeaponType.NONE;
 	}
 	

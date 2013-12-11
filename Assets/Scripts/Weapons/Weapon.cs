@@ -21,6 +21,8 @@ public abstract class Weapon : MonoBehaviour
 	protected float timer;
 	protected float maxTime;
 
+	public Texture hudIcon;
+
 	protected WeaponType _weaponType;
 	public WeaponType weaponType {
 		get{return _weaponType;}

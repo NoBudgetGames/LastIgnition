@@ -3858,6 +3858,7 @@ MonoBehaviour:
   - {fileID: 400140}
   - {fileID: 400116}
   cameraCtrl: {fileID: 0}
+  hudPrefab: {fileID: 100004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4042,6 +4043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b10062735989649a2b00168fda476d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudIcon: {fileID: 2800000, guid: 582ceecaa0895da44aa2210e9eea690c, type: 3}
   minePrefab: {fileID: 100000, guid: 73feb47014c9e8143a74e96352767561, type: 2}
 --- !u!114 &11400020
 MonoBehaviour:
@@ -4054,6 +4056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a90a2ce8f6dd21439fa5c26d5a77c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudIcon: {fileID: 2800000, guid: 2e83515c7347e7f4ca07db3eae0374d0, type: 3}
   rocketPrefab: {fileID: 100000, guid: 2f80f42db9c705d48b96408f8e5d65f1, type: 2}
 --- !u!114 &11400022
 MonoBehaviour:
@@ -4066,6 +4069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c72ba61dd529540bf7e284118c2188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudIcon: {fileID: 2800000, guid: e486e7a08152bf14a851b332c2fb6237, type: 3}
   spikePrefab: {fileID: 100000, guid: c840f610d6c045d4cb2d2f753064ae41, type: 2}
 --- !u!114 &11400024
 MonoBehaviour:
@@ -4234,6 +4238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154b72597d18da040b6ca82d34195d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudIcon: {fileID: 2800000, guid: 5dc5b36fc4208ac43916ca2c574d3f5b, type: 3}
 --- !u!114 &11400050
 MonoBehaviour:
   m_ObjectHideFlags: 1

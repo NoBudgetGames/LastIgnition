@@ -55,6 +55,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
 		input.playerString = playerName;
+		input.setupHUD();
 		//Kamera muss aufgesetzt werden
 		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
 		playerList.Add(player);

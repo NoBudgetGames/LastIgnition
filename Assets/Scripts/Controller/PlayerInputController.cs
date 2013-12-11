@@ -26,6 +26,9 @@ public class PlayerInputController : MonoBehaviour
 	//Referenz auf das Inventar des Autos
 	private CarInventory inv;
 
+	public GameObject hudPrefab;
+	private HUD hud;
+
 	void Awake()
 	{
 		car = GetComponent<Car>();
@@ -40,11 +43,31 @@ public class PlayerInputController : MonoBehaviour
 		cameraCtrl.hoodCamera = additionalCameraPositions[0];
 		//zweites Element ist Kofferraumkamera
 		cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
+
+		GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+		hud = hudObj.GetComponent<HUD>();
+
+		hud.cameraObject = camObj;
+
+
+
+	}
+
+	public void setupHUD(){
+		if(playerString == "One"){
+			hud.layer = LayerMask.NameToLayer("Test");
+			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test");
+		} else {
+			hud.layer = LayerMask.NameToLayer("Test2");
+			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test2");
+		}
+		hud.player = playerString;
 	}
 
 	//in dieser Methode wird der Input des Spielers an die jeweiligen Komponenten weitergereicht
 	void FixedUpdate()
 	{
+
 		//falls Tastatur benutzt wird, wird später rausgenohmen
 		if(usingController == false)
 		{
