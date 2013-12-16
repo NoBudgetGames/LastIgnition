@@ -97,31 +97,45 @@ public class CarInventory : MonoBehaviour
 	}
 
 	public void nextWeapon(bool pressed){
-		if(lastNextPress != pressed){
+		if(lastNextPress != pressed && !allWeaponsEmpty()){
 			if(pressed){
-				if(equippedWeaponNumber+1>(int)WeaponType.NUMBER_OF_WEAPONS-1){
-					equippedWeaponNumber = 0;
-				} else {
-					equippedWeaponNumber++;
-				}
-				equippedWeapon = allWeapons[(int)equippedWeaponNumber];
+				do{
+					if(equippedWeaponNumber+1>(int)WeaponType.NUMBER_OF_WEAPONS-1){
+						equippedWeaponNumber = 0;
+					} else {
+						equippedWeaponNumber++;
+					}
+					equippedWeapon = allWeapons[(int)equippedWeaponNumber];
+				} while(equippedWeapon.remainingAmmo() == 0);
 			}
 		}
 		lastNextPress = pressed;
 	}
 
 	public void prevWeapon(bool pressed){
-		if(lastPrevPress != pressed){
-			if(pressed){
-				if(equippedWeaponNumber-1<0){
-					equippedWeaponNumber = (int)WeaponType.NUMBER_OF_WEAPONS-1;
-				} else {
-					equippedWeaponNumber--;
+		if(lastPrevPress != pressed && !allWeaponsEmpty()){
+			do{
+				if(pressed){
+					if(equippedWeaponNumber-1<0){
+						equippedWeaponNumber = (int)WeaponType.NUMBER_OF_WEAPONS-1;
+					} else {
+						equippedWeaponNumber--;
+					}
+					equippedWeapon = allWeapons[(int)equippedWeaponNumber];
 				}
-				equippedWeapon = allWeapons[(int)equippedWeaponNumber];
-			}
+			} while(equippedWeapon.remainingAmmo() == 0);
 		}
 		lastPrevPress = pressed;
+	}
+
+	bool allWeaponsEmpty(){
+		for(int i = 0; i< allWeapons.Length; ++i){
+			if(allWeapons[i].remainingAmmo() > 0){
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
 
