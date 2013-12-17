@@ -39,6 +39,9 @@ public class Car : MonoBehaviour
 	public float[] RPMToGearUp = {3000, 3000, 3000, 3000, 3000, 3500};
 	//Werte für die Gangschaltung, damit sie weiss ab welcher Umdrehungszahl sie runter schalten soll
 	public float[] RPMToGearDown = {3000, 2000, 2500, 2500, 2500, 2500};
+	//Multiplier für die Gänge, die ersten Gänge sind zu stark, daher werden diese abgeschwächt. Man könnte auch die gearRation ändern, 
+	//allerdings führt das dazu dass das Auto recht spät hochschaltet
+	public float[] gearMultiplier = {0.5f, 0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f};
 	//Verstärung des Differenzials
 	public float differentialMultiplier = 3f;
 	//kraft des Bremspedals
@@ -57,13 +60,6 @@ public class Car : MonoBehaviour
 	//Wert für Schaden einen anderen Auto bei einer Kollision
 	public float crashDamage = 0.1f;
 
-/*	
- 	//Wert für Luftwiederstand beim geradeaus fahren, setzt sich unter anderen aus Luftdichte und Fläche zusammen
-	public float CDrag = 0.4f;
-	//Multiplier für seitlichen Luftwiederstand
-	public float sideDragMultiplier = 1.0f;
-*/	
-	
 //// REFERENZEN AUF OBJEKTE 
 	
 	//Zentrum der Masse für den RigiBody (während er in der Luft ist)
@@ -199,13 +195,6 @@ public class Car : MonoBehaviour
 	private int secondDamageModelHealthLimit = 70;
 	//Healthwert ab dem das dritte Schadensmodell angezeigt werden soll (erste Schadensmodell hat keinen sichtbaren Schaden)
 	private int thirdDamageModelHealthLimit = 30;
-
-/*
-	//Healthwert des Motors
-	private int engineHealth = 100;
-	//Healtwert der Lenkung
-	private int steerHealth = 100;
-*/		
 
 //// START UND UPDATE METHODEN
 
@@ -987,9 +976,6 @@ public class Car : MonoBehaviour
 		{
 			thisRigidBody.drag = 0.2f;
 		}
-		//Luftwiderstand
-		//Luftwiderstandswert CDrag = 0.5 * Luftwiderstandskoeffiezient * Luftdichte * Fläche in Fahrtrichtung
-		//Vector3 DragForce = CDrag * 
 	}
 	
 	//die WheelFrictionCurves sollen abhängig vom Status des Fahrzeugs (Handbremse, etc...) und abhängig des gerade befahrenens 
@@ -1118,23 +1104,46 @@ public class Car : MonoBehaviour
 			//http://forum.unity3d.com/threads/120091-Edy-s-Vehicle-Physics-official-thread/page6?p=1054085&viewfull=1#post1054085 )
 			//wird in dieser Variante des Fixes geschaut, wie die momentane Beschleinigung ist. Sollte sie einen Wert überschreiten, wird das Auto 
 			//einfach abgebremst
-			
 			//beschleiunigung = DeltaV / DeltaT
 			float deltaAccelleration = (currentVelocity - previousVel) / Time.fixedDeltaTime;
 			previousVel = currentVelocity;
 			//maximal Zulässige Beschleunigung
 			int maxAccelleration = 60;
 
-			//Drehmoment, der auch auf die Reifen übertragen wird. 
-			float motorTorque = Mathf.Abs(throttle) * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * differentialMultiplier * transmissionEfficiency;
+			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
+			//abhängig vom neigungswinkel des Autos ist
+			//nur wenn sich ein Reifen auf dem Boden befindet
+/*			if(isOneWheelGrounded)
+			{
+				//Vector in World Space, in welcher Richtung das Auto zeigt
+				Vector3 currentForward = this.thisTransform.TransformDirection(thisTransform.forward);
+				
+				//die Kraft soll nur angewendet werden, wenn sich das Auto nach oben neigt bzw. nach oben zeigt und dabei auch den Berg hochfährt
+				if((currentForward.y > 0.0f && isAccelearting && relVelocity.z > 0.0f) || (currentForward.y < 0.0f && isReversing && relVelocity.z < 0.0f))
+				{
+					//Richtung des Autos auf dem Boden, ohne Y-Komponente
+					Vector3 groundForward = new Vector3(currentForward.x, 0.0f, currentForward.z);
+					//winkel zwischen vorwärtsvektor aus dem letzten Frame und den aktuellen.
+					float inclinationAngle = Vector3.Angle(groundForward.normalized, currentForward.normalized);
+					//Kraft ist entgegengesetzt der Fahrtrichtung
+					Vector3 resistanceForce = -Mathf.Sign(relVelocity.z) * thisTransform.forward * relVelocity.z * 0.07f * inclinationAngle/90;
+					thisRigidBody.AddForce(resistanceForce, ForceMode.VelocityChange);
+				}
+			}
+*/
+			//Drehmoment, der auch auf die Reifen übertragen wird. Setzt sich zusammen aus: wie weit ist das Gaspedal/Bremspedal (fürs Rückwärtsfahren) 
+			//durchgedrückt * Drehmomentkurve * aktueller Gang * Gang Koeffizient * Differenzial Koeffizient * Effizienz des Getriebes 
+			float motorTorque = Mathf.Abs(throttle) * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * gearMultiplier[currentGear]
+								* differentialMultiplier * transmissionEfficiency;
 
 			//falls wir am rückwärtsfahren sind, soll die Motorkraft negativ sein
 			if(isReversing)
 			{
 				motorTorque = -motorTorque;
 				//beim rückwärtafahren entstehen größere Beschleunigungen, Ursache noch nicht gefunden
-				maxAccelleration *= 2;
 			}
+
+			//Debug.Log("Accel " + deltaAccelleration);
 
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)

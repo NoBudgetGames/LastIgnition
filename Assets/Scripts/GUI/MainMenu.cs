@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour {
 			Application.LoadLevel("StefTestScene2");
 		}
 		//zweites Level
-		if(GUI.Button(new Rect(20,70,280,20), "Ein Spieler Test Level")) 
+		if(GUI.Button(new Rect(20,70,280,20), "ArenaStadium TestLevel")) 
 		{
 			Application.LoadLevel("StefTestScene");
 		}
