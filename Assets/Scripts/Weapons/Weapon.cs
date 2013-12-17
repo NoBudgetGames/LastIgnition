@@ -13,7 +13,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
 	protected bool buttonPressed = false;
-	protected int ammo = 0;
+	protected int ammo = 200;
 	protected int minAmmo;
 	protected int maxAmmo;
 	protected int incAmmo;

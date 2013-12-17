@@ -15,6 +15,8 @@ public class HUD : MonoBehaviour
 	public GUIText ammo;
 	public Texture2D speedo;
 	public Texture2D speedoArrow;
+	public GUIText rank;
+
 	int numberOfHuds;
 
 	float speedoSizeX, speedoSizeY, offset;
@@ -27,6 +29,7 @@ public class HUD : MonoBehaviour
 
 		weapon.gameObject.layer = layer;
 		ammo.gameObject.layer = layer;
+		rank.gameObject.layer = layer;
 		this.gameObject.layer = layer;
 
 		speedoSizeX = Screen.width/5;

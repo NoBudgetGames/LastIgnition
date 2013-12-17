@@ -27,7 +27,7 @@ public class PlayerInputController : MonoBehaviour
 	private CarInventory inv;
 
 	public GameObject hudPrefab;
-	private HUD hud;
+	public HUD hud;
 
 	void Awake()
 	{
@@ -43,11 +43,12 @@ public class PlayerInputController : MonoBehaviour
 		cameraCtrl.hoodCamera = additionalCameraPositions[0];
 		//zweites Element ist Kofferraumkamera
 		cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
+		
+			GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+			hud = hudObj.GetComponent<HUD>();
 
-		GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
-		hud = hudObj.GetComponent<HUD>();
-
-		hud.cameraObject = camObj;
+			hud.cameraObject = camObj;
+		
 
 
 

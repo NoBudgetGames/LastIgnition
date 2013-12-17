@@ -11,16 +11,19 @@ using System.Collections.Generic;
 public class TwoLocalPlayerGameController : MonoBehaviour 
 {
 	//Startpunkte
-	public Transform[] spawnPoints;
+	public GameObject[] spawnPoints;
 	//Referenz auf die Auto Prefab
 	public GameObject carPrefab;
 	//Liste mit Spielern
-	private List<GameObject> playerList;
+	public  List<GameObject> playerList;
 
 	// Use this for initialization
 	void Start()
 	{
 		playerList = new List<GameObject>();
+		if(GameObject.FindGameObjectsWithTag("SpawnPoint") != null){
+			spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+		}
 		instaciateNewPlayer(spawnPoints[0], "One");
 		instaciateNewPlayer(spawnPoints[1], "Two");
 	}
@@ -47,10 +50,10 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 
 	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
-	private void instaciateNewPlayer(Transform trans, string playerName)
+	private void instaciateNewPlayer(GameObject trans, string playerName)
 	{
 		//neues Auto
-		GameObject player = (GameObject)GameObject.Instantiate(carPrefab, trans.position, trans.rotation);
+		GameObject player = (GameObject)GameObject.Instantiate(carPrefab, trans.transform.position, trans.transform.rotation);
 
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
@@ -69,7 +72,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 
 	//resete das Auto des SPielers (FULL HEALTH)
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
-	private void reInstanciatePlayer(string playerName)
+	public void reInstanciatePlayer(string playerName)
 	{
 		GameObject player = new GameObject("PLayerToDestroy");
 		//finde den richtigen Spieler aus der Liste
@@ -87,6 +90,8 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 			//lösche den Spieler aus der Liste
 			playerList.Remove(player);
+
+			GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
 			//zerstöre den Spieler
 			//Anmerkung: die Transform Komponente lässt sich nicht zerstören und bleibt daher noch in der der 
 			//Szene übrig

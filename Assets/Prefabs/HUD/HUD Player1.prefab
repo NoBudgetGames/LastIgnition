@@ -159,6 +159,7 @@ MonoBehaviour:
   ammo: {fileID: 13200004}
   speedo: {fileID: 2800000, guid: ecc51243a94674645926888421e06641, type: 3}
   speedoArrow: {fileID: 2800000, guid: 21d2f8d366fb9ff469fce6ac687ca58b, type: 3}
+  rank: {fileID: 13200002}
 --- !u!131 &13100004
 GUITexture:
   m_ObjectHideFlags: 1
