@@ -6,17 +6,27 @@ ModelImporter:
     100000: //RootNode
     100002: ArenaWall
     100004: ArenaWallFence
+    100006: ArenaFence
+    100008: ArenaIronPost
     400000: //RootNode
     400002: ArenaWall
     400004: ArenaWallFence
+    400006: ArenaFence
+    400008: ArenaIronPost
     2300000: //RootNode
     2300002: ArenaWall
     2300004: ArenaWallFence
+    2300006: ArenaFence
+    2300008: ArenaIronPost
     3300000: //RootNode
     3300002: ArenaWall
     3300004: ArenaWallFence
+    3300006: ArenaFence
+    3300008: ArenaIronPost
     4300000: ArenaWall
     4300002: ArenaWallFence
+    4300004: ArenaIronPost
+    4300006: ArenaFence
     9500000: //RootNode
   materials:
     importMaterials: 0

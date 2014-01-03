@@ -926,6 +926,8 @@ public class Car : MonoBehaviour
 				int layer = hit.collider.transform.gameObject.layer;
 				//switch erlaubt keine abfragen wie "case LayerMask.NameToLayer("Default"):", daher feste Werte
 				//Compiler Error CS0150: A constant value is expected
+
+				//LENKUNG KLEINER MACHEN
 				switch(layer)
 				{
 					case 9:

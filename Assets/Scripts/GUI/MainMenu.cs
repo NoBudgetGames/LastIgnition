@@ -10,22 +10,27 @@ public class MainMenu : MonoBehaviour {
 	void OnGUI () 
 	{
 		// kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(10,10,300,130), "Level Auswahl");
+		GUI.Box(new Rect(10,10,300,170), "Level Auswahl");
 		
 		//erster Button, falls gedrückt, wird das erste Level geladen
-		if(GUI.Button(new Rect(20,40,280,20), "Zwei Spieler Test Level")) 
+		if(GUI.Button(new Rect(20,40,280,20), "Derby-Arena im Stadium")) 
 		{
-			Application.LoadLevel("StefTestScene2");
+			Application.LoadLevel("ArenaStadium");
 		}
 		//zweites Level
-		if(GUI.Button(new Rect(20,70,280,20), "ArenaStadium TestLevel")) 
+		if(GUI.Button(new Rect(20,70,280,20), "Wüsten-Arena")) 
 		{
-			Application.LoadLevel("StefTestScene");
+			Application.LoadLevel("DesertArena");
 		}
 		//drittes Level
-		if(GUI.Button(new Rect(20,100,280,20), "Waffen Test Level")) 
+		if(GUI.Button(new Rect(20,100,280,20), "Wüsten-Strecke")) 
 		{
-			Application.LoadLevel("CTestScene");
+			Application.LoadLevel("DesertCircuit");
+		}
+		//....
+		if(GUI.Button(new Rect(20,130,280,20), "Stefs Test-Strecke")) 
+		{
+			Application.LoadLevel("StefTestScene2");
 		}
 	}
 }

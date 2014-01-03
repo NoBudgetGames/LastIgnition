@@ -6,10 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenuScene.unity
+    path: Assets/Scenes/menu/MainMenuScene.unity
   - enabled: 1
-    path: Assets/Scenes/StefTestScene2.unity
+    path: Assets/Scenes/tracks/ArenaStadium.unity
   - enabled: 1
-    path: Assets/Scenes/StefTestScene.unity
+    path: Assets/Scenes/tracks/DesertCircuit.unity
   - enabled: 1
-    path: Assets/Scenes/CTestScene.unity
+    path: Assets/Scenes/tracks/DesertArena.unity
+  - enabled: 1
+    path: Assets/Scenes/testScenes/StefTestScene2.unity
+  - enabled: 1
+    path: Assets/Scenes/testScenes/CTestScene.unity
+  - enabled: 1
+    path: Assets/Scenes/testScenes/CTestScene2.unity
+  - enabled: 1
+    path: Assets/Scenes/testScenes/DesertArenaCTest.unity
+  - enabled: 1
+    path: Assets/Scenes/testScenes/SimTestScene.unity

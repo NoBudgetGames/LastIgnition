@@ -5838,6 +5838,7 @@ MonoBehaviour:
   - {fileID: 1356642196}
   - {fileID: 1777765134}
   carPrefab: {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
+  playerList: []
 --- !u!4 &632515977
 Transform:
   m_ObjectHideFlags: 0
@@ -13888,7 +13889,7 @@ GameObject:
   - 4: {fileID: 1356642196}
   m_Layer: 0
   m_Name: SpawnOne
-  m_TagString: Untagged
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19377,7 +19378,7 @@ GameObject:
   - 4: {fileID: 1777765134}
   m_Layer: 0
   m_Name: SpawnTwo
-  m_TagString: Untagged
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
