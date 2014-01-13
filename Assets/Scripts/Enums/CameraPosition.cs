@@ -1,6 +1,7 @@
 ﻿using System;
 
-/* Dieser Enum enthält Informationen, an welcher Stelle sich die Kamera befindet
+/* 
+ * Dieser Enum enthält die möglichen Kamerapositionen am Auto
  */ 
 
 public enum CameraPosition

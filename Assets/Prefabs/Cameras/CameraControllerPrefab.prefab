@@ -49,7 +49,7 @@ Camera:
     height: 1
   near clip plane: .300000012
   far clip plane: 10000
-  field of view: 50
+  field of view: 45
   orthographic: 0
   orthographic size: 100
   m_Depth: -1
@@ -88,14 +88,14 @@ MonoBehaviour:
   targetCar: {fileID: 0}
   hoodCamera: {fileID: 0}
   hoodCameraLookBack: {fileID: 0}
-  floatingCamDampingZ: 50
-  floatingCamDampingX: 35
-  distanceToTarget: 12
+  floatingCamDampingZ: 40
+  floatingCamDampingX: 20
+  distanceToTarget: 15
   heightOnGround: 7
   viewHeight: 3
-  distanceToTargetHigh: 20
-  heightOnGroundHigh: 12
-  viewHeightHigh: 3
+  distanceToTargetHigh: 25
+  heightOnGroundHigh: 10
+  viewHeightHigh: 5
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

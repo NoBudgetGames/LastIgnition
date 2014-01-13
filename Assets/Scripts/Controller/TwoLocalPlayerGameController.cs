@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Diese Klasse initialisiert die Fahrzeuge für den lokalen 2 Spieler "CooP"
  * Die Autos werden werden an ihren Startpositionen gespawnt
- * Falls ein Auto kaputt ist, kann man es wieder neu  spawnen (llerdings erstmal nur zu testzwecken)
+ * Falls ein Auto kaputt ist, kann man es wieder neu  spawnen (allerdings erstmal nur zu testzwecken)
  */
 
 public class TwoLocalPlayerGameController : MonoBehaviour 
@@ -62,12 +62,6 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		//Kamera muss aufgesetzt werden
 		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
 		playerList.Add(player);
-
-		//Spieler 2 hat keine Tasten auf der Tastatur, nur solange noch Tastatur benötigt wird
-		if(playerName.Equals("Two"))
-		{
-			input.usingController = true;
-		}
 	}
 
 	//resete das Auto des SPielers (FULL HEALTH)
@@ -111,8 +105,8 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		}
 	}
 
-	//diese Methode setzt die Kamerahöhe auf die richtigen Werte, abhängig vom Spieler
-	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
+	//diese Methode setzt die Kameraposition/-höhe (für den SliptScreen am Bildschirm) auf die richtigen Werte,
+	//abhängig vom Spieler. Bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
 	private void setCamera(Camera cam, string playerName)
 	{
 		if(cam != null)
@@ -129,5 +123,4 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 
 		}
 	}
-
 }

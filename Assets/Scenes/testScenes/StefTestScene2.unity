@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!59 &59815319
 HingeJoint:
@@ -753,7 +753,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!146 &90894616
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &159827376
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1225,7 +1225,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &169854133
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &205708179
 BoxCollider:
@@ -1820,7 +1820,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &240230206
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -2220,7 +2220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &302841040
 BoxCollider:
@@ -2399,7 +2399,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &314631775
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -3083,7 +3083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &371334103
 BoxCollider:
@@ -3290,7 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &405337448
 BoxCollider:
@@ -3661,7 +3661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &452782954
 BoxCollider:
@@ -4327,7 +4327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!59 &503394512
 HingeJoint:
@@ -4602,7 +4602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &515777153
 BoxCollider:
@@ -5076,7 +5076,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &547305633
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5378,7 +5378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &603663921
 BoxCollider:
@@ -5703,7 +5703,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &619709188
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5778,7 +5778,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &623839556
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -6275,7 +6275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &690881201
 BoxCollider:
@@ -6360,7 +6360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &694922965
 BoxCollider:
@@ -6512,7 +6512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &716495736
 BoxCollider:
@@ -6651,7 +6651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &725317476
 BoxCollider:
@@ -6867,6 +6867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 547305632}
   rightWheel: {fileID: 623839555}
+  stabilizierMultiplier: .800000012
 --- !u!114 &730842654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6881,6 +6882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 886832122}
   rightWheel: {fileID: 1771038855}
+  stabilizierMultiplier: .800000012
 --- !u!1 &732547360
 GameObject:
   m_ObjectHideFlags: 0
@@ -7676,7 +7678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &816470429
 BoxCollider:
@@ -8568,7 +8570,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &886832123
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -8666,7 +8668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &906306488
 BoxCollider:
@@ -8738,7 +8740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!59 &907347516
 HingeJoint:
@@ -8909,7 +8911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &908045213
 BoxCollider:
@@ -9304,6 +9306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 314631774}
   rightWheel: {fileID: 159827375}
+  stabilizierMultiplier: .800000012
 --- !u!114 &942286535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9318,6 +9321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 240230205}
   rightWheel: {fileID: 1525360735}
+  stabilizierMultiplier: .800000012
 --- !u!1 &949625432
 GameObject:
   m_ObjectHideFlags: 0
@@ -9416,7 +9420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &951047518
 BoxCollider:
@@ -10278,7 +10282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!59 &1072399770
 HingeJoint:
@@ -10402,7 +10406,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &1072778972
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -10748,6 +10752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 1570227291}
   rightWheel: {fileID: 1072778971}
+  stabilizierMultiplier: .800000012
 --- !u!114 &1085413436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10762,6 +10767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 1307585341}
   rightWheel: {fileID: 90894615}
+  stabilizierMultiplier: .800000012
 --- !u!1 &1087747973
 GameObject:
   m_ObjectHideFlags: 0
@@ -10964,7 +10970,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &1094768964
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -11050,7 +11056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!59 &1097810178
 HingeJoint:
@@ -11471,7 +11477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1122082644
 BoxCollider:
@@ -12317,7 +12323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!59 &1180887487
 HingeJoint:
@@ -12808,6 +12814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 619709187}
   rightWheel: {fileID: 169854132}
+  stabilizierMultiplier: .800000012
 --- !u!114 &1211062513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12822,6 +12829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 1094768963}
   rightWheel: {fileID: 1270053183}
+  stabilizierMultiplier: .800000012
 --- !u!54 &1211062514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12936,7 +12944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1221256860
 BoxCollider:
@@ -13078,7 +13086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &1234156403
 BoxCollider:
@@ -13281,7 +13289,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!146 &1270053184
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -13442,7 +13450,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &1307585342
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -13511,7 +13519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1316084994
 BoxCollider:
@@ -14030,7 +14038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!59 &1378505173
 HingeJoint:
@@ -14302,7 +14310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1401231252
 BoxCollider:
@@ -14374,7 +14382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!59 &1403333265
 HingeJoint:
@@ -14677,7 +14685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!59 &1420161638
 HingeJoint:
@@ -15904,7 +15912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1512826449
 BoxCollider:
@@ -16262,7 +16270,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!146 &1525360736
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -16785,7 +16793,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &1570227292
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -16880,7 +16888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1574648039
 BoxCollider:
@@ -17171,7 +17179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1591272287
 BoxCollider:
@@ -17314,7 +17322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1612382186
 BoxCollider:
@@ -17485,7 +17493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1616544046
 BoxCollider:
@@ -17690,7 +17698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1632278520
 BoxCollider:
@@ -19000,7 +19008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1735262958
 BoxCollider:
@@ -19367,7 +19375,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!1 &1777765133
 GameObject:
   m_ObjectHideFlags: 0
@@ -19492,7 +19500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &1790563711
 BoxCollider:
@@ -19721,7 +19729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1814413312
 BoxCollider:
@@ -19892,7 +19900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1841331177
 BoxCollider:
@@ -20014,7 +20022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!59 &1859411820
 HingeJoint:
@@ -20176,7 +20184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!59 &1865587090
 HingeJoint:
@@ -20523,7 +20531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1901286922
 BoxCollider:
@@ -20694,7 +20702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1916320117
 BoxCollider:
@@ -20824,7 +20832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!59 &1926727230
 HingeJoint:
@@ -20942,7 +20950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1929724583
 BoxCollider:
@@ -21171,7 +21179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &1951563630
 BoxCollider:
@@ -23125,7 +23133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &2108055538
 BoxCollider:
@@ -23638,7 +23646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &2136398453
 BoxCollider:

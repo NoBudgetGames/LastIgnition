@@ -1,6 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
+/*
+ * Diese Klasse dient um bei einer Kollision zwischen zwei Autos Schaden zuzufügen.
+ * Dabei wird die die Geschwindigkeit des Autos als Schadensmultiplikator benutzt.
+ * Sie wird als Script-Komponente an ein Car-Objekt hinzugefügt.
+ * Im GameObject selber besitzt das GameObject noch einen MeshCollider - der als Trigger
+ * in der CarCollision-Layer liegt - verwendet, um nicht mit dem richtigen Kollisionmehs des
+ * Autos und den Waffen zu kollidieren
+ */
+
 public class CarCollision : MonoBehaviour
 {
 	//referenz auf dieses Auto
@@ -19,19 +28,15 @@ public class CarCollision : MonoBehaviour
 		//falls other ein DestructibleCarPart hat
 		if(other.GetComponent<DestructibleCarPart>())
 		{
-			Vector3 relVelocityVec = car.GetComponent<Rigidbody>().velocity - other.GetComponent<DestructibleCarPart>().car.GetComponent<Rigidbody>().velocity;
-			float relVelocity = relVelocityVec.magnitude;
-
-			if(relVelocity >10.0f)
+			if(car.GetComponent<Rigidbody>().velocity.magnitude > 10.0f)
 			{
-				//schaden wird mit relativer Geschwindigkeit zum anderen Objekt multipliziert
+				//schaden wird mit aktueller Geschwindigkeit multipliziert
 				AbstractDestructibleObject destr = other.GetComponent<AbstractDestructibleObject>();
 				if(destr != null)
 				{
-					destr.receiveDamage(car.crashDamage * relVelocity);
+					destr.receiveDamage(car.crashDamage * car.GetComponent<Rigidbody>().velocity.magnitude);
 				}
 			}
 		}
 	}
 }
-

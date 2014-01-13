@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /*
  * diese Klasse stellt ein Reifen dar. sie besitzt eine WheelCollider Komponente, sowie eine Referenz auf ein Graphisches Objekt,
- * welches sich auch dreht. Um eine korrekte Aufhänung und eine (Lenk-)Drehung des Reifens zu erreichen muss zwischen dem WHeelCollider und dem eigentlichen
+ * welches sich auch dreht. Um eine korrekte Aufhänung und eine (Lenk-)Drehung des Reifens zu erreichen muss zwischen dem WheelCollider und dem eigentlichen
  * grapischen Objekt (das sich um die eigene y-Achse rotiert), muss ein Objekt dazwischen schalten, um den Reifen auch um die Lenkachse zu drehen.
  */
 
@@ -20,10 +20,12 @@ public class Wheel : MonoBehaviour
 	//referenz auf den WheelCollider, sollte nicht verändert werden, nur public um von aussen zuzugreifen
 	public WheelCollider wheelCol;
 	//DamageDirection
-	public DamageDirection direction;
+	public DamageZone damageZone;
 	
 	//die Räder benötigen ein zusätzliches Gameobject, das dazwischen geschaltet ist, um eine korrekte aufhängung und Lenkung darzustellen
 	private GameObject steerGraphic;
+	//forwärtsslip der Reifen
+	private float forwardSlip;
 	
 //// START UND UPDATE METHODEN
 	
@@ -46,21 +48,7 @@ public class Wheel : MonoBehaviour
 	// Update is called once per frame
 	//in dieser Methode wird das grapische Objekt des Rades verändert
 	void Update()
-	{	
-		//in WheelHit werden Informationen über die Beührung des Reifens mit dem Bodeb gespeichert, wir benötigen hier nur den Punkt
-		WheelHit wheelHit;
-		//falls das Rad den Boden berührt, soll die Position des Rades nach oben verschoben sein, da die Feder zusammengedrückt wird
-		if(wheelCol.GetGroundHit(out wheelHit))
-		{
-			//die position des Rades soll vom Berührungspunkt durch den Radradius nach oben verschoben sein
-			steerGraphic.transform.localPosition = wheelCol.transform.up * (wheelCol.radius + wheelCol.transform.InverseTransformPoint(wheelHit.point).y);
-		}
-		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt
-		else
-		{
-			steerGraphic.transform.position = wheelCol.transform.position - (wheelCol.transform.up * wheelCol.suspensionDistance);
-		}
-					
+	{				
 		//hier muss noch das grapische Objekt rotiert werden, / 60 in sekunden, * in Grad
 		tireGraphic.Rotate(Vector3.right * (wheelCol.rpm / 60 * 360 * Time.deltaTime));	
 		
@@ -74,10 +62,35 @@ public class Wheel : MonoBehaviour
 		}
 	}
 
-	//in dieser MEthode werden die Skidmarks gerendert
+	//in dieser Methode wird der Slip der Reifenan die CarKLasse weitergelteite und die Skidmarks gerendert
 	void FixedUpdate()
 	{
-
+		//in WheelHit werden Informationen über die Beührung des Reifens mit dem Bodeb gespeichert
+		WheelHit wheelHit;
+		//falls das Rad den Boden berührt, soll die Position des Rades nach oben verschoben sein, da die Feder zusammengedrückt wird,
+		//außerdem wird das durchdrehen der Reifen an die Car-Klasse weitergeleitet und die Skidmarks gerendert
+		if(wheelCol.GetGroundHit(out wheelHit))
+		{
+			//die position des Rades soll vom Berührungspunkt durch den Radradius nach oben verschoben sein
+			steerGraphic.transform.localPosition = wheelCol.transform.up * (wheelCol.radius + wheelCol.transform.InverseTransformPoint(wheelHit.point).y);
+			if(wheelHit.sidewaysSlip > 0.5f)
+			{
+				drawSkidmark(wheelHit.sidewaysSlip);
+			}
+			if(wheelHit.forwardSlip > 0.5f)
+			{
+				forwardSlip = wheelHit.forwardSlip;
+			}
+			else
+			{
+				forwardSlip = 0;
+			}
+		}
+		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt
+		else
+		{
+			steerGraphic.transform.position = wheelCol.transform.position - (wheelCol.transform.up * wheelCol.suspensionDistance);
+		}
 	}
 
 //// SETUP METHODEN
@@ -162,5 +175,19 @@ public class Wheel : MonoBehaviour
 		{
 			return 1.0f;
 		}
+	}
+
+	//liefert das Durchdrehen der Reifen zurück
+	public float getForwardSlip()
+	{
+		return forwardSlip;
+	}
+
+//// SKIDMARKS
+
+	//in dieser Methode werden die Skidmarks für diesen Reifen gerendert
+	private void drawSkidmark(float sideSlip)
+	{
+
 	}
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 
-/* Dieser Enum enthält Informationen, aus welcher Richtung der Schaden relativ zum Fahrzeug kam.
+/* 
+ * Dieser Enum enthält die verschiedenen Schadenszonen am Auto
  * Der Wert selber wird vom Trigger am Fahrzeug benutzt, um im Car Script die applyDamage Methode aufzurufen
  */ 
 
-public enum DamageDirection
+public enum DamageZone
 {
 	NONE = -1,
 	FRONT, 
@@ -16,4 +17,3 @@ public enum DamageDirection
 	REAR_LEFT,
 	REAR_RIGHT
 };
-

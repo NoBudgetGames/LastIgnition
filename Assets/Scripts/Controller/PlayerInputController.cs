@@ -2,18 +2,17 @@ using UnityEngine;
 using System.Collections;
 
 /*
- * der InputController diest dazu, den Input vom SPieler auf das Fahrzeug zu übertragen
- * Die Nummer des Spielers ist von einen String abhängig, somit muss nur eine Klasse geschreiben werden
+ * der InputController diest dazu, den Input vom Spieler auf das Fahrzeug zu übertragen
+ * Die Nummer des Spielers ist von einen String abhängig, somit muss nur eine Klasse geschrieben werden
  * AUßerdem besitzt die Klasse eine Referenz auf einen CameraController. Da nur menschliche Spieler eine Kamera brauchen,
- * wird diese Komponente im ebenfalls nur für menschliche Spieler benötigten InputController gespeichert
+ * wird diese Komponente im ebenfalls nur für menschliche Spieler benötigten PlayerInputController gespeichert
+ * Die Klasse wird als Script-Komponente in das Auto-Object hinzugefügt
  */
 
 public class PlayerInputController : MonoBehaviour 
 {
 	//Einfüge String für Input, "One" für Spieler 1, "Two" für Spieler 2, es ist nicht der richtige Name des Spielers!
 	public string playerString = "One";
-	//Wird ein Controller benutz oder nicht?
-	public bool usingController = false;
 	//refernz auf die CameraControllerPrefab, wird instanziert, NICHT VERÄNDERN!
 	public GameObject cameraCtrlPrefab;
 	//referenz auf weitere Kameras, z.B. die Kamere auf der Motorhaube
@@ -25,6 +24,8 @@ public class PlayerInputController : MonoBehaviour
 	private Car car;
 	//Referenz auf das Inventar des Autos
 	private CarInventory inv;
+	//hilfsvariable, die überprüft, ob ein Controller für den Spieler angeschloßen wurde oder nicht
+	private bool controllerAttached = false;
 
 	public GameObject hudPrefab;
 	public HUD hud;
@@ -44,14 +45,31 @@ public class PlayerInputController : MonoBehaviour
 		//zweites Element ist Kofferraumkamera
 		cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
 		
-			GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
-			hud = hudObj.GetComponent<HUD>();
+		GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+		hud = hudObj.GetComponent<HUD>();
+		hud.cameraObject = camObj;
+	}
 
-			hud.cameraObject = camObj;
-		
-
-
-
+	//in dieser Methode wird geschaut, ob für den Spieler ein Controller angeschloßen wurde oder nicht
+	void Start()
+	{
+		//gehe alle angeschloßenen Controller durch
+		//GetJoystickNames ist ein String Array mit den angeschloßenen Joysticks
+		//falls seine Länge kleiner als 2 ist, wurden nicht alle Controller angeschloßen
+		//d.h. Spieler 2 wird bei nur 1 angeschloßenen Controller immer auf der Tastatur spielen
+		for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+		{
+			//überprüfe für Spieler One
+			if(i == 0 && playerString.Equals("One") && Input.GetJoystickNames()[i] != null)
+			{
+				controllerAttached = true;
+			}
+			//überprüfe für Spieler Two
+			if(i == 1 && playerString.Equals("Two") && Input.GetJoystickNames()[i] != null)
+			{
+				controllerAttached = true;
+			}
+		}
 	}
 
 	public void setupHUD(){
@@ -68,9 +86,8 @@ public class PlayerInputController : MonoBehaviour
 	//in dieser Methode wird der Input des Spielers an die jeweiligen Komponenten weitergereicht
 	void FixedUpdate()
 	{
-
-		//falls Tastatur benutzt wird, wird später rausgenohmen
-		if(usingController == false)
+		//falls für diesen Spieler kein Controller angeschloßen ist, benutze die Tastatur
+		if(controllerAttached == false)
 		{
 			car.setThrottle(Input.GetAxis("Player" + playerString + "ThrottleKey"));
 			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));

@@ -8,6 +8,7 @@ using System.Collections.Generic;
  * Außerdem verarbeitet sie den Input eines Controller Scripts, dies kann ein Spieler oder eine KI sein.
  * Daneben hat jedes Autos auch Lebenspunkte, die bei Kollisionen oder durch Waffen verringert werden
  * Dazu gibt es noch mehrere Modele, die in abhängigkeit der Lebenspunkte ausgetauscht werden
+ * (Für eine genaure Beschreibung siehe Doku/Designentscheidungen)
  */
 
 public class Car : MonoBehaviour 
@@ -126,8 +127,10 @@ public class Car : MonoBehaviour
 	//WheelFrictionCurves, sollten für alle Reifen gleich sein
 	//vorwärtsfahren
 	private WheelFrictionCurve forwardWFC;
-	//seitwärsfahren bzw. rutschen
-	private WheelFrictionCurve sidewaysWFC;
+	//seitwärsfahren für vorne
+	private WheelFrictionCurve sidewaysFrontWFC;
+	//seitwärsfahren bzw. rutschen für hinten
+	private WheelFrictionCurve sidewaysRearWFC;
 	//seitwärtsrutschen falls Handbremse benutzt wird
 	private WheelFrictionCurve sidewaysHandbrakeWFC;
 	
@@ -213,9 +216,9 @@ public class Car : MonoBehaviour
 		thisRigidBody.centerOfMass = CenterOfMassDown.localPosition;
 		
 		//richtige Schadensmodell aktivieren, gehe durch jede Schadesnzone durch und füge 0 Schaden
-		foreach(DamageDirection direction in DamageDirection.GetValues(typeof(DamageDirection)))
+		foreach(DamageZone damZone in DamageZone.GetValues(typeof(DamageZone)))
 		{
-			applyVisualDamage(direction, 0);
+			applyVisualDamage(damZone, 0);
 		}
 	}
 
@@ -304,6 +307,19 @@ public class Car : MonoBehaviour
 	{
 		return isReversing;
 	}
+
+	//liefert true, wenn das Auto gerade am lenken ist
+	public bool isSteering()
+	{
+		if(steer < 0.1f && steer > -0.1f)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 	
 //// INPUT METHODEN
 	
@@ -362,7 +378,7 @@ public class Car : MonoBehaviour
 //// SCHADENSMODELLE AUFSETZEN, EXPLODIEREN
 
 	//diese Methode behandelt den Schaden der einzelnen DestructibleCarParts
-	public void applyDamage(DamageDirection direction, float damageAmount)
+	public void applyDamage(DamageZone damZone, float damageAmount)
 	{
 		health -= damageAmount;	
 
@@ -373,7 +389,7 @@ public class Car : MonoBehaviour
 			glassDamageModels[1].SetActive(true);
 		}
 		//für den sichtbaren Schaden sind keine float Werte nötig
-		applyVisualDamage(direction, (int)damageAmount);
+		applyVisualDamage(damZone, (int)damageAmount);
 
 		//Wenn die Lebenspunkte 0 sind, soll das Auto explodieren und alle refen verlieren
 		if(health<=0.0f)
@@ -383,14 +399,14 @@ public class Car : MonoBehaviour
 	}
 
 	//diese Methode sorgt dafür, dass das Auto einen Reifen verliert
-	private void loseAWheel(DamageDirection direction)
+	private void loseAWheel(DamageZone damZone)
 	{
 		Wheel wheelToDestroy = null;
 		hasLostWheel = true;
 		//gehe durch jedes Rad durch und such dasd richtige raus
 		foreach(Wheel wheel in wheels)
 		{	
-			if(wheel.direction == direction)
+			if(wheel.damageZone == damZone)
 			{
 				wheelToDestroy = wheel;
 				break;
@@ -453,9 +469,9 @@ public class Car : MonoBehaviour
 			removeWheelFromList(ref wheelToDestroy);
 		}
 		//gehe durch alle Schadenszonen durch und füge (visuellen )schaden hinzu
-		foreach(DamageDirection direction in DamageDirection.GetValues(typeof(DamageDirection)))
+		foreach(DamageZone damZone in DamageZone.GetValues(typeof(DamageZone)))
 		{
-			applyVisualDamage(direction, 200);
+			applyVisualDamage(damZone, 200);
 		}
 		removeDoor(frontDoor);
  		removeDoor(rearDoor);
@@ -464,33 +480,33 @@ public class Car : MonoBehaviour
 	}
 	
 	//diese Methode verarbeitet den Schaden und schaut, aus welcher Richtung er kam und ruf entsprechende Methode auf
-	private void applyVisualDamage(DamageDirection direction, int damageAmount)
+	private void applyVisualDamage(DamageZone damZone, int damageAmount)
 	{
 		//zunächst muss geschaut werden, an welcher Stelle der Schaden angerichtet werden soll
-		switch (direction)
+		switch (damZone)
 		{
-			case DamageDirection.FRONT:
+			case DamageZone.FRONT:
 				setupFrontDamage(damageAmount);
 				break;
-			case DamageDirection.REAR:
+			case DamageZone.REAR:
 				setupRearDamage(damageAmount);
 				break;
-			case DamageDirection.RIGHT:
+			case DamageZone.RIGHT:
 				setupRightDamage(damageAmount);
 				break;
-			case DamageDirection.LEFT:
+			case DamageZone.LEFT:
 				setupLeftDamage(damageAmount);
 				break;
-			case DamageDirection.FRONT_LEFT:
+			case DamageZone.FRONT_LEFT:
 				setupFrontLeftDamage(damageAmount);
 				break;
-			case DamageDirection.FRONT_RIGHT:
+			case DamageZone.FRONT_RIGHT:
 				setupFrontRightDamage(damageAmount);
 				break;
-			case DamageDirection.REAR_LEFT:
+			case DamageZone.REAR_LEFT:
 				setupRearLeftDamage(damageAmount);
 				break;
-			case DamageDirection.REAR_RIGHT:
+			case DamageZone.REAR_RIGHT:
 				setupRearRightDamage(damageAmount);
 				break;
 		}
@@ -685,7 +701,7 @@ public class Car : MonoBehaviour
 		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
 		if(hasLostWheel == false && frontLeftHealth <= 15)
 		{
-			loseAWheel(DamageDirection.FRONT_LEFT);
+			loseAWheel(DamageZone.FRONT_LEFT);
 		}
 	}
 
@@ -717,7 +733,7 @@ public class Car : MonoBehaviour
 		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
 		if(hasLostWheel == false && frontRightHealth <= 15)
 		{
-			loseAWheel(DamageDirection.FRONT_RIGHT);
+			loseAWheel(DamageZone.FRONT_RIGHT);
 		}
 	}
 
@@ -749,7 +765,7 @@ public class Car : MonoBehaviour
 		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
 		if(hasLostWheel == false && rearLeftHealth <= 15)
 		{
-			loseAWheel(DamageDirection.REAR_LEFT);
+			loseAWheel(DamageZone.REAR_LEFT);
 		}
 	}
 
@@ -781,7 +797,7 @@ public class Car : MonoBehaviour
 		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
 		if(hasLostWheel == false && rearRightHealth <= 15)
 		{
-			loseAWheel(DamageDirection.REAR_LEFT);
+			loseAWheel(DamageZone.REAR_LEFT);
 		}
 	}
 
@@ -804,12 +820,12 @@ public class Car : MonoBehaviour
 			if(wheel.isFrontWheel)
 			{
 				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringFront);
-				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
+				wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
 			}
 			else
 			{
 				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringRear);
-				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
+				wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
 			}
 			
 			if(wheel.isDriveWheel)
@@ -829,26 +845,34 @@ public class Car : MonoBehaviour
 		//normales geradeaus fahren
 		forwardWFC = new WheelFrictionCurve();
 		forwardWFC.asymptoteSlip = 2.0f;
-		forwardWFC.asymptoteValue = 400f;
+		forwardWFC.asymptoteValue = 200; //400f;
 		forwardWFC.extremumSlip = 0.5f;
-		forwardWFC.extremumValue = 6000;
+		forwardWFC.extremumValue = 3000; //6000;
 		forwardWFC.stiffness = 1.0f;
 		
-		//seitliches rutschen/bewegen
-		sidewaysWFC = new WheelFrictionCurve();
-		sidewaysWFC.asymptoteSlip = 2.0f;
-		sidewaysWFC.asymptoteValue = 150f;
-		sidewaysWFC.extremumSlip = 1f;
-		sidewaysWFC.extremumValue = 350;
-		sidewaysWFC.stiffness = 1.0f * slipMultiplier;	
+		//seitliches rutschen/bewegen für die Vorderreifen
+		sidewaysFrontWFC = new WheelFrictionCurve();
+		sidewaysFrontWFC.asymptoteSlip = 2.0f;
+		sidewaysFrontWFC.asymptoteValue = 70; //150f;
+		sidewaysFrontWFC.extremumSlip = 1f;
+		sidewaysFrontWFC.extremumValue = 170; //350;
+		sidewaysFrontWFC.stiffness = 1.0f * slipMultiplier;	
+
+		//seitliches rutschen/bewegen für die Hintereifen (für Donuts usw.)
+		sidewaysRearWFC = new WheelFrictionCurve();
+		sidewaysRearWFC.asymptoteSlip = 2.0f;
+		sidewaysRearWFC.asymptoteValue = 70; //150f;
+		sidewaysRearWFC.extremumSlip = 1f;
+		sidewaysRearWFC.extremumValue = 170; //350;
+		sidewaysRearWFC.stiffness = 0.9f * slipMultiplier;	
 		
-		//seitliches rutschen falls die Handbremse benutzt wird, dadurch kann das Auto besser um die Kurve driften und Donuts fahren
+		//seitliches rutschen falls die Handbremse benutzt wird
 		sidewaysHandbrakeWFC = new WheelFrictionCurve();
 		sidewaysHandbrakeWFC.asymptoteSlip = 2.0f;
-		sidewaysHandbrakeWFC.asymptoteValue = 150f;
+		sidewaysHandbrakeWFC.asymptoteValue = 70; //150f;
 		sidewaysHandbrakeWFC.extremumSlip = 1f;
-		sidewaysHandbrakeWFC.extremumValue = 350;
-		sidewaysHandbrakeWFC.stiffness = 0.5f * slipMultiplier;	
+		sidewaysHandbrakeWFC.extremumValue = 200; //350;
+		sidewaysHandbrakeWFC.stiffness = 1.0f;
 	}
 
 //// PHYSIK BERECHNUNGEN, FAHRZEUG WERTE
@@ -992,7 +1016,7 @@ public class Car : MonoBehaviour
 				//falls es ein Vorderrad ist, sollen die normalen WFC bnutzt werden
 				if(wheel.isFrontWheel)
 				{
-					wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
+					wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
 				}
 				//ansonsten soll am den HInterrädern eine andere WFC fürs seitliche fahren verwendet werden
 				else
@@ -1006,8 +1030,26 @@ public class Car : MonoBehaviour
 		{
 			foreach(Wheel wheel in wheels)
 			{
-				wheel.setFrictionCurves(forwardWFC, sidewaysWFC);
-			}
+/*				//wenn die Reifen am durchdrehen sind
+				if(wheel.getForwardSlip() > 1.0f)
+				{
+*/					//falls es ein Vorderrad ist, sollen die normalen WFC bnutzt werden
+					if(wheel.isFrontWheel)
+					{
+						wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
+					}
+					//ansonsten soll am den HInterrädern eine andere WFC verwendet werden, um besser rutschen zu können
+					else
+					{
+						wheel.setFrictionCurves(forwardWFC, sidewaysRearWFC);
+					}
+/*				}
+				//ansonsten benutzen normale WFC
+				else
+				{
+					wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
+				}
+*/			}
 		}
 	}
 	
@@ -1078,7 +1120,7 @@ public class Car : MonoBehaviour
 		}
 	}
 	
-	//diese Methode stabiliziert das Auto in Kurven lage. Da die StabilizerBars nicht genug stabiliziert, wird hier einfach der Schwerpunkt nach unten gesetzt
+	//diese Methode stabiliziert das Auto in Kurvenlage. Da die StabilizerBars nicht genug stabilizieren, wird hier einfach der Schwerpunkt nach unten gesetzt
 	private void stabilizeCar()
 	{
 		//nur wenn mindestens 1 Rad den Boden berührt soll das Auto stabiliziert werden
@@ -1111,11 +1153,12 @@ public class Car : MonoBehaviour
 			previousVel = currentVelocity;
 			//maximal Zulässige Beschleunigung
 			int maxAccelleration = 60;
+			//Debug.Log ("Accel " + deltaAccelleration);
 
-			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
+/*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
 			//abhängig vom neigungswinkel des Autos ist
 			//nur wenn sich ein Reifen auf dem Boden befindet
-/*			if(isOneWheelGrounded)
+			if(isOneWheelGrounded)
 			{
 				//Vector in World Space, in welcher Richtung das Auto zeigt
 				Vector3 currentForward = this.thisTransform.TransformDirection(thisTransform.forward);
@@ -1145,20 +1188,19 @@ public class Car : MonoBehaviour
 				//beim rückwärtafahren entstehen größere Beschleunigungen, Ursache noch nicht gefunden
 			}
 
-			//Debug.Log("Accel " + deltaAccelleration);
-
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
 				//werte reseten, da sich das Auto möglicherweise noch fortbewegt/bremst, da er noch den Wert vom vorherigen Frame hat
 				//verurschat ein paar selstsame Fehler
-				wheel.wheelCol.brakeTorque = 0f;
-				//sollte die maximal zugelasse Beschleunigung überschreitten werden, bremsen wir einfach
+				wheel.wheelCol.brakeTorque = 0.0f;
+				wheel.wheelCol.motorTorque = motorTorque;		
+				//sollte die maximal zugelasse Beschleunigung überschrietten werden, bremsen wir einfach und beschleunigen nicht mehr so stark
 				if(deltaAccelleration > maxAccelleration && isReversing == false)
 				{
+					wheel.wheelCol.motorTorque = motorTorque/2;	
 					wheel.wheelCol.brakeTorque = Mathf.Lerp(0.0f, 1000, deltaAccelleration / maxAccelleration);
 				}
-				wheel.wheelCol.motorTorque = motorTorque;		
 			}
 		}
 	}
@@ -1178,7 +1220,7 @@ public class Car : MonoBehaviour
 				else
 				{
 					//mehr Bremskraft auf Hinterreifen
-					wheel.wheelCol.brakeTorque = brakeTorque;
+					wheel.wheelCol.brakeTorque = brakeTorque * 2;
 				}
 			}	
 		}

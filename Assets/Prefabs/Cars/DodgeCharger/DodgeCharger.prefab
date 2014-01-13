@@ -1374,7 +1374,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: .00872663688, z: 0, w: -.999961913}
   m_LocalPosition: {x: 3.19995117, y: -1.16999996, z: -5.03704834}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1386,7 +1386,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
-  m_LocalRotation: {x: 0, y: -.00436330959, z: 0, w: .999990523}
+  m_LocalRotation: {x: 0, y: .00872663688, z: 0, w: -.999961913}
   m_LocalPosition: {x: 3.19995117, y: -1.16999996, z: 7.03485107}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1431,7 +1431,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100016}
-  m_LocalRotation: {x: 0, y: .00436330959, z: 0, w: .999990523}
+  m_LocalRotation: {x: 0, y: .00872653536, z: 0, w: .999961913}
   m_LocalPosition: {x: -3.19995117, y: -1.17000008, z: 7.03485107}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1472,7 +1472,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100022}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: .00872653536, z: 0, w: .999961913}
   m_LocalPosition: {x: -3.19995117, y: -1.16999996, z: -5.03704834}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3449,8 +3449,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   serializedVersion: 2
-  m_Mass: 2500
-  m_Drag: 100
+  m_Mass: 25000
+  m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -3805,7 +3805,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3822,7 +3822,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3839,7 +3839,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3852,13 +3852,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerString: One
-  usingController: 1
   cameraCtrlPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
   additionalCameraPositions:
   - {fileID: 400140}
   - {fileID: 400116}
   cameraCtrl: {fileID: 0}
   hudPrefab: {fileID: 100004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
+  hud: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3949,8 +3949,8 @@ MonoBehaviour:
   differentialMultiplier: 2.5
   brakeTorque: 700
   slipMultiplier: .800000012
-  maxSteerAngle: 35
-  minSteerAngle: 10
+  maxSteerAngle: 40
+  minSteerAngle: 15
   engineBrakingMultiplier: .5
   crashDamage: .100000001
   CenterOfMass: {fileID: 400024}
@@ -4000,7 +4000,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4014,6 +4014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 11400004}
   rightWheel: {fileID: 11400002}
+  stabilizierMultiplier: .800000012
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4027,6 +4028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 11400010}
   rightWheel: {fileID: 11400000}
+  stabilizierMultiplier: .800000012
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4089,7 +4091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400026
 MonoBehaviour:
@@ -4102,7 +4104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400028
 MonoBehaviour:
@@ -4115,7 +4117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400030
 MonoBehaviour:
@@ -4128,7 +4130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400032
 MonoBehaviour:
@@ -4141,7 +4143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400034
 MonoBehaviour:
@@ -4154,7 +4156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400036
 MonoBehaviour:
@@ -4167,7 +4169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400038
 MonoBehaviour:
@@ -4180,7 +4182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400040
 MonoBehaviour:
@@ -4193,7 +4195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400042
 MonoBehaviour:
@@ -4206,7 +4208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400044
 MonoBehaviour:
@@ -4219,7 +4221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400046
 MonoBehaviour:
@@ -4232,7 +4234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 11400008}
 --- !u!114 &11400048
 MonoBehaviour:

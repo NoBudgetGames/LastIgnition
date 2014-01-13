@@ -41,7 +41,7 @@ InputManager:
     descriptiveName: Player One Reset Car Key
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: end
+    positiveButton: right shift
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -73,7 +73,7 @@ InputManager:
     descriptiveName: Player One Change Camera Key
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: c
+    positiveButton: insert
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -89,9 +89,9 @@ InputManager:
     descriptiveName: Player One Fire Key
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: left ctrl
+    positiveButton: right ctrl
     altNegativeButton: 
-    altPositiveButton: e
+    altPositiveButton: 
     gravity: 1000
     dead: .00100000005
     sensitivity: 1000
@@ -105,7 +105,7 @@ InputManager:
     descriptiveName: Player One Cycle Weapon Up Key
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: r
+    positiveButton: page up
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -121,7 +121,7 @@ InputManager:
     descriptiveName: Player One Cycle Weapon Down Key
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f
+    positiveButton: page down
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -139,7 +139,167 @@ InputManager:
     negativeButton: 
     positiveButton: 
     altNegativeButton: 
+    altPositiveButton: end
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoThrottleKey
+    descriptiveName: Player Two Throttle
+    descriptiveNegativeName: Player Two Break Key
+    negativeButton: s
+    positiveButton: w
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoSteerKey
+    descriptiveName: Player Two Right
+    descriptiveNegativeName: Player Two Left Key
+    negativeButton: a
+    positiveButton: d
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoResetCarKey
+    descriptiveName: Player Two Reset Car Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: r
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoHandbrakeKey
+    descriptiveName: Player Two Handbrake Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: x
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoChangeCameraKey
+    descriptiveName: Player Two Change Camera Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: c
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .0149999997
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoFireKey
+    descriptiveName: Player Two Fire Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: e
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: .00100000005
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoCycleWeaponUpKey
+    descriptiveName: Player Two Cycle Weapon Up Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: left shift
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoCycleWeaponDownKey
+    descriptiveName: Player Two Cycle Weapon Down Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: left ctrl
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PlayerTwoLookBackKey
+    descriptiveName: Player Two Look Back
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
     altPositiveButton: x
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PauseGameKey
+    descriptiveName: Pause Game Key
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
     gravity: 3
     dead: .00100000005
     sensitivity: 3
@@ -163,6 +323,22 @@ InputManager:
     invert: 1
     type: 2
     axis: 2
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: PauseGame
+    descriptiveName: Pause Game
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .0149999997
+    sensitivity: 1000
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
     joyNum: 1
   - serializedVersion: 3
     m_Name: PlayerOneSteer
