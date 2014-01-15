@@ -754,6 +754,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &90894616
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1111,6 +1112,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &159827376
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1174,6 +1176,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .632828116
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
   m_RootGameObject: {fileID: 730842648}
@@ -1226,6 +1232,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &169854133
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1821,6 +1828,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &240230206
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -2400,6 +2408,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &314631775
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5077,6 +5086,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &547305633
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5704,6 +5714,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &619709188
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5779,6 +5790,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &623839556
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5835,8 +5847,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {fileID: 1356642196}
-  - {fileID: 1777765134}
+  - {fileID: 1356642195}
+  - {fileID: 1777765133}
   carPrefab: {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
   playerList: []
 --- !u!4 &632515977
@@ -6006,6 +6018,62 @@ Transform:
   - {fileID: 214230460}
   - {fileID: 365870838}
   m_Father: {fileID: 942286530}
+--- !u!1 &664584256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 664584259}
+  - 33: {fileID: 664584258}
+  - 23: {fileID: 664584257}
+  m_Layer: 0
+  m_Name: SkidmarkWithMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &664584257
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664584256}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 471739605a1984846a78578445be1274, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!33 &664584258
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664584256}
+  m_Mesh: {fileID: 0}
+--- !u!4 &664584259
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664584256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1468.62598, y: 72.986969, z: 1108.30566}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &673554368
 GameObject:
   m_ObjectHideFlags: 0
@@ -6685,7 +6753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &730842649
 Transform:
   m_ObjectHideFlags: 0
@@ -8127,6 +8195,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d9f6aaa642dc8824394531a80fc23637, type: 2}
+    - target: {fileID: 100000, guid: efd9ebe13cd9c4446b7b033093a9d2fd, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: efd9ebe13cd9c4446b7b033093a9d2fd, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: efd9ebe13cd9c4446b7b033093a9d2fd, type: 3}
@@ -8571,6 +8643,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &886832123
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -9124,7 +9197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &942286530
 Transform:
   m_ObjectHideFlags: 0
@@ -9853,6 +9926,46 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1726314647}
   m_GameObject: {fileID: 1004341786}
   m_Mesh: {fileID: 0}
+--- !u!1001 &1009237972
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: .00872653536
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: .999961913
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+  m_RootGameObject: {fileID: 1216865280}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1011577148
 GameObject:
   m_ObjectHideFlags: 0
@@ -10407,6 +10520,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &1072778972
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -10570,7 +10684,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1085413431
 Transform:
   m_ObjectHideFlags: 0
@@ -10971,6 +11085,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &1094768964
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -12648,7 +12763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1211062509
 Transform:
   m_ObjectHideFlags: 0
@@ -12904,6 +13019,94 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1555190614}
   m_GameObject: {fileID: 1213589635}
   m_Mesh: {fileID: 4300002, guid: 847bc00251b7ae94ab85874cbdcf4a74, type: 3}
+--- !u!1 &1216865280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+  m_PrefabInternal: {fileID: 1009237972}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1216865281}
+  - 96: {fileID: 1216865283}
+  - 114: {fileID: 1216865282}
+  m_Layer: 0
+  m_Name: SkidmarkTrailPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1216865281
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: 37468a3acf9ed444298e83a593a27110, type: 2}
+  m_PrefabInternal: {fileID: 1009237972}
+  m_GameObject: {fileID: 1216865280}
+  m_LocalRotation: {x: 0, y: .00872653536, z: 0, w: .999961913}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1216865282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 37468a3acf9ed444298e83a593a27110,
+    type: 2}
+  m_PrefabInternal: {fileID: 1009237972}
+  m_GameObject: {fileID: 1216865280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee259b2fef757c640b109799d76c159e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorSandNormal: {r: .87429893, g: .882352948, b: .29844293, a: 0}
+  colorSandLose: {r: .834888518, g: .875, b: .147977918, a: 0}
+  colorRubble: {r: .779411793, g: .779411793, b: .779411793, a: 0}
+  colorDirt: {r: .632352948, g: .48664242, b: .302227497, a: 0}
+  colorGrass: {r: 0, g: .669117689, b: .0599898547, a: 0}
+--- !u!96 &1216865283
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 9600000, guid: 37468a3acf9ed444298e83a593a27110,
+    type: 2}
+  m_PrefabInternal: {fileID: 1009237972}
+  m_GameObject: {fileID: 1216865280}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 471739605a1984846a78578445be1274, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 10
+  m_StartWidth: 1
+  m_EndWidth: 1
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4288190616
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4278190335
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4280418048
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294904832
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 4291690751
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &1221256857
 GameObject:
   m_ObjectHideFlags: 0
@@ -13290,6 +13493,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &1270053184
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -13451,6 +13655,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &1307585342
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -16271,6 +16476,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &1525360736
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -16632,6 +16838,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .632828116
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
   m_RootGameObject: {fileID: 1085413430}
@@ -16794,6 +17004,7 @@ MonoBehaviour:
   isFrontWheel: 0
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!146 &1570227292
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -18931,6 +19142,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .632828116
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
   m_RootGameObject: {fileID: 1211062508}
@@ -19376,6 +19591,7 @@ MonoBehaviour:
   isFrontWheel: 1
   wheelCol: {fileID: 0}
   damageZone: 0
+  skidTrailPrefab: {fileID: 0}
 --- !u!1 &1777765133
 GameObject:
   m_ObjectHideFlags: 0
@@ -21487,6 +21703,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .632828116
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cda7d3f25f1f10489fb3b5227007f35, type: 2}
   m_RootGameObject: {fileID: 942286529}
@@ -22525,7 +22745,7 @@ GameObject:
   - 33: {fileID: 2064994742}
   - 23: {fileID: 2064994741}
   - 64: {fileID: 2064994744}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TestKurs
   m_TagString: Untagged
   m_Icon: {fileID: 0}

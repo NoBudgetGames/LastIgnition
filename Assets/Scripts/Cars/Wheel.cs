@@ -17,15 +17,17 @@ public class Wheel : MonoBehaviour
 	public bool isDriveWheel = false;
 	//ist dies ein Vorderrad? die Federn der Aufhängung am Motor sind in der Regel stärker als die anderen (meistens vorne)
 	public bool isFrontWheel = false;
-	//referenz auf den WheelCollider, sollte nicht verändert werden, nur public um von aussen zuzugreifen
+	//referenz auf den WheelCollider, sollte nicht verändert werden, nur public um von aussen besser zuzugreifen (anstatt über Getter Methode)
 	public WheelCollider wheelCol;
 	//DamageDirection
 	public DamageZone damageZone;
-	
+	//referenzt auf die Skidmark-Prefab mit TrailRenderer
+	public GameObject skidTrailPrefab;
+
+	//Referenz auf den Skidmark Object samt TrailRenderer
+	private GameObject skidmarkWithTrail;
 	//die Räder benötigen ein zusätzliches Gameobject, das dazwischen geschaltet ist, um eine korrekte aufhängung und Lenkung darzustellen
 	private GameObject steerGraphic;
-	//forwärtsslip der Reifen
-	private float forwardSlip;
 	
 //// START UND UPDATE METHODEN
 	
@@ -48,7 +50,7 @@ public class Wheel : MonoBehaviour
 	// Update is called once per frame
 	//in dieser Methode wird das grapische Objekt des Rades verändert
 	void Update()
-	{				
+	{	
 		//hier muss noch das grapische Objekt rotiert werden, / 60 in sekunden, * in Grad
 		tireGraphic.Rotate(Vector3.right * (wheelCol.rpm / 60 * 360 * Time.deltaTime));	
 		
@@ -60,12 +62,8 @@ public class Wheel : MonoBehaviour
 			tempRot.y = wheelCol.steerAngle;
 			steerGraphic.transform.localEulerAngles = tempRot;	
 		}
-	}
 
-	//in dieser Methode wird der Slip der Reifenan die CarKLasse weitergelteite und die Skidmarks gerendert
-	void FixedUpdate()
-	{
-		//in WheelHit werden Informationen über die Beührung des Reifens mit dem Bodeb gespeichert
+		//in WheelHit werden Informationen über die Beührung des Reifens mit dem Boden gespeichert
 		WheelHit wheelHit;
 		//falls das Rad den Boden berührt, soll die Position des Rades nach oben verschoben sein, da die Feder zusammengedrückt wird,
 		//außerdem wird das durchdrehen der Reifen an die Car-Klasse weitergeleitet und die Skidmarks gerendert
@@ -73,23 +71,44 @@ public class Wheel : MonoBehaviour
 		{
 			//die position des Rades soll vom Berührungspunkt durch den Radradius nach oben verschoben sein
 			steerGraphic.transform.localPosition = wheelCol.transform.up * (wheelCol.radius + wheelCol.transform.InverseTransformPoint(wheelHit.point).y);
-			if(wheelHit.sidewaysSlip > 0.5f)
-			{
-				drawSkidmark(wheelHit.sidewaysSlip);
+
+			//falls der Reifen rutscht
+			if(Mathf.Abs(wheelHit.forwardSlip) > 10.0f || Mathf.Abs(wheelHit.sidewaysSlip) > 15.0f)
+			{	
+				//falls es momentan bereits eine Skidmark für diesen Reifen gibt
+				if(skidmarkWithTrail != null)
+				{
+					skidmarkWithTrail.transform.position = wheelHit.point;
+					//verschiebe die Skidmark ein kleines bischen nach oben, damit sie nicht durch den Boden clippt
+					skidmarkWithTrail.transform.Translate(Vector3.up * 0.1f);
+				}
+				//falls es keine Skidmark gibt, erzeuge eine neue
+				else
+				{
+					skidmarkWithTrail = (GameObject)GameObject.Instantiate(skidTrailPrefab);
+					skidmarkWithTrail.transform.position = wheelHit.point;
+					skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().setGroundLayer(wheelHit.collider.transform.gameObject.layer);
+				}
 			}
-			if(wheelHit.forwardSlip > 0.5f)
-			{
-				forwardSlip = wheelHit.forwardSlip;
-			}
+			//ansonsten entferne die aktuelle Skidmark
 			else
 			{
-				forwardSlip = 0;
+				if(skidmarkWithTrail != null)
+				{
+					skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().removeSkidmark();
+					skidmarkWithTrail = null;
+				}
 			}
 		}
-		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt
+		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt und das Skidmark Object existiert nicht mehr
 		else
 		{
 			steerGraphic.transform.position = wheelCol.transform.position - (wheelCol.transform.up * wheelCol.suspensionDistance);
+			if(skidmarkWithTrail != null)
+			{
+				skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().removeSkidmark();
+				skidmarkWithTrail = null;
+			}
 		}
 	}
 
@@ -114,7 +133,7 @@ public class Wheel : MonoBehaviour
 	}
 	
 	//in dieser Methode werden die WheelFrictionCurves übergeben, man kann sie auch noch nachträlich ändern, z.B. im beim 
-	//benutzen der Handbremse oder einen anderen Untergrund ein anderes Verhalten zu haben
+	//benutzen der Handbremse oder bei einen anderen Untergrund ein anderes Verhalten zu haben
 	public void setFrictionCurves(WheelFrictionCurve forward, WheelFrictionCurve sideways)
 	{
 		//falls sich das Rad in der Luft befindet soll es nicht zur Berechnung beitragen
@@ -130,25 +149,31 @@ public class Wheel : MonoBehaviour
 			case 9:
 				forward.stiffness *= 0.8f; //fester Sand, SandNormal
 				sideways.stiffness *= 0.8f;
+				checkSkidmarkLayer(layer);
 				break;
 			case 10:
-				forward.stiffness *= 0.6f; //loser Sand, SandLose
-				sideways.stiffness *= 0.8f;
+				forward.stiffness *= 0.5f; //loser Sand, SandLose
+				sideways.stiffness *= 1.5f;
+				checkSkidmarkLayer(layer);
 				break;
 			case 11:
 				forward.stiffness *= 0.75f; //Schotter, Rubble
 				sideways.stiffness *= 0.65f;
+				checkSkidmarkLayer(layer);
 				break;
 			case 12:
 				forward.stiffness *= 0.8f; //Erdweg, Dirt
 				sideways.stiffness *= 0.7f;
+				checkSkidmarkLayer(layer);
 				break;
 			case 13:
 				forward.stiffness *= 0.7f; //Grass, Grass
 				sideways.stiffness *= 0.7f;
+				checkSkidmarkLayer(layer);
 				break;
 			default:
 				//asphalt, Default Layer (mach nichts)
+				checkSkidmarkLayer(layer);
 				break;
 			}
 			wheelCol.forwardFriction = forward;
@@ -177,17 +202,21 @@ public class Wheel : MonoBehaviour
 		}
 	}
 
-	//liefert das Durchdrehen der Reifen zurück
-	public float getForwardSlip()
+//// SONSTIGES
+
+	//diese Methode überprüft, ob die Layer der Skidmark mit der des Bodens übereinstimmt, auf dem der Reifen gerade fährt
+	private void checkSkidmarkLayer(int layer)
 	{
-		return forwardSlip;
-	}
-
-//// SKIDMARKS
-
-	//in dieser Methode werden die Skidmarks für diesen Reifen gerendert
-	private void drawSkidmark(float sideSlip)
-	{
-
+		//überprüfe ob SKidmark vorhanden
+		if(skidmarkWithTrail != null)
+		{
+			//falls die Skidmark GroundLayer verschieden zu der Boden Layer ist, muss eine neue Skidmark erzeugt werden (das macht die Update Methode),
+			//da der Untergrund sich geändert hat und nun nicht mehr die richtige Farbe hat
+			if(skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().getGroundLayer() != layer)
+			{
+				skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().removeSkidmark();
+				skidmarkWithTrail = null;
+			}
+		}
 	}
 }
