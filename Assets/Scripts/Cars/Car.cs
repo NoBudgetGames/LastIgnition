@@ -936,60 +936,58 @@ public class Car : MonoBehaviour
 	private void applyResistanceForces(Vector3 relativeVelocity)
 	{
 		//Rollwiderstand
-		//Rollwiederstandkoefizient ist abhängig vom Untergrund, eventuell kannman auch die Layer bestimmen, auf dem der Wagen fährt
-		//gehe durch jedes Rad durch und bestimme die Layer auf der er fährt
-		float GroundCoefRR = 0.0f;
-		int size = 0;
-		foreach(Wheel wheel in wheels)
-		{
-			//falls sich das Rad in der Luft befindet soll es nicht zur Berechnung beitragen
-			WheelHit hit;
-			if(wheel.wheelCol.GetGroundHit(out hit))
-			{
-				//schau auf welcher Layer der Refien fährt
-				int layer = hit.collider.transform.gameObject.layer;
-				//switch erlaubt keine abfragen wie "case LayerMask.NameToLayer("Default"):", daher feste Werte
-				//Compiler Error CS0150: A constant value is expected
-
-				//LENKUNG KLEINER MACHEN
-				switch(layer)
-				{
-					case 9:
-						GroundCoefRR = 0.07f; //fester Sand, SandNormal
-						break;
-					case 10:
-						GroundCoefRR = 0.3f; //loser Sand, SandLose
-						break;
-					case 11:
-						GroundCoefRR = 0.02f; //Schotter, Rubble
-						break;
-					case 12:
-						GroundCoefRR = 0.05f; //Erdweg, Dirt
-						break;
-					case 13:
-						GroundCoefRR = 0.08f; //Grass, Grass
-						break;
-					default:
-						GroundCoefRR = 0.015f; //asphalt, Default Layer
-						break;
-				}
-				size++;	
-			}	
-		}
-		//bereche den Durchschnitt der wheels
-		if(size != 0)
-		{
-			GroundCoefRR /= size;	
-		}
-
-		//Rollwiderstandswert = Rollwiederstandskoeffizient * Masse * Gravitation
-		float CoefRR = GroundCoefRR * rigidbody.mass * Physics.gravity.y; //  9.81f;
-		//Rollwiderstandskraft, ist entgegengesetzt der aktuellen Fahrtrichtung des Autos
-		Vector3 RollingResistanceForce = -Mathf.Sign(relativeVelocity.z) * thisTransform.forward * CoefRR;
-		
 		//bei niedrigen Geschwindigkeiten soll kein Rollwiederstand erzeugt werden
 		if(isOneWheelGrounded && (relativeVelocity.z > 10 || relativeVelocity.z < -10))
 		{
+			//Rollwiederstandkoefizient ist abhängig vom Untergrund
+			//gehe durch jedes Rad durch und bestimme die Layer auf der er fährt
+			float GroundCoefRR = 0.0f;
+			int size = 0;
+			foreach(Wheel wheel in wheels)
+			{
+				//falls sich das Rad in der Luft befindet soll es nicht zur Berechnung beitragen
+				WheelHit hit;
+				if(wheel.wheelCol.GetGroundHit(out hit))
+				{
+					//schau auf welcher Layer der Refien fährt
+					int layer = hit.collider.transform.gameObject.layer;
+					//switch erlaubt keine abfragen wie "case LayerMask.NameToLayer("Default"):", daher feste Werte
+					//Compiler Error CS0150: A constant value is expected
+					switch(layer)
+					{
+					case 9:
+						GroundCoefRR += 0.07f; //fester Sand, SandNormal
+						break;
+					case 10:
+						GroundCoefRR += 0.3f; //loser Sand, SandLose
+						break;
+					case 11:
+						GroundCoefRR += 0.02f; //Schotter, Rubble
+						break;
+					case 12:
+						GroundCoefRR += 0.05f; //Erdweg, Dirt
+						break;
+					case 13:
+						GroundCoefRR += 0.08f; //Grass, Grass
+						break;
+					default:
+						GroundCoefRR += 0.015f; //asphalt, Default Layer
+						break;
+					}
+					size++;	
+				}	
+			}
+			//bereche den Durchschnitt der wheels
+			if(size != 0)
+			{
+				GroundCoefRR /= (size * 4);	
+			}
+			
+			//Rollwiderstandswert = Rollwiederstandskoeffizient * Masse * Gravitation
+			float CoefRR = GroundCoefRR * rigidbody.mass * Physics.gravity.y;
+			//Rollwiderstandskraft, ist entgegengesetzt der aktuellen Fahrtrichtung des Autos
+			Vector3 RollingResistanceForce = Mathf.Sign(relativeVelocity.z) * thisTransform.forward * CoefRR;
+			//füge die Kraft dem Auto hinzu
 			thisRigidBody.AddForce(RollingResistanceForce, ForceMode.Impulse);
 		}
 
