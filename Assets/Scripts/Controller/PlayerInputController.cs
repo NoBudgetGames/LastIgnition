@@ -48,6 +48,7 @@ public class PlayerInputController : MonoBehaviour
 		GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
 		hud = hudObj.GetComponent<HUD>();
 		hud.cameraObject = camObj;
+		setupHUD();
 	}
 
 	//in dieser Methode wird geschaut, ob für den Spieler ein Controller angeschloßen wurde oder nicht
@@ -76,8 +77,10 @@ public class PlayerInputController : MonoBehaviour
 		if(playerString == "One"){
 			hud.layer = LayerMask.NameToLayer("Test");
 			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test");
+			cameraCtrl.camera.cullingMask ^= 1 << LayerMask.NameToLayer("Test2");
 		} else {
 			hud.layer = LayerMask.NameToLayer("Test2");
+			cameraCtrl.camera.cullingMask ^= 1 << LayerMask.NameToLayer("Test");
 			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test2");
 		}
 		hud.player = playerString;

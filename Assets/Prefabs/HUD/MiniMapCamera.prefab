@@ -9,13 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 400000}
   - 20: {fileID: 2000000}
-  - 92: {fileID: 9200000}
   - 124: {fileID: 12400000}
-  - 81: {fileID: 8100000}
-  - 114: {fileID: 11400000}
+  - 92: {fileID: 9200000}
   m_Layer: 0
-  m_Name: CameraControllerPrefab
-  m_TagString: MainCamera
+  m_Name: MiniMapCamera
+  m_TagString: MiniMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,8 +24,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: 1002, y: 327.122803, z: 1001.82837}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -39,34 +37,27 @@ Camera:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: .790000021
+    y: .649999976
+    width: .170000002
+    height: .25
   near clip plane: .300000012
-  far clip plane: 10000
-  field of view: 45
-  orthographic: 0
-  orthographic size: 100
-  m_Depth: -1
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 1057.80005
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294852607
+    m_Bits: 4294918143
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
   m_OcclusionCulling: 1
---- !u!81 &8100000
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
 --- !u!92 &9200000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -74,28 +65,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f6d45168b5cd704383994f5a7c9b9ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetCar: {fileID: 0}
-  hoodCamera: {fileID: 0}
-  hoodCameraLookBack: {fileID: 0}
-  floatingCamDampingZ: 40
-  floatingCamDampingX: 20
-  distanceToTarget: 15
-  heightOnGround: 7
-  viewHeight: 3
-  distanceToTargetHigh: 25
-  heightOnGroundHigh: 10
-  viewHeightHigh: 5
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

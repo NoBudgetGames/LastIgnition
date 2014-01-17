@@ -22,7 +22,9 @@ public class MiniGun : Weapon {
 		//EVTL DELAY EINFÜGEN, WEGEN ANLAUFEN
 		if(buttonPressed)
 			firing = true;
-		
+		else 
+			firing = false;
+
 		//Wenn der Timer sein Limit erreicht hat wird ein Raycast ausgeführt der in gerader Richtung nach
 		//Vorne verläuft, das erste Objekt das getroffen wird erhält schaden
 		//EVTL SPRAY EINFÜGEN
