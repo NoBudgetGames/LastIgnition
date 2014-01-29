@@ -3884,10 +3884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerString: One
-<<<<<<< HEAD
-  usingController: 0
-=======
->>>>>>> 89d75876bfb95073816cd6d21fa82d72c7d096fa
   cameraCtrlPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
   additionalCameraPositions:
   - {fileID: 400140}
