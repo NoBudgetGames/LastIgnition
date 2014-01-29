@@ -112,6 +112,12 @@ public class Car : MonoBehaviour
 	public GameObject rightExhaustPrefab;
 	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
 	public GameObject wheelSphereCol;
+
+	//Referenz auf ein GameObject, zu dem das Auto bei einen drücken der Reset Taste teleportiert wird,
+	//in Falle der Arena wäre das die Aktuelle Position des Autos, 
+	//beim Rundkurz wäre es der zuletzt durchgefahrene Checkpoint
+	private GameObject resetPosition;
+
 	//liste mit lenkrädern
 	private List<Wheel> steerWheels;
 	//liste mit beschleiunigungsrädern
@@ -272,10 +278,17 @@ public class Car : MonoBehaviour
 
 //// GET METHODEN
 	
-	//lefert die aktuelle Geschwindigkeit zurück
-	public float getVelocity()
+	//liefert die aktuelle Geschwindigkeit in Kilometer pro Stunde zurück
+	//Dazu wird die Unity Geschwinddigkeit in Meter/Sekunde umgerechnet
+	//in dem das Größenverhältnisses des Autos verwendet wird
+	public float getVelocityInKmPerHour()
 	{
-		return currentVelocity;
+		// Länge des Autos in Metern (aus Wikipedia): 5283 mm = 5,283 m 
+		// Länge des Autos in Unity (gemessen): 1327.76 - 1306.646 = 21.114
+		// Verhältniss: 5,283 / 21.114 = ca. 0,25 ==> durch 4 teilen
+		// zunächst in Meter pro Sekunde (/4), dann in Kilometer pro Stunde umrechnen ( * 3.6)
+		// 1/4 * 3,6 = 0,9 ==> Unity-Geschwindigkeit mit 0.9 multiplizieren
+		return currentVelocity * 0.9f;
 	}
 
 	//liefert den Geschwindigkeitsvektor in WorldSpace zurück
@@ -336,6 +349,8 @@ public class Car : MonoBehaviour
 	}
 	
 	//in dieser Methode wird das Auto nach einen Unfall (wenn er z.B. auf dem Dach liegt) wieder auf die Straße gesetzt
+	//MOMENTAN wird das Auto nur umgedreht, später soll er wieder auf die Straße gesetzt werden, am besten am zuletzt 
+	//durchgefahrenen Checkpoint
 	public void resetCar(bool reset)
 	{
 		if(reset)

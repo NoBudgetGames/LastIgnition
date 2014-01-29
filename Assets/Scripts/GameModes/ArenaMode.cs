@@ -35,7 +35,7 @@ public class ArenaMode : MonoBehaviour
 
 			if(players.Count == 1){
 				PlayerInputController p = players[0].GetComponent<PlayerInputController>();
-				Debug.Log("Player " + p.playerString + " won the Battle!");
+				Debug.Log("Player " + p.numberOfControllerString + " won the Battle!");
 			}
 				
 			for(int i = 0; i<players.Count; ++i){
@@ -44,12 +44,12 @@ public class ArenaMode : MonoBehaviour
 						lives[i]--;
 						PlayerInputController p = players[i].GetComponent<PlayerInputController>();
 						if(lives[i] == 0){
-							Debug.Log("Player " + p.playerString + " eliminated!");
+							Debug.Log("Player " + p.numberOfControllerString + " eliminated!");
 							players.RemoveAt(i);
 							lives.RemoveAt(i);
 							ranks.RemoveAt(i);
 						} else {
-							control.reInstanciatePlayer(p.playerString);
+							control.reInstanciatePlayer(p.numberOfControllerString);
 						}
 						updateRanks();
 					}

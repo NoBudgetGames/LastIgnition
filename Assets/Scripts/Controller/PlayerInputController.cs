@@ -12,7 +12,7 @@ using System.Collections;
 public class PlayerInputController : MonoBehaviour 
 {
 	//Einfüge String für Input, "One" für Spieler 1, "Two" für Spieler 2, es ist nicht der richtige Name des Spielers!
-	public string playerString = "One";
+	public string numberOfControllerString = "One";
 	//refernz auf die CameraControllerPrefab, wird instanziert, NICHT VERÄNDERN!
 	public GameObject cameraCtrlPrefab;
 	//referenz auf weitere Kameras, z.B. die Kamere auf der Motorhaube
@@ -60,12 +60,12 @@ public class PlayerInputController : MonoBehaviour
 		for(int i = 0; i < Input.GetJoystickNames().Length; i++)
 		{
 			//überprüfe für Spieler One
-			if(i == 0 && playerString.Equals("One") && Input.GetJoystickNames()[i] != null)
+			if(i == 0 && numberOfControllerString.Equals("One") && Input.GetJoystickNames()[i] != null)
 			{
 				controllerAttached = true;
 			}
 			//überprüfe für Spieler Two
-			if(i == 1 && playerString.Equals("Two") && Input.GetJoystickNames()[i] != null)
+			if(i == 1 && numberOfControllerString.Equals("Two") && Input.GetJoystickNames()[i] != null)
 			{
 				controllerAttached = true;
 			}
@@ -73,14 +73,14 @@ public class PlayerInputController : MonoBehaviour
 	}
 
 	public void setupHUD(){
-		if(playerString == "One"){
+		if(numberOfControllerString == "One"){
 			hud.layer = LayerMask.NameToLayer("Test");
 			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test");
 		} else {
 			hud.layer = LayerMask.NameToLayer("Test2");
 			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test2");
 		}
-		hud.player = playerString;
+		hud.player = numberOfControllerString;
 	}
 
 	//in dieser Methode wird der Input des Spielers an die jeweiligen Komponenten weitergereicht
@@ -89,32 +89,32 @@ public class PlayerInputController : MonoBehaviour
 		//falls für diesen Spieler kein Controller angeschloßen ist, benutze die Tastatur
 		if(controllerAttached == false)
 		{
-			car.setThrottle(Input.GetAxis("Player" + playerString + "ThrottleKey"));
-			car.setSteer(Input.GetAxis("Player" + playerString + "SteerKey"));
-			car.resetCar(Input.GetButton("Player" + playerString + "ResetCarKey"));
-			car.setHandbrake(Input.GetButton("Player" + playerString + "HandbrakeKey"));
+			car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey"));
+			car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "SteerKey"));
+			car.resetCar(Input.GetButton("Player" + numberOfControllerString + "ResetCarKey"));
+			car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "HandbrakeKey"));
 
-			inv.setFiring(Input.GetButton("Player" + playerString + "FireKey"));
-			inv.prevWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponDownKey"));
-			inv.nextWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponUpKey"));
+			inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "FireKey"));
+			inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDownKey"));
+			inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUpKey"));
 
-			cameraCtrl.lookBack(Input.GetButton("Player" + playerString + "LookBackKey"));
-			cameraCtrl.cycleCamera(Input.GetAxis("Player" + playerString + "ChangeCameraKey"));
+			cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBackKey"));
+			cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCameraKey"));
 		}
 		//falls Controller benutzt wird
 		else
 		{
-			car.setThrottle(Input.GetAxis("Player" + playerString + "Throttle"));
-			car.setSteer(Input.GetAxis("Player" + playerString + "Steer"));
-			car.resetCar(Input.GetButtonDown("Player" + playerString + "ResetCar"));
-			car.setHandbrake(Input.GetButton("Player" + playerString + "Handbrake"));
+			car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "Throttle"));
+			car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "Steer"));
+			car.resetCar(Input.GetButtonDown("Player" + numberOfControllerString + "ResetCar"));
+			car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "Handbrake"));
 
-			inv.setFiring(Input.GetButton("Player" + playerString + "Fire"));
-			inv.prevWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponDown"));
-			inv.nextWeapon(Input.GetButtonDown("Player" + playerString + "CycleWeaponUp"));
+			inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "Fire"));
+			inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDown"));
+			inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUp"));
 
-			cameraCtrl.lookBack(Input.GetButton("Player" + playerString + "LookBack"));
-			cameraCtrl.cycleCamera(Input.GetAxis("Player" + playerString + "ChangeCamera"));
+			cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBack"));
+			cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCamera"));
 		}
 	}
 }

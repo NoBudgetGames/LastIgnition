@@ -35,7 +35,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		{
 			if(obj.GetComponent<Car>().getHealth() <= 0.0f)
 			{
-				Debug.Log ("PLAYER " + obj.GetComponent<PlayerInputController>().playerString + " HAD HIS LAST IGNITION!");
+				Debug.Log ("PLAYER " + obj.GetComponent<PlayerInputController>().numberOfControllerString + " HAD HIS LAST IGNITION!");
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.O))
@@ -57,7 +57,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
-		input.playerString = playerName;
+		input.numberOfControllerString = playerName;
 		input.setupHUD();
 		//Kamera muss aufgesetzt werden
 		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
@@ -72,7 +72,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		//finde den richtigen Spieler aus der Liste
 		foreach(GameObject obj in playerList)
 		{
-			if(obj.GetComponent<PlayerInputController>().playerString.Equals(playerName))
+			if(obj.GetComponent<PlayerInputController>().numberOfControllerString.Equals(playerName))
 			{
 				player = obj;
 				break;
@@ -120,7 +120,6 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			{
 				cam.rect = new Rect(0, 0.5f, 1.0f, 0.5f);
 			}
-
 		}
 	}
 }

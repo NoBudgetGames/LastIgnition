@@ -3943,10 +3943,10 @@ MonoBehaviour:
   - 2000
   - 2000
   gearMultiplier:
+  - .5
+  - .600000024
   - .699999988
   - .800000012
-  - .899999976
-  - 1
   - 1
   - 1
   differentialMultiplier: 2.5

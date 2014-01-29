@@ -47,7 +47,7 @@ public class HUD : MonoBehaviour
 	}
 
 	void OnGUI(){
-		float angle = car.getVelocity();
+		float angle = car.getVelocityInKmPerHour();
 		if(numberOfHuds > 1){
 			if(player != "One"){
 				GUI.DrawTexture(new Rect(0, Screen.height/2-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);

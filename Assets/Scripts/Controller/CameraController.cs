@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 /*
  * diese Klasse ist für die verschiedenen Kamerapositionen am Auto zuständig. Die Position wird dabei in jeden FixedUpdate
@@ -171,7 +171,7 @@ public class CameraController : MonoBehaviour
 			}
 		}
 		//falls die geschwindigkeit nicht sehr niedrig ist und die Kamera zu weit überm Boden ist
-		else if(targetCar.getVelocity() > 0.5f) 
+		else if(targetCar.getVelocityInKmPerHour() > 0.5f) 
 		{
 			//ziel Position soll in negativer Geschwindigkeitsrichtung sein
 			Vector3 negVelocity = Vector3.Normalize(new Vector3 (targetCar.rigidbody.velocity.x, 0.0f, targetCar.rigidbody.velocity.z));
