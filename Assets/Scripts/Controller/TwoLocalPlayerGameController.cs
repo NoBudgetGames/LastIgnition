@@ -111,6 +111,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	{
 		if(cam != null)
 		{
+			cam.clearFlags = CameraClearFlags.Skybox;
 			if(playerName.Equals("One"))
 			{
 				//(left, top, width, height)

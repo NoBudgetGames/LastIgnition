@@ -49,7 +49,7 @@ public class CarInventory : MonoBehaviour
 		if(equippedWeapon != null){
 			equippedWeapon.setFiring(firing);
 		}
-		firing = false;
+		//firing = false;
 
 	}
 

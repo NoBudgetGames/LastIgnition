@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!59 &59815319
 HingeJoint:
@@ -811,7 +811,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!146 &90894616
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1141,7 +1141,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &159827376
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1256,7 +1256,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &169854133
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -1457,7 +1457,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &205708179
 BoxCollider:
@@ -1905,7 +1905,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &240230206
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -2074,7 +2074,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2091,46 +2091,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1191758734}
   m_GameObject: {fileID: 253592578}
   m_Mesh: {fileID: 4300018, guid: 92191a1c0343625459a936199a8b796d, type: 3}
---- !u!1001 &255684012
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 10.3665915
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 3.23912358
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: .519197524
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_RootGameObject: {fileID: 805695844}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &262393032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,7 +2305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &302841040
 BoxCollider:
@@ -2390,46 +2350,6 @@ Transform:
   - {fileID: 314631773}
   - {fileID: 159827374}
   m_Father: {fileID: 942286530}
---- !u!1001 &307569796
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-  m_RootGameObject: {fileID: 338270539}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &308999710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,7 +2484,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &314631775
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -2593,114 +2513,6 @@ WheelCollider:
     asymptoteValue: 10000
     stiffnessFactor: 1
   m_Enabled: 1
---- !u!1 &338270539
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 338270545}
-  - 20: {fileID: 338270544}
-  - 92: {fileID: 338270543}
-  - 124: {fileID: 338270542}
-  - 81: {fileID: 338270541}
-  - 114: {fileID: 338270540}
-  m_Layer: 0
-  m_Name: CameraControllerPrefab
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &338270540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 9ab7bb472edebb3428c8b639fb8921ea,
-    type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  m_GameObject: {fileID: 338270539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f6d45168b5cd704383994f5a7c9b9ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetCar: {fileID: 0}
-  hoodCamera: {fileID: 0}
-  hoodCameraLookBack: {fileID: 0}
-  floatingCamDampingZ: 50
-  floatingCamDampingX: 35
-  distanceToTarget: 12
-  heightOnGround: 7
-  viewHeight: 3
-  distanceToTargetHigh: 20
-  heightOnGroundHigh: 12
-  viewHeightHigh: 3
---- !u!81 &338270541
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: 9ab7bb472edebb3428c8b639fb8921ea,
-    type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  m_GameObject: {fileID: 338270539}
-  m_Enabled: 1
---- !u!124 &338270542
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: 9ab7bb472edebb3428c8b639fb8921ea,
-    type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  m_GameObject: {fileID: 338270539}
-  m_Enabled: 1
---- !u!92 &338270543
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9200000, guid: 9ab7bb472edebb3428c8b639fb8921ea,
-    type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  m_GameObject: {fileID: 338270539}
-  m_Enabled: 1
---- !u!20 &338270544
-Camera:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 2000000, guid: 9ab7bb472edebb3428c8b639fb8921ea,
-    type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  m_GameObject: {fileID: 338270539}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: .300000012
-  far clip plane: 10000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 100
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294918143
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_HDR: 0
-  m_OcclusionCulling: 1
---- !u!4 &338270545
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
-  m_PrefabInternal: {fileID: 307569796}
-  m_GameObject: {fileID: 338270539}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
 --- !u!1 &341179174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3329,7 +3141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &371334103
 BoxCollider:
@@ -3536,7 +3348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &405337448
 BoxCollider:
@@ -3965,7 +3777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &452782954
 BoxCollider:
@@ -4631,7 +4443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!59 &503394512
 HingeJoint:
@@ -4765,7 +4577,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4906,7 +4718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &515777153
 BoxCollider:
@@ -5191,7 +5003,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -5380,7 +5192,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &547305633
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -5682,7 +5494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &603663921
 BoxCollider:
@@ -6007,7 +5819,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &619709188
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -6082,7 +5894,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &623839556
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -6142,6 +5954,7 @@ MonoBehaviour:
   - {fileID: 1356642196}
   - {fileID: 1777765134}
   carPrefab: {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
+  playerList: []
 --- !u!4 &632515977
 Transform:
   m_ObjectHideFlags: 0
@@ -6453,53 +6266,6 @@ Transform:
   - {fileID: 1511068982}
   - {fileID: 1542115516}
   m_Father: {fileID: 1085413431}
---- !u!1 &682241734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100002, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 682241736}
-  - 131: {fileID: 682241735}
-  m_Layer: 0
-  m_Name: Weapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!131 &682241735
-GUITexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13100004, guid: d9b5c2991e6fbb240b74570e1d05a0b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 682241734}
-  m_Enabled: 1
-  m_Texture: {fileID: 0}
-  m_Color: {r: .5, g: .5, b: .5, a: .5}
-  m_PixelInset:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  m_LeftBorder: 0
-  m_RightBorder: 0
-  m_TopBorder: 0
-  m_BottomBorder: 0
---- !u!4 &682241736
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400002, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 682241734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.52999973, y: -3, z: -.519197524}
-  m_LocalScale: {x: .129999995, y: .150000006, z: .889999986}
-  m_Children: []
-  m_Father: {fileID: 805695845}
 --- !u!1 &683270096
 GameObject:
   m_ObjectHideFlags: 0
@@ -6625,7 +6391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &690881201
 BoxCollider:
@@ -6710,7 +6476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &694922965
 BoxCollider:
@@ -6862,7 +6628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &716495736
 BoxCollider:
@@ -7001,7 +6767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &725317476
 BoxCollider:
@@ -7135,6 +6901,7 @@ MonoBehaviour:
   - 2000
   - 2000
   - 2000
+  gearMultiplier: []
   differentialMultiplier: 2.5
   brakeTorque: 700
   slipMultiplier: .800000012
@@ -7216,6 +6983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 547305632}
   rightWheel: {fileID: 623839555}
+  stabilizierMultiplier: .800000012
 --- !u!114 &730842654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7230,6 +6998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 886832122}
   rightWheel: {fileID: 1771038855}
+  stabilizierMultiplier: .800000012
 --- !u!1 &732516844
 GameObject:
   m_ObjectHideFlags: 0
@@ -7936,59 +7705,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1992051550}
   m_GameObject: {fileID: 796583099}
   m_Mesh: {fileID: 0}
---- !u!1 &805695844
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 805695845}
-  - 114: {fileID: 805695846}
-  m_Layer: 0
-  m_Name: HUD Player1
-  m_TagString: HUD
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &805695845
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400004, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 805695844}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.3665915, y: 3.23912358, z: .519197524}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 854348588}
-  - {fileID: 1226843581}
-  - {fileID: 682241736}
-  - {fileID: 1412544068}
-  m_Father: {fileID: 0}
---- !u!114 &805695846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: d9b5c2991e6fbb240b74570e1d05a0b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 805695844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aad03c745d07eb4695201d4c58aefe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraObject: {fileID: 0}
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  player: 
-  weapon: {fileID: 682241735}
-  ammo: {fileID: 1412544069}
-  speedo: {fileID: 2800000, guid: ecc51243a94674645926888421e06641, type: 3}
-  speedoArrow: {fileID: 2800000, guid: 21d2f8d366fb9ff469fce6ac687ca58b, type: 3}
-  rank: {fileID: 854348589}
 --- !u!1 &813402356
 GameObject:
   m_ObjectHideFlags: 0
@@ -8132,7 +7848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &816470429
 BoxCollider:
@@ -8279,7 +7995,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8352,7 +8068,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8701,7 +8417,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8718,57 +8434,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1191758734}
   m_GameObject: {fileID: 851421746}
   m_Mesh: {fileID: 4300004, guid: 92191a1c0343625459a936199a8b796d, type: 3}
---- !u!1 &854348587
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100010, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 854348588}
-  - 132: {fileID: 854348589}
-  m_Layer: 0
-  m_Name: Position
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &854348588
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400010, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 854348587}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.3100004, y: -2.33999991, z: -.519197524}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 805695845}
---- !u!132 &854348589
-GUIText:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13200002, guid: d9b5c2991e6fbb240b74570e1d05a0b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 854348587}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Text: 1st Place
-  m_Anchor: 0
-  m_Alignment: 0
-  m_PixelOffset: {x: 0, y: 0}
-  m_LineSpacing: 1
-  m_TabSize: 4
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Material: {fileID: 0}
-  m_FontSize: 28
-  m_FontStyle: 1
-  m_Color:
-    serializedVersion: 2
-    rgba: 4278255590
-  m_PixelCorrect: 1
-  m_RichText: 1
 --- !u!1 &865752953
 GameObject:
   m_ObjectHideFlags: 0
@@ -9075,7 +8740,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &886832123
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -9173,7 +8838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &906306488
 BoxCollider:
@@ -9245,7 +8910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!59 &907347516
 HingeJoint:
@@ -9416,7 +9081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &908045213
 BoxCollider:
@@ -9729,6 +9394,7 @@ MonoBehaviour:
   - 2000
   - 2000
   - 2000
+  gearMultiplier: []
   differentialMultiplier: 2.5
   brakeTorque: 700
   slipMultiplier: .800000012
@@ -9810,6 +9476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 314631774}
   rightWheel: {fileID: 159827375}
+  stabilizierMultiplier: .800000012
 --- !u!114 &942286535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9824,6 +9491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 240230205}
   rightWheel: {fileID: 1525360735}
+  stabilizierMultiplier: .800000012
 --- !u!1 &949625432
 GameObject:
   m_ObjectHideFlags: 0
@@ -9922,7 +9590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &951047518
 BoxCollider:
@@ -10568,7 +10236,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -10784,7 +10452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!59 &1072399770
 HingeJoint:
@@ -10908,7 +10576,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 7
+  damageZone: 0
 --- !u!146 &1072778972
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -11172,6 +10840,7 @@ MonoBehaviour:
   - 2000
   - 2000
   - 2000
+  gearMultiplier: []
   differentialMultiplier: 2.5
   brakeTorque: 700
   slipMultiplier: .800000012
@@ -11253,6 +10922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 1570227291}
   rightWheel: {fileID: 1072778971}
+  stabilizierMultiplier: .800000012
 --- !u!114 &1085413436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11267,6 +10937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 1307585341}
   rightWheel: {fileID: 90894615}
+  stabilizierMultiplier: .800000012
 --- !u!1 &1087747973
 GameObject:
   m_ObjectHideFlags: 0
@@ -11469,7 +11140,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &1094768964
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -11555,7 +11226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!59 &1097810178
 HingeJoint:
@@ -11747,7 +11418,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -11976,7 +11647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1122082644
 BoxCollider:
@@ -12543,7 +12214,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -12849,7 +12520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!59 &1180887487
 HingeJoint:
@@ -13111,7 +12782,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -13247,6 +12918,7 @@ MonoBehaviour:
   - 2000
   - 2000
   - 2000
+  gearMultiplier: []
   differentialMultiplier: 2.5
   brakeTorque: 700
   slipMultiplier: .800000012
@@ -13312,6 +12984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 619709187}
   rightWheel: {fileID: 169854132}
+  stabilizierMultiplier: .800000012
 --- !u!114 &1211062513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13326,6 +12999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWheel: {fileID: 1094768963}
   rightWheel: {fileID: 1270053183}
+  stabilizierMultiplier: .800000012
 --- !u!54 &1211062514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13440,7 +13114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1221256860
 BoxCollider:
@@ -13513,57 +13187,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1992051550}
   m_GameObject: {fileID: 1222026377}
   m_Mesh: {fileID: 4300002, guid: fd23fe524f3a8a44cb1726649bbeb745, type: 3}
---- !u!1 &1226843580
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1226843581}
-  - 132: {fileID: 1226843582}
-  m_Layer: 0
-  m_Name: Lap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1226843581
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 1226843580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.3100004, y: -2.2699995, z: -.519197524}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 805695845}
---- !u!132 &1226843582
-GUIText:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13200000, guid: d9b5c2991e6fbb240b74570e1d05a0b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 1226843580}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Text: 'Lap : 1/1'
-  m_Anchor: 0
-  m_Alignment: 0
-  m_PixelOffset: {x: 0, y: 0}
-  m_LineSpacing: 1
-  m_TabSize: 4
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Material: {fileID: 0}
-  m_FontSize: 27
-  m_FontStyle: 0
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_PixelCorrect: 1
-  m_RichText: 1
 --- !u!1 &1229371365
 GameObject:
   m_ObjectHideFlags: 0
@@ -13633,7 +13256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &1234156403
 BoxCollider:
@@ -13836,7 +13459,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!146 &1270053184
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -13997,7 +13620,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 4
+  damageZone: 0
 --- !u!146 &1307585342
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -14066,7 +13689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1316084994
 BoxCollider:
@@ -14558,7 +14181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!59 &1378505173
 HingeJoint:
@@ -14718,7 +14341,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -14830,7 +14453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 4
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1401231252
 BoxCollider:
@@ -14902,7 +14525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!59 &1403333265
 HingeJoint:
@@ -14980,57 +14603,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 167337801}
   m_GameObject: {fileID: 1403333261}
   m_Mesh: {fileID: 4300000, guid: 74682a3a429c6814599c5887c0e8a050, type: 3}
---- !u!1 &1412544067
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100012, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1412544068}
-  - 132: {fileID: 1412544069}
-  m_Layer: 0
-  m_Name: Ammo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1412544068
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400012, guid: d9b5c2991e6fbb240b74570e1d05a0b1, type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 1412544067}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.5, y: -3.08999991, z: -.519197524}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 805695845}
---- !u!132 &1412544069
-GUIText:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13200004, guid: d9b5c2991e6fbb240b74570e1d05a0b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 255684012}
-  m_GameObject: {fileID: 1412544067}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Text: Ammo
-  m_Anchor: 0
-  m_Alignment: 0
-  m_PixelOffset: {x: 0, y: 0}
-  m_LineSpacing: 1
-  m_TabSize: 4
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Material: {fileID: 0}
-  m_FontSize: 27
-  m_FontStyle: 2
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_PixelCorrect: 1
-  m_RichText: 1
 --- !u!1 &1417140606
 GameObject:
   m_ObjectHideFlags: 0
@@ -15256,7 +14828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!59 &1420161638
 HingeJoint:
@@ -16456,7 +16028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1512826449
 BoxCollider:
@@ -16814,7 +16386,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!146 &1525360736
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -17337,7 +16909,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 0
   wheelCol: {fileID: 0}
-  direction: 6
+  damageZone: 0
 --- !u!146 &1570227292
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -17432,7 +17004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1574648039
 BoxCollider:
@@ -17723,7 +17295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1591272287
 BoxCollider:
@@ -17866,7 +17438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1612382186
 BoxCollider:
@@ -18037,7 +17609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1616544046
 BoxCollider:
@@ -18242,7 +17814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1632278520
 BoxCollider:
@@ -19419,7 +18991,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -19548,7 +19120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1735262958
 BoxCollider:
@@ -19915,7 +19487,7 @@ MonoBehaviour:
   isDriveWheel: 1
   isFrontWheel: 1
   wheelCol: {fileID: 0}
-  direction: 5
+  damageZone: 0
 --- !u!1 &1777765133
 GameObject:
   m_ObjectHideFlags: 0
@@ -20040,7 +19612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 6
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &1790563711
 BoxCollider:
@@ -20327,7 +19899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1814413312
 BoxCollider:
@@ -20498,7 +20070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1841331177
 BoxCollider:
@@ -20620,7 +20192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!59 &1859411820
 HingeJoint:
@@ -20755,7 +20327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!59 &1865587090
 HingeJoint:
@@ -21075,7 +20647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &1901286922
 BoxCollider:
@@ -21246,7 +20818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 7
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!65 &1916320117
 BoxCollider:
@@ -21376,7 +20948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1211062510}
 --- !u!59 &1926727230
 HingeJoint:
@@ -21494,7 +21066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 5
+  damageZone: 0
   car: {fileID: 942286531}
 --- !u!65 &1929724583
 BoxCollider:
@@ -21723,7 +21295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &1951563630
 BoxCollider:
@@ -22896,7 +22468,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c262692687b0c6747b7d2e40b364eb64, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -23561,7 +23133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  damageZone: 0
   car: {fileID: 1085413432}
 --- !u!65 &2108055538
 BoxCollider:
@@ -24074,7 +23646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23523fa1eb09384eb10e102b1e0e99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
+  damageZone: 0
   car: {fileID: 730842650}
 --- !u!65 &2136398453
 BoxCollider:
