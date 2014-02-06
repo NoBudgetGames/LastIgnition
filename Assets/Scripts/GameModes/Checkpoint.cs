@@ -29,13 +29,14 @@ public class Checkpoint : MonoBehaviour
 	{
 		//gucke auf die Wurzel des other, da sich dort der CheckpointCounter befindet, das das Auto keinen Parent hat
 		//wird allerdings für jeden DestructibleCarPart aufgerufen....
-		CheckpointCounter chkPointCount = other.gameObject.transform.root.GetComponent<CheckpointCounter>();
+		CircuitModePlayerStats chkPointCount = other.gameObject.transform.root.GetComponent<CircuitModePlayerStats>();
 		if(chkPointCount != null)
 		{
 			chkPointCount.updateCheckpoint(this);
 		}
 	}
 
+	//diese Methode überprüft, ob sich das Auto in die falsche Richtung bewegt (vom checkpoint weg)
 	public bool isDrivingInRightDirection(Vector3 carVelocity)
 	{
 		//falls die Geschwindigkeit des Autos mit der RIchtung des Checkpoints übereinstimmt
@@ -47,5 +48,13 @@ public class Checkpoint : MonoBehaviour
 		{
 			return false;
 		}
+	}
+
+	//diese Methode errechnet den Abstand vom Auto zum Checkpoint (parallel zur Straße)
+	public float distanceToCheckpoint(Vector3 carPos)
+	{
+		//erreche position des Autos zum Checkpoint in localspace des CHeckpoints um,
+		//hier ist nur der y-Wert interresant, da er den Abstand zum Checkpoint parallel zur Straße darstellt
+		return transform.InverseTransformDirection(carPos).y;
 	}
 }
