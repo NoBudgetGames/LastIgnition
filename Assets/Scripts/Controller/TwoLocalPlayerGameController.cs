@@ -12,8 +12,9 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 {
 	//Startpunkte
 	public GameObject[] spawnPoints;
-	//Referenz auf die Auto Prefab
-	public GameObject carPrefab;
+	//Referenz auf die Auto Prefabs
+	//MUSS MIT DER LISTE IM CAR SELECTOR ÜBEREINSTIMMEN!!
+	public GameObject[] carPrefabs;
 	//Liste mit Spielern
 	public  List<GameObject> playerList;
 
@@ -24,8 +25,13 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		if(GameObject.FindGameObjectsWithTag("SpawnPoint") != null){
 			spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 		}
-		instaciateNewPlayer(spawnPoints[0], "One");
-		instaciateNewPlayer(spawnPoints[1], "Two");
+		if(PlayerPrefs.GetInt("LocalPlayers") == 1){
+			instaciateNewPlayer(spawnPoints[0], "One");
+			this.enabled = false;
+		} else{
+			instaciateNewPlayer(spawnPoints[0], "One");
+			instaciateNewPlayer(spawnPoints[1], "Two");
+		}
 	}
 
 	//
@@ -52,8 +58,9 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
 	private void instaciateNewPlayer(GameObject trans, string playerName)
 	{
+		int carIndex = PlayerPrefs.GetInt(playerName);
 		//neues Auto
-		GameObject player = (GameObject)GameObject.Instantiate(carPrefab, trans.transform.position, trans.transform.rotation);
+		GameObject player = (GameObject)GameObject.Instantiate(carPrefabs[carIndex], trans.transform.position, trans.transform.rotation);
 
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
@@ -111,15 +118,20 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	{
 		if(cam != null)
 		{
-			cam.clearFlags = CameraClearFlags.Skybox;
-			if(playerName.Equals("One"))
-			{
-				//(left, top, width, height)
-				cam.rect = new Rect(0, 0, 1.0f, 0.5f);
-			}
-			else if(playerName.Equals("Two"))
-			{
-				cam.rect = new Rect(0, 0.5f, 1.0f, 0.5f);
+			if(PlayerPrefs.GetInt("LocalPlayers") == 1){
+				cam.clearFlags = CameraClearFlags.Skybox;
+				cam.rect = new Rect(0, 0, 1.0f, 1.0f);
+			} else {
+				cam.clearFlags = CameraClearFlags.Skybox;
+				if(playerName.Equals("One"))
+				{
+					//(left, top, width, height)
+					cam.rect = new Rect(0, 0, 1.0f, 0.5f);
+				}
+				else if(playerName.Equals("Two"))
+				{
+					cam.rect = new Rect(0, 0.5f, 1.0f, 0.5f);
+				}
 			}
 		}
 	}

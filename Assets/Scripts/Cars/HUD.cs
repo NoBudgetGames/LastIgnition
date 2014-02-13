@@ -62,7 +62,11 @@ public class HUD : MonoBehaviour
 		weapon.texture = inventory.equippedWeapon.hudIcon;
 		ammo.text = ""+inventory.equippedWeapon.remainingAmmo();
 		if(numberOfHuds == -1){
-			numberOfHuds = GameObject.FindGameObjectsWithTag("HUD").Length;
+			if(PlayerPrefs.GetInt("LocalPlayers") != 0){
+				numberOfHuds = PlayerPrefs.GetInt("LocalPlayers");
+			} else{
+				numberOfHuds = GameObject.FindGameObjectsWithTag("HUD").Length;
+			}
 		}
 		if(player == "Two" && !miniMapTwoInstantiated && miniMap != null){
 			GameObject newMap = (GameObject)GameObject.Instantiate(GameObject.FindGameObjectWithTag("MiniMap"));

@@ -41,7 +41,9 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
-  carPrefab: {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
+  carPrefabs:
+  - {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
+  - {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
   playerList: []
 --- !u!1001 &100100000
 Prefab:
