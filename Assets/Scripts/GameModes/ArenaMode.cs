@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class ArenaMode : MonoBehaviour
 {
+	//Referenz innerhalb der Szene aud den TwoLocalPlayerCOntrolle
+	public TwoLocalPlayerGameController control;
 	List<GameObject> players;
 	List<int> lives;
 	List<int> ranks;
-	TwoLocalPlayerGameController control;
 	bool initialised;
 	const int MAX_LIVES = 3;
 		// Use this for initialization
 		void Start ()
 		{
-			control = GameObject.FindWithTag("GameController").GetComponent<TwoLocalPlayerGameController>();
 			initialised = false;
 			lives = new List<int>();
 			ranks = new List<int>();

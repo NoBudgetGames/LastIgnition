@@ -15,7 +15,7 @@ public class PlayerInputController : MonoBehaviour
 	public string numberOfControllerString = "One";
 	//refernz auf die CameraControllerPrefab, wird instanziert, NICHT VERÄNDERN!
 	public GameObject cameraCtrlPrefab;
-	//referenz auf weitere Kameras, z.B. die Kamere auf der Motorhaube
+	//referenz auf weitere Kameras im Auto, z.B. die Kamere auf der Motorhaube
 	//reihenfolge wichtig! 1. Motorhaube | 2. Kofferraum
 	public Transform[] additionalCameraPositions;
 	//refernz auf den CameraController

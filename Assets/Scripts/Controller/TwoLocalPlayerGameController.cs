@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 public class TwoLocalPlayerGameController : MonoBehaviour 
 {
-	//Startpunkte
+	//Referenz auf die Start-/Spawnpunkte
 	public GameObject[] spawnPoints;
 	//Referenz auf die Auto Prefabs
 	//MUSS MIT DER LISTE IM CAR SELECTOR ÜBEREINSTIMMEN!!
 	public GameObject[] carPrefabs;
-	//Liste mit Spielern
+	//Liste mit Spielern, wird vom Script selber gefüllt,
 	public  List<GameObject> playerList;
 
 	// Use this for initialization

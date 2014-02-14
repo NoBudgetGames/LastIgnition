@@ -12,14 +12,14 @@ public class CircuitRaceMode : MonoBehaviour
 {
 	//Anzahl der zu fahrenden Runden
 	public int lapsToDrive;
-	//anfangs Checkpoint, wird nicht durchfahren, dient hautpsächlich zur Positionsbestimmung, solange der 0-te 
+	//Referenz in der Szene auf anfangs Checkpoint, wird nicht durchfahren, dient hautpsächlich zur Positionsbestimmung, solange der 0-te 
 	//Checkpoint noch nicht durchfahren wurde
 	public Checkpoint firstCheckpoint;
-	//Liste der CheckPoints, muss in zu fahrender Reihenfolge sein!
+	//Liste mit Referenzen auf die CheckPoints, muss in zu fahrender Reihenfolge sein!
 	public Checkpoint[] checkpoints;
+	//ZweiSpieler Controller, wichtig für die Liste der Spieler, ist eine Referenz innerhalb der Szene
+	public TwoLocalPlayerGameController playerCtrl;
 
-	//ZweiSpieler Controller, wichtig für die Liste der Spieler
-	private TwoLocalPlayerGameController playerCtrl;
 	//Liste der Spieler mit dem CircuitModePlayerStats
 	private List<CircuitModePlayerStats> playerList;
 	//int List mit der Wagenummer des Autos, an erster Stelle steht das Auto, das momentan führt, usw...
@@ -30,7 +30,6 @@ public class CircuitRaceMode : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		playerCtrl = GetComponent<TwoLocalPlayerGameController>();
 		playerList = new List<CircuitModePlayerStats>();
 		playerPosition = new List<int>();
 		leaderboardTimer = 0.0f;
