@@ -15,20 +15,18 @@ public class CameraController : MonoBehaviour
 	public Transform hoodCamera;
 	//referenz auf Transform für Kamera auf kofferraum, um nach hinten zu gucken
 	public Transform hoodCameraLookBack;
-	//die Dämpfung, mit dem die Kamera an die position gehalten werden soll in Z Richtung (längsachse)
-	public int floatingCamDampingZ = 30;
-	//die Dämpfung, mit dem die Kamera an die position gehalten werden soll in X Richtung (seitliche Achse)
-	public int floatingCamDampingX = 20;
+	//die Dämpfung, mit dem die Kamera an die position gehalten werden soll
+	public int chaseCamDamping = 30;
 	//Entfernung zum Ziel
 	public float distanceToTarget = 15.0f;
-	//mindestabstand zum Boden
-	public float heightOnGround = 10.0f;
+	//die Höhe der Kamera relativ zum Auto
+	public float heightOverCar = 10.0f;
 	//Höhe über dem Auto, wo die Kamera hingucken soll
 	public float viewHeight = 2.0f;
 	//Entfernung zum Ziel für ferne Kamera
 	public float distanceToTargetHigh = 15.0f;
-	//mindestabstand zum Boden  für ferne Kamera
-	public float heightOnGroundHigh = 12.0f;
+	//die Höhe der fernen Kamera relativ zum Auto
+	public float heightOverCarHigh = 12.0f;
 	//Höhe über dem Auto, wo die Kamera hingucken soll, für ferne Kamera
 	public float viewHeightHigh = 3.0f;
 
@@ -36,18 +34,12 @@ public class CameraController : MonoBehaviour
 	private CameraPosition camPos = CameraPosition.REAR_FLOATING_LOW;
 	//schauen wir gerade nacht hinten?
 	private bool lookingBack = false;
-	//Dampfüngswert für X Richtung
-	private float dampX;
 
 	//da der D-Pad auf dem 360 Controller eine Achse darstellt und nicht mit GetButtonDown angesprochen werden kann, 
 	//stellt changed eine Hilfvariable dar um festzustellen, ob die Kamera schon geändert wurde, solange der Spieler
 	//den D-Pad noch nach unten drückt
+	//dadurch wird die Kamere beim drücken des D-Pads nur einmal geändert 
 	private bool changed = false;
-
-	void Start()
-	{
-		dampX = floatingCamDampingX;
-	}
 
 	//in dieser Methode wird die Kamera position errechnet
 	//FixedUpdate da die Kameraposition sonst leicht "ruckelt"
@@ -129,70 +121,35 @@ public class CameraController : MonoBehaviour
 
 		//Hilfsvariablen
 		float distance = distanceToTarget;
-		float height = heightOnGround;
+		float height = heightOverCar;
 		float targetHeight = viewHeight;
-		int dampZ = floatingCamDampingZ;
 		//falls die hohe Kamera benutzt werden soll, solen andere Werte verwendet werden
 		if(highCam)
 		{
 			distance = distanceToTargetHigh;
-			height = heightOnGroundHigh;
+			height = heightOverCarHigh;
 			targetHeight = viewHeightHigh;
 		}
 
 		//Zielposition ist erstmal hinter dem Auto
-		Vector3 targetPosition = targetCar.transform.TransformPoint(0.0f, 0.0f, -distance * lookingBackInt);
+		Vector3 targetPosition = targetCar.transform.TransformPoint(0.0f, height, -distance * lookingBackInt);
 
-		//nach unten raycasten um zu guckenn, ob die Kamera zu nah am Boden ist
+		//nach hinten raycasten um zu guckenn, ob die Kamera durch irgendwelche Objekte durchgeht
 		RaycastHit hit;
-		if(Physics.Raycast(targetPosition, -Vector3.up, out hit, height))
+		if(Physics.Raycast(targetPosition, -Vector3.forward, out hit, distance))
 		{
-			//y Position ist um height nach oben verschoben (überm Boden), 
-			targetPosition.y = Mathf.Lerp(targetPosition.y, hit.point.y + height, 0.9f);
-
-			//falls der Abstand der Kamera zum Auto zu gross ist, wird der Dämpfungsfaktor in Z (Fahrrichtung) erhöht,
-			//damit die Kamera nicht zu weit vom Auto weg ist
-			if((this.transform.position - targetCar.transform.position).magnitude > (distance * 1.1f))
-			{
-				//dampZ *= 3;
-			}
-			
-			//falls das Auto nicht am Lenken ist, soll die Kamera direkt hinter dem AUto sein
-			if(targetCar.isSteering() == false)
-			{
-				if(dampX < (floatingCamDampingX * 3))
-				{
-					//dampX *= 1.05f;
-				}
-			}
-			else
-			{
-				dampX = floatingCamDampingX;
-			}
-		}
-		//falls die geschwindigkeit nicht sehr niedrig ist und die Kamera zu weit überm Boden ist
-		else if(targetCar.getVelocityInKmPerHour() > 0.5f) 
-		{
-			//ziel Position soll in negativer Geschwindigkeitsrichtung sein
-			Vector3 negVelocity = Vector3.Normalize(new Vector3 (targetCar.rigidbody.velocity.x, 0.0f, targetCar.rigidbody.velocity.z));
-			//richtiger Abstand zum Auto
-			negVelocity *= distance * lookingBackInt;
-			//richtige Höhe zum Auto
-			negVelocity.y = -height/2;
-			targetPosition = targetCar.transform.position - negVelocity;
+			//falls was getroffen wurde, setze die Kamera Position an den Hitpoint
+			targetPosition.x = hit.point.x;
+			targetPosition.z = hit.point.z;
+			//verschiede die Kamerapositon ein kleines bischen nach oben
+			targetPosition.y = Mathf.Lerp(hit.point.y + 1.0f, targetPosition.y, Time.deltaTime * chaseCamDamping);
 		}
 
 		//momentane Position soll langsam der Zielposition angepasst werden
-		Vector3 tmpPos = transform.position;
-		tmpPos.x = Mathf.Lerp(tmpPos.x, targetPosition.x, Time.deltaTime * dampX);
-		tmpPos.y = targetPosition.y; //Mathf.Lerp(tmpPos.y, targetPosition.y, 0.9f);
-		tmpPos.z = Mathf.Lerp(tmpPos.z, targetPosition.z, Time.deltaTime * dampZ);
-		transform.position = tmpPos;
+		transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * chaseCamDamping);
 
 		//aktuallisiere die rotation
 		//die Kamera soll nicht direkt auf das AUto gucken, sondern ein bischen darüber
-		Vector3 tmpLookPos = new Vector3(targetCar.transform.position.x, targetCar.transform.position.y, targetCar.transform.position.z);
-		tmpLookPos.y += targetHeight;
-		transform.LookAt(tmpLookPos);
+		transform.LookAt(new Vector3(targetCar.transform.position.x, targetCar.transform.position.y + targetHeight, targetCar.transform.position.z));
 	}
 }

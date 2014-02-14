@@ -88,13 +88,12 @@ MonoBehaviour:
   targetCar: {fileID: 0}
   hoodCamera: {fileID: 0}
   hoodCameraLookBack: {fileID: 0}
-  floatingCamDampingZ: 40
-  floatingCamDampingX: 20
+  chaseCamDamping: 15
   distanceToTarget: 15
-  heightOnGround: 7
+  heightOverCar: 4
   viewHeight: 3
   distanceToTargetHigh: 25
-  heightOnGroundHigh: 10
+  heightOverCarHigh: 6
   viewHeightHigh: 5
 --- !u!124 &12400000
 Behaviour:
