@@ -17,24 +17,27 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	public GameObject[] carPrefabs;
 	//Liste mit Spielern, wird vom Script selber gefüllt,
 	public  List<GameObject> playerList;
-
+	
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
 		playerList = new List<GameObject>();
-		if(GameObject.FindGameObjectsWithTag("SpawnPoint") != null){
+		if(GameObject.FindGameObjectsWithTag("SpawnPoint") != null)
+		{
 			spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 		}
-		if(PlayerPrefs.GetInt("LocalPlayers") == 1){
+		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+		{
 			instaciateNewPlayer(spawnPoints[0], "One");
 			this.enabled = false;
-		} else{
+		}
+		else
+		{
 			instaciateNewPlayer(spawnPoints[0], "One");
 			instaciateNewPlayer(spawnPoints[1], "Two");
 		}
 	}
-
-	//
+	
 	void Update()
 	{
 		foreach(GameObject obj in playerList)
@@ -53,7 +56,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			reInstanciatePlayer("Two");
 		}
 	}
-
+	
 	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
 	private void instaciateNewPlayer(GameObject trans, string playerName)
@@ -61,7 +64,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		int carIndex = PlayerPrefs.GetInt(playerName);
 		//neues Auto
 		GameObject player = (GameObject)GameObject.Instantiate(carPrefabs[carIndex], trans.transform.position, trans.transform.rotation);
-
+		
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
 		input.numberOfControllerString = playerName;
@@ -70,7 +73,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
 		playerList.Add(player);
 	}
-
+	
 	//resete das Auto des SPielers (FULL HEALTH)
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
 	public void reInstanciatePlayer(string playerName)
@@ -91,7 +94,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 			//lösche den Spieler aus der Liste
 			playerList.Remove(player);
-
+			
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
 			//zerstöre den Spieler
 			//Anmerkung: die Transform Komponente lässt sich nicht zerstören und bleibt daher noch in der der 
@@ -111,7 +114,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			}
 		}
 	}
-
+	
 	//diese Methode setzt die Kameraposition/-höhe (für den SliptScreen am Bildschirm) auf die richtigen Werte,
 	//abhängig vom Spieler. Bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
 	private void setCamera(Camera cam, string playerName)

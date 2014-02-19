@@ -14,7 +14,7 @@ using System.Collections.Generic;
 public class Car : MonoBehaviour 
 {
 	
-//// AUFHÄNGUNG
+	//// AUFHÄNGUNG
 	
 	//um nicht jedes Rad neu ändern zu müssen, werden hier die Daten geändert
 	//die maximale Länge der Feder im auseinander gezogenen ZUstand
@@ -26,7 +26,7 @@ public class Car : MonoBehaviour
 	//die Kraft, die die Feder aushalten kann, am Motor meistens stärker, hier für hinten
 	public float suspensionSpringRear;
 	
-//// EIGENSCHAFTEN DES AUTOS
+	//// EIGENSCHAFTEN DES AUTOS
 	
 	//Motor, Schaltung
 	//Drehmomentkennline des Fahrzeuges. X-Achse entspricht Umdrehungen pro Minute (RPM), Y-Achse enstspricht der daraus resultierende 
@@ -54,20 +54,20 @@ public class Car : MonoBehaviour
 	public float maxSteerAngle = 30;
 	//kleinster Lenkwikel
 	public float minSteerAngle = 12;
-
+	
 	//Werte für Wiederstandskräfte
 	//Motorbremse
 	public float engineBrakingMultiplier = 0.5f;
 	//Wert für Schaden einen anderen Auto bei einer Kollision
 	public float crashDamage = 0.1f;
-
-//// REFERENZEN AUF OBJEKTE 
+	
+	//// REFERENZEN AUF OBJEKTE 
 	
 	//Zentrum der Masse für den RigiBody (während er in der Luft ist)
 	public Transform CenterOfMass;
 	//Zentrumd der Masse dür den RigidBody, während dem fahren (damit er nicht beim Kurvenfahren umkippt)
 	public Transform CenterOfMassDown;
-
+	
 	//Liste der Schadensmodelle
 	//Frontmodelle
 	public GameObject[] frontDamageModels;
@@ -112,12 +112,12 @@ public class Car : MonoBehaviour
 	public GameObject rightExhaustPrefab;
 	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
 	public GameObject wheelSphereCol;
-
+	
 	//Referenz auf ein GameObject, zu dem das Auto bei einen drücken der Reset Taste teleportiert wird,
 	//in Falle der Arena wäre das die Aktuelle Position des Autos, 
 	//beim Rundkurz wäre es der zuletzt durchgefahrene Checkpoint
 	private GameObject resetPosition;
-
+	
 	//liste mit lenkrädern
 	private List<Wheel> steerWheels;
 	//liste mit beschleiunigungsrädern
@@ -128,7 +128,7 @@ public class Car : MonoBehaviour
 	//referenz auf eigenens rigidBody, 
 	private Rigidbody thisRigidBody;
 	
-//// WHEELFRICTIONCURVES
+	//// WHEELFRICTIONCURVES
 	
 	//WheelFrictionCurves, sollten für alle Reifen gleich sein
 	//vorwärtsfahren
@@ -140,7 +140,7 @@ public class Car : MonoBehaviour
 	//seitwärtsrutschen falls Handbremse benutzt wird
 	private WheelFrictionCurve sidewaysHandbrakeWFC;
 	
-//// INPUT WERTE
+	//// INPUT WERTE
 	
 	// Wert für die Beschleinigung, von -1 (rückwärts beschleunigen bzw. bremsen) bis 1 (vorwärts beschleunigen)
 	private float throttle = 0.0f;
@@ -149,7 +149,7 @@ public class Car : MonoBehaviour
 	//bool für die Handbremse
 	private bool handbrake = false;
 	
-//// AKTUELLE WERTE
+	//// AKTUELLE WERTE
 	
 	//aktueller Gang, 1 ist für 1. Gang, 0 ist für Rückwärtsgang
 	private int currentGear = 1;
@@ -179,9 +179,9 @@ public class Car : MonoBehaviour
 	private bool hasLostExhausts = false;
 	//Geschwindigkeit im vorherigen Frame
 	private float previousVel = 0.0f;
-
-//// HEALTH
-
+	
+	//// HEALTH
+	
 	//gesamter Health Wert
 	private float health = 100f;
 	//Health Wert für die Front, wird benötigt um das korrekte Schadensmodel anzuzeigen
@@ -204,9 +204,9 @@ public class Car : MonoBehaviour
 	private int secondDamageModelHealthLimit = 70;
 	//Healthwert ab dem das dritte Schadensmodell angezeigt werden soll (erste Schadensmodell hat keinen sichtbaren Schaden)
 	private int thirdDamageModelHealthLimit = 30;
-
-//// START UND UPDATE METHODEN
-
+	
+	//// START UND UPDATE METHODEN
+	
 	void Awake()
 	{
 		thisTransform = transform;
@@ -226,8 +226,9 @@ public class Car : MonoBehaviour
 		{
 			applyVisualDamage(damZone, 0);
 		}
+		resetPosition = this.gameObject;
 	}
-
+	
 	//in dieser Methode wird das Lenkrad gedreht
 	void Update()
 	{
@@ -275,8 +276,8 @@ public class Car : MonoBehaviour
 		//Lenkung hinzufügen		
 		applySteering(relativeVelocity);
 	}
-
-//// GET METHODEN
+	
+	//// GET UND SET METHODEN
 	
 	//liefert die aktuelle Geschwindigkeit in Kilometer pro Stunde zurück
 	//Dazu wird die Unity Geschwinddigkeit in Meter/Sekunde umgerechnet
@@ -290,7 +291,7 @@ public class Car : MonoBehaviour
 		// 1/4 * 3,6 = 0,9 ==> Unity-Geschwindigkeit mit 0.9 multiplizieren
 		return currentVelocity * 0.9f;
 	}
-
+	
 	//liefert den Geschwindigkeitsvektor in WorldSpace zurück
 	public Vector3 getVelocityVector()
 	{
@@ -308,19 +309,19 @@ public class Car : MonoBehaviour
 	{
 		return currentGear;
 	}
-
+	
 	//liefert Lebenspunkte zurück
 	public float getHealth()
 	{
 		return health;
 	}
-
+	
 	//ist das Auto gerade am rückwärtsfahren?
 	public bool isCarReversing()
 	{
 		return isReversing;
 	}
-
+	
 	//liefert true, wenn das Auto gerade am lenken ist
 	public bool isSteering()
 	{
@@ -334,7 +335,13 @@ public class Car : MonoBehaviour
 		}
 	}
 	
-//// INPUT METHODEN
+	//setzt die resetPosition
+	public void setResetPosition(GameObject obj)
+	{
+		resetPosition = obj;
+	}
+	
+	//// INPUT METHODEN
 	
 	//Der Wert wird vom InputPlayerXXController geändert
 	public void setThrottle(float th)
@@ -356,7 +363,7 @@ public class Car : MonoBehaviour
 		if(reset)
 		{
 			//falls das Auto auf dem Dach oder schief liegt wird es wieder zurückgesetzt
-			Vector3 tempAngles = thisTransform.eulerAngles;
+			Vector3 tempAngles = resetPosition.transform.eulerAngles;
 			tempAngles.z = 0.0f;
 			tempAngles.x = 0.0f;
 			thisTransform.eulerAngles = tempAngles;
@@ -367,9 +374,9 @@ public class Car : MonoBehaviour
 			//Die Position muss wieder angepasst werden, es wird ein Ray nach unten geschoßen und den Aufprallpunkt 
 			//als neue Position gewählt
 			RaycastHit rayHit;
-			if(Physics.Raycast(thisTransform.position, -Vector3.up, out rayHit))
+			if(Physics.Raycast(resetPosition.transform.position, -Vector3.up, out rayHit))
 			{
-				Vector3 tempPos = thisTransform.position;
+				Vector3 tempPos = resetPosition.transform.position;
 				//+4 um das Auto nicht im Boden versinken zu lassen
 				tempPos.y = rayHit.point.y + 4;
 				thisTransform.position = tempPos;
@@ -390,13 +397,13 @@ public class Car : MonoBehaviour
 		}
 	}
 	
-//// SCHADENSMODELLE AUFSETZEN, EXPLODIEREN
-
+	//// SCHADENSMODELLE AUFSETZEN, EXPLODIEREN
+	
 	//diese Methode behandelt den Schaden der einzelnen DestructibleCarParts
 	public void applyDamage(DamageZone damZone, float damageAmount)
 	{
 		health -= damageAmount;	
-
+		
 		//die Scheiben sollen als erstes kaputt gehen
 		if(health < 90)
 		{
@@ -405,14 +412,14 @@ public class Car : MonoBehaviour
 		}
 		//für den sichtbaren Schaden sind keine float Werte nötig
 		applyVisualDamage(damZone, (int)damageAmount);
-
+		
 		//Wenn die Lebenspunkte 0 sind, soll das Auto explodieren und alle refen verlieren
 		if(health<=0.0f)
 		{
 			explodeCar();
 		}
 	}
-
+	
 	//diese Methode sorgt dafür, dass das Auto einen Reifen verliert
 	private void loseAWheel(DamageZone damZone)
 	{
@@ -448,7 +455,7 @@ public class Car : MonoBehaviour
 		}
 		//neues Rad um in der Welt rumzufliegen
 		GameObject.Instantiate(loseWheel, wheel.transform.position, wheel.transform.rotation);
-				
+		
 		//den Collider dahin stellen, wo vorher das Rad war (um ein absenken des Auto an dieser Stelle zu verhindern)
 		wheelSphereCol.transform.localPosition = wheel.transform.localPosition;
 		
@@ -458,7 +465,7 @@ public class Car : MonoBehaviour
 		//hier muss explizit auf das dazugehörige gameObject zugegriffen werden
 		GameObject.Destroy(wheel.gameObject);
 	}
-
+	
 	//diese Methode löst die Tür vom Auto
 	private void removeDoor(GameObject door)
 	{
@@ -471,7 +478,7 @@ public class Car : MonoBehaviour
 			door.GetComponent<Rigidbody>().AddForceAtPosition(door.transform.up, door.transform.position);
 		}
 	}
-
+	
 	//diese Methode lässt das Auto explodieren, alle Reifen und Türen entfernen
 	public void explodeCar()
 	{
@@ -489,7 +496,7 @@ public class Car : MonoBehaviour
 			applyVisualDamage(damZone, 200);
 		}
 		removeDoor(frontDoor);
- 		removeDoor(rearDoor);
+		removeDoor(rearDoor);
 		removeDoor(rightDoor);
 		removeDoor(leftDoor);
 	}
@@ -500,30 +507,30 @@ public class Car : MonoBehaviour
 		//zunächst muss geschaut werden, an welcher Stelle der Schaden angerichtet werden soll
 		switch (damZone)
 		{
-			case DamageZone.FRONT:
-				setupFrontDamage(damageAmount);
-				break;
-			case DamageZone.REAR:
-				setupRearDamage(damageAmount);
-				break;
-			case DamageZone.RIGHT:
-				setupRightDamage(damageAmount);
-				break;
-			case DamageZone.LEFT:
-				setupLeftDamage(damageAmount);
-				break;
-			case DamageZone.FRONT_LEFT:
-				setupFrontLeftDamage(damageAmount);
-				break;
-			case DamageZone.FRONT_RIGHT:
-				setupFrontRightDamage(damageAmount);
-				break;
-			case DamageZone.REAR_LEFT:
-				setupRearLeftDamage(damageAmount);
-				break;
-			case DamageZone.REAR_RIGHT:
-				setupRearRightDamage(damageAmount);
-				break;
+		case DamageZone.FRONT:
+			setupFrontDamage(damageAmount);
+			break;
+		case DamageZone.REAR:
+			setupRearDamage(damageAmount);
+			break;
+		case DamageZone.RIGHT:
+			setupRightDamage(damageAmount);
+			break;
+		case DamageZone.LEFT:
+			setupLeftDamage(damageAmount);
+			break;
+		case DamageZone.FRONT_LEFT:
+			setupFrontLeftDamage(damageAmount);
+			break;
+		case DamageZone.FRONT_RIGHT:
+			setupFrontRightDamage(damageAmount);
+			break;
+		case DamageZone.REAR_LEFT:
+			setupRearLeftDamage(damageAmount);
+			break;
+		case DamageZone.REAR_RIGHT:
+			setupRearRightDamage(damageAmount);
+			break;
 		}
 	}
 	
@@ -687,7 +694,7 @@ public class Car : MonoBehaviour
 			rightDoor.SetActive(true);
 		}
 	}
-
+	
 	//in dieser Methode wird das graphische Objekt für die vordere linke Seite des Autos aktiviert
 	private void setupFrontLeftDamage(int damageAmount)
 	{
@@ -719,7 +726,7 @@ public class Car : MonoBehaviour
 			loseAWheel(DamageZone.FRONT_LEFT);
 		}
 	}
-
+	
 	//in dieser Methode wird das graphische Objekt für die vordere rechte Seite des Autos aktiviert
 	private void setupFrontRightDamage(int damageAmount)
 	{
@@ -751,7 +758,7 @@ public class Car : MonoBehaviour
 			loseAWheel(DamageZone.FRONT_RIGHT);
 		}
 	}
-
+	
 	//in dieser Methode wird das graphische Objekt für die hintere linke  Seite des Autos aktiviert
 	private void setupRearLeftDamage(int damageAmount)
 	{
@@ -783,7 +790,7 @@ public class Car : MonoBehaviour
 			loseAWheel(DamageZone.REAR_LEFT);
 		}
 	}
-
+	
 	//in dieser Methode wird das graphische Objekt für die hintere rechte Seite des Autos aktiviert
 	private void setupRearRightDamage(int damageAmount)
 	{
@@ -815,8 +822,8 @@ public class Car : MonoBehaviour
 			loseAWheel(DamageZone.REAR_LEFT);
 		}
 	}
-
-//// RÄDER EINRICHTEN
+	
+	//// RÄDER EINRICHTEN
 	
 	//diese Methode richtet die Reifen ein und fügt sie den richtigen Listen zu
 	private void setupWheels()
@@ -831,7 +838,7 @@ public class Car : MonoBehaviour
 			wheel.wheelCol.motorTorque = 0f;
 			wheel.wheelCol.brakeTorque = 0f;
 			wheel.wheelCol.steerAngle = 0f;
-					
+			
 			if(wheel.isFrontWheel)
 			{
 				wheel.setSpringValues(suspensionDistance, suspensionDamper, suspensionSpringFront);
@@ -853,7 +860,7 @@ public class Car : MonoBehaviour
 			}
 		}
 	}
-
+	
 	//diese Methode initialisiert alle WheelFrictionCurves
 	private void setupWFC()
 	{
@@ -872,7 +879,7 @@ public class Car : MonoBehaviour
 		sidewaysFrontWFC.extremumSlip = 1f;
 		sidewaysFrontWFC.extremumValue = 170; //350;
 		sidewaysFrontWFC.stiffness = 1.0f * slipMultiplier;	
-
+		
 		//seitliches rutschen/bewegen für die Hintereifen (für Donuts usw.)
 		sidewaysRearWFC = new WheelFrictionCurve();
 		sidewaysRearWFC.asymptoteSlip = 2.0f;
@@ -889,8 +896,8 @@ public class Car : MonoBehaviour
 		sidewaysHandbrakeWFC.extremumValue = 200; //350;
 		sidewaysHandbrakeWFC.stiffness = 1.0f;
 	}
-
-//// PHYSIK BERECHNUNGEN, FAHRZEUG WERTE
+	
+	//// PHYSIK BERECHNUNGEN, FAHRZEUG WERTE
 	
 	//in dieser Methode wid festgestellt, ob die Reifen den Boden berühren und wie der aktuelle Status des Autos ist
 	private void calculateStatus(Vector3 relVelocity)
@@ -1005,7 +1012,7 @@ public class Car : MonoBehaviour
 			//füge die Kraft dem Auto hinzu
 			thisRigidBody.AddForce(RollingResistanceForce, ForceMode.Impulse);
 		}
-
+		
 		//Angular Drag soll größer sein, wenn das Auto eine hohe Geschwindigkeit hat
 		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 50;
 		
@@ -1043,20 +1050,20 @@ public class Car : MonoBehaviour
 		{
 			foreach(Wheel wheel in wheels)
 			{
-/*				//wenn die Reifen am durchdrehen sind
+				/*				//wenn die Reifen am durchdrehen sind
 				if(wheel.getForwardSlip() > 1.0f)
 				{
 */					//falls es ein Vorderrad ist, sollen die normalen WFC bnutzt werden
-					if(wheel.isFrontWheel)
-					{
-						wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
-					}
-					//ansonsten soll am den HInterrädern eine andere WFC verwendet werden, um besser rutschen zu können
-					else
-					{
-						wheel.setFrictionCurves(forwardWFC, sidewaysRearWFC);
-					}
-/*				}
+				if(wheel.isFrontWheel)
+				{
+					wheel.setFrictionCurves(forwardWFC, sidewaysFrontWFC);
+				}
+				//ansonsten soll am den HInterrädern eine andere WFC verwendet werden, um besser rutschen zu können
+				else
+				{
+					wheel.setFrictionCurves(forwardWFC, sidewaysRearWFC);
+				}
+				/*				}
 				//ansonsten benutzen normale WFC
 				else
 				{
@@ -1087,7 +1094,7 @@ public class Car : MonoBehaviour
 		{
 			currentRPM /= size;	
 		}
-
+		
 		//die Motordrehzahl soll nicht weniger als 1000 sein (sonst würd im Reallife der Motor ausgehen)
 		if(currentRPM < 1000)
 		{
@@ -1147,8 +1154,8 @@ public class Car : MonoBehaviour
 			thisRigidBody.centerOfMass = CenterOfMass.localPosition;
 		}
 	}
-
-//// GAS GEBEN, BREMSEN UND LENKEN
+	
+	//// GAS GEBEN, BREMSEN UND LENKEN
 	
 	//in dieser Methode wird die Motorkraft (Drehmoment) aus der Drehzahl des Motors errechnet , mit der Gangschaltung multipliziert und 
 	//auf die Reifen übertragen
@@ -1167,8 +1174,8 @@ public class Car : MonoBehaviour
 			//maximal Zulässige Beschleunigung
 			int maxAccelleration = 60;
 			//Debug.Log ("Accel " + deltaAccelleration);
-
-/*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
+			
+			/*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
 			//abhängig vom neigungswinkel des Autos ist
 			//nur wenn sich ein Reifen auf dem Boden befindet
 			if(isOneWheelGrounded)
@@ -1192,15 +1199,15 @@ public class Car : MonoBehaviour
 			//Drehmoment, der auch auf die Reifen übertragen wird. Setzt sich zusammen aus: wie weit ist das Gaspedal/Bremspedal (fürs Rückwärtsfahren) 
 			//durchgedrückt * Drehmomentkurve * aktueller Gang * Gang Koeffizient * Differenzial Koeffizient * Effizienz des Getriebes 
 			float motorTorque = Mathf.Abs(throttle) * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * gearMultiplier[currentGear]
-								* differentialMultiplier * transmissionEfficiency;
-
+			* differentialMultiplier * transmissionEfficiency;
+			
 			//falls wir am rückwärtsfahren sind, soll die Motorkraft negativ sein
 			if(isReversing)
 			{
 				motorTorque = -motorTorque;
 				//beim rückwärtafahren entstehen größere Beschleunigungen, Ursache noch nicht gefunden
 			}
-
+			
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{

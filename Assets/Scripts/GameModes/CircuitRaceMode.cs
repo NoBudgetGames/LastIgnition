@@ -19,21 +19,24 @@ public class CircuitRaceMode : MonoBehaviour
 	public Checkpoint[] checkpoints;
 	//ZweiSpieler Controller, wichtig für die Liste der Spieler, ist eine Referenz innerhalb der Szene
 	public TwoLocalPlayerGameController playerCtrl;
-
+	
 	//Liste der Spieler mit dem CircuitModePlayerStats
 	private List<CircuitModePlayerStats> playerList;
 	//int List mit der Wagenummer des Autos, an erster Stelle steht das Auto, das momentan führt, usw...
 	private List<int> playerPosition;
 	//timer fürs update der Leaderboard Methode, siehr Update()-Methode
 	private float leaderboardTimer;
-
+	//haben alle das Rennen Beendet?
+	private bool haveAllFinishedTheRace;
+	
 	// Use this for initialization
 	void Start () 
 	{
 		playerList = new List<CircuitModePlayerStats>();
 		playerPosition = new List<int>();
 		leaderboardTimer = 0.0f;
-
+		haveAllFinishedTheRace = false;
+		
 		//gehe alle Checkpoints durch und numeriere sie
 		for(int i = 0; i < checkpoints.Length; i++)
 		{
@@ -45,7 +48,7 @@ public class CircuitRaceMode : MonoBehaviour
 			//es gibt nur ein Child (die Pyramide), daher GetChild(0)
 			GameObject.Destroy(checkpoints[i].transform.GetChild(0).gameObject);
 		}
-
+		
 		//gehe die Playerlist durch und initialisiere die CircuitModePlayerStats
 		for(int i = 0; i < playerCtrl.playerList.Count; i++)
 		{
@@ -60,7 +63,7 @@ public class CircuitRaceMode : MonoBehaviour
 			playerPosition.Add(i);
 		}
 	}
-
+	
 	void Update()
 	{
 		//da die updateLeaderboard Methode nur alle x Sekunden aufgerufen werden soll (wegen Performance)
@@ -71,15 +74,40 @@ public class CircuitRaceMode : MonoBehaviour
 			updateLeaderboard();
 			leaderboardTimer = 0.0f;
 		}
-
+		
+		//gehe durch alle Spieler durch und schaue, ob sie das rennen beendet haben
+		foreach(CircuitModePlayerStats player in playerList)
+		{
+			//falls der Spieler das Rennen nicht beendet hat, stoppe die schleife
+			if(player.getHasFinishedRace() == false)
+			{
+				haveAllFinishedTheRace = false;
+				break;
+			}
+			//ansonsten gehe weiter
+			else
+			{
+				//spieler hat das Rennen beendet, schaue dann weiter zum nächsten
+				haveAllFinishedTheRace = true;
+			}
+		}
+		
+		if(haveAllFinishedTheRace == true)
+		{
+			//gehe durch alle Spieler durch und gebe die Rundenzeit aus
+			foreach(CircuitModePlayerStats player in playerList)
+			{
+				player.printTimers();
+			}
+		}
 	}
-
+	
 	//diese Methode aktuallisiert die Positionsanzeige (wer grad erster ist)
 	private void updateLeaderboard()
 	{
 		//sortieren die Liste nach meiner eigenen sortierfunktion
 		playerPosition.Sort(comparePlayerCheckpoints);
-
+		
 		//hier müsste man dem HUD bescheidsagen, das er sich aktuallisieren soll
 		//eventuell könnte man das als StringArray mit den Spielernamen machen
 		for(int i = 0; i < playerPosition.Count; i++)
@@ -87,7 +115,7 @@ public class CircuitRaceMode : MonoBehaviour
 			Debug.Log (i + ". Pos: " + playerPosition[i]);	
 		}
 	}
-
+	
 	//diese Methode sortiert die PlayerPosition Liste nach folgenden Kriterien:
 	// 1. überprüfe, welches Auto die höhere durchgefahrenen Checkpoints hat
 	// 2. falls gleiche CheckpointNummer: welcher davon am nahesten zum nächsten Checkpoint ist
@@ -98,7 +126,7 @@ public class CircuitRaceMode : MonoBehaviour
 		CircuitModePlayerStats carA = playerList[carNumberA];
 		//Auto B aus der Liste
 		CircuitModePlayerStats carB = playerList[carNumberB];
-
+		
 		//falls A mehr Checkpoints als B hat
 		if(carA.getNumberOfDrivenCheckpoints() > carB.getNumberOfDrivenCheckpoints())
 		{
@@ -124,13 +152,13 @@ public class CircuitRaceMode : MonoBehaviour
 			{
 				chkNum++;
 			}
-
+			
 			//der nächste CHeckpoint
 			Checkpoint chk = checkpoints[chkNum];
 			//Abstände zum nächsten Checkpoint
 			float distA = chk.distanceToCheckpoint(carA.transform.position);
 			float distB = chk.distanceToCheckpoint(carB.transform.position);
-
+			
 			//falls A näher am CHeckpoint ist als B
 			if(distA < distB)
 			{

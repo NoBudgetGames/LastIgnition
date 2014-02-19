@@ -16,7 +16,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 	public CircuitRaceMode circuitMode;
 	//nummer der Autos (wichtig bei mehreren Spielern)
 	public int carNumber;
-
+	
 	//aktueller (zuletzt erfolgreich durchgefahrener) CheckPoint, in Fahrtrichtung
 	private Checkpoint currentCheckpoint;
 	//die Anzahl der Checkpoints
@@ -28,16 +28,24 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//hat das Auto das Rennen beendet?
 	private bool hasFinishedRace = false;
 	//aktuelle Rundenzeit
-	private float lapTime = 0.0f;
+	private float lapTime;
 	//gesamtzeit
-	private float totalTime = 0.0f;
+	private float totalTime;
 	//schnellste Runde
-	private float fastestLap = -1.0f;
+	private float fastestLap;
 	//anzahl durchgefahrerer Checkpoints
 	private int numberOfDrivenCheckpoints = 0;
 	//aktuell zu durchfahrende RUnde
 	private int currentLapToDrive = 1;
-
+	
+	void Start()
+	{
+		hasRaceStarted = true;
+		lapTime = 0.0f;
+		totalTime = 0.0f;
+		fastestLap = -1.0f;
+	}
+	
 	// Update is called once per frame
 	//hier wird überprüft, ob sich das AUto in der falschen Richtung bewegt
 	//dazu wird geschaut, ob der Geschwindindigkeitsvektor mit der (Fahrt-)Richtung des Checkpoints übereinstimmt
@@ -49,11 +57,11 @@ public class CircuitModePlayerStats : MonoBehaviour
 			lapTime += Time.deltaTime;
 			totalTime += Time.deltaTime;
 		}
-
+		
 		//Debug.Log("LatTime " + lapTime + " TotalTime " + totalTime + " FastestLap " + fastestLap);
-
+		
 		//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
-
+		
 		//überprüfe, ob das AUto in die falsche RIchtung fährt
 		//falls wir in die richtige Richtung fahren, resete den Timer
 		if (currentCheckpoint.isDrivingInRightDirection(transform.GetComponent<Rigidbody>().velocity))
@@ -65,50 +73,66 @@ public class CircuitModePlayerStats : MonoBehaviour
 		{
 			directionTimer += Time.deltaTime;
 		}
-
+		
 		//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
 		if(directionTimer > 2.0f)
 		{
-			Debug.Log ("WRONG DIRECTION DUDE! TURN AROUND!!!!");
+			Debug.Log ("WRONG DIRECTION DUDE! TURN AROUND!1!!");
 		}
 	}
-
+	
 	//die Methode sagt dem Auto quasi Bescheid, dass das Rennen jetzt startet
 	public void startRace()
 	{
 		hasRaceStarted = true;
 	}
-
+	
 	//der erste Checkpoint wird gesetzt
 	public void setFirstCheckpoint(Checkpoint chk)
 	{
 		currentCheckpoint = chk;
 	}
-
+	
 	//die Anzahl der CHeckpoiints wird gesetzt
 	public void setNumberOfCheckpoints(int chkNum)
 	{
 		numberOfCheckpoints = chkNum;
 	}
-
+	
 	//die Methode gibt die Anzahl der durchgefahrenen Checkpoints zurück
 	public int getNumberOfDrivenCheckpoints()
 	{
 		return numberOfDrivenCheckpoints;
 	}
-
+	
 	//gibt die Nummer des momentanens Checkpoint zurück
 	public int getCurrentCheckpointNumber()
 	{
 		return currentCheckpoint.checkpointNumber;
 	}
-
+	
+	//liefert den aktuellen Checkpoint zurück
+	public Checkpoint getCurrentCheckpoint()
+	{
+		return currentCheckpoint;
+	}
+	
+	public bool getHasFinishedRace()
+	{
+		return hasFinishedRace;
+	}
+	
+	public void printTimers()
+	{
+		Debug.Log ("Player " + carNumber + " TotalTime: " + totalTime + " FastestLap: " + fastestLap);
+	}
+	
 	//diese Methode wird aufgerufen, sobald eine Runde zu ende gefahren wurde
 	private void finishedLap()
 	{
 		//zahle die RUnde für dieses AUto hoch
 		currentLapToDrive++;
-
+		
 		//aktuellisiere die schnellste RUnde
 		if(lapTime < fastestLap)
 		{
@@ -119,10 +143,10 @@ public class CircuitModePlayerStats : MonoBehaviour
 		{
 			fastestLap = lapTime;
 		}
-
+		
 		//resete denRundenzähler
 		lapTime = 0.0f;
-
+		
 		//falls es die letzt Runde war
 		if(currentLapToDrive == circuitMode.lapsToDrive +1)
 		{
@@ -133,14 +157,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 			Car car = transform.GetComponent<Car>();
 			car.setThrottle(0.0f);
 			car.setHandbrake(true);
-
+			
 			//das Rennden wurde beendet
 			hasFinishedRace = true;
-					
-			Debug.Log ("NumOfCar " + carNumber + " has finished the race!!1!");
 		}
 	}
-
+	
 	//diese Methode überprüft, ob das Auto den richtigen Checkpoint abgefahren hat
 	public void updateCheckpoint(Checkpoint chkPoint)
 	{
