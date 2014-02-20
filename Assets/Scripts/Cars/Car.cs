@@ -225,6 +225,7 @@ public class Car : MonoBehaviour
 		foreach(DamageZone damZone in DamageZone.GetValues(typeof(DamageZone)))
 		{
 			applyVisualDamage(damZone, 0);
+
 		}
 		resetPosition = this.gameObject;
 	}
@@ -749,7 +750,7 @@ public class Car : MonoBehaviour
 			frontRightDamageModels[i].gameObject.SetActive(false);
 			if(damageModelNumber == i)
 			{
-				frontLeftDamageModels[i].gameObject.SetActive(true);
+				frontRightDamageModels[i].gameObject.SetActive(true);
 			}
 		}
 		//falls noch kein Reifen verloren worden ist und die Health Punkte relative klein sind
