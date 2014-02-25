@@ -16,7 +16,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	//MUSS MIT DER LISTE IM CAR SELECTOR ÜBEREINSTIMMEN!!
 	public GameObject[] carPrefabs;
 	//Liste mit Spielern, wird vom Script selber gefüllt,
-	public  List<GameObject> playerList;
+	public List<GameObject> playerList;
 	
 	// Use this for initialization
 	void Awake()

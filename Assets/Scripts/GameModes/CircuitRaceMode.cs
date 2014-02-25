@@ -19,6 +19,8 @@ public class CircuitRaceMode : MonoBehaviour
 	public Checkpoint[] checkpoints;
 	//ZweiSpieler Controller, wichtig für die Liste der Spieler, ist eine Referenz innerhalb der Szene
 	public TwoLocalPlayerGameController playerCtrl;
+	//Referenz auf die FinishedRaceCam
+	public FinishedRaceCamera finishedCam;
 	
 	//Liste der Spieler mit dem CircuitModePlayerStats
 	private List<CircuitModePlayerStats> playerList;
@@ -28,7 +30,15 @@ public class CircuitRaceMode : MonoBehaviour
 	private float leaderboardTimer;
 	//haben alle das Rennen Beendet?
 	private bool haveAllFinishedTheRace;
-	
+	//wurde die Kameras zerstört?
+	private bool camerasDestroyed;
+	//Countdown für start des Spiels
+	private float countDown = 4.0f;
+	//wurd das Rennen gestartet?
+	private bool hasRaceStarted = false;
+	//countDown zum anzeigen der SpielerInfos nachdem das Rennen vorbei ist
+	private float finishedRaceCountdown = 2.0f;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -36,6 +46,7 @@ public class CircuitRaceMode : MonoBehaviour
 		playerPosition = new List<int>();
 		leaderboardTimer = 0.0f;
 		haveAllFinishedTheRace = false;
+		camerasDestroyed = false;
 		
 		//gehe alle Checkpoints durch und numeriere sie
 		for(int i = 0; i < checkpoints.Length; i++)
@@ -66,7 +77,32 @@ public class CircuitRaceMode : MonoBehaviour
 	
 	void Update()
 	{
-		//da die updateLeaderboard Methode nur alle x Sekunden aufgerufen werden soll (wegen Performance)
+		//falls das Rennen nicht gestartet wurde, verhindere, das die AUtos sich bewegen
+		if(hasRaceStarted == false)
+		{
+			//gehe jedes Auto durch
+			foreach(CircuitModePlayerStats player in playerList)
+			{
+				//blokiere alle Bewegungen
+				player.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+			}
+			//zähle Timer runter
+			countDown -= Time.deltaTime;
+			if(countDown <= 0.0f)
+			{
+				hasRaceStarted = true;
+				//gehe jedes Auto durch
+				foreach(CircuitModePlayerStats player in playerList)
+				{
+					//blokiere nicht mehr alle Bewegungen
+					player.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+					//starte das Rennen
+					player.startRace();
+				}
+			}
+		}
+
+		//da die updateLeaderboard Methode nur alle x Sekunden aufgerufen werden soll, Platzierung muss nicht ständig aktuallisert werden
 		//wird hier ein "sleep"Timer verwendet
 		leaderboardTimer += Time.deltaTime;
 		if(leaderboardTimer >= 3.0f)
@@ -91,15 +127,34 @@ public class CircuitRaceMode : MonoBehaviour
 				haveAllFinishedTheRace = true;
 			}
 		}
-		
+
+		//falls das Rennen beendet wurde, zähle den Countdown runter
 		if(haveAllFinishedTheRace == true)
 		{
-			//gehe durch alle Spieler durch und gebe die Rundenzeit aus
+			finishedRaceCountdown -= Time.deltaTime;
+		}
+
+		//hier werden die Kameras, die die Autos verfolgen, gelöscht, damit die Ergebnisse dargestellt werden können
+		if(camerasDestroyed == false && finishedRaceCountdown <0.0f)
+		{
+			//aktiviere die finish Kamera
+			finishedCam.activateCamera();
+			//gehe durch alle Spieler durch
 			foreach(CircuitModePlayerStats player in playerList)
 			{
 				player.printTimers();
+				//zerstöre die Kamera und das HUD
+				GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
+				GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
+				GameObject.Destroy(GameObject.FindGameObjectWithTag("MiniMap").gameObject);
 			}
+			camerasDestroyed = true;
 		}
+	}
+
+	public void playerHasFinishedRace(string[] data)
+	{
+		finishedCam.addPlayerData(data);
 	}
 	
 	//diese Methode aktuallisiert die Positionsanzeige (wer grad erster ist)
@@ -140,7 +195,7 @@ public class CircuitRaceMode : MonoBehaviour
 		//falls beide gleich sind, muss geschaut werden, welcher am nächsten dran zum nächsten Checkpoint ist
 		else
 		{
-			//die nummer des aktuellen Checkpoints
+			//die nummer des aktuellen Checkpoints. Da beide Autos den selben Checkpoint haben, reicht es beim CarA nachugucken
 			int chkNum = carA.getCurrentCheckpointNumber();
 			//falls es der letzte Checkpoint ist, muss der 0-ten Checkpoint geprüft werden
 			if(chkNum == checkpoints.Length - 1)

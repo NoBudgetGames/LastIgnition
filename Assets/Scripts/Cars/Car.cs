@@ -12,8 +12,7 @@ using System.Collections.Generic;
  */
 
 public class Car : MonoBehaviour 
-{
-	
+{	
 	//// AUFHÄNGUNG
 	
 	//um nicht jedes Rad neu ändern zu müssen, werden hier die Daten geändert
@@ -114,8 +113,8 @@ public class Car : MonoBehaviour
 	public GameObject wheelSphereCol;
 	
 	//Referenz auf ein GameObject, zu dem das Auto bei einen drücken der Reset Taste teleportiert wird,
-	//in Falle der Arena wäre das die Aktuelle Position des Autos, 
-	//beim Rundkurz wäre es der zuletzt durchgefahrene Checkpoint
+	//normalerweise wäre das die Aktuelle Position des Autos, 
+	//beim verlassen der Strecke beim Rundkurs wäre es die Position der zuletzt durchgefahrenen Checkpoints
 	private GameObject resetPosition;
 	
 	//liste mit lenkrädern
@@ -123,7 +122,7 @@ public class Car : MonoBehaviour
 	//liste mit beschleiunigungsrädern
 	private List<Wheel> driveWheels;
 	
-	//referenz auf aktuelles Objekt, ist einfacher die Referenz zu setzen anstadt mit GetComponent die Komponente zu suchen
+	//referenz auf aktuelles Transfom, 
 	private Transform thisTransform;
 	//referenz auf eigenens rigidBody, 
 	private Rigidbody thisRigidBody;
@@ -225,7 +224,6 @@ public class Car : MonoBehaviour
 		foreach(DamageZone damZone in DamageZone.GetValues(typeof(DamageZone)))
 		{
 			applyVisualDamage(damZone, 0);
-
 		}
 		resetPosition = this.gameObject;
 	}
@@ -249,9 +247,6 @@ public class Car : MonoBehaviour
 		Vector3 relativeVelocity = transform.InverseTransformDirection(rigidbody.velocity);
 		//momentane Geschwindigkeit
 		currentVelocity = relativeVelocity.magnitude;
-		
-		//Zeit seit den letzten Gangwechsel verringern
-		gearChangeTimer-= Time.deltaTime;
 		//Status des Autos feststellen
 		calculateStatus(relativeVelocity);		
 		
@@ -261,7 +256,9 @@ public class Car : MonoBehaviour
 		updateWFC();
 		//Auto stabilisieren
 		stabilizeCar();
-		
+
+		//Zeit seit den letzten Gangwechsel verringern
+		gearChangeTimer-= Time.deltaTime;
 		//nur Beschleinigung hinzufügen, wenn gerade der Gang nicht gewechselt wird
 		if(gearChangeTimer<0)
 		{
@@ -285,11 +282,11 @@ public class Car : MonoBehaviour
 	//in dem das Größenverhältnisses des Autos verwendet wird
 	public float getVelocityInKmPerHour()
 	{
-		// Länge des Autos in Metern (aus Wikipedia): 5283 mm = 5,283 m 
-		// Länge des Autos in Unity (gemessen): 1327.76 - 1306.646 = 21.114
+		// Länge des Autos (für den Dodge Charger) in Metern (aus Wikipedia): 5283 mm = 5,283 m 
+		// Länge des Autos in Unity (vorderes Ende - hinteres Ende, gemessen): 1327.76 - 1306.646 = 21.114
 		// Verhältniss: 5,283 / 21.114 = ca. 0,25 ==> durch 4 teilen
 		// zunächst in Meter pro Sekunde (/4), dann in Kilometer pro Stunde umrechnen ( * 3.6)
-		// 1/4 * 3,6 = 0,9 ==> Unity-Geschwindigkeit mit 0.9 multiplizieren
+		// 1/4 * 3,6 = 0,9 ==> "Unity-Geschwindigkeit" mit 0.9 multiplizieren
 		return currentVelocity * 0.9f;
 	}
 	
@@ -344,21 +341,19 @@ public class Car : MonoBehaviour
 	
 	//// INPUT METHODEN
 	
-	//Der Wert wird vom InputPlayerXXController geändert
+	//Der Wert wird vom PlayerInputController geändert
 	public void setThrottle(float th)
 	{
 		throttle = th;
 	}
 	
-	//Der Wert wird vom InputPlayerController geändert
+	//Der Wert wird vom PlayerInputController geändert
 	public void setSteer(float st)
 	{
 		steer = st;
 	}
 	
 	//in dieser Methode wird das Auto nach einen Unfall (wenn er z.B. auf dem Dach liegt) wieder auf die Straße gesetzt
-	//MOMENTAN wird das Auto nur umgedreht, später soll er wieder auf die Straße gesetzt werden, am besten am zuletzt 
-	//durchgefahrenen Checkpoint
 	public void resetCar(bool reset)
 	{
 		if(reset)
@@ -379,7 +374,7 @@ public class Car : MonoBehaviour
 			{
 				Vector3 tempPos = resetPosition.transform.position;
 				//+4 um das Auto nicht im Boden versinken zu lassen
-				tempPos.y = rayHit.point.y + 4;
+				tempPos.y = rayHit.point.y + 3;
 				thisTransform.position = tempPos;
 			}
 		}
@@ -1176,7 +1171,7 @@ public class Car : MonoBehaviour
 			int maxAccelleration = 60;
 			//Debug.Log ("Accel " + deltaAccelleration);
 			
-			/*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
+/*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
 			//abhängig vom neigungswinkel des Autos ist
 			//nur wenn sich ein Reifen auf dem Boden befindet
 			if(isOneWheelGrounded)
@@ -1236,7 +1231,7 @@ public class Car : MonoBehaviour
 			{
 				if(wheel.isFrontWheel)
 				{
-					wheel.wheelCol.brakeTorque = brakeTorque;	
+					wheel.wheelCol.brakeTorque = brakeTorque * 1.5f;	
 				}
 				else
 				{

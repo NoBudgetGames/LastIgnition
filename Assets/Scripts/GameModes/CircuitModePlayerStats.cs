@@ -160,6 +160,8 @@ public class CircuitModePlayerStats : MonoBehaviour
 			
 			//das Rennden wurde beendet
 			hasFinishedRace = true;
+			string[] str = new string[]{"" + carNumber,"" + totalTime, "" + fastestLap};
+			circuitMode.playerHasFinishedRace(str);
 		}
 	}
 	
