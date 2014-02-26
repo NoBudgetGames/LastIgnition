@@ -1,0 +1,42 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class MiniMap : MonoBehaviour
+{
+	int localPlayers;
+	
+	GameObject secondMap;
+	// Use this for initialization
+	void Start ()
+	{
+		localPlayers = PlayerPrefs.GetInt("LocalPlayers");
+		
+		if(localPlayers == 1){
+			Rect viewRect = this.camera.rect;
+
+			viewRect.width  = viewRect.width * 1.5f;
+			viewRect.height = viewRect.height * 1.5f;
+			viewRect.y = 0.71f - viewRect.height*0.5f;
+			this.camera.rect = viewRect;
+		} else {
+			secondMap = (GameObject)GameObject.Instantiate(this.gameObject);
+			secondMap.GetComponent<MiniMap>().enabled = false;
+
+			
+			Rect viewRect = this.camera.rect;
+			viewRect.y = 0.71f;
+			this.camera.rect = viewRect;
+			
+			Rect viewRect2 = this.camera.rect;
+			viewRect2.y = 0.18f;
+			secondMap.camera.rect = viewRect2;
+		}
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		
+	}
+}
+

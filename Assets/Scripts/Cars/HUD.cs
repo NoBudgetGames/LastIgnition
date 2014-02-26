@@ -18,11 +18,8 @@ public class HUD : MonoBehaviour
 	public GUIText rank;
 	public GUIText modeInfo;
 	public GUITexture health;
-	protected Camera miniMap;
 
 	int numberOfHuds = -1;
-
-	bool miniMapOneSet = false ,miniMapTwoSet = false, miniMapTwoInstantiated = false;
 
 	float healthMaxBorderValue;
 	float maxHealth;
@@ -42,14 +39,9 @@ public class HUD : MonoBehaviour
 		health.gameObject.layer = layer;
 		this.gameObject.layer = layer;
 
-		speedoSizeX = Screen.width/5;
-		speedoSizeY = Screen.height/5;
-		offset = 50.0f;
-
-		if(GameObject.FindGameObjectWithTag("MiniMap") != null)
-			miniMap = GameObject.FindGameObjectWithTag("MiniMap").camera;
-		else
-			Debug.LogError("Please place and adjust the minimap prefab");
+		speedoSizeX = Screen.width/4.5f;
+		speedoSizeY = Screen.height/4.5f;
+		offset = 0.0f;
 
 		healthMaxBorderValue = health.pixelInset.width;
 		maxHealth = car.getHealth();
@@ -68,11 +60,7 @@ public class HUD : MonoBehaviour
 				numberOfHuds = GameObject.FindGameObjectsWithTag("HUD").Length;
 			}
 		}
-		if(player == "Two" && !miniMapTwoInstantiated && miniMap != null){
-			GameObject newMap = (GameObject)GameObject.Instantiate(GameObject.FindGameObjectWithTag("MiniMap"));
-			miniMap = newMap.camera;
-			miniMapTwoInstantiated = true;
-		}
+		
 		float w = car.getHealth()/maxHealth * healthMaxBorderValue;
 		if(w >=0)
 			health.pixelInset = new Rect(health.pixelInset.x,health.pixelInset.y,w,health.pixelInset.height);
@@ -84,56 +72,26 @@ public class HUD : MonoBehaviour
 			if(player != "One"){
 				GUI.DrawTexture(new Rect(0, Screen.height/2-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);
 				GUI.BeginGroup(new Rect(0,0,Screen.width,Screen.height));
-				GUIUtility.RotateAroundPivot(-135.0f,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset));
+				GUIUtility.RotateAroundPivot(-120.0f,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset));
 				GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset));
 				GUI.DrawTexture(new Rect(0,Screen.height/2-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedoArrow);
 				GUI.EndGroup();
-
-				if(!miniMapTwoSet && miniMap !=null){
-					Rect viewRect = miniMap.rect;
-					viewRect.y = 0.18f;
-					miniMap.rect = viewRect;
-					miniMapTwoSet = true;
-				}
 				
 			} else {
 				GUI.DrawTexture(new Rect(0, Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);
 				GUI.BeginGroup(new Rect(0,0,Screen.width,Screen.height));
-				GUIUtility.RotateAroundPivot(-135.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
+				GUIUtility.RotateAroundPivot(-120.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
 				GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2+-offset));
 				GUI.DrawTexture(new Rect(0,Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedoArrow);
 				GUI.EndGroup();
-
-				if(!miniMapOneSet && miniMap !=null){
-					Rect viewRect = miniMap.rect;
-					viewRect.y = 0.71f;
-					miniMap.rect = viewRect;
-					miniMapOneSet = true;
-				}
 			}
 		} else {
 			GUI.DrawTexture(new Rect(0, Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);
 			GUI.BeginGroup(new Rect(0,0,Screen.width,Screen.height));
-			GUIUtility.RotateAroundPivot(-135.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
+			GUIUtility.RotateAroundPivot(-120.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
 			GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
 			GUI.DrawTexture(new Rect(0,Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedoArrow);
 			GUI.EndGroup();
-
-			if(!miniMapOneSet && miniMap !=null){
-				Rect viewRect = miniMap.rect;
-				viewRect.y = 0.71f - viewRect.height;
-				viewRect.x = viewRect.x - viewRect.width;
-				viewRect.width  = viewRect.width * 2;
-				viewRect.height = viewRect.height * 2;
-				miniMap.rect = viewRect;
-				miniMapOneSet = true;
-			}
-		}
-	}
-
-	void OnDestroy(){
-		if(player == "Two"){
-			GameObject.Destroy(miniMap.gameObject);
 		}
 	}
 

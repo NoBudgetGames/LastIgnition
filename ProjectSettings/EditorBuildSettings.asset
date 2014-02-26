@@ -6,22 +6,22 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/menu/MainMenuScene.unity
+    path: Assets/Prefabs/Pickups/Scenes/menu/MainMenuScene.unity
   - enabled: 1
-    path: Assets/Scenes/tracks/ArenaStadium.unity
+    path: Assets/Prefabs/Pickups/Scenes/tracks/ArenaStadium.unity
   - enabled: 1
-    path: Assets/Scenes/tracks/DesertCircuit.unity
+    path: Assets/Prefabs/Pickups/Scenes/tracks/DesertCircuit.unity
   - enabled: 1
-    path: Assets/Scenes/tracks/DesertArena.unity
+    path: Assets/Prefabs/Pickups/Scenes/tracks/DesertArena.unity
   - enabled: 1
-    path: Assets/Scenes/testScenes/StefTestScene2.unity
+    path: Assets/Prefabs/Pickups/Scenes/testScenes/StefTestScene2.unity
   - enabled: 1
-    path: Assets/Scenes/testScenes/CTestScene.unity
+    path: Assets/Prefabs/Pickups/Scenes/testScenes/CTestScene.unity
   - enabled: 1
-    path: Assets/Scenes/testScenes/CTestScene2.unity
+    path: Assets/Prefabs/Pickups/Scenes/testScenes/CTestScene2.unity
   - enabled: 1
-    path: Assets/Scenes/testScenes/DesertArenaCTest.unity
+    path: Assets/Prefabs/Pickups/Scenes/testScenes/DesertArenaCTest.unity
   - enabled: 1
-    path: Assets/Scenes/testScenes/SimTestScene.unity
+    path: Assets/Prefabs/Pickups/Scenes/testScenes/SimTestScene.unity
   - enabled: 1
-    path: Assets/Scenes/menu/ChooseCar.unity
+    path: Assets/Prefabs/Pickups/Scenes/menu/ChooseCar.unity
