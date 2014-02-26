@@ -6,12 +6,19 @@ public class ArenaMode : MonoBehaviour
 {
 	//Referenz innerhalb der Szene aud den TwoLocalPlayerCOntrolle
 	public TwoLocalPlayerGameController control;
+	//Referenz innerhald der Szene auf die FinishedCam
+	public FinishedRaceCamera finishCam;
+
 	//wurde das Match schon gestartet?
 	private bool hasMatchStarted = false;
 	//wurde das Match beendet?
 	private bool hasMatchFinished = false;
 	//Countdown für den Anfang des Matches
 	private float countDown = 4.0f;
+	//wurden die Cameras schon zerstört?
+	private bool camerasDestroyed;
+	//countDown zum anzeigen der Ergebnisse
+private float finishCountdown = 2.0f;
 
 	List<GameObject> players;
 	List<int> lives;
@@ -25,6 +32,7 @@ public class ArenaMode : MonoBehaviour
 		initialised = false;
 		lives = new List<int>();
 		ranks = new List<int>();
+		camerasDestroyed = false;
 	}
 
 	// Update is called once per frame
@@ -63,8 +71,10 @@ public class ArenaMode : MonoBehaviour
 				}
 			}
 		}
-					
-		if(players.Count == 1){
+
+		//falls nur noch ein Spieler übrig ist
+		if(players.Count == 1)
+		{
 			PlayerInputController p = players[0].GetComponent<PlayerInputController>();
 			Debug.Log("Player " + p.numberOfControllerString + " won the Battle!");
 
@@ -74,7 +84,37 @@ public class ArenaMode : MonoBehaviour
 			Car car = p.gameObject.GetComponent<Car>();
 			car.setThrottle(0.0f);
 			car.setHandbrake(true);
+			//das Match wurde beendet
 			hasMatchFinished = true;
+		}
+
+		//falls Match beendet wurde, zähle den finishCountdown runter
+		if(hasMatchFinished == true)
+		{
+			finishCountdown -= Time.deltaTime;
+		}
+		
+		//hier werden die Kameras, die die Autos verfolgen, gelöscht, damit die Ergebnisse dargestellt werden können
+		if(camerasDestroyed == false && finishCountdown <0.0f)
+		{
+			//aktiviere die finish Kamera
+			finishCam.activateCamera();
+			finishCam.setArenaMode(true);
+
+			//gehe durch alle Spieler durch und zerstöre die überflüssigen Sachen
+			foreach(GameObject player in control.playerList)
+			{
+				//zerstöre die Kamera und das HUD
+				GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
+				GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
+			}
+			//gehe alle Objekte mit dem Tag MiniMap durch und lösche sie
+			GameObject[] minimaps = GameObject.FindGameObjectsWithTag("MiniMap");
+			foreach(GameObject obj in minimaps)
+			{
+				GameObject.Destroy(obj);
+			}
+			camerasDestroyed = true;
 		}
 			
 		for(int i = 0; i<players.Count; ++i){
@@ -103,7 +143,10 @@ public class ArenaMode : MonoBehaviour
 		for(int i = 0; i < players.Count; ++i){
 				if(lives[i] == currentLives){
 					ranks[i] = rank;
-					players[i].GetComponent<PlayerInputController>().hud.rank.text = ""+rank + " place";
+					if(players[i].GetComponent<PlayerInputController>().hud != null)
+					{
+						players[i].GetComponent<PlayerInputController>().hud.rank.text = ""+rank + " place";
+					}
 					rankChanged = true;
 				}
 			}

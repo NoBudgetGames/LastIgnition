@@ -6,6 +6,8 @@ using System.Collections.Generic;
  * Diese Klasse ist für den Rundkurs Spielmodus zuständig.
  * Es gibt dabei eine Liste der mit zu durchfahrenden Checkpoints auf der Strecke
  * Sie instanziert auch die Fahrzeuge über den LoacalPlayerController
+ * Wenn das Rennen vorbei ist, wird das HUD, der CameraController und die Minimap zerstört und
+ * stadtdessen die Ergebnisse dargestellt
  */
 
 public class CircuitRaceMode : MonoBehaviour 
@@ -15,18 +17,18 @@ public class CircuitRaceMode : MonoBehaviour
 	//Referenz in der Szene auf anfangs Checkpoint, wird nicht durchfahren, dient hautpsächlich zur Positionsbestimmung, solange der 0-te 
 	//Checkpoint noch nicht durchfahren wurde
 	public Checkpoint firstCheckpoint;
-	//Liste mit Referenzen auf die CheckPoints, muss in zu fahrender Reihenfolge sein!
+	//Liste mit Referenzen innerhald der Szene auf die CheckPoints, muss in zu fahrender Reihenfolge sein!
 	public Checkpoint[] checkpoints;
 	//ZweiSpieler Controller, wichtig für die Liste der Spieler, ist eine Referenz innerhalb der Szene
 	public TwoLocalPlayerGameController playerCtrl;
-	//Referenz auf die FinishedRaceCam
+	//Referenz innerhald der Szene auf die FinishedRaceCam
 	public FinishedRaceCamera finishedCam;
 	
 	//Liste der Spieler mit dem CircuitModePlayerStats
 	private List<CircuitModePlayerStats> playerList;
 	//int List mit der Wagenummer des Autos, an erster Stelle steht das Auto, das momentan führt, usw...
 	private List<int> playerPosition;
-	//timer fürs update der Leaderboard Methode, siehr Update()-Methode
+	//timer fürs update der Leaderboard Methode, siehe Update()-Methode
 	private float leaderboardTimer;
 	//haben alle das Rennen Beendet?
 	private bool haveAllFinishedTheRace;
@@ -112,24 +114,26 @@ public class CircuitRaceMode : MonoBehaviour
 		}
 		
 		//gehe durch alle Spieler durch und schaue, ob sie das rennen beendet haben
-		foreach(CircuitModePlayerStats player in playerList)
+		if(haveAllFinishedTheRace == false)
 		{
-			//falls der Spieler das Rennen nicht beendet hat, stoppe die schleife
-			if(player.getHasFinishedRace() == false)
+			foreach(CircuitModePlayerStats player in playerList)
 			{
-				haveAllFinishedTheRace = false;
-				break;
-			}
-			//ansonsten gehe weiter
-			else
-			{
-				//spieler hat das Rennen beendet, schaue dann weiter zum nächsten
-				haveAllFinishedTheRace = true;
+				//falls der Spieler das Rennen nicht beendet hat, stoppe die schleife
+				if(player.getHasFinishedRace() == false)
+				{
+					haveAllFinishedTheRace = false;
+					break;
+				}
+				//ansonsten gehe weiter
+				else
+				{
+					//spieler hat das Rennen beendet, schaue dann weiter zum nächsten
+					haveAllFinishedTheRace = true;
+				}
 			}
 		}
-
 		//falls das Rennen beendet wurde, zähle den Countdown runter
-		if(haveAllFinishedTheRace == true)
+		else
 		{
 			finishedRaceCountdown -= Time.deltaTime;
 		}
@@ -139,19 +143,26 @@ public class CircuitRaceMode : MonoBehaviour
 		{
 			//aktiviere die finish Kamera
 			finishedCam.activateCamera();
+			finishedCam.setArenaMode(false);
 			//gehe durch alle Spieler durch
 			foreach(CircuitModePlayerStats player in playerList)
 			{
-				player.printTimers();
 				//zerstöre die Kamera und das HUD
 				GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 				GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
-				GameObject.Destroy(GameObject.FindGameObjectWithTag("MiniMap").gameObject);
+			}
+			//gehe alle Objekte mit dem Tag MiniMap durch und lösche sie
+			GameObject[] minimaps = GameObject.FindGameObjectsWithTag("MiniMap");
+			foreach(GameObject obj in minimaps)
+			{
+				GameObject.Destroy(obj);
 			}
 			camerasDestroyed = true;
 		}
 	}
 
+	//diese Methode wird von den CircuitModePlayerStas aufgerufen, sobald das Auto das Rennen beendet hat
+	//Dabei werden seine Stats der Liste der FinishCam hinzugefügt
 	public void playerHasFinishedRace(string[] data)
 	{
 		finishedCam.addPlayerData(data);

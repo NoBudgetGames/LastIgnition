@@ -15,7 +15,7 @@ GameObject:
   - 45: {fileID: 4500000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: FinieshedCamera
+  m_Name: FinishedCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

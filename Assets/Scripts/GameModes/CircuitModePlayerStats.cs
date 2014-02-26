@@ -116,24 +116,20 @@ public class CircuitModePlayerStats : MonoBehaviour
 	{
 		return currentCheckpoint;
 	}
-	
+
+	//liefert einen bool zurück, ob das Auto das Rennen bereits beendet hat oder nicht
 	public bool getHasFinishedRace()
 	{
 		return hasFinishedRace;
 	}
-	
-	public void printTimers()
-	{
-		Debug.Log ("Player " + carNumber + " TotalTime: " + totalTime + " FastestLap: " + fastestLap);
-	}
-	
+
 	//diese Methode wird aufgerufen, sobald eine Runde zu ende gefahren wurde
 	private void finishedLap()
 	{
-		//zahle die RUnde für dieses AUto hoch
+		//zahle die Runde für dieses Auto hoch
 		currentLapToDrive++;
 		
-		//aktuellisiere die schnellste RUnde
+		//aktuellisiere die schnellste Runde
 		if(lapTime < fastestLap)
 		{
 			fastestLap = lapTime;
@@ -160,7 +156,8 @@ public class CircuitModePlayerStats : MonoBehaviour
 			
 			//das Rennden wurde beendet
 			hasFinishedRace = true;
-			string[] str = new string[]{"" + carNumber,"" + totalTime, "" + fastestLap};
+			//übergebe die PlayerStats
+			string[] str = new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString,"" + totalTime, "" + fastestLap};
 			circuitMode.playerHasFinishedRace(str);
 		}
 	}
