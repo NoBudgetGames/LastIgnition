@@ -314,6 +314,7 @@ GameObject:
   - 20: {fileID: 211342377}
   - 124: {fileID: 211342376}
   - 92: {fileID: 211342375}
+  - 114: {fileID: 211342379}
   m_Layer: 0
   m_Name: MiniMapCamera
   m_TagString: MiniMap
@@ -352,8 +353,8 @@ Camera:
     serializedVersion: 2
     x: .790000021
     y: .649999976
-    width: .170000002
-    height: .25
+    width: .109999999
+    height: .0900000036
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 60
@@ -378,6 +379,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &211342379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: bd6eecd730cb9174b847e89c9fe5ee39,
+    type: 2}
+  m_PrefabInternal: {fileID: 1612269942}
+  m_GameObject: {fileID: 211342374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89843d1e6bfe1df4d957b3b2cfc15854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &276627875
 GameObject:
   m_ObjectHideFlags: 0

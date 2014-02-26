@@ -5,6 +5,7 @@ using System.Collections;
  * diese Klasse stellt ein Reifen dar. sie besitzt eine WheelCollider Komponente, sowie eine Referenz auf ein Graphisches Objekt,
  * welches sich auch dreht. Um eine korrekte Aufhänung und eine (Lenk-)Drehung des Reifens zu erreichen muss zwischen dem WheelCollider und dem eigentlichen
  * grapischen Objekt (das sich um die eigene y-Achse rotiert), muss ein Objekt dazwischen schalten, um den Reifen auch um die Lenkachse zu drehen.
+ * Außerdem besitzt die Klasse einen ParticleSystem, um beim Rutschen Rauch dazustellen
  */
 
 public class Wheel : MonoBehaviour 
@@ -28,6 +29,8 @@ public class Wheel : MonoBehaviour
 	private GameObject skidmarkWithTrail;
 	//die Räder benötigen ein zusätzliches Gameobject, das dazwischen geschaltet ist, um eine korrekte aufhängung und Lenkung darzustellen
 	private GameObject steerGraphic;
+	//der ParticleSystem
+	private ParticleSystem particleSys;
 	
 //// START UND UPDATE METHODEN
 	
@@ -45,6 +48,8 @@ public class Wheel : MonoBehaviour
 		steerGraphic.transform.rotation = tireGraphic.transform.rotation;
 		steerGraphic.transform.parent = tireGraphic.parent;
 		tireGraphic.parent = steerGraphic.transform;
+		particleSys = gameObject.GetComponentInChildren<ParticleSystem>();
+		particleSys.enableEmission = false;
 	}
 	
 	// Update is called once per frame
@@ -75,6 +80,40 @@ public class Wheel : MonoBehaviour
 			//falls der Reifen rutscht
 			if(Mathf.Abs(wheelHit.forwardSlip) > 10.0f || Mathf.Abs(wheelHit.sidewaysSlip) > 15.0f)
 			{	
+				//Das Partikel System soll Partikel emitten, 
+				particleSys.enableEmission = true;
+				//schau auf welcher Layer der Refien fährt
+				int layer = wheelHit.collider.transform.gameObject.layer;
+				//switch erlaubt keine abfragen wie "case LayerMask.NameToLayer("Default"):", daher feste Werte
+				//Compiler Error CS0150: A constant value is expected
+				switch(layer)
+				{
+					case 9:
+						//fester Sand, SandNormal
+						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorSandNormal;
+						break;
+					case 10:
+						//loser Sand, SandLose
+						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorSandLose;
+						break;
+					case 11:
+						//Schotter, Rubble
+						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorRubble;
+						break;
+					case 12:
+						//Erdweg, Dirt
+						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorDirt;
+						break;
+					case 13:
+					 	//Grass, Grass, es sollen keine Partikel erzeugt werden
+						particleSys.enableEmission = false;
+						break;
+					default:
+						//asphalt, Default Layer (mach nichts)
+						particleSys.startColor = new Color(1.0f, 1.0f, 1.0f);
+						break;
+				}
+
 				//falls es momentan bereits eine Skidmark für diesen Reifen gibt
 				if(skidmarkWithTrail != null)
 				{
@@ -93,6 +132,8 @@ public class Wheel : MonoBehaviour
 			//ansonsten entferne die aktuelle Skidmark
 			else
 			{
+				//Das Partikel System soll keine Partikel emitten
+				particleSys.enableEmission = false;
 				if(skidmarkWithTrail != null)
 				{
 					skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().removeSkidmark();

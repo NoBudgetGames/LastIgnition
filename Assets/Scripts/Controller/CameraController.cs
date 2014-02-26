@@ -62,6 +62,7 @@ public class CameraController : MonoBehaviour
 				transform.parent = targetCar.transform;
 				break;
 		}
+		//gameObject.GetComponent<Camera>().fieldOfView = Mathf.Lerp(45,90, (targetCar.getVelocityInKmPerHour()-60)/100);
 	}
 
 	//wird vom InputController aufgerufen
