@@ -38,9 +38,9 @@ public class HUD : MonoBehaviour
 		modeInfo.gameObject.layer = layer;
 		health.gameObject.layer = layer;
 		this.gameObject.layer = layer;
-
-		speedoSizeX = Screen.width/4.5f;
-		speedoSizeY = Screen.height/4.5f;
+		
+		speedoSizeY = Screen.height/3f;
+		speedoSizeX = speedoSizeY;
 		offset = 0.0f;
 
 		healthMaxBorderValue = health.pixelInset.width;
@@ -60,7 +60,10 @@ public class HUD : MonoBehaviour
 				numberOfHuds = GameObject.FindGameObjectsWithTag("HUD").Length;
 			}
 		}
-		
+
+		if(numberOfHuds == 2){
+			
+		}
 		float w = car.getHealth()/maxHealth * healthMaxBorderValue;
 		if(w >=0)
 			health.pixelInset = new Rect(health.pixelInset.x,health.pixelInset.y,w,health.pixelInset.height);
@@ -72,24 +75,24 @@ public class HUD : MonoBehaviour
 			if(player != "One"){
 				GUI.DrawTexture(new Rect(0, Screen.height/2-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);
 				GUI.BeginGroup(new Rect(0,0,Screen.width,Screen.height));
-				GUIUtility.RotateAroundPivot(-120.0f,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset));
-				GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset));
+				GUIUtility.RotateAroundPivot(-125.0f,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset+4f));
+				GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height/2-speedoSizeY/2-offset+4f));
 				GUI.DrawTexture(new Rect(0,Screen.height/2-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedoArrow);
 				GUI.EndGroup();
 				
 			} else {
 				GUI.DrawTexture(new Rect(0, Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);
 				GUI.BeginGroup(new Rect(0,0,Screen.width,Screen.height));
-				GUIUtility.RotateAroundPivot(-120.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
-				GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2+-offset));
+				GUIUtility.RotateAroundPivot(-125.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset+4f));
+				GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset+4f));
 				GUI.DrawTexture(new Rect(0,Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedoArrow);
 				GUI.EndGroup();
 			}
 		} else {
 			GUI.DrawTexture(new Rect(0, Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedo);
 			GUI.BeginGroup(new Rect(0,0,Screen.width,Screen.height));
-			GUIUtility.RotateAroundPivot(-120.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
-			GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset));
+			GUIUtility.RotateAroundPivot(-125.0f,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset+4f));
+			GUIUtility.RotateAroundPivot(angle,new Vector2(speedoSizeX/2,Screen.height-speedoSizeY/2-offset+4f));
 			GUI.DrawTexture(new Rect(0,Screen.height-speedoSizeY-offset,speedoSizeX,speedoSizeY),speedoArrow);
 			GUI.EndGroup();
 		}
