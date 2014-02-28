@@ -128,7 +128,7 @@ private float finishCountdown = 2.0f;
 					lives.RemoveAt(i);
 					ranks.RemoveAt(i);
 				} else {
-					control.reInstanciatePlayer(p.numberOfControllerString);
+					control.reInstanciatePlayer(p.numberOfControllerString, false);
 				}
 				updateRanks();
 			}

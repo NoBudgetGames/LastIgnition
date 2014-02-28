@@ -1188,7 +1188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &100148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4784,7 +4784,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 7
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5836,7 +5836,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 7
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6888,7 +6888,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 7
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7940,7 +7940,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 7
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:

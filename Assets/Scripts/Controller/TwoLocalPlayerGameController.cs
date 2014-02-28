@@ -49,11 +49,11 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.O))
 		{
-			reInstanciatePlayer("One");
+			reInstanciatePlayer("One", true);
 		}
 		if(Input.GetKeyDown(KeyCode.P))
 		{
-			reInstanciatePlayer("Two");
+			reInstanciatePlayer("Two", true);
 		}
 	}
 	
@@ -76,7 +76,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	
 	//resete das Auto des SPielers (FULL HEALTH)
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
-	public void reInstanciatePlayer(string playerName)
+	public void reInstanciatePlayer(string playerName, bool toBeDestroyed)
 	{
 		GameObject player = new GameObject("PLayerToDestroy");
 		//finde den richtigen Spieler aus der Liste
@@ -94,12 +94,31 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 			//lösche den Spieler aus der Liste
 			playerList.Remove(player);
-			
+			//zertöre den HUD
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
-			//zerstöre den Spieler
-			//Anmerkung: die Transform Komponente lässt sich nicht zerstören und bleibt daher noch in der der 
-			//Szene übrig
-			GameObject.Destroy(player.gameObject);
+
+			//falls das Auto nicht mehr in der Szene sein soll, lösche das Auto
+			if(toBeDestroyed == true)
+			{
+				//zerstöre den Spieler
+				//Anmerkung: die Transform Komponente lässt sich nicht zerstören und bleibt daher noch in der der 
+				//Szene übrig
+				GameObject.Destroy(player.gameObject);
+			}
+			//ansonsten lasse das Auto in der Szene und lösche alle nicht mehr relevanten/benötigten Komponenten
+			else
+			{
+				//lösche die beiden StabilizerBars
+				GameObject.Destroy(player.GetComponent<StabilizerBar>());
+				GameObject.Destroy(player.GetComponent<StabilizerBar>());
+				//lösche den CarInventory
+				GameObject.Destroy(player.GetComponent<CarInventory>());
+				//lösche den Minimal Icon GameObject
+				GameObject.Destroy(player.GetComponentInChildren<MiniMapElement>().gameObject);
+				//lösche den CarCollision GameObject
+				GameObject.Destroy(player.GetComponentInChildren<CarCollision>().gameObject);
+			}
+
 			
 			//instanszere einen neuen Spieler
 			if(playerName.Equals("One"))

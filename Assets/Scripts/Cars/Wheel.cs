@@ -141,7 +141,8 @@ public class Wheel : MonoBehaviour
 				}
 			}
 		}
-		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt und das Skidmark Object existiert nicht mehr
+		//ansonsten werden die Reifen durch die Feder nach aussen gedrückt und das Skidmark Object existiert nicht mehr, 
+		//außerdem soll kein Rauch mehr erzeugt werden
 		else
 		{
 			steerGraphic.transform.position = wheelCol.transform.position - (wheelCol.transform.up * wheelCol.suspensionDistance);
@@ -150,6 +151,8 @@ public class Wheel : MonoBehaviour
 				skidmarkWithTrail.GetComponent<SkidmarkWithTrailRenderer>().removeSkidmark();
 				skidmarkWithTrail = null;
 			}
+			//Das Partikel System soll keine Partikel emitten
+			particleSys.enableEmission = false;
 		}
 	}
 
