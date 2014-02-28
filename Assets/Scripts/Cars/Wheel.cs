@@ -90,19 +90,19 @@ public class Wheel : MonoBehaviour
 				{
 					case 9:
 						//fester Sand, SandNormal
-						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorSandNormal;
+						particleSys.startColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
 						break;
 					case 10:
 						//loser Sand, SandLose
-						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorSandLose;
+						particleSys.startColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
 						break;
 					case 11:
 						//Schotter, Rubble
-						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorRubble;
+						particleSys.startColor = new Color(0.5f, 0.5f, 0.5f, 1.0f);
 						break;
 					case 12:
 						//Erdweg, Dirt
-						particleSys.startColor = skidTrailPrefab.GetComponent<SkidmarkWithTrailRenderer>().colorDirt;
+						particleSys.startColor = new Color(0.8f, 0.6f, 0.1f, 1.0f);
 						break;
 					case 13:
 					 	//Grass, Grass, es sollen keine Partikel erzeugt werden

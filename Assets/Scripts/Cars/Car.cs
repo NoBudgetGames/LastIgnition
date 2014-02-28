@@ -111,6 +111,8 @@ public class Car : MonoBehaviour
 	public GameObject rightExhaustPrefab;
 	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
 	public GameObject wheelSphereCol;
+	//Referenz auf den ParticleSystem, der das Feuer erzeugt, wenn das AUto explodiert ist
+	public ParticleSystem particleSysForExplosion;
 	
 	//Referenz auf ein GameObject, zu dem das Auto bei einen drücken der Reset Taste teleportiert wird,
 	//normalerweise wäre das die Aktuelle Position des Autos, 
@@ -126,7 +128,7 @@ public class Car : MonoBehaviour
 	private Transform thisTransform;
 	//referenz auf eigenens rigidBody, 
 	private Rigidbody thisRigidBody;
-	
+
 	//// WHEELFRICTIONCURVES
 	
 	//WheelFrictionCurves, sollten für alle Reifen gleich sein
@@ -219,6 +221,10 @@ public class Car : MonoBehaviour
 		setupWheels();
 		//Massezemtrum sollte weiter vorne und weiter unten liegen, daher Referenz auf eine anderes in der Hierariche plaziertes Objekt
 		thisRigidBody.centerOfMass = CenterOfMassDown.localPosition;
+		//particleSys deaktivieren
+		particleSysForExplosion.enableEmission = false;
+		//erstmal deaktivieren, da es noch nicht gebraucht wird
+		particleSysForExplosion.gameObject.SetActive(false);
 		
 		//richtige Schadensmodell aktivieren, gehe durch jede Schadesnzone durch und füge 0 Schaden
 		foreach(DamageZone damZone in DamageZone.GetValues(typeof(DamageZone)))
@@ -475,7 +481,7 @@ public class Car : MonoBehaviour
 		}
 	}
 	
-	//diese Methode lässt das Auto explodieren, alle Reifen und Türen entfernen
+	//diese Methode lässt das Auto explodieren sowie alle Reifen und Türen entfernen
 	public void explodeCar()
 	{
 		wheelSphereCol.SetActive(false);
@@ -495,6 +501,10 @@ public class Car : MonoBehaviour
 		removeDoor(rearDoor);
 		removeDoor(rightDoor);
 		removeDoor(leftDoor);
+
+		//aktiviere den ParticleSystem
+		particleSysForExplosion.gameObject.SetActive(true);
+		particleSysForExplosion.enableEmission = true;
 	}
 	
 	//diese Methode verarbeitet den Schaden und schaut, aus welcher Richtung er kam und ruf entsprechende Methode auf
