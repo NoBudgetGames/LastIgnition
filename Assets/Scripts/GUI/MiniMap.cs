@@ -16,7 +16,7 @@ public class MiniMap : MonoBehaviour
 
 			viewRect.width  = viewRect.width * 1.5f;
 			viewRect.height = viewRect.height * 1.5f;
-			viewRect.y = 0.71f - viewRect.height*0.5f;
+			viewRect.y = 0.84f - viewRect.height*0.5f;
 			this.camera.rect = viewRect;
 		} else {
 			secondMap = (GameObject)GameObject.Instantiate(this.gameObject);
@@ -24,11 +24,11 @@ public class MiniMap : MonoBehaviour
 
 			
 			Rect viewRect = this.camera.rect;
-			viewRect.y = 0.71f;
+			viewRect.y = 0.84f;
 			this.camera.rect = viewRect;
 			
 			Rect viewRect2 = this.camera.rect;
-			viewRect2.y = 0.18f;
+			viewRect2.y = 0.34f;
 			secondMap.camera.rect = viewRect2;
 		}
 	}

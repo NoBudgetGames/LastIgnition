@@ -133,8 +133,13 @@ private float finishCountdown = 2.0f;
 				updateRanks();
 			}
 		}
+
+		if(!hasMatchFinished)
+			updateLives();
 	}
 
+	//Berechnet den Aktuellen Rang der Spieler basierend auf den verbleibenden Leben
+	//und schreibt ihn in den GUI Text des jeweligen HUDs
 	void updateRanks(){
 		int currentLives = MAX_LIVES;
 		int rank = 1;
@@ -145,7 +150,18 @@ private float finishCountdown = 2.0f;
 					ranks[i] = rank;
 					if(players[i].GetComponent<PlayerInputController>().hud != null)
 					{
-						players[i].GetComponent<PlayerInputController>().hud.rank.text = ""+rank + " place";
+						string postfix;
+						switch(rank){
+						case 1: postfix="st";
+							break;
+						case 2: postfix="nd";
+							break;
+						case 3: postfix="rd";
+							break;
+						default: postfix="th";
+							break;
+						}
+						players[i].GetComponent<PlayerInputController>().hud.rank.text = ""+ rank + postfix + " Place";
 					}
 					rankChanged = true;
 				}
@@ -155,6 +171,13 @@ private float finishCountdown = 2.0f;
 				rank++;
 
 			rankChanged = false;
+		}
+	}
+
+	//Schreibt die aktuelle Leben in den GUI Text
+	void updateLives(){
+		for(int i = 0; i < players.Count; ++i){
+			players[i].GetComponent<PlayerInputController>().hud.modeInfo.text = ""+lives[i]+" Lives";
 		}
 	}
 }

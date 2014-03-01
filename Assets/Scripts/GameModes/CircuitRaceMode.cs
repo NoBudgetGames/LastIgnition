@@ -23,7 +23,9 @@ public class CircuitRaceMode : MonoBehaviour
 	public TwoLocalPlayerGameController playerCtrl;
 	//Referenz innerhald der Szene auf die FinishedRaceCam
 	public FinishedRaceCamera finishedCam;
-	
+	//Textur für falsche Richtung
+	public Texture wrongWayTexture;
+
 	//Liste der Spieler mit dem CircuitModePlayerStats
 	private List<CircuitModePlayerStats> playerList;
 	//int List mit der Wagenummer des Autos, an erster Stelle steht das Auto, das momentan führt, usw...
@@ -40,6 +42,7 @@ public class CircuitRaceMode : MonoBehaviour
 	private bool hasRaceStarted = false;
 	//countDown zum anzeigen der SpielerInfos nachdem das Rennen vorbei ist
 	private float finishedRaceCountdown = 2.0f;
+
 
 	// Use this for initialization
 	void Start () 
@@ -179,6 +182,19 @@ public class CircuitRaceMode : MonoBehaviour
 		for(int i = 0; i < playerPosition.Count; i++)
 		{
 			Debug.Log (i + ". Pos: " + playerPosition[i]);	
+			HUD hud = playerCtrl.playerList[i].GetComponent<PlayerInputController>().hud;
+			string postfix;
+			switch(playerPosition[i]){
+				case 0: postfix="st";
+					break;
+				case 1: postfix="nd";
+					break;
+				case 2: postfix="rd";
+					break;
+				default: postfix="th";
+					break;
+			}
+			hud.rank.text = ""+ (playerPosition[i]+1)+ postfix +" Place";
 		}
 	}
 	
@@ -242,4 +258,5 @@ public class CircuitRaceMode : MonoBehaviour
 			}
 		}
 	}
+
 }

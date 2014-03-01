@@ -39,7 +39,7 @@ public class HUD : MonoBehaviour
 		health.gameObject.layer = layer;
 		this.gameObject.layer = layer;
 		
-		speedoSizeY = Screen.height/3f;
+		speedoSizeY = Screen.height/3.5f;
 		speedoSizeX = speedoSizeY;
 		offset = 0.0f;
 
@@ -51,6 +51,11 @@ public class HUD : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+
+		speedoSizeY = Screen.height/4f;
+		speedoSizeX = speedoSizeY;
+		offset = 0.0f;
+
 		weapon.texture = inventory.equippedWeapon.hudIcon;
 		ammo.text = ""+inventory.equippedWeapon.remainingAmmo();
 		if(numberOfHuds == -1){

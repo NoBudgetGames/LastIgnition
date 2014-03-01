@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.3100004, y: -2.2699995, z: -.519197524}
+  m_LocalPosition: {x: -10.3100004, y: -2.31999993, z: -.519197524}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400004}
@@ -142,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: -2.26999998, z: -.519197524}
-  m_LocalScale: {x: -.200000003, y: -.119999997, z: 1}
+  m_LocalScale: {x: 0, y: -.119999997, z: 1}
   m_Children: []
   m_Father: {fileID: 400004}
 --- !u!4 &400010
@@ -152,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.3100004, y: -2.33999991, z: -.519197524}
+  m_LocalPosition: {x: -10.3100004, y: -2.25, z: -.519197524}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400004}
@@ -185,8 +185,8 @@ MonoBehaviour:
   player: 
   weapon: {fileID: 13100004}
   ammo: {fileID: 13200004}
-  speedo: {fileID: 2800000, guid: e7be6335ae67f3649b54ee298a7ec9a1, type: 3}
-  speedoArrow: {fileID: 2800000, guid: 21d2f8d366fb9ff469fce6ac687ca58b, type: 3}
+  speedo: {fileID: 2800000, guid: 1a46d4d52e809064db9d5459ece4c360, type: 3}
+  speedoArrow: {fileID: 2800000, guid: 2bef25b3dd74fc0479d8d0e8063368b8, type: 3}
   rank: {fileID: 13200002}
   modeInfo: {fileID: 13200000}
   health: {fileID: 13100000}
@@ -201,9 +201,9 @@ GUITexture:
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: -67.2399979
+    x: 26.7000008
     y: -32.7000008
-    width: 400
+    width: 250
     height: 58
   m_LeftBorder: 0
   m_RightBorder: 0
