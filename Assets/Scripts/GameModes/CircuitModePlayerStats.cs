@@ -61,44 +61,44 @@ public class CircuitModePlayerStats : MonoBehaviour
 	// Update is called once per frame
 	//hier wird überprüft, ob sich das AUto in der falschen Richtung bewegt
 	//dazu wird geschaut, ob der Geschwindindigkeitsvektor mit der (Fahrt-)Richtung des Checkpoints übereinstimmt
+	//außerdem werden die Rundenzeiten hochgezählt und das HUD aktuallisiert
 	void Update () 
 	{	
-		//zähle die Rundenzeit hoch, nur, wenn das Rennen noch nicht beendet wurde und es gestarte wurde
+		//aktuallisiere die Rundenzeiten, aber nur, wenn Rennen gestartet und noch nicht beendet wurde
 		if(hasRaceStarted == true && hasFinishedRace ==  false)
 		{
+			//zähle die Rundenzeit hoch,
 			lapTime += Time.deltaTime;
 			totalTime += Time.deltaTime;
+
+			//überprüfe, ob das AUto in die falsche RIchtung fährt
+			//falls wir in die richtige Richtung fahren, resete den Timer
+			if (currentCheckpoint.isDrivingInRightDirection(transform.GetComponent<Rigidbody>().velocity))
+			{
+				directionTimer = 0.0f;
+			}
+			//ansonsten zähle den Timer hoch
+			else
+			{
+				directionTimer += Time.deltaTime;
+			}
+			
+			//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
+			if(directionTimer > 2.0f)
+			{
+				Debug.Log ("WRONG DIRECTION DUDE! TURN AROUND!1!!");
+				wrongWay = true;
+			} else {
+				wrongWay = false;
+			}
 		}
-		
-		//Debug.Log("LatTime " + lapTime + " TotalTime " + totalTime + " FastestLap " + fastestLap);
-		
+
 		//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
-			HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
-			int minutes = (int)(lapTime/60.0f);
-			int seconds = (int)(lapTime%60.0f);
-			int milliseconds = (int)((lapTime*1000.0f)%1000);
-			hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ minutes+ ":" + seconds + ":" + milliseconds;
-		
-		//überprüfe, ob das AUto in die falsche RIchtung fährt
-		//falls wir in die richtige Richtung fahren, resete den Timer
-		if (currentCheckpoint.isDrivingInRightDirection(transform.GetComponent<Rigidbody>().velocity))
-		{
-			directionTimer = 0.0f;
-		}
-		//ansonsten zähle den Timer hoch
-		else
-		{
-			directionTimer += Time.deltaTime;
-		}
-		
-		//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
-		if(directionTimer > 2.0f)
-		{
-			Debug.Log ("WRONG DIRECTION DUDE! TURN AROUND!1!!");
-			wrongWay = true;
-		} else {
-			wrongWay = false;
-		}
+		HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
+		int minutes = (int)(lapTime/60.0f);
+		int seconds = (int)(lapTime%60.0f);
+		int milliseconds = (int)((lapTime*1000.0f)%1000);
+		hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ minutes+ ":" + seconds + ":" + milliseconds;
 	}
 	
 	//die Methode sagt dem Auto quasi Bescheid, dass das Rennen jetzt startet
@@ -161,7 +161,6 @@ public class CircuitModePlayerStats : MonoBehaviour
 		{
 			fastestLap = lapTime;
 		}
-
 		
 		//resete denRundenzähler
 		lapTime = 0.0f;
@@ -179,11 +178,24 @@ public class CircuitModePlayerStats : MonoBehaviour
 			
 			//das Rennden wurde beendet
 			hasFinishedRace = true;
+	
+			//wandle die Gesmtzeiten in Minuten und Sekunden um
+			int totalMinutes = (int)(totalTime/60.0f);
+			int totalSeconds = (int)(totalTime%60.0f);
+			int totalMilliseconds = (int)((totalTime*1000.0f)%1000);
+			string totalTimeStr = totalMinutes + ":" + totalSeconds + ":" + totalMilliseconds;
+
+			//wandle die schnellste in Minuten und Sekunden um
+			int fastestMinutes = (int)(fastestLap/60.0f);
+			int fastestSeconds = (int)(fastestLap%60.0f);
+			int fastestMilliseconds = (int)((fastestLap*1000.0f)%1000);
+			string fastestTimeStr = fastestMinutes + ":" + fastestSeconds + ":" + fastestMilliseconds;
+
 			//übergebe die PlayerStats
-			string[] str = new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString,"" + totalTime, "" + fastestLap};
+			//Controllernummer, gesamtzeit, schnellste RUnde
+			string[] str = new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString, totalTimeStr, fastestTimeStr};
 			circuitMode.playerHasFinishedRace(str);
 		}
-
 		showBestRound = true;
 	}
 	

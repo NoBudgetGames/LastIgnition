@@ -108,17 +108,19 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			//ansonsten lasse das Auto in der Szene und lösche alle nicht mehr relevanten/benötigten Komponenten
 			else
 			{
-				//lösche die beiden StabilizerBars
+				//lösche die beiden StabilizerBars, aber aus irgendeinen grund wird die 2. StabilizerBar nicht gelöscht
 				GameObject.Destroy(player.GetComponent<StabilizerBar>());
-				GameObject.Destroy(player.GetComponent<StabilizerBar>());
+				GameObject.Destroy(player.GetComponent<StabilizerBar>(), 0.5f);
 				//lösche den CarInventory
 				GameObject.Destroy(player.GetComponent<CarInventory>());
 				//lösche den Minimal Icon GameObject
 				GameObject.Destroy(player.GetComponentInChildren<MiniMapElement>().gameObject);
 				//lösche den CarCollision GameObject
 				GameObject.Destroy(player.GetComponentInChildren<CarCollision>().gameObject);
-			}
+				//lösche den inputController
+				GameObject.Destroy(player.GetComponent<PlayerInputController>());
 
+			}
 			
 			//instanszere einen neuen Spieler
 			if(playerName.Equals("One"))

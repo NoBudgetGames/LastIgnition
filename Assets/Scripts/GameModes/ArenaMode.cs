@@ -18,7 +18,11 @@ public class ArenaMode : MonoBehaviour
 	//wurden die Cameras schon zerstört?
 	private bool camerasDestroyed;
 	//countDown zum anzeigen der Ergebnisse
-private float finishCountdown = 2.0f;
+	private float finishCountdown = 2.0f;
+	//Liste mit String-Arrays mit Infos der Spieler
+	private List<string[]> playerStats;
+	//TImer, wie lange die Runde geht
+	private float roundDuration = 0.0f;
 
 	List<GameObject> players;
 	List<int> lives;
@@ -33,6 +37,7 @@ private float finishCountdown = 2.0f;
 		lives = new List<int>();
 		ranks = new List<int>();
 		camerasDestroyed = false;
+		playerStats = new List<string[]>();
 	}
 
 	// Update is called once per frame
@@ -71,6 +76,11 @@ private float finishCountdown = 2.0f;
 				}
 			}
 		}
+		//ansonsten zähle den Counter hoch
+		else
+		{
+			roundDuration += Time.deltaTime;
+		}
 
 		//falls nur noch ein Spieler übrig ist
 		if(players.Count == 1)
@@ -97,6 +107,25 @@ private float finishCountdown = 2.0f;
 		//hier werden die Kameras, die die Autos verfolgen, gelöscht, damit die Ergebnisse dargestellt werden können
 		if(camerasDestroyed == false && finishCountdown <0.0f)
 		{
+			//es gibt nur noch einen Player im Feld
+			PlayerInputController lastPlayer = players[0].GetComponent<PlayerInputController>();
+
+			//wandle die rundendauer (= überlebensziet) in Minuten und Sekunden um
+			int livingMinutes = (int)(roundDuration/60.0f);
+			int livingSeconds = (int)(roundDuration%60.0f);
+			int livingMilliseconds = (int)((roundDuration*1000.0f)%1000);
+			
+			//füge die Infos der SpielerStats hinzu
+			//Controllernummer, überlebenszeit, restliche leben
+			playerStats.Add(new string[]{lastPlayer.numberOfControllerString, livingMinutes + ":" + livingSeconds + ":" + livingMilliseconds, "" + lives[0]});
+
+			//drehe die Reihenfolge der playerStats um ,sodass der zuletzt überlebende an erste Stelle steht
+			playerStats.Reverse();
+			foreach(string[] str in playerStats)
+			{
+				finishCam.addPlayerData(str);
+			}
+
 			//aktiviere die finish Kamera
 			finishCam.activateCamera();
 			finishCam.setArenaMode(true);
@@ -127,6 +156,15 @@ private float finishCountdown = 2.0f;
 					players.RemoveAt(i);
 					lives.RemoveAt(i);
 					ranks.RemoveAt(i);
+
+					//wandle die rundendauer (= überlebensziet) in Minuten und Sekunden um
+					int livingMinutes = (int)(roundDuration/60.0f);
+					int livingSeconds = (int)(roundDuration%60.0f);
+					int livingMilliseconds = (int)((roundDuration*1000.0f)%1000);
+
+					//füge die Infos der SpielerStats hinzu
+					//Controllernummer, überlebenszeit, restliche leben
+					playerStats.Add(new string[]{p.numberOfControllerString, livingMinutes + ":" + livingSeconds + ":" + livingMilliseconds, "RIP"});
 				} else {
 					control.reInstanciatePlayer(p.numberOfControllerString, false);
 				}

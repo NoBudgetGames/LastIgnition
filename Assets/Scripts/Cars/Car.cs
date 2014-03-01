@@ -990,10 +990,10 @@ public class Car : MonoBehaviour
 						GroundCoefRR += 0.01f; //loser Sand, SandLose
 						break;
 					case 11:
-						GroundCoefRR += 0.05f; //Schotter, Rubble
+						GroundCoefRR += 0.025f; //Schotter, Rubble
 						break;
 					case 12:
-						GroundCoefRR += 0.02f; //Erdweg, Dirt
+						GroundCoefRR += 0.025f; //Erdweg, Dirt
 						break;
 					case 13:
 						GroundCoefRR += 0.04f; //Grass, Grass

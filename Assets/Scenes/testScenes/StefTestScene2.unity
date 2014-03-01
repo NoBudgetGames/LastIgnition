@@ -4551,7 +4551,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: d9f6aaa642dc8824394531a80fc23637, type: 2}
     - target: {fileID: 100000, guid: efd9ebe13cd9c4446b7b033093a9d2fd, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: efd9ebe13cd9c4446b7b033093a9d2fd, type: 3}
@@ -7774,7 +7774,7 @@ Prefab:
       objectReference: {fileID: 367678628}
     - target: {fileID: 11400002, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: lapsToDrive
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
@@ -8408,7 +8408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8359c30a0314849b894aad21b439ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lapsToDrive: 1
+  lapsToDrive: 2
   firstCheckpoint: {fileID: 1115481455}
   checkpoints:
   - {fileID: 1393592446}
@@ -8442,6 +8442,7 @@ MonoBehaviour:
   - {fileID: 960181189}
   playerCtrl: {fileID: 1795911547}
   finishedCam: {fileID: 367678628}
+  wrongWayTexture: {fileID: 2800000, guid: b29c133450d5bc74cac2f76eec27b9d1, type: 3}
 --- !u!4 &1441144887
 Transform:
   m_ObjectHideFlags: 0
@@ -12115,7 +12116,7 @@ GameObject:
   - 33: {fileID: 2064994742}
   - 23: {fileID: 2064994741}
   - 64: {fileID: 2064994744}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: TestKurs
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -142,6 +142,7 @@ public class CircuitRaceMode : MonoBehaviour
 		}
 
 		//hier werden die Kameras, die die Autos verfolgen, gelöscht, damit die Ergebnisse dargestellt werden können
+		//nur wenn das Rennen beendet wurde
 		if(camerasDestroyed == false && finishedRaceCountdown <0.0f)
 		{
 			//aktiviere die finish Kamera
@@ -150,9 +151,11 @@ public class CircuitRaceMode : MonoBehaviour
 			//gehe durch alle Spieler durch
 			foreach(CircuitModePlayerStats player in playerList)
 			{
-				//zerstöre die Kamera und das HUD
+				//zerstöre die Kamera, das HUD und die CircuitModePlayerStats
 				GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 				GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
+				//circuitModePlayerStats deswegen, weil sonst ein großer WRONG WAY erscheint
+				GameObject.Destroy(player.GetComponent<CircuitModePlayerStats>());
 			}
 			//gehe alle Objekte mit dem Tag MiniMap durch und lösche sie
 			GameObject[] minimaps = GameObject.FindGameObjectsWithTag("MiniMap");
@@ -174,6 +177,11 @@ public class CircuitRaceMode : MonoBehaviour
 	//diese Methode aktuallisiert die Positionsanzeige (wer grad erster ist)
 	private void updateLeaderboard()
 	{
+		//falls das Rennen bereits beendet wurde, ist es nicht meht nötig den erster usw. zu finden
+		if(haveAllFinishedTheRace == true)
+		{
+			return;
+		}
 		//sortieren die Liste nach meiner eigenen sortierfunktion
 		playerPosition.Sort(comparePlayerCheckpoints);
 		

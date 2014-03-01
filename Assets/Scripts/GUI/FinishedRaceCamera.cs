@@ -23,6 +23,7 @@ public class FinishedRaceCamera : MonoBehaviour
 	{
 		playerData = new List<string[]>();
 		gameObject.GetComponent<Camera>().enabled = false;
+		gameObject.GetComponent<AudioListener>().enabled = false;
 	}
 
 	public void addPlayerData(string[] data)
@@ -46,6 +47,7 @@ public class FinishedRaceCamera : MonoBehaviour
 		if(camActive == true)
 		{
 			gameObject.GetComponent<Camera>().enabled = true;
+			gameObject.GetComponent<AudioListener>().enabled = true;
 			//zeichne eine Box
 			GUI.Box(new Rect(10,10,500,300), "");
 			//fall es ein Rundkursrennen ist, stelle Rundkursinfos dar
@@ -56,7 +58,7 @@ public class FinishedRaceCamera : MonoBehaviour
 			//ansonsten Arenainfos
 			else
 			{
-				GUI.Label(new Rect(45,15,400,100), "Player       Time            Lives");
+				GUI.Label(new Rect(45,15,400,100), "Player       Survival Time   Lives");
 			}
 
 			int i = 0;

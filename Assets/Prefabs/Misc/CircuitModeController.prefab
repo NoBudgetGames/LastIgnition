@@ -72,6 +72,7 @@ MonoBehaviour:
   - {fileID: 0}
   playerCtrl: {fileID: 0}
   finishedCam: {fileID: 0}
+  wrongWayTexture: {fileID: 2800000, guid: b29c133450d5bc74cac2f76eec27b9d1, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
