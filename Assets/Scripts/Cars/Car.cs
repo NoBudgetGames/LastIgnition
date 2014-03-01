@@ -984,19 +984,19 @@ public class Car : MonoBehaviour
 					switch(layer)
 					{
 					case 9:
-						GroundCoefRR += 0.07f; //fester Sand, SandNormal
+						GroundCoefRR += 0.03f; //fester Sand, SandNormal
 						break;
 					case 10:
-						GroundCoefRR += 0.3f; //loser Sand, SandLose
+						GroundCoefRR += 0.01f; //loser Sand, SandLose
 						break;
 					case 11:
-						GroundCoefRR += 0.02f; //Schotter, Rubble
+						GroundCoefRR += 0.05f; //Schotter, Rubble
 						break;
 					case 12:
-						GroundCoefRR += 0.05f; //Erdweg, Dirt
+						GroundCoefRR += 0.02f; //Erdweg, Dirt
 						break;
 					case 13:
-						GroundCoefRR += 0.08f; //Grass, Grass
+						GroundCoefRR += 0.04f; //Grass, Grass
 						break;
 					default:
 						GroundCoefRR += 0.015f; //asphalt, Default Layer
@@ -1159,6 +1159,14 @@ public class Car : MonoBehaviour
 		{
 			thisRigidBody.centerOfMass = CenterOfMass.localPosition;
 		}
+		//falls sich das Auto in der Luft befindet, drücke das Auto nach unten
+		//man könnte zwar auch die Gravitaionskraft im Editor größer machen, allerdings würde es das Fahrverhalten auch drastisch
+		//ändern, da die Reifen deutlich mehr Grip haben. Um die Werte nicht erneut anpassen zu müssen, wird hier einfach 
+		//das Auto nach unter grdrückt
+		if(areAllWheelsGrounded == false)
+		{
+			thisRigidBody.AddForce(new Vector3(0.0f, -5000.0f, 0.0f), ForceMode.Impulse);
+		}
 	}
 	
 	//// GAS GEBEN, BREMSEN UND LENKEN
@@ -1183,6 +1191,7 @@ public class Car : MonoBehaviour
 			
 /*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
 			//abhängig vom neigungswinkel des Autos ist
+			//allerdings sieht es in der ArenaStadium nicht gut aus, und führt zu komischen Fahrverhalten, wenn man an der Seite hochfahren will
 			//nur wenn sich ein Reifen auf dem Boden befindet
 			if(isOneWheelGrounded)
 			{

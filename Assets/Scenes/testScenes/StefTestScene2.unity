@@ -7039,11 +7039,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee259b2fef757c640b109799d76c159e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorSandNormal: {r: .87429893, g: .882352948, b: .29844293, a: 0}
-  colorSandLose: {r: .834888518, g: .875, b: .147977918, a: 0}
-  colorRubble: {r: .779411793, g: .779411793, b: .779411793, a: 0}
-  colorDirt: {r: .632352948, g: .48664242, b: .302227497, a: 0}
-  colorGrass: {r: 0, g: .669117689, b: .0599898547, a: 0}
+  colorSandNormal: {r: .87429893, g: .882352948, b: .29844293, a: 1}
+  colorSandLose: {r: .834888518, g: .875, b: .147977918, a: 1}
+  colorRubble: {r: .779411793, g: .779411793, b: .779411793, a: 1}
+  colorDirt: {r: .632352948, g: .48664242, b: .302227497, a: 1}
+  colorGrass: {r: 0, g: .669117689, b: .0599898547, a: 1}
 --- !u!96 &1216865283
 TrailRenderer:
   m_ObjectHideFlags: 0
