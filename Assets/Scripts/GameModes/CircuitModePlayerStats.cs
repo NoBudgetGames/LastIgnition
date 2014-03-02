@@ -65,7 +65,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 	void Update () 
 	{	
 		//aktuallisiere die Rundenzeiten, aber nur, wenn Rennen gestartet und noch nicht beendet wurde
-		if(hasRaceStarted == true && hasFinishedRace ==  false)
+		if(hasRaceStarted == true && hasFinishedRace == false)
 		{
 			//zähle die Rundenzeit hoch,
 			lapTime += Time.deltaTime;
@@ -73,7 +73,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			//überprüfe, ob das AUto in die falsche RIchtung fährt
 			//falls wir in die richtige Richtung fahren, resete den Timer
-			if (currentCheckpoint.isDrivingInRightDirection(transform.GetComponent<Rigidbody>().velocity))
+			if (currentCheckpoint.isDrivingInRightDirection(transform.GetComponent<Rigidbody>().velocity) == true)
 			{
 				directionTimer = 0.0f;
 			}
@@ -86,7 +86,6 @@ public class CircuitModePlayerStats : MonoBehaviour
 			//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
 			if(directionTimer > 2.0f)
 			{
-				Debug.Log ("WRONG DIRECTION DUDE! TURN AROUND!1!!");
 				wrongWay = true;
 			} else {
 				wrongWay = false;
@@ -95,10 +94,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 		//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
 		HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
-		int minutes = (int)(lapTime/60.0f);
-		int seconds = (int)(lapTime%60.0f);
-		int milliseconds = (int)((lapTime*1000.0f)%1000);
-		hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ minutes+ ":" + seconds + ":" + milliseconds;
+		hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
 	}
 	
 	//die Methode sagt dem Auto quasi Bescheid, dass das Rennen jetzt startet
@@ -162,12 +158,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 			fastestLap = lapTime;
 		}
 		
-		//resete denRundenzähler
-		lapTime = 0.0f;
-		
 		//falls es die letzt Runde war
 		if(currentLapToDrive == circuitMode.lapsToDrive +1)
 		{
+			//zähle die RUndenzahl wieder ein runter, sonst steht nacher 3/2 dar, was nicht so gut aussieht
+			currentLapToDrive--;
+
 			//deaktiviere den InputController
 			transform.GetComponent<PlayerInputController>().enabled = false;
 			
@@ -178,23 +174,17 @@ public class CircuitModePlayerStats : MonoBehaviour
 			
 			//das Rennden wurde beendet
 			hasFinishedRace = true;
-	
-			//wandle die Gesmtzeiten in Minuten und Sekunden um
-			int totalMinutes = (int)(totalTime/60.0f);
-			int totalSeconds = (int)(totalTime%60.0f);
-			int totalMilliseconds = (int)((totalTime*1000.0f)%1000);
-			string totalTimeStr = totalMinutes + ":" + totalSeconds + ":" + totalMilliseconds;
-
-			//wandle die schnellste in Minuten und Sekunden um
-			int fastestMinutes = (int)(fastestLap/60.0f);
-			int fastestSeconds = (int)(fastestLap%60.0f);
-			int fastestMilliseconds = (int)((fastestLap*1000.0f)%1000);
-			string fastestTimeStr = fastestMinutes + ":" + fastestSeconds + ":" + fastestMilliseconds;
+			wrongWay = false;
 
 			//übergebe die PlayerStats
 			//Controllernummer, gesamtzeit, schnellste RUnde
-			string[] str = new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString, totalTimeStr, fastestTimeStr};
-			circuitMode.playerHasFinishedRace(str);
+			circuitMode.playerHasFinishedRace(new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString, 
+												TimeConverter.floatToString(totalTime), TimeConverter.floatToString(fastestLap)});
+		}
+		//ansonsten resete denRundenzähler
+		else 
+		{
+			lapTime = 0.0f;
 		}
 		showBestRound = true;
 	}
@@ -220,28 +210,26 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//Zeichnet außerdem die in Circuitmode zugewiesene Textur, wenn man in die falsche Richtung fährt
 	void OnGUI(){
 		if(showBestRound){
-			int minutes = (int)(difference/60.0f);
-			int seconds = (int)(difference%60.0f);
-			int milliseconds = (int)((difference*1000.0f)%1000.0f);
+			string differenceStr = TimeConverter.floatToString(difference);
 			if(currentLapToDrive == 2){
 				GUI.color = new Color(0,0,255);
 				if(carNumber == 0)
-					GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),minutes+":"+seconds+":"+milliseconds);
+					GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200), differenceStr);
 				else if(carNumber == 1)
-					GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),minutes+":"+seconds+":"+milliseconds);
+					GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200), differenceStr);
 			} else {
 				if(difference<0){
 					GUI.color = new Color(0,255,0);
 					if(carNumber == 0)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"-"+minutes+":"+seconds+":"+milliseconds);
+						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"-" + differenceStr);
 					else if(carNumber == 1)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"-"+minutes+":"+seconds+":"+milliseconds);
+						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"-" + differenceStr);
 				} else {
 					GUI.color = new Color(255,0,0);
 					if(carNumber == 0)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"+"+minutes+":"+seconds+":"+milliseconds);
+						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"+" + differenceStr);
 					else if(carNumber == 1)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"+"+minutes+":"+seconds+":"+milliseconds);
+						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"+" + differenceStr);
 				}
 			}
 			GUI.color = new Color(255,255,255);

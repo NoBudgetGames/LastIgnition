@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8359c30a0314849b894aad21b439ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lapsToDrive: 2
+  lapsToDrive: 3
   firstCheckpoint: {fileID: 0}
   checkpoints:
   - {fileID: 0}

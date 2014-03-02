@@ -181,7 +181,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 3.57070231
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -237,7 +237,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 6.88395786
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -439,7 +439,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33896208
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -594,9 +594,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 197000846}
   - 33: {fileID: 197000850}
-  - 64: {fileID: 197000849}
   - 23: {fileID: 197000848}
   - 114: {fileID: 197000847}
+  - 65: {fileID: 197000849}
   m_Layer: 0
   m_Name: CheckPointNr009
   m_TagString: Untagged
@@ -612,7 +612,7 @@ Transform:
   m_GameObject: {fileID: 197000845}
   m_LocalRotation: {x: .0846319795, y: -.702023804, z: .702023804, w: .0846319795}
   m_LocalPosition: {x: -1100.79175, y: 53.5460358, z: 7.91418457}
-  m_LocalScale: {x: 146.778946, y: 7.33895063, z: 146.7789}
+  m_LocalScale: {x: 146.778946, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 1788574358}
   m_Father: {fileID: 1134079622}
@@ -651,10 +651,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &197000849
-MeshCollider:
+--- !u!65 &197000849
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 824872055}
   m_GameObject: {fileID: 197000845}
@@ -662,9 +662,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &197000850
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -682,9 +681,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 207582759}
   - 33: {fileID: 207582763}
-  - 64: {fileID: 207582762}
   - 23: {fileID: 207582761}
   - 114: {fileID: 207582760}
+  - 65: {fileID: 207582762}
   m_Layer: 0
   m_Name: CheckPointNr002
   m_TagString: Untagged
@@ -700,7 +699,7 @@ Transform:
   m_GameObject: {fileID: 207582758}
   m_LocalRotation: {x: .635028899, y: -.311028004, z: .311028153, w: .63502872}
   m_LocalPosition: {x: -72.6308594, y: -28.2588997, z: 558.735352}
-  m_LocalScale: {x: 137.679123, y: 6.88395786, z: 137.679123}
+  m_LocalScale: {x: 137.679123, y: 10, z: 137.679123}
   m_Children:
   - {fileID: 2021932163}
   m_Father: {fileID: 1134079622}
@@ -739,10 +738,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &207582762
-MeshCollider:
+--- !u!65 &207582762
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 56086545}
   m_GameObject: {fileID: 207582758}
@@ -750,9 +749,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &207582763
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -864,7 +862,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33894491
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -1167,7 +1165,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33896303
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -1319,9 +1317,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 349318063}
   - 33: {fileID: 349318067}
-  - 64: {fileID: 349318066}
   - 23: {fileID: 349318065}
   - 114: {fileID: 349318064}
+  - 65: {fileID: 349318066}
   m_Layer: 0
   m_Name: CheckPointNr021
   m_TagString: Untagged
@@ -1337,7 +1335,7 @@ Transform:
   m_GameObject: {fileID: 349318062}
   m_LocalRotation: {x: -.456142247, y: -.540309429, z: .540309429, w: -.456142247}
   m_LocalPosition: {x: 101.024414, y: 70.5462189, z: -1376.69788}
-  m_LocalScale: {x: 146.779175, y: 7.33895493, z: 146.778992}
+  m_LocalScale: {x: 146.779175, y: 14, z: 146.778992}
   m_Children:
   - {fileID: 1155637919}
   m_Father: {fileID: 1134079622}
@@ -1376,10 +1374,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &349318066
-MeshCollider:
+--- !u!65 &349318066
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 960580673}
   m_GameObject: {fileID: 349318062}
@@ -1387,9 +1385,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &349318067
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1554,9 +1551,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 381732962}
   - 33: {fileID: 381732966}
-  - 64: {fileID: 381732965}
   - 23: {fileID: 381732964}
   - 114: {fileID: 381732963}
+  - 65: {fileID: 381732965}
   m_Layer: 0
   m_Name: CheckPointNr004
   m_TagString: Untagged
@@ -1572,7 +1569,7 @@ Transform:
   m_GameObject: {fileID: 381732961}
   m_LocalRotation: {x: .594582736, y: -.382715881, z: .382715881, w: .594582736}
   m_LocalPosition: {x: -424.133484, y: -28.2588997, z: 883.910522}
-  m_LocalScale: {x: 146.77887, y: 7.33894491, z: 146.778854}
+  m_LocalScale: {x: 146.77887, y: 13, z: 146.778854}
   m_Children:
   - {fileID: 1682380156}
   m_Father: {fileID: 1134079622}
@@ -1611,10 +1608,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &381732965
-MeshCollider:
+--- !u!65 &381732965
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 228230774}
   m_GameObject: {fileID: 381732961}
@@ -1622,9 +1619,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &381732966
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1781,9 +1777,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 401153855}
   - 33: {fileID: 401153859}
-  - 64: {fileID: 401153858}
   - 23: {fileID: 401153857}
   - 114: {fileID: 401153856}
+  - 65: {fileID: 401153858}
   m_Layer: 0
   m_Name: CheckPointNr001
   m_TagString: Untagged
@@ -1797,9 +1793,9 @@ Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
   m_PrefabInternal: {fileID: 1223531180}
   m_GameObject: {fileID: 401153854}
-  m_LocalRotation: {x: .761247575, y: -.119855456, z: .0985016823, w: .629630327}
+  m_LocalRotation: {x: .704265237, y: -.0633280948, z: .0633282363, w: .704265296}
   m_LocalPosition: {x: 97.1855469, y: -28.2400551, z: 238.959229}
-  m_LocalScale: {x: 102.390823, y: 5.11954165, z: 102.390823}
+  m_LocalScale: {x: 102.390823, y: 10, z: 102.390823}
   m_Children:
   - {fileID: 1034167338}
   m_Father: {fileID: 1134079622}
@@ -1838,10 +1834,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &401153858
-MeshCollider:
+--- !u!65 &401153858
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1223531180}
   m_GameObject: {fileID: 401153854}
@@ -1849,9 +1845,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &401153859
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1905,7 +1900,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895922
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -2023,7 +2018,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895016
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -2047,9 +2042,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 428291084}
   - 33: {fileID: 428291088}
-  - 64: {fileID: 428291087}
   - 23: {fileID: 428291086}
   - 114: {fileID: 428291085}
+  - 65: {fileID: 428291087}
   m_Layer: 0
   m_Name: CheckPointNr019
   m_TagString: Untagged
@@ -2065,7 +2060,7 @@ Transform:
   m_GameObject: {fileID: 428291083}
   m_LocalRotation: {x: -.338453472, y: -.620845616, z: .620845616, w: -.338453442}
   m_LocalPosition: {x: -304.505615, y: 70.5462189, z: -1252.39587}
-  m_LocalScale: {x: 146.779083, y: 7.33895302, z: 146.778931}
+  m_LocalScale: {x: 146.779083, y: 14, z: 146.778931}
   m_Children:
   - {fileID: 216163818}
   m_Father: {fileID: 1134079622}
@@ -2104,10 +2099,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &428291087
-MeshCollider:
+--- !u!65 &428291087
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1198107093}
   m_GameObject: {fileID: 428291083}
@@ -2115,9 +2110,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &428291088
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2189,9 +2183,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 444100027}
   - 33: {fileID: 444100031}
-  - 64: {fileID: 444100030}
   - 23: {fileID: 444100029}
   - 114: {fileID: 444100028}
+  - 65: {fileID: 444100030}
   m_Layer: 0
   m_Name: CheckPointNr025
   m_TagString: Untagged
@@ -2207,7 +2201,7 @@ Transform:
   m_GameObject: {fileID: 444100026}
   m_LocalRotation: {x: -.630293667, y: .320515156, z: -.320515186, w: -.630293667}
   m_LocalPosition: {x: 265.377197, y: 44.3304291, z: -1093.40649}
-  m_LocalScale: {x: 146.779236, y: 7.33896017, z: 146.779083}
+  m_LocalScale: {x: 146.779236, y: 14, z: 146.779083}
   m_Children:
   - {fileID: 1600017115}
   m_Father: {fileID: 1134079622}
@@ -2246,10 +2240,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &444100030
-MeshCollider:
+--- !u!65 &444100030
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1612481208}
   m_GameObject: {fileID: 444100026}
@@ -2257,9 +2251,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &444100031
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2768,9 +2761,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 511647414}
   - 33: {fileID: 511647418}
-  - 64: {fileID: 511647417}
   - 23: {fileID: 511647416}
   - 114: {fileID: 511647415}
+  - 65: {fileID: 511647417}
   m_Layer: 0
   m_Name: CheckPointNr023
   m_TagString: Untagged
@@ -2786,7 +2779,7 @@ Transform:
   m_GameObject: {fileID: 511647413}
   m_LocalRotation: {x: -.678897023, y: -.197734386, z: .197734341, w: -.678897023}
   m_LocalPosition: {x: 303.288086, y: 70.5462189, z: -1286.60815}
-  m_LocalScale: {x: 146.779236, y: 7.33895779, z: 146.779022}
+  m_LocalScale: {x: 146.779236, y: 14, z: 146.779022}
   m_Children:
   - {fileID: 2115556367}
   m_Father: {fileID: 1134079622}
@@ -2825,10 +2818,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &511647417
-MeshCollider:
+--- !u!65 &511647417
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 2124624874}
   m_GameObject: {fileID: 511647413}
@@ -2836,9 +2829,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &511647418
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3123,7 +3115,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.3389535
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -3375,9 +3367,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 617658090}
   - 33: {fileID: 617658094}
-  - 64: {fileID: 617658093}
   - 23: {fileID: 617658092}
   - 114: {fileID: 617658091}
+  - 65: {fileID: 617658093}
   m_Layer: 0
   m_Name: CheckPointNr024
   m_TagString: Untagged
@@ -3393,7 +3385,7 @@ Transform:
   m_GameObject: {fileID: 617658089}
   m_LocalRotation: {x: -.702856123, y: .0774164572, z: -.0774164945, w: -.702856123}
   m_LocalPosition: {x: 321.359741, y: 70.5462189, z: -1167.76172}
-  m_LocalScale: {x: 146.779236, y: 7.33895922, z: 146.779053}
+  m_LocalScale: {x: 146.779236, y: 14, z: 146.779053}
   m_Children:
   - {fileID: 1555505669}
   m_Father: {fileID: 1134079622}
@@ -3432,10 +3424,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &617658093
-MeshCollider:
+--- !u!65 &617658093
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 401720176}
   m_GameObject: {fileID: 617658089}
@@ -3443,9 +3435,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &617658094
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3733,9 +3724,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 694688241}
   - 33: {fileID: 694688245}
-  - 64: {fileID: 694688244}
   - 23: {fileID: 694688243}
   - 114: {fileID: 694688242}
+  - 65: {fileID: 694688244}
   m_Layer: 0
   m_Name: CheckPointNr022
   m_TagString: Untagged
@@ -3751,7 +3742,7 @@ Transform:
   m_GameObject: {fileID: 694688240}
   m_LocalRotation: {x: -.577394664, y: -.408185601, z: .408185571, w: -.577394664}
   m_LocalPosition: {x: 232.187622, y: 70.5462189, z: -1360.71619}
-  m_LocalScale: {x: 146.779205, y: 7.3389554, z: 146.778992}
+  m_LocalScale: {x: 146.779205, y: 14, z: 146.778992}
   m_Children:
   - {fileID: 1302233396}
   m_Father: {fileID: 1134079622}
@@ -3790,10 +3781,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &694688244
-MeshCollider:
+--- !u!65 &694688244
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1028390930}
   m_GameObject: {fileID: 694688240}
@@ -3801,9 +3792,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &694688245
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3897,7 +3887,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.3389492
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -4247,7 +4237,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895063
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -4271,9 +4261,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 829404995}
   - 33: {fileID: 829404999}
-  - 64: {fileID: 829404998}
   - 23: {fileID: 829404997}
   - 114: {fileID: 829404996}
+  - 65: {fileID: 829404998}
   m_Layer: 0
   m_Name: CheckPointNr011
   m_TagString: Untagged
@@ -4289,7 +4279,7 @@ Transform:
   m_GameObject: {fileID: 829404994}
   m_LocalRotation: {x: -.147763044, y: -.691495538, z: .691495538, w: -.147763029}
   m_LocalPosition: {x: -1136.75256, y: 70.5462189, z: -199.019409}
-  m_LocalScale: {x: 146.778931, y: 7.33895111, z: 146.7789}
+  m_LocalScale: {x: 146.778931, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 896802292}
   m_Father: {fileID: 1134079622}
@@ -4328,10 +4318,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &829404998
-MeshCollider:
+--- !u!65 &829404998
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1505360216}
   m_GameObject: {fileID: 829404994}
@@ -4339,9 +4329,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &829404999
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4495,7 +4484,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33894682
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -4648,7 +4637,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895302
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -5121,9 +5110,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 960181188}
   - 33: {fileID: 960181192}
-  - 64: {fileID: 960181191}
   - 23: {fileID: 960181190}
   - 114: {fileID: 960181189}
+  - 65: {fileID: 960181191}
   m_Layer: 0
   m_Name: CheckPointNr028
   m_TagString: Untagged
@@ -5139,7 +5128,7 @@ Transform:
   m_GameObject: {fileID: 960181187}
   m_LocalRotation: {x: -.70617491, y: .0362909958, z: -.0362909958, w: -.70617491}
   m_LocalPosition: {x: 94.670166, y: -28.2612762, z: -625.200745}
-  m_LocalScale: {x: 146.779282, y: 7.33896303, z: 146.779144}
+  m_LocalScale: {x: 146.779282, y: 14, z: 146.779144}
   m_Children:
   - {fileID: 1011835141}
   m_Father: {fileID: 1134079622}
@@ -5178,10 +5167,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &960181191
-MeshCollider:
+--- !u!65 &960181191
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 304911948}
   m_GameObject: {fileID: 960181187}
@@ -5189,9 +5178,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &960181192
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5245,7 +5233,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895493
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -5391,7 +5379,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33894825
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -5648,7 +5636,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.3389554
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -6075,9 +6063,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1111268977}
   - 33: {fileID: 1111268981}
-  - 64: {fileID: 1111268980}
   - 23: {fileID: 1111268979}
   - 114: {fileID: 1111268978}
+  - 65: {fileID: 1111268980}
   m_Layer: 0
   m_Name: CheckPointNr026
   m_TagString: Untagged
@@ -6093,7 +6081,7 @@ Transform:
   m_GameObject: {fileID: 1111268976}
   m_LocalRotation: {x: -.676603854, y: .205443993, z: -.205443993, w: -.676603854}
   m_LocalPosition: {x: 156.087646, y: 29.6586761, z: -1031.86926}
-  m_LocalScale: {x: 146.779266, y: 7.33896208, z: 146.779144}
+  m_LocalScale: {x: 146.779266, y: 14, z: 146.779144}
   m_Children:
   - {fileID: 2042075232}
   m_Father: {fileID: 1134079622}
@@ -6132,10 +6120,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1111268980
-MeshCollider:
+--- !u!65 &1111268980
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 136933564}
   m_GameObject: {fileID: 1111268976}
@@ -6143,9 +6131,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1111268981
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6189,9 +6176,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1115481454}
   - 33: {fileID: 1115481458}
-  - 64: {fileID: 1115481457}
   - 23: {fileID: 1115481456}
   - 114: {fileID: 1115481455}
+  - 65: {fileID: 1115481457}
   m_Layer: 0
   m_Name: CheckPointNr000x
   m_TagString: Untagged
@@ -6246,10 +6233,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1115481457
-MeshCollider:
+--- !u!65 &1115481457
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 472766348}
   m_GameObject: {fileID: 1115481453}
@@ -6257,9 +6244,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1115481458
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6277,9 +6263,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1130744151}
   - 33: {fileID: 1130744155}
-  - 64: {fileID: 1130744154}
   - 23: {fileID: 1130744153}
   - 114: {fileID: 1130744152}
+  - 65: {fileID: 1130744154}
   m_Layer: 0
   m_Name: CheckPointNr020
   m_TagString: Untagged
@@ -6295,7 +6281,7 @@ Transform:
   m_GameObject: {fileID: 1130744150}
   m_LocalRotation: {x: -.391887158, y: -.588578403, z: .588578403, w: -.391887158}
   m_LocalPosition: {x: -133.099976, y: 70.5462189, z: -1327.40259}
-  m_LocalScale: {x: 146.779114, y: 7.3389535, z: 146.778931}
+  m_LocalScale: {x: 146.779114, y: 14, z: 146.778931}
   m_Children:
   - {fileID: 878868704}
   m_Father: {fileID: 1134079622}
@@ -6334,10 +6320,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1130744154
-MeshCollider:
+--- !u!65 &1130744154
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 540205658}
   m_GameObject: {fileID: 1130744150}
@@ -6345,9 +6331,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1130744155
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6420,9 +6405,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1138647842}
   - 33: {fileID: 1138647846}
-  - 64: {fileID: 1138647845}
   - 23: {fileID: 1138647844}
   - 114: {fileID: 1138647843}
+  - 65: {fileID: 1138647845}
   m_Layer: 0
   m_Name: CheckPointNr015
   m_TagString: Untagged
@@ -6438,7 +6423,7 @@ Transform:
   m_GameObject: {fileID: 1138647841}
   m_LocalRotation: {x: -.0858826339, y: -.701871932, z: .701871932, w: -.0858826488}
   m_LocalPosition: {x: -710.457458, y: 70.5462189, z: -622.629272}
-  m_LocalScale: {x: 146.778931, y: 7.33895016, z: 146.7789}
+  m_LocalScale: {x: 146.778931, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 1933138742}
   m_Father: {fileID: 1134079622}
@@ -6477,10 +6462,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1138647845
-MeshCollider:
+--- !u!65 &1138647845
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 410277136}
   m_GameObject: {fileID: 1138647841}
@@ -6488,9 +6473,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1138647846
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6911,7 +6895,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895302
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -7108,19 +7092,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalRotation.x
-      value: .761247575
+      value: .704265237
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -.119855456
+      value: -.0633280948
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalRotation.z
-      value: .0985016823
+      value: .0633282363
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .629630327
+      value: .704265296
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_Name
@@ -7132,7 +7116,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 5.11954165
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -7204,9 +7188,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1241296268}
   - 33: {fileID: 1241296272}
-  - 64: {fileID: 1241296271}
   - 23: {fileID: 1241296270}
   - 114: {fileID: 1241296269}
+  - 65: {fileID: 1241296271}
   m_Layer: 0
   m_Name: CheckPointNr018
   m_TagString: Untagged
@@ -7222,7 +7206,7 @@ Transform:
   m_GameObject: {fileID: 1241296267}
   m_LocalRotation: {x: -.257479638, y: -.658562303, z: .658562243, w: -.257479638}
   m_LocalPosition: {x: -485.10376, y: 70.5462189, z: -1126.40381}
-  m_LocalScale: {x: 146.779053, y: 7.33895302, z: 146.778931}
+  m_LocalScale: {x: 146.779053, y: 14, z: 146.778931}
   m_Children:
   - {fileID: 1384451176}
   m_Father: {fileID: 1134079622}
@@ -7261,10 +7245,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1241296271
-MeshCollider:
+--- !u!65 &1241296271
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 850802949}
   m_GameObject: {fileID: 1241296267}
@@ -7272,9 +7256,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1241296272
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7292,9 +7275,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1269118623}
   - 33: {fileID: 1269118627}
-  - 64: {fileID: 1269118626}
   - 23: {fileID: 1269118625}
   - 114: {fileID: 1269118624}
+  - 65: {fileID: 1269118626}
   m_Layer: 0
   m_Name: CheckPointNr017
   m_TagString: Untagged
@@ -7310,7 +7293,7 @@ Transform:
   m_GameObject: {fileID: 1269118622}
   m_LocalRotation: {x: -.160390347, y: -.688676238, z: .688676238, w: -.160390347}
   m_LocalPosition: {x: -585.939819, y: 70.5462189, z: -1003.02698}
-  m_LocalScale: {x: 146.779022, y: 7.33895302, z: 146.778931}
+  m_LocalScale: {x: 146.779022, y: 14, z: 146.778931}
   m_Children:
   - {fileID: 797701859}
   m_Father: {fileID: 1134079622}
@@ -7349,10 +7332,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1269118626
-MeshCollider:
+--- !u!65 &1269118626
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 2046620470}
   m_GameObject: {fileID: 1269118622}
@@ -7360,9 +7343,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1269118627
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7774,7 +7756,7 @@ Prefab:
       objectReference: {fileID: 367678628}
     - target: {fileID: 11400002, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: lapsToDrive
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
@@ -7973,9 +7955,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1393306454}
   - 33: {fileID: 1393306458}
-  - 64: {fileID: 1393306457}
   - 23: {fileID: 1393306456}
   - 114: {fileID: 1393306455}
+  - 65: {fileID: 1393306457}
   m_Layer: 0
   m_Name: CheckPointNr010
   m_TagString: Untagged
@@ -7991,7 +7973,7 @@ Transform:
   m_GameObject: {fileID: 1393306453}
   m_LocalRotation: {x: .0763354003, y: -.702974319, z: .702974319, w: .0763354003}
   m_LocalPosition: {x: -1136.87268, y: 63.197525, z: -106.629028}
-  m_LocalScale: {x: 146.778946, y: 7.33895111, z: 146.7789}
+  m_LocalScale: {x: 146.778946, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 1092838755}
   m_Father: {fileID: 1134079622}
@@ -8030,10 +8012,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1393306457
-MeshCollider:
+--- !u!65 &1393306457
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1794929122}
   m_GameObject: {fileID: 1393306453}
@@ -8041,9 +8023,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1393306458
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8061,9 +8042,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1393592445}
   - 33: {fileID: 1393592449}
-  - 64: {fileID: 1393592448}
   - 23: {fileID: 1393592447}
   - 114: {fileID: 1393592446}
+  - 65: {fileID: 1393592448}
   m_Layer: 0
   m_Name: CheckPointNr000
   m_TagString: Untagged
@@ -8079,7 +8060,7 @@ Transform:
   m_GameObject: {fileID: 1393592444}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
   m_LocalPosition: {x: 101.07373, y: -28.2588997, z: -228.696533}
-  m_LocalScale: {x: 71.4140244, y: 3.57070231, z: 71.4140244}
+  m_LocalScale: {x: 71.4140244, y: 10, z: 71.4140244}
   m_Children:
   - {fileID: 1736733857}
   m_Father: {fileID: 1134079622}
@@ -8118,10 +8099,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1393592448
-MeshCollider:
+--- !u!65 &1393592448
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 50561945}
   m_GameObject: {fileID: 1393592444}
@@ -8129,9 +8110,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1393592449
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8149,9 +8129,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1410775618}
   - 33: {fileID: 1410775617}
-  - 64: {fileID: 1410775616}
   - 23: {fileID: 1410775615}
   - 114: {fileID: 1410775614}
+  - 65: {fileID: 1410775616}
   m_Layer: 0
   m_Name: CheckPointNr016
   m_TagString: Untagged
@@ -8194,10 +8174,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1410775616
-MeshCollider:
+--- !u!65 &1410775616
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1796902940}
   m_GameObject: {fileID: 1410775613}
@@ -8205,9 +8185,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1410775617
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8224,7 +8203,7 @@ Transform:
   m_GameObject: {fileID: 1410775613}
   m_LocalRotation: {x: -.0858829841, y: -.701871872, z: .701871872, w: -.0858829841}
   m_LocalPosition: {x: -638.77594, y: 70.5462189, z: -834.73938}
-  m_LocalScale: {x: 146.778976, y: 7.33895206, z: 146.778915}
+  m_LocalScale: {x: 146.778976, y: 14, z: 146.778915}
   m_Children:
   - {fileID: 882381427}
   m_Father: {fileID: 1134079622}
@@ -8301,9 +8280,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1435967809}
   - 33: {fileID: 1435967813}
-  - 64: {fileID: 1435967812}
   - 23: {fileID: 1435967811}
   - 114: {fileID: 1435967810}
+  - 65: {fileID: 1435967812}
   m_Layer: 0
   m_Name: CheckPointNr014
   m_TagString: Untagged
@@ -8319,7 +8298,7 @@ Transform:
   m_GameObject: {fileID: 1435967808}
   m_LocalRotation: {x: -.243540153, y: -.663843513, z: .663843513, w: -.243540168}
   m_LocalPosition: {x: -764.655212, y: 70.5462189, z: -479.934143}
-  m_LocalScale: {x: 146.778946, y: 7.33895063, z: 146.7789}
+  m_LocalScale: {x: 146.778946, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 57126574}
   m_Father: {fileID: 1134079622}
@@ -8358,10 +8337,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1435967812
-MeshCollider:
+--- !u!65 &1435967812
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 2119808504}
   m_GameObject: {fileID: 1435967808}
@@ -8369,9 +8348,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1435967813
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8408,7 +8386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8359c30a0314849b894aad21b439ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lapsToDrive: 2
+  lapsToDrive: 3
   firstCheckpoint: {fileID: 1115481455}
   checkpoints:
   - {fileID: 1393592446}
@@ -8597,7 +8575,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33894539
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -8819,9 +8797,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1491945657}
   - 33: {fileID: 1491945661}
-  - 64: {fileID: 1491945660}
   - 23: {fileID: 1491945659}
   - 114: {fileID: 1491945658}
+  - 65: {fileID: 1491945660}
   m_Layer: 0
   m_Name: CheckPointNr007
   m_TagString: Untagged
@@ -8837,7 +8815,7 @@ Transform:
   m_GameObject: {fileID: 1491945656}
   m_LocalRotation: {x: .184734777, y: -.68254894, z: .68254894, w: .184734821}
   m_LocalPosition: {x: -882.124451, y: -28.2588997, z: 535.814453}
-  m_LocalScale: {x: 146.778946, y: 7.33894825, z: 146.7789}
+  m_LocalScale: {x: 146.778946, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 80789876}
   m_Father: {fileID: 1134079622}
@@ -8876,10 +8854,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1491945660
-MeshCollider:
+--- !u!65 &1491945660
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 996909496}
   m_GameObject: {fileID: 1491945656}
@@ -8887,9 +8865,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1491945661
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8995,9 +8972,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1500509448}
   - 33: {fileID: 1500509452}
-  - 64: {fileID: 1500509451}
   - 23: {fileID: 1500509450}
   - 114: {fileID: 1500509449}
+  - 65: {fileID: 1500509451}
   m_Layer: 0
   m_Name: CheckPointNr012
   m_TagString: Untagged
@@ -9013,7 +8990,7 @@ Transform:
   m_GameObject: {fileID: 1500509447}
   m_LocalRotation: {x: -.32608673, y: -.627429307, z: .627429247, w: -.3260867}
   m_LocalPosition: {x: -1050.81702, y: 70.5462189, z: -285.672241}
-  m_LocalScale: {x: 146.778931, y: 7.33895111, z: 146.7789}
+  m_LocalScale: {x: 146.778931, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 1835565216}
   m_Father: {fileID: 1134079622}
@@ -9052,10 +9029,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1500509451
-MeshCollider:
+--- !u!65 &1500509451
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1675619558}
   m_GameObject: {fileID: 1500509447}
@@ -9063,9 +9040,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1500509452
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9141,9 +9117,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1504135338}
   - 33: {fileID: 1504135342}
-  - 64: {fileID: 1504135341}
   - 23: {fileID: 1504135340}
   - 114: {fileID: 1504135339}
+  - 65: {fileID: 1504135341}
   m_Layer: 0
   m_Name: CheckPointNr003
   m_TagString: Untagged
@@ -9159,7 +9135,7 @@ Transform:
   m_GameObject: {fileID: 1504135337}
   m_LocalRotation: {x: .602967381, y: -.369365156, z: .369365096, w: .602966964}
   m_LocalPosition: {x: -289.427856, y: -28.2588997, z: 764.998413}
-  m_LocalScale: {x: 146.778854, y: 7.33894444, z: 146.778854}
+  m_LocalScale: {x: 146.778854, y: 13, z: 146.778854}
   m_Children:
   - {fileID: 285439937}
   m_Father: {fileID: 1134079622}
@@ -9198,10 +9174,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1504135341
-MeshCollider:
+--- !u!65 &1504135341
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1845653962}
   m_GameObject: {fileID: 1504135337}
@@ -9209,9 +9185,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1504135342
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9265,7 +9240,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895111
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -9448,7 +9423,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33896303
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -9584,9 +9559,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1570639119}
   - 33: {fileID: 1570639123}
-  - 64: {fileID: 1570639122}
   - 23: {fileID: 1570639121}
   - 114: {fileID: 1570639120}
+  - 65: {fileID: 1570639122}
   m_Layer: 0
   m_Name: CheckPointNr013
   m_TagString: Untagged
@@ -9602,7 +9577,7 @@ Transform:
   m_GameObject: {fileID: 1570639118}
   m_LocalRotation: {x: -.326087028, y: -.627429068, z: .627429068, w: -.326087028}
   m_LocalPosition: {x: -856.578003, y: 70.5462189, z: -394.886963}
-  m_LocalScale: {x: 146.778976, y: 7.33895206, z: 146.778931}
+  m_LocalScale: {x: 146.778976, y: 14, z: 146.778931}
   m_Children:
   - {fileID: 924967595}
   m_Father: {fileID: 1134079622}
@@ -9641,10 +9616,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1570639122
-MeshCollider:
+--- !u!65 &1570639122
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 2107954471}
   m_GameObject: {fileID: 1570639118}
@@ -9652,9 +9627,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1570639123
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9908,7 +9882,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33896017
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -10144,9 +10118,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1660071028}
   - 33: {fileID: 1660071032}
-  - 64: {fileID: 1660071031}
   - 23: {fileID: 1660071030}
   - 114: {fileID: 1660071029}
+  - 65: {fileID: 1660071031}
   m_Layer: 0
   m_Name: CheckPointNr006
   m_TagString: Untagged
@@ -10162,7 +10136,7 @@ Transform:
   m_GameObject: {fileID: 1660071027}
   m_LocalRotation: {x: .302832812, y: -.638977587, z: .638977587, w: .302832812}
   m_LocalPosition: {x: -726.853882, y: -28.2588997, z: 795.128052}
-  m_LocalScale: {x: 146.778931, y: 7.33894682, z: 146.778885}
+  m_LocalScale: {x: 146.778931, y: 14, z: 146.778885}
   m_Children:
   - {fileID: 1740844437}
   m_Father: {fileID: 1134079622}
@@ -10201,10 +10175,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1660071031
-MeshCollider:
+--- !u!65 &1660071031
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 840016982}
   m_GameObject: {fileID: 1660071027}
@@ -10212,9 +10186,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1660071032
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10268,7 +10241,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895111
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -10350,9 +10323,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1692853606}
   - 33: {fileID: 1692853610}
-  - 64: {fileID: 1692853609}
   - 23: {fileID: 1692853608}
   - 114: {fileID: 1692853607}
+  - 65: {fileID: 1692853609}
   m_Layer: 0
   m_Name: CheckPointNr027
   m_TagString: Untagged
@@ -10368,7 +10341,7 @@ Transform:
   m_GameObject: {fileID: 1692853605}
   m_LocalRotation: {x: -.70617491, y: .0362908654, z: -.0362908244, w: -.70617491}
   m_LocalPosition: {x: 113.420776, y: 13.9565887, z: -898.820923}
-  m_LocalScale: {x: 146.779282, y: 7.33896303, z: 146.779144}
+  m_LocalScale: {x: 146.779282, y: 14, z: 146.779144}
   m_Children:
   - {fileID: 1194742467}
   m_Father: {fileID: 1134079622}
@@ -10407,10 +10380,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1692853609
-MeshCollider:
+--- !u!65 &1692853609
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1547084205}
   m_GameObject: {fileID: 1692853605}
@@ -10418,9 +10391,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1692853610
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10797,9 +10769,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1779011632}
   - 33: {fileID: 1779011636}
-  - 64: {fileID: 1779011635}
   - 23: {fileID: 1779011634}
   - 114: {fileID: 1779011633}
+  - 65: {fileID: 1779011635}
   m_Layer: 0
   m_Name: CheckPointNr008
   m_TagString: Untagged
@@ -10815,7 +10787,7 @@ Transform:
   m_GameObject: {fileID: 1779011631}
   m_LocalRotation: {x: .0846319869, y: -.702023804, z: .702023804, w: .0846320018}
   m_LocalPosition: {x: -1026.83472, y: 21.6489105, z: 215.014893}
-  m_LocalScale: {x: 146.778946, y: 7.3389492, z: 146.7789}
+  m_LocalScale: {x: 146.778946, y: 14, z: 146.7789}
   m_Children:
   - {fileID: 1041589477}
   m_Father: {fileID: 1134079622}
@@ -10854,10 +10826,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1779011635
-MeshCollider:
+--- !u!65 &1779011635
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 764341864}
   m_GameObject: {fileID: 1779011631}
@@ -10865,9 +10837,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1779011636
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10979,7 +10950,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895111
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -11085,7 +11056,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895206
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -11203,7 +11174,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33894444
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -11421,9 +11392,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1921782212}
   - 33: {fileID: 1921782216}
-  - 64: {fileID: 1921782215}
   - 23: {fileID: 1921782214}
   - 114: {fileID: 1921782213}
+  - 65: {fileID: 1921782215}
   m_Layer: 0
   m_Name: CheckPointNr005
   m_TagString: Untagged
@@ -11439,7 +11410,7 @@ Transform:
   m_GameObject: {fileID: 1921782211}
   m_LocalRotation: {x: .435018897, y: -.557457268, z: .557457268, w: .435018897}
   m_LocalPosition: {x: -558.162598, y: -28.2588997, z: 905.217163}
-  m_LocalScale: {x: 146.778885, y: 7.33894539, z: 146.778854}
+  m_LocalScale: {x: 146.778885, y: 13, z: 146.778854}
   m_Children:
   - {fileID: 1607963874}
   m_Father: {fileID: 1134079622}
@@ -11478,10 +11449,10 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!64 &1921782215
-MeshCollider:
+--- !u!65 &1921782215
+BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 232a6d344cca8fe428039a10b97145f1,
+  m_PrefabParentObject: {fileID: 6500000, guid: 232a6d344cca8fe428039a10b97145f1,
     type: 2}
   m_PrefabInternal: {fileID: 1463668567}
   m_GameObject: {fileID: 1921782211}
@@ -11489,9 +11460,8 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1921782216
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12017,7 +11987,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895302
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -12436,7 +12406,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895206
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -12582,7 +12552,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895063
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -12642,7 +12612,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.y
-      value: 7.33895779
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 232a6d344cca8fe428039a10b97145f1, type: 2}
       propertyPath: m_LocalScale.z
@@ -12695,6 +12665,10 @@ Prefab:
     - target: {fileID: 2000000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
       propertyPath: orthographic size
       value: 969.408691
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}

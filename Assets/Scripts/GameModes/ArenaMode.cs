@@ -109,15 +109,10 @@ public class ArenaMode : MonoBehaviour
 		{
 			//es gibt nur noch einen Player im Feld
 			PlayerInputController lastPlayer = players[0].GetComponent<PlayerInputController>();
-
-			//wandle die rundendauer (= überlebensziet) in Minuten und Sekunden um
-			int livingMinutes = (int)(roundDuration/60.0f);
-			int livingSeconds = (int)(roundDuration%60.0f);
-			int livingMilliseconds = (int)((roundDuration*1000.0f)%1000);
 			
 			//füge die Infos der SpielerStats hinzu
 			//Controllernummer, überlebenszeit, restliche leben
-			playerStats.Add(new string[]{lastPlayer.numberOfControllerString, livingMinutes + ":" + livingSeconds + ":" + livingMilliseconds, "" + lives[0]});
+			playerStats.Add(new string[]{lastPlayer.numberOfControllerString, TimeConverter.floatToString(roundDuration), "" + lives[0]});
 
 			//drehe die Reihenfolge der playerStats um ,sodass der zuletzt überlebende an erste Stelle steht
 			playerStats.Reverse();
@@ -151,20 +146,16 @@ public class ArenaMode : MonoBehaviour
 			if(lives[i] > 0 && car.getHealth()<=0.0f){
 				lives[i]--;
 				PlayerInputController p = players[i].GetComponent<PlayerInputController>();
+				//falls es das letzte Leben des Autos war
 				if(lives[i] == 0){
 					Debug.Log("Player " + p.numberOfControllerString + " eliminated!");
 					players.RemoveAt(i);
 					lives.RemoveAt(i);
 					ranks.RemoveAt(i);
 
-					//wandle die rundendauer (= überlebensziet) in Minuten und Sekunden um
-					int livingMinutes = (int)(roundDuration/60.0f);
-					int livingSeconds = (int)(roundDuration%60.0f);
-					int livingMilliseconds = (int)((roundDuration*1000.0f)%1000);
-
-					//füge die Infos der SpielerStats hinzu
+					//füge die Infos des gerade zerstörten Spielers der SpielerStats hinzu
 					//Controllernummer, überlebenszeit, restliche leben
-					playerStats.Add(new string[]{p.numberOfControllerString, livingMinutes + ":" + livingSeconds + ":" + livingMilliseconds, "RIP"});
+					playerStats.Add(new string[]{p.numberOfControllerString, TimeConverter.floatToString(roundDuration), "RIP"});
 				} else {
 					control.reInstanciatePlayer(p.numberOfControllerString, false);
 				}

@@ -86,8 +86,6 @@ public class FinishedRaceCamera : MonoBehaviour
 			{
 				Application.LoadLevel(PlayerPrefs.GetString("Level"));
 			}
-
-
 		}
 	}
 }

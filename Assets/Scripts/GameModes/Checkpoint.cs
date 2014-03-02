@@ -40,7 +40,7 @@ public class Checkpoint : MonoBehaviour
 	public bool isDrivingInRightDirection(Vector3 carVelocity)
 	{
 		//falls die Geschwindigkeit des Autos mit der RIchtung des Checkpoints übereinstimmt
-		if(transform.InverseTransformDirection(carVelocity).y > 0.0f)
+		if(transform.InverseTransformDirection(carVelocity).y >= 0.0f)
 		{
 			return true;
 		}

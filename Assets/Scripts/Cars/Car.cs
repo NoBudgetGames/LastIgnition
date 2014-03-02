@@ -102,12 +102,20 @@ public class Car : MonoBehaviour
 	//referenz auf Kofferraumtür
 	public GameObject rearDoor;
 	//referenz auf vordere Stoßstange
-	public GameObject frontBumperPrefab;
+	public GameObject frontBumper;
 	//referenz auf hintere Stoßstange
-	public GameObject rearBumperPrefab;
+	public GameObject rearBumper;
 	//referenz auf linken Auspuff
-	public GameObject leftExhaustPrefab;
+	public GameObject leftExhaust;
 	//referenz auf rechten Auspuff
+	public GameObject rightExhaust;
+	//referenz auf vordere Stoßstange, die sich vom Auto gelöst hat
+	public GameObject frontBumperPrefab;
+	//referenz auf hintere Stoßstange, die sich vom Auto gelöst hat
+	public GameObject rearBumperPrefab;
+	//referenz auf linken Auspuff, der sich vom Auto gelöst hat
+	public GameObject leftExhaustPrefab;
+	//referenz auf rechten Auspuff, der sich vom Auto gelöst hat
 	public GameObject rightExhaustPrefab;
 	//Objekt um das Absenken des Autos zu verhindern, wenn es einen Reifen verliert
 	public GameObject wheelSphereCol;
@@ -560,6 +568,9 @@ public class Car : MonoBehaviour
 			if(hasLostFrontBumper == false)
 			{
 				hasLostFrontBumper = true;
+				//deaktiviere das Model
+				frontBumper.SetActive(false);
+				//instantiere das Prefab, damit es in der Welt rumfliegen kann
 				GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
 			}
 		}
@@ -571,6 +582,9 @@ public class Car : MonoBehaviour
 			if(hasLostFrontBumper == false)
 			{
 				hasLostFrontBumper = true;
+				//deaktiviere das Model
+				frontBumper.SetActive(false);
+				//instantiere das Prefab, damit es in der Welt rumfliegen kann
 				GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
 			}
 		}
@@ -605,6 +619,9 @@ public class Car : MonoBehaviour
 			if(hasLostRearBumper == false)
 			{
 				hasLostRearBumper = true;
+				//deaktiviere das Model
+				rearBumper.SetActive(false);
+				//instantiere das Prefab, damit es in der Welt rumfliegen kann
 				GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
 			}
 		}
@@ -615,6 +632,10 @@ public class Car : MonoBehaviour
 			if(hasLostExhausts == false)
 			{
 				hasLostExhausts = true;
+				//deaktiviere das Model
+				leftExhaust.SetActive(false);
+				rightExhaust.SetActive(false);
+				//instantiere das Prefab, damit es in der Welt rumfliegen kann
 				GameObject.Instantiate(rightExhaustPrefab, thisTransform.position, thisTransform.rotation);
 				GameObject.Instantiate(leftExhaustPrefab, thisTransform.position, thisTransform.rotation);
 			}
@@ -622,6 +643,9 @@ public class Car : MonoBehaviour
 			if(hasLostRearBumper == false)
 			{
 				hasLostRearBumper = true;
+				//deaktiviere das Model
+				rearBumper.SetActive(false);
+				//instantiere das Prefab, damit es in der Welt rumfliegen kann
 				GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
 			}
 		}

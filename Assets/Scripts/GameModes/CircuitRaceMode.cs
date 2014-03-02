@@ -41,7 +41,7 @@ public class CircuitRaceMode : MonoBehaviour
 	//wurd das Rennen gestartet?
 	private bool hasRaceStarted = false;
 	//countDown zum anzeigen der SpielerInfos nachdem das Rennen vorbei ist
-	private float finishedRaceCountdown = 2.0f;
+	private float finishedRaceCountdown = 4.0f;
 
 
 	// Use this for initialization
@@ -142,7 +142,7 @@ public class CircuitRaceMode : MonoBehaviour
 		}
 
 		//hier werden die Kameras, die die Autos verfolgen, gelöscht, damit die Ergebnisse dargestellt werden können
-		//nur wenn das Rennen beendet wurde
+		//nur wenn das Rennen beendet wurde und der Countdown runterlief
 		if(camerasDestroyed == false && finishedRaceCountdown <0.0f)
 		{
 			//aktiviere die finish Kamera
@@ -266,5 +266,4 @@ public class CircuitRaceMode : MonoBehaviour
 			}
 		}
 	}
-
 }
