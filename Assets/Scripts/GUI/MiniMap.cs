@@ -6,18 +6,31 @@ public class MiniMap : MonoBehaviour
 	int localPlayers;
 	
 	GameObject secondMap;
+
+	public GUITexture frame;
 	// Use this for initialization
 	void Start ()
 	{
 		localPlayers = PlayerPrefs.GetInt("LocalPlayers");
 		
 		if(localPlayers == 1){
+
+			Rect frameRect = this.frame.pixelInset;
 			Rect viewRect = this.camera.rect;
 
+			frameRect.x *=1.5f;
+			frameRect.y *=1.5f;
+			frameRect.width  *= 1.5f;
+			frameRect.height *= 1.5f;
+			this.frame.pixelInset = frameRect;
+
+
+			viewRect.x = viewRect.x -viewRect.width/1.5f;
 			viewRect.width  = viewRect.width * 1.5f;
 			viewRect.height = viewRect.height * 1.5f;
-			viewRect.y = 0.84f - viewRect.height*0.5f;
+			viewRect.y = 0.84f - viewRect.height/1.5f;
 			this.camera.rect = viewRect;
+
 		} else {
 			secondMap = (GameObject)GameObject.Instantiate(this.gameObject);
 			secondMap.GetComponent<MiniMap>().enabled = false;
