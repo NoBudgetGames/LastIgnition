@@ -20,6 +20,7 @@ public class PlayerInputController : MonoBehaviour
 	public Transform[] additionalCameraPositions;
 	//refernz auf den CameraController
 	public CameraController cameraCtrl;
+
 	//referenz auf Fahrzeug,
 	private Car car;
 	//Referenz auf das Inventar des Autos

@@ -30,6 +30,8 @@ public class CircuitRaceMode : MonoBehaviour
 	private List<CircuitModePlayerStats> playerList;
 	//int List mit der Wagenummer des Autos, an erster Stelle steht das Auto, das momentan führt, usw...
 	private List<int> playerPosition;
+	//Lite mit String Array der vorher ausgeschiedenen (vor der Zieleinfahrt explodierten) Autos
+	private List<string[]> explodedPlayerData;
 	//timer fürs update der Leaderboard Methode, siehe Update()-Methode
 	private float leaderboardTimer;
 	//haben alle das Rennen Beendet?
@@ -48,6 +50,7 @@ public class CircuitRaceMode : MonoBehaviour
 	void Start () 
 	{
 		playerList = new List<CircuitModePlayerStats>();
+		explodedPlayerData = new List<string[]>();
 		playerPosition = new List<int>();
 		leaderboardTimer = 0.0f;
 		haveAllFinishedTheRace = false;
@@ -145,6 +148,14 @@ public class CircuitRaceMode : MonoBehaviour
 		//nur wenn das Rennen beendet wurde und der Countdown runterlief
 		if(camerasDestroyed == false && finishedRaceCountdown <0.0f)
 		{
+			//drehe die explodierten Infos um, damit der zuerst explodierte auf dem letzten Platz landet 
+			explodedPlayerData.Reverse();
+			//übergebe diese Infos der FinishCamera
+			foreach(string[] explodedPlayer in explodedPlayerData)
+			{
+				playerHasFinishedRace(explodedPlayer);
+			}
+
 			//aktiviere die finish Kamera
 			finishedCam.activateCamera();
 			finishedCam.setArenaMode(false);
@@ -173,7 +184,13 @@ public class CircuitRaceMode : MonoBehaviour
 	{
 		finishedCam.addPlayerData(data);
 	}
-	
+
+	public void addExplodedPlayerData(string[] data)
+	{
+		explodedPlayerData.Add(data);
+	}
+
+
 	//diese Methode aktuallisiert die Positionsanzeige (wer grad erster ist)
 	private void updateLeaderboard()
 	{

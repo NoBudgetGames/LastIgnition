@@ -510,6 +510,17 @@ public class Car : MonoBehaviour
 		removeDoor(rightDoor);
 		removeDoor(leftDoor);
 
+		//Da das Auto explodiert ist, kann man aller überflüsigen Komponenten löschen
+		//lösche die beiden StabilizerBars, aber aus irgendeinen grund wird die 2. StabilizerBar nicht gelöscht
+		GameObject.Destroy(thisTransform.GetComponent<StabilizerBar>());
+		GameObject.Destroy(thisTransform.GetComponent<StabilizerBar>(), 0.5f);
+		//lösche den CarInventory
+		GameObject.Destroy(thisTransform.GetComponent<CarInventory>());
+		//lösche die CarCollision Komponente
+		thisTransform.GetComponentInChildren<CarCollision>().enabled = false;
+		//deaktiviere den InputController, damit der Spieler das Auto nicht mehr steuern kann
+		thisTransform.GetComponent<PlayerInputController>().enabled = false;
+
 		//aktiviere den ParticleSystem
 		particleSysForExplosion.gameObject.SetActive(true);
 		particleSysForExplosion.enableEmission = true;

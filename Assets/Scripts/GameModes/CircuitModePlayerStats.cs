@@ -82,7 +82,28 @@ public class CircuitModePlayerStats : MonoBehaviour
 			{
 				directionTimer += Time.deltaTime;
 			}
-			
+
+			//schaue, ob das Auto bereits exploriert ist, wenn ja, beende das Rennen für diesen Fahrzeug
+			Car car = transform.GetComponent<Car>();
+			if(car.getHealth() <= 0.0f)
+			{
+				hasFinishedRace = true;
+				//übergebe die PlayerStats
+				string fastestLapStr = "";
+				//falls das AUto noch keine RUnde gefahren ist, stelle die schlesste Runde auf --:--:--
+				if(fastestLap == -1.0f)
+				{
+					fastestLapStr = "--:--:--";
+				}
+				else
+				{
+					fastestLapStr = TimeConverter.floatToString(fastestLap);
+				}
+				//Controllernummer, zeige dsa das AUto zerstört wurde , schnellste Runde
+				circuitMode.addExplodedPlayerData(new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString, 
+					"RIP", fastestLapStr});
+			}
+
 			//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
 			if(directionTimer > 2.0f)
 			{

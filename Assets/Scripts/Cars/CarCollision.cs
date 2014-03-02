@@ -34,7 +34,9 @@ public class CarCollision : MonoBehaviour
 				AbstractDestructibleObject destr = other.GetComponent<AbstractDestructibleObject>();
 				if(destr != null)
 				{
-					destr.receiveDamage(car.crashDamage * car.GetComponent<Rigidbody>().velocity.magnitude);
+					//relative Geschwindigkeit der beiden
+					Vector3 relVel = car.GetComponent<Rigidbody>().velocity - other.transform.root.GetComponent<Rigidbody>().velocity;
+					destr.receiveDamage(car.crashDamage * relVel.magnitude);
 				}
 			}
 		}
