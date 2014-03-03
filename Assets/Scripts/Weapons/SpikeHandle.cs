@@ -3,7 +3,14 @@ using System.Collections;
 
 public class SpikeHandle : Weapon
 {
+	//Das Prefab zum erstellen der Spikes
 	public GameObject spikePrefab;
+	//Die Reifen, die die Position angeben
+	//Es muss zwichen rechts und links unterschieden werden, da die Spikes
+	//für die Linke Seite gedreht werden müssen
+	public GameObject[] spikePositionLeft = new GameObject[2];
+	public GameObject[] spikePositionRight = new GameObject[2];
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -21,26 +28,25 @@ public class SpikeHandle : Weapon
 	{
 		if(ammo>0){
 			if(timer==0.0f){
+				//Erzeugt Spike Objekte in den Reifen mittels des übergebenen Prefabs
 				if(buttonPressed){
 					buttonPressed = false;
+					for(int i = 0; i<2; ++i){
 					GameObject spike = (GameObject) GameObject.Instantiate(spikePrefab);
-					spike.transform.position = this.transform.position;
-					spike.transform.rotation = this.transform.rotation;
-					spike.transform.Rotate(spike.transform.forward,-this.transform.parent.transform.eulerAngles.x+90.0f,Space.Self);
-					spike.transform.Rotate(spike.transform.up,-this.transform.parent.transform.eulerAngles.y-90.0f,Space.Self);
-					spike.GetComponent<Spike>().parent = transform.root.gameObject;
-					spike.GetComponent<Spike>().startingPosition = this.transform.position;
-					spike.GetComponent<Spike>().spikeNumber = 1;
-				
-					GameObject spike2 = (GameObject) GameObject.Instantiate(spikePrefab);
-					spike2.transform.position = this.transform.position;
-					spike2.transform.rotation = this.transform.rotation;
-					spike2.transform.Rotate(spike2.transform.forward,-this.transform.parent.transform.eulerAngles.y+90.0f,Space.Self);
-					spike2.transform.Rotate(spike2.transform.up,-this.transform.parent.transform.eulerAngles.y+90.0f,Space.Self);
-					spike2.GetComponent<Spike>().parent = transform.root.gameObject;
-					spike2.GetComponent<Spike>().startingPosition = this.transform.position;
-					spike2.GetComponent<Spike>().spikeNumber = 2;
+					spike.transform.position = spikePositionLeft[i].transform.position;
+					spike.transform.rotation = spikePositionLeft[i].transform.rotation;
+					spike.transform.parent = spikePositionLeft[i].transform;
+					spike.transform.Rotate(this.transform.up,180.0f,Space.Self);
+					spike.GetComponentInChildren<Spike>().parent = spikePositionLeft[i].transform.root.gameObject;
 
+
+			
+					GameObject spike2 = (GameObject) GameObject.Instantiate(spikePrefab);
+					spike2.transform.position = spikePositionRight[i].transform.position;
+					spike2.transform.rotation = spikePositionRight[i].transform.rotation;
+					spike2.transform.parent = spikePositionRight[i].transform;
+					spike2.GetComponentInChildren<Spike>().parent = spikePositionRight[i].transform.transform.root.gameObject;
+					}
 					ammo--;	
 					timer+=Time.deltaTime;
 				}
