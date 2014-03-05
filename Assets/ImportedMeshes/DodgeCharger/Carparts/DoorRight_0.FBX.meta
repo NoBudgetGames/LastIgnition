@@ -4,10 +4,19 @@ ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
+    100002: RightDoor
+    100004: RightWindow
     400000: //RootNode
+    400002: RightDoor
+    400004: RightWindow
     2300000: //RootNode
+    2300002: RightDoor
+    2300004: RightWindow
     3300000: //RootNode
+    3300002: RightDoor
+    3300004: RightWindow
     4300000: RightDoor
+    4300002: RightWindow
     9500000: //RootNode
   materials:
     importMaterials: 0

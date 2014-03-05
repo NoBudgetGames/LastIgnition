@@ -519,7 +519,10 @@ public class Car : MonoBehaviour
 		//lösche die CarCollision Komponente
 		thisTransform.GetComponentInChildren<CarCollision>().enabled = false;
 		//deaktiviere den InputController, damit der Spieler das Auto nicht mehr steuern kann
-		thisTransform.GetComponent<PlayerInputController>().enabled = false;
+		if(thisTransform.GetComponent<PlayerInputController>() != null)
+		{
+			thisTransform.GetComponent<PlayerInputController>().enabled = false;
+		}
 
 		//aktiviere den ParticleSystem
 		particleSysForExplosion.gameObject.SetActive(true);
