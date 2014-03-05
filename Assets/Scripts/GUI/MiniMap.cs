@@ -15,14 +15,7 @@ public class MiniMap : MonoBehaviour
 		
 		if(localPlayers == 1){
 
-			Rect frameRect = this.frame.pixelInset;
 			Rect viewRect = this.camera.rect;
-
-			frameRect.x *=1.5f;
-			frameRect.y *=1.5f;
-			frameRect.width  *= 1.5f;
-			frameRect.height *= 1.5f;
-			this.frame.pixelInset = frameRect;
 
 
 			viewRect.x = viewRect.x -viewRect.width/1.5f;
