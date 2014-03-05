@@ -1120,6 +1120,7 @@ GameObject:
   - 33: {fileID: 3300072}
   - 23: {fileID: 2300072}
   - 114: {fileID: 11400048}
+  - 82: {fileID: 8200000}
   m_Layer: 0
   m_Name: MiniGun
   m_TagString: Untagged
@@ -1837,7 +1838,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 18.3279419, y: 0, z: -16.2102718}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400028}
@@ -2009,7 +2010,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.49304199, y: .0838875771, z: 11.8729248}
+  m_LocalPosition: {x: 2.49304199, y: .98140192, z: 12.3148794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400026}
@@ -2020,7 +2021,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.67443848, y: -.0409452915, z: 12.0325928}
+  m_LocalPosition: {x: -2.67443848, y: 1.38566947, z: 12.0325928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400026}
@@ -2570,7 +2571,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.67443848, y: -.0409450531, z: 12.0325928}
+  m_LocalPosition: {x: -2.67443848, y: 1.45154381, z: 12.0325928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400026}
@@ -4365,6 +4366,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.04097295, y: 5.49568224, z: 3.94686508}
   m_Center: {x: 3.32283401, y: -1.51684654, z: .299344361}
+--- !u!82 &8200000
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100138}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 9d63e1fa5a6a331409bd1ef298ddbf11, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4673,7 +4732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudIcon: {fileID: 2800000, guid: 2e83515c7347e7f4ca07db3eae0374d0, type: 3}
-  rocketPrefab: {fileID: 100000, guid: 2f80f42db9c705d48b96408f8e5d65f1, type: 2}
+  rocketPrefab: {fileID: 100004, guid: bdbbd432effcc98449eefae8673a9f6c, type: 2}
 --- !u!114 &11400022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4686,7 +4745,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudIcon: {fileID: 2800000, guid: e486e7a08152bf14a851b332c2fb6237, type: 3}
-  spikePrefab: {fileID: 100000, guid: c840f610d6c045d4cb2d2f753064ae41, type: 2}
+  spikePrefab: {fileID: 100002, guid: 19be571ed91ae9845b0b9c83abfb1f40, type: 2}
+  spikePositionLeft:
+  - {fileID: 100016}
+  - {fileID: 100022}
+  spikePositionRight:
+  - {fileID: 100008}
+  - {fileID: 100006}
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4855,6 +4920,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudIcon: {fileID: 2800000, guid: 5dc5b36fc4208ac43916ca2c574d3f5b, type: 3}
+  bullet: {fileID: 100000, guid: 5dc703412b0d13c4b9d83a1a00756bab, type: 2}
+  audioClips:
+  - {fileID: 8300000, guid: 9d63e1fa5a6a331409bd1ef298ddbf11, type: 3}
+  - {fileID: 8300000, guid: 73035607dfbd8c44cb7314ebe82ae778, type: 3}
+  - {fileID: 8300000, guid: c28e21f602d38db4f9d9f91fb2aa3ea3, type: 3}
 --- !u!114 &11400050
 MonoBehaviour:
   m_ObjectHideFlags: 1

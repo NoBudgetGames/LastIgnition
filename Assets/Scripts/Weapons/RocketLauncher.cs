@@ -27,7 +27,7 @@ public class RocketLauncher : Weapon
 					buttonPressed = false;
 					GameObject rocket = (GameObject) GameObject.Instantiate(rocketPrefab);
 					rocket.transform.position = this.transform.position;
-					rocket.transform.Rotate(rocket.transform.up,-this.transform.parent.transform.eulerAngles.y,Space.Self);
+					rocket.transform.Rotate(rocket.transform.up,this.transform.parent.transform.eulerAngles.y,Space.Self);
 					rocket.GetComponent<Rocket>().parent = transform.root.gameObject;
 					timer+=Time.deltaTime;
 					ammo--;

@@ -10,6 +10,8 @@ public class Rocket : MonoBehaviour
 	float radius; //Radius in dem Schadn verursacht wird
 	float force; //Die Kraft mit der Objekte zurückgestoßen werden
 	float speed; //Die Geschwindigkeit mit der die Rakete sich fortbewegt
+
+	public GameObject explosionPrefab;
 	// Use this for initialization
 	void Start ()
 	{
@@ -18,7 +20,7 @@ public class Rocket : MonoBehaviour
 		damage = 40.0f;
 		radius = 10.0f;
 		force = 7000.0f;
-		speed = 200.0f;
+		speed = 500.0f;
 	}
 	
 	// Update is called once per frame
@@ -29,7 +31,9 @@ public class Rocket : MonoBehaviour
 	}
 	
 	void OnTriggerEnter(Collider other){
-
+		if(other.GetComponent<Checkpoint>())
+			return;
+		GameObject.Instantiate(explosionPrefab,this.transform.position,this.transform.rotation);
 		//Von der Explosionsposition der Rakete aus werden mittels einer Sphere alle Objekte
 		//im Explosionsradius erfasst. Objekte die zerstörbar sind erhalten Schaden, Objekte 
 		//mit einem Rigidbody werden zurückgeworfen (abhängig von der Masse)
