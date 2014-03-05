@@ -5,7 +5,7 @@ public class MiniGun : Weapon {
 
 	bool firing; //Gibt an ob die Minigun bereits schießt
 	float firingDelayTimer;
-	AudioSource audio;
+	public AudioSource audio;
 	public GameObject bullet;
 	public AudioClip[] audioClips = new AudioClip[3];
 	// Use this for initialization
@@ -18,14 +18,15 @@ public class MiniGun : Weapon {
 
 		_weaponType = WeaponType.MINIGUN;
 
-		audio = GetComponent<AudioSource>();
+		audio = this.GetComponentInChildren<AudioSource>();
 		firingDelayTimer = 0.0f;
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+		this.GetComponentInChildren<RealAudioSource>().setPosition(new Vector3());
 		//Sobald der Button gedrückt wird schießt die Minigun
 		//EVTL DELAY EINFÜGEN, WEGEN ANLAUFEN
 		if(buttonPressed){

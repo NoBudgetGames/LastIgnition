@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42168cdc08addae429ba16b77da9e6c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 100010, guid: 9bf7ec1a8b0f052438359d3f3b2e6524, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
