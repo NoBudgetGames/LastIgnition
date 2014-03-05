@@ -4,10 +4,29 @@ ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
+    100002: glass
+    100004: LeftWindow
+    100006: RightWindow
+    100008: steertWheel
     400000: //RootNode
+    400002: glass
+    400004: LeftWindow
+    400006: RightWindow
+    400008: steertWheel
     2300000: //RootNode
+    2300002: glass
+    2300004: LeftWindow
+    2300006: RightWindow
+    2300008: steertWheel
     3300000: //RootNode
+    3300002: glass
+    3300004: LeftWindow
+    3300006: RightWindow
+    3300008: steertWheel
     4300000: glass
+    4300002: steertWheel
+    4300004: LeftWindow
+    4300006: RightWindow
     9500000: //RootNode
   materials:
     importMaterials: 0
