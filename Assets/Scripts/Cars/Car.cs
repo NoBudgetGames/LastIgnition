@@ -420,8 +420,8 @@ public class Car : MonoBehaviour
 			glassDamageModels[0].SetActive(false);
 			glassDamageModels[1].SetActive(true);
 		}
-		//für den sichtbaren Schaden sind keine float Werte nötig
-		applyVisualDamage(damZone, (int)damageAmount);
+		//für den sichtbaren Schaden sind keine float Werte nötig, 4 ist da um den Sichtbaren Schaden deutlicher zu machen
+		applyVisualDamage(damZone, (int)damageAmount * 4);
 		
 		//Wenn die Lebenspunkte 0 sind, soll das Auto explodieren und alle refen verlieren
 		if(health<=0.0f)
