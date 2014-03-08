@@ -330,7 +330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &100040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2353,7 +2353,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 875.825134, y: 190.240707, z: 1893.54053}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400028}
@@ -6298,7 +6298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b10062735989649a2b00168fda476d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudIcon: {fileID: 2800000, guid: 582ceecaa0895da44aa2210e9eea690c, type: 3}
+  hudIcon: {fileID: 2800000, guid: deb42021507ea694fb8a8d214006b8a3, type: 3}
   minePrefab: {fileID: 100000, guid: 73feb47014c9e8143a74e96352767561, type: 2}
 --- !u!114 &11400020
 MonoBehaviour:
