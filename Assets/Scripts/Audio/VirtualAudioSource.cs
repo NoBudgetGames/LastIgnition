@@ -19,7 +19,7 @@ public class VirtualAudioSource : MonoBehaviour
 
 	//Liste mit Referenzen auf die VirtuellenAudioListener (der sich am Auto befidnet)
 	private List<GameObject> virtAudioListener;
-	//Liste mit den RealAudioSources
+	//Liste mit den RealAudioSources, für jedes Auto eine
 	private List<GameObject> realAudioList;
 
 	void Start()
@@ -46,8 +46,11 @@ public class VirtualAudioSource : MonoBehaviour
 		for(int i = 0; i < realAudioList.Count; i++)
 		{
 			//die relative Position der VirtuelAudioSource zum VirtualAudioListener
-			Vector3 relativePosition = virtAudioListener[i].transform.InverseTransformPoint(transform.position);
-			realAudioList[i].GetComponent<RealAudioSource>().setPosition(relativePosition);
+			if(virtAudioListener[i].gameObject != null)
+			{
+				Vector3 relativePosition = virtAudioListener[i].transform.InverseTransformPoint(transform.position);
+				realAudioList[i].GetComponent<RealAudioSource>().setPosition(relativePosition);		
+			}
 		}
 	}
 }

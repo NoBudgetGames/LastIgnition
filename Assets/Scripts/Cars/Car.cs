@@ -1150,7 +1150,7 @@ public class Car : MonoBehaviour
 	private void updateGear(Vector3 relVelocity)
 	{
 		//falls die vorwärts Geschwindigkeit relativ niedrig ist (nach einen Crash z.B.), wird wieder in den ersten Gang gewechslt
-		if(relVelocity.z > 0 && relVelocity.magnitude < 10)
+		if(relVelocity.z > 0 && relVelocity.magnitude < 30)
 		{
 			currentGear = 1;
 			return;

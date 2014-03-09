@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioListener: {fileID: 0}
+  destroyAfterPlayed: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

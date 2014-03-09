@@ -12,6 +12,10 @@ public class Rocket : MonoBehaviour
 	float speed; //Die Geschwindigkeit mit der die Rakete sich fortbewegt
 
 	public GameObject explosionPrefab;
+
+	//timer, um die Rakete, falls sie nichts treffen sollte, zu zerstören
+	private float destroyTimer = 10.0f;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -28,11 +32,24 @@ public class Rocket : MonoBehaviour
 	{
 		//Simpler gerader Bahnverlauf
 		transform.position += forwardVector*Time.deltaTime*speed;
+
+		destroyTimer -= Time.deltaTime;
+		//falls der Timer abgelaufen ist, zerstöre die Rakete
+		if(destroyTimer < 0.0f)
+		{
+			GameObject.Destroy(gameObject);
+		}
 	}
 	
 	void OnTriggerEnter(Collider other){
 		if(other.GetComponent<Checkpoint>())
 			return;
+		//falls wir eine SpawnZone getroffen haben, mache nichts
+		if(other.GetComponent<SpawnZone>())
+		{
+			return;
+		}			
+
 		GameObject.Instantiate(explosionPrefab,this.transform.position,this.transform.rotation);
 		//Von der Explosionsposition der Rakete aus werden mittels einer Sphere alle Objekte
 		//im Explosionsradius erfasst. Objekte die zerstörbar sind erhalten Schaden, Objekte 
@@ -50,12 +67,8 @@ public class Rocket : MonoBehaviour
 				{
 					col.GetComponent<DestructibleCarPart>().car.rigidbody.AddExplosionForce(force * 2,explosionPosition,radius);
 				}
-			}
-
-				
+			}				
 		}
 		GameObject.Destroy(this.gameObject);
-		
 	}
 }
-

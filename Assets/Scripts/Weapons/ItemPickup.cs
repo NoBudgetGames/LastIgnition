@@ -68,8 +68,8 @@ public class ItemPickup : MonoBehaviour
 		if(objectUsed){
 			timer+=Time.deltaTime;
 			if(timer >= MAX_TIME){
-				this.renderer.enabled = true;
-				this.collider.enabled = true;
+				this.GetComponentInChildren<Renderer>().enabled = true;
+				this.GetComponent<Collider>().enabled = true;
 				timer = 0.0f;
 				objectUsed = false;
 			}
@@ -92,8 +92,8 @@ public class ItemPickup : MonoBehaviour
 				}
 
 				objectUsed = true;
-				this.renderer.enabled = false;
-				this.collider.enabled = false;
+				this.GetComponentInChildren<Renderer>().enabled = false;
+				this.GetComponent<Collider>().enabled = false;
 			}
 		}
 	}

@@ -33,11 +33,11 @@ public class CircuitRaceMode : MonoBehaviour
 	//Lite mit String Array der vorher ausgeschiedenen (vor der Zieleinfahrt explodierten) Autos
 	private List<string[]> explodedPlayerData;
 	//timer fürs update der Leaderboard Methode, siehe Update()-Methode
-	private float leaderboardTimer;
+	private float leaderboardTimer = 0.0f;
 	//haben alle das Rennen Beendet?
-	private bool haveAllFinishedTheRace;
+	private bool haveAllFinishedTheRace = false;
 	//wurde die Kameras zerstört?
-	private bool camerasDestroyed;
+	private bool camerasDestroyed = false;
 	//Countdown für start des Spiels
 	private float countDown = 4.0f;
 	//wurd das Rennen gestartet?
@@ -52,9 +52,6 @@ public class CircuitRaceMode : MonoBehaviour
 		playerList = new List<CircuitModePlayerStats>();
 		explodedPlayerData = new List<string[]>();
 		playerPosition = new List<int>();
-		leaderboardTimer = 0.0f;
-		haveAllFinishedTheRace = false;
-		camerasDestroyed = false;
 		
 		//gehe alle Checkpoints durch und numeriere sie
 		for(int i = 0; i < checkpoints.Length; i++)

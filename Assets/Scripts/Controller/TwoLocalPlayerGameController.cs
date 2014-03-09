@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class TwoLocalPlayerGameController : MonoBehaviour 
 {
 	//Referenz auf die Start-/Spawnpunkte
-	public GameObject[] spawnPoints;
+	public SpawnZone[] spawnPoints;
 	//Referenz auf die Auto Prefabs
 	//MUSS MIT DER LISTE IM CAR SELECTOR ÜBEREINSTIMMEN!!
 	public GameObject[] carPrefabs;
@@ -22,19 +22,15 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	void Awake()
 	{
 		playerList = new List<GameObject>();
-		if(GameObject.FindGameObjectsWithTag("SpawnPoint") != null)
-		{
-			spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-		}
 		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
 		{
-			instaciateNewPlayer(spawnPoints[0], "One");
+			instaciateNewPlayer(getFreeSpawnPoint(), "One");
 			this.enabled = false;
 		}
 		else
 		{
-			instaciateNewPlayer(spawnPoints[0], "One");
-			instaciateNewPlayer(spawnPoints[1], "Two");
+			instaciateNewPlayer(getFreeSpawnPoint(), "One");
+			instaciateNewPlayer(getFreeSpawnPoint(), "Two");
 		}
 	}
 	
@@ -90,7 +86,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			//zertöre den HUD
 			GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
 
-			//falls das Auto nicht mehr in der Szene sein soll, lösche das Auto
+			//falls das Auto(-wrack) nicht mehr in der Szene sein soll, lösche das Auto
 			if(toBeDestroyed == true)
 			{
 				//zerstöre den Spieler
@@ -105,20 +101,10 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				GameObject.Destroy(player.GetComponentInChildren<MiniMapElement>().gameObject);
 				//lösche den inputController
 				GameObject.Destroy(player.GetComponent<PlayerInputController>());
-
 			}
 			
 			//instanszere einen neuen Spieler
-			if(playerName.Equals("One"))
-			{
-				//spieler 1 an ersten Spawnpunkt
-				instaciateNewPlayer(spawnPoints[0], playerName);
-			}
-			else
-			{
-				//spieler 2 an zweiten Spawnpunkt
-				instaciateNewPlayer(spawnPoints[1], playerName);
-			}
+			instaciateNewPlayer(getFreeSpawnPoint(), playerName);
 		}
 	}
 	
@@ -128,11 +114,16 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	{
 		if(cam != null)
 		{
-			if(PlayerPrefs.GetInt("LocalPlayers") == 1){
-				cam.clearFlags = CameraClearFlags.Skybox;
+			//die Kamera soll Skyboxen darstellen
+			cam.clearFlags = CameraClearFlags.Skybox;
+			//falls wir nur einen Spieler haben, soll der Viewport den gesamtem Bildsichrm ausfüllen
+			if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+			{
 				cam.rect = new Rect(0, 0, 1.0f, 1.0f);
-			} else {
-				cam.clearFlags = CameraClearFlags.Skybox;
+			}
+			//ansonsten haben wir zwei Spieler und müssen den Bildschirm in zwei Teile aufteilen
+			else 
+			{
 				if(playerName.Equals("One"))
 				{
 					//(left, top, width, height)
@@ -144,5 +135,23 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	//diese Methode leifert einen freien SpawnPunkt zurück
+	private GameObject getFreeSpawnPoint()
+	{
+		GameObject obj = new GameObject();
+		//gehe alle Spawnpunkte durch und schaue, ob einer frei ist
+		foreach(SpawnZone spawnPoint in spawnPoints)
+		{
+			//falls einer frei ist, returne das GameObject zum Spawnpunkt
+			if(spawnPoint.isSpawnZoneFree() == true)
+			{
+				obj = spawnPoint.gameObject;
+				spawnPoint.spawnIsNotFree();
+				break;
+			}
+		}
+		return obj; 
 	}
 }
