@@ -10,6 +10,8 @@ public class SpawnZone : MonoBehaviour
 {
 	//kann man diese Zone zum Spawnen benutzen?
 	private bool canSpawn;
+	//Anzahl der Fahrzeuge, die sich in der Zone befinden
+	int numberOfCars = 0;
 
 	void Awake() 
 	{
@@ -34,6 +36,7 @@ public class SpawnZone : MonoBehaviour
 		if(car != null)
 		{
 			canSpawn = false;
+			numberOfCars++;
 		}
 	}
 
@@ -43,7 +46,11 @@ public class SpawnZone : MonoBehaviour
 		//falls other eine Car Komponente besitzt, ist dass Spawnen in dieser Zone wieder erlaubt
 		if(car != null)
 		{
-			canSpawn = true;
+			numberOfCars--;
+			if(numberOfCars == 0)
+			{
+				canSpawn = true;
+			}
 		}
 	}
 }

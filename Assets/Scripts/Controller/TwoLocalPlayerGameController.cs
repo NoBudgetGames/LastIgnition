@@ -24,13 +24,13 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		playerList = new List<GameObject>();
 		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
 		{
-			instaciateNewPlayer(getFreeSpawnPoint(), "One");
+			playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "One"));
 			this.enabled = false;
 		}
 		else
 		{
-			instaciateNewPlayer(getFreeSpawnPoint(), "One");
-			instaciateNewPlayer(getFreeSpawnPoint(), "Two");
+			playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "One"));
+			playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "Two"));
 		}
 	}
 	
@@ -48,7 +48,8 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	
 	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
-	private void instaciateNewPlayer(GameObject trans, string playerName)
+	//Die Methode liefert den Spieler wieder zurück
+	private GameObject instaciateNewPlayer(GameObject trans, string playerName)
 	{
 		int carIndex = PlayerPrefs.GetInt(playerName);
 		//neues Auto
@@ -60,13 +61,16 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		input.setupHUD();
 		//Kamera muss aufgesetzt werden
 		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
-		playerList.Add(player);
+		//playerList.Add(player);
+		return player;
 	}
 	
 	//resete das Auto des SPielers (FULL HEALTH)
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
 	public void reInstanciatePlayer(string playerName, bool toBeDestroyed)
 	{
+		//index des Spielers aus der Liste
+		int index = 0;
 		GameObject player = new GameObject("PLayerToDestroy");
 		//finde den richtigen Spieler aus der Liste
 		foreach(GameObject obj in playerList)
@@ -76,6 +80,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				player = obj;
 				break;
 			}
+			index++;
 		}
 		if(player != null)
 		{
@@ -102,9 +107,8 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				//lösche den inputController
 				GameObject.Destroy(player.GetComponent<PlayerInputController>());
 			}
-			
-			//instanszere einen neuen Spieler
-			instaciateNewPlayer(getFreeSpawnPoint(), playerName);
+			//instanszere einen neuen Spieler und füge ihn in der List da ein, wo er vorher war
+			playerList.Insert(index, instaciateNewPlayer(getFreeSpawnPoint(), playerName));
 		}
 	}
 	
