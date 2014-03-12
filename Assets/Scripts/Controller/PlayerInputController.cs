@@ -103,7 +103,15 @@ public class PlayerInputController : MonoBehaviour
 			inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUpKey"));
 
 			cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBackKey"));
-			cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCameraKey"));
+			if(Input.GetButtonDown("Player" + numberOfControllerString + "ChangeCameraKey") == true)
+			{
+				cameraCtrl.cycleCamera(-1.0f);
+			}
+			else 
+			{
+				cameraCtrl.cycleCamera(0.0f);
+			}
+
 		}
 		//falls Controller benutzt wird
 		else
