@@ -3504,12 +3504,12 @@ Transform:
   m_LocalPosition: {x: 500, y: 20, z: 500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 236841742}
-  - {fileID: 149603263}
-  - {fileID: 1273512656}
-  - {fileID: 1082650140}
-  - {fileID: 1920889245}
   - {fileID: 1979047529}
+  - {fileID: 236841742}
+  - {fileID: 1920889245}
+  - {fileID: 1082650140}
+  - {fileID: 1273512656}
+  - {fileID: 149603263}
   - {fileID: 1986657864}
   - {fileID: 873356692}
   m_Father: {fileID: 0}
