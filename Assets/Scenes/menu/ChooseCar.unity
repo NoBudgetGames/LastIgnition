@@ -389,6 +389,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1745708495}
   - 114: {fileID: 1745708494}
+  - 148: {fileID: 1745708496}
   m_Layer: 0
   m_Name: SelectionManager
   m_TagString: Untagged
@@ -424,6 +425,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &1745708496
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745708493}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1745708495}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &1798408217
 GameObject:
   m_ObjectHideFlags: 0
