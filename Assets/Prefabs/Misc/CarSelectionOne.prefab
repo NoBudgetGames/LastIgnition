@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: TwoLocalPlayerGameController
-  m_TagString: GameController
+  m_Name: CarSelectionOne
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,7 +23,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1403.47192, y: 5.01754904, z: 535.201294}
+  m_LocalPosition: {x: -14.5123177, y: 8.58851624, z: -.877846718}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -35,17 +35,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a307e96254ffed546b29d198fb9c9371, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a658360f21da9e4994c30243ebc7c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  carPrefabs:
-  - {fileID: 100270, guid: a47be2df3ca720148981cdf1f78e082e, type: 2}
-  - {fileID: 100270, guid: 57aa2b4b405abf94b81b7856ac638e58, type: 2}
-  - {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
-  playerList: []
+  choosableCars:
+  - {fileID: 100270, guid: dc1a993dac97ecf4fbe4344c990b0268, type: 2}
+  - {fileID: 100270, guid: 4c4fdb01f65b34243a82c8ce98e174a2, type: 2}
+  - {fileID: 100020, guid: c2b576318759d754c822c342d954739e, type: 2}
+  playerName: One
+  playerReady: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
