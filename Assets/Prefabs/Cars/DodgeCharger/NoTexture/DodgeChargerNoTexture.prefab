@@ -183,7 +183,7 @@ GameObject:
   - 114: {fileID: 11400016}
   - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: DodgeCharger
+  m_Name: DodgeChargerNoTexture
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6541,7 +6541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6175c2dafa3eddf41b9850dd3726f5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioListener: {fileID: 0}
+  destroyAfterPlayed: 0
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
