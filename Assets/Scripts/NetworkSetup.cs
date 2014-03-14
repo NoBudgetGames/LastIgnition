@@ -3,17 +3,19 @@ using System.Collections;
 
 public class NetworkSetup : MonoBehaviour
 {
-	HostData[] hostList;
-	bool startGame;
-	bool setup;
-	NetworkView netView;
+	private HostData[] hostList;
+	private bool startGame;
+	private bool setup;
+
+	private int levelPrefix;
 	// Use this for initialization
 	void Start ()
 	{
 		DontDestroyOnLoad(this);
 		setup = true;
 		startGame = false;
-		netView = this.GetComponent<NetworkView>();
+		levelPrefix = 0;
+		this.networkView.group = 1;
 	}
 
 	// Update is called once per frame
@@ -23,8 +25,30 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 	[RPC]
-	void loadLevel(string level){
+	void loadLevel(string level, int newLevelPrefix){
+		StartCoroutine(loadLevelCoroutine(level,newLevelPrefix));
+	}
+
+	private IEnumerator loadLevelCoroutine(string level, int newLevelPrefix){
+		
+		levelPrefix = newLevelPrefix;
+		
+		Network.SetSendingEnabled(0,false);
+		
+		Network.isMessageQueueRunning = false;
+		
+		Network.SetLevelPrefix(levelPrefix);
 		Application.LoadLevel(level);
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
+
+		Network.isMessageQueueRunning = true;
+
+		Network.SetSendingEnabled(0, true);
+
+		foreach( GameObject g in FindObjectsOfType(typeof(GameObject))){
+			g.SendMessage("OnNetworkLoadedLevel",SendMessageOptions.DontRequireReceiver);
+		}
 	}
 
 	void startServer(){
@@ -71,9 +95,12 @@ public class NetworkSetup : MonoBehaviour
 				}
 			}
 		}
-		if(Network.isServer && Network.connections.Length > 0){
+		if(Network.isServer && Network.connections.Length > 0 && setup ){
 			if (GUI.Button(new Rect(100, 300, 250, 100), "Start Game")){
-				netView.RPC("loadLevel",RPCMode.All,"ChooseCar");
+				setup = false;
+				Network.RemoveRPCsInGroup(0);
+				Network.RemoveRPCsInGroup(1);
+				this.networkView.RPC("loadLevel",RPCMode.AllBuffered,"ChooseCar",levelPrefix+1);
 			}
 		}
 	}

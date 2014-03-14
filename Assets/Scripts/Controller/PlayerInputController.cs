@@ -37,7 +37,12 @@ public class PlayerInputController : MonoBehaviour
 		inv = GetComponentInChildren<CarInventory>();
 		
 		//neuen CameraController aufsetzen
-		GameObject camObj = (GameObject)GameObject.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation);
+		GameObject camObj;
+		if(Network.connections.Length > 0){
+			camObj = (GameObject)Network.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation,0);
+		} else {
+			camObj = (GameObject)GameObject.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation);
+		}
 		cameraCtrl = camObj.GetComponent<CameraController>();
 		
 		cameraCtrl.targetCar = car;
@@ -46,7 +51,12 @@ public class PlayerInputController : MonoBehaviour
 		//zweites Element ist Kofferraumkamera
 		cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
 		
-		GameObject hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+		GameObject hudObj;
+		if(Network.connections.Length > 0){
+			hudObj = (GameObject) Network.Instantiate(hudPrefab,hudPrefab.transform.position,hudPrefab.transform.rotation,0);
+		} else {
+			hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+		}
 		hud = hudObj.GetComponent<HUD>();
 		hud.cameraObject = camObj;
 		setupHUD();
@@ -72,6 +82,7 @@ public class PlayerInputController : MonoBehaviour
 				controllerAttached = true;
 			}
 		}
+
 	}
 
 	public void setupHUD(){

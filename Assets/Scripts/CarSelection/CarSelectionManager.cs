@@ -19,10 +19,12 @@ public class CarSelectionManager : MonoBehaviour
 			selectors = tmp;
 		}
 
-		networkFinished = new bool[Network.connections.Length];
+		networkFinished = new bool[Network.connections.Length+1];
 		for(int i = 0; i< networkFinished.Length; ++i){
 			networkFinished[i] = false;
 		}
+
+		this.networkView.group = 0;
 	}
 
 	// Update is called once per frame
@@ -44,7 +46,7 @@ public class CarSelectionManager : MonoBehaviour
 				Application.LoadLevel(PlayerPrefs.GetString("Level"));
 			} else {
 				if(!rpcSent){
-					this.GetComponent<NetworkView>().RPC("finishedSelection",RPCMode.All);
+					this.networkView.RPC("finishedSelection",RPCMode.All);
 					rpcSent = true;
 				}
 			}
@@ -58,7 +60,8 @@ public class CarSelectionManager : MonoBehaviour
 		}
 
 		if(allDoneNetwork() && (Network.connections.Length > 0)){
-			Application.LoadLevel(PlayerPrefs.GetString("Level"));
+			NetworkView netView = GameObject.Find("Network").networkView;
+			netView.RPC("loadLevel",RPCMode.All,PlayerPrefs.GetString("Level"),2);
 		}
 	}
 
@@ -73,7 +76,7 @@ public class CarSelectionManager : MonoBehaviour
 	[RPC]
 	void finishedSelection(){
 		for(int i = 0; i < networkFinished.Length; ++i){
-			if(networkFinished[i] = false){
+			if(networkFinished[i] == false){
 				networkFinished[i] = true;
 				return;
 			}

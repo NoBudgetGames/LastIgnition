@@ -53,7 +53,12 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	{
 		int carIndex = PlayerPrefs.GetInt(playerName);
 		//neues Auto
-		GameObject player = (GameObject)GameObject.Instantiate(carPrefabs[carIndex], trans.transform.position, trans.transform.rotation);
+		GameObject player;
+		if(Network.connections.Length > 0){
+			player = (GameObject)Network.Instantiate(carPrefabs[carIndex], trans.transform.position, trans.transform.rotation,0);
+		} else {
+			player = (GameObject)GameObject.Instantiate(carPrefabs[carIndex], trans.transform.position, trans.transform.rotation);
+		}
 		
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
