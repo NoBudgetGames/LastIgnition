@@ -36,11 +36,11 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.O))
+		if(Input.GetKeyDown(KeyCode.I))
 		{
 			reInstanciatePlayer("One", true);
 		}
-		if(Input.GetKeyDown(KeyCode.P))
+		if(Input.GetKeyDown(KeyCode.O))
 		{
 			reInstanciatePlayer("Two", true);
 		}
