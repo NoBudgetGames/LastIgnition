@@ -187,7 +187,6 @@ public class CircuitRaceMode : MonoBehaviour
 		explodedPlayerData.Add(data);
 	}
 
-
 	//diese Methode aktuallisiert die Positionsanzeige (wer grad erster ist)
 	private void updateLeaderboard()
 	{
@@ -203,7 +202,7 @@ public class CircuitRaceMode : MonoBehaviour
 		//eventuell könnte man das als StringArray mit den Spielernamen machen
 		for(int i = 0; i < playerPosition.Count; i++)
 		{
-			Debug.Log (i + ". Pos: " + playerPosition[i]);	
+			//Debug.Log (i + ". Pos: " + playerPosition[i]);	
 			HUD hud = playerCtrl.playerList[i].GetComponent<PlayerInputController>().hud;
 			string postfix;
 			switch(playerPosition[i]){

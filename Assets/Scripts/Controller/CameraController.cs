@@ -34,6 +34,8 @@ public class CameraController : MonoBehaviour
 	private CameraPosition camPos = CameraPosition.REAR_FLOATING_LOW;
 	//schauen wir gerade nacht hinten?
 	private bool lookingBack = false;
+	//wurde das Rennen für diesen CameraController schon beendet?
+	private bool raceEnded = false;
 
 	//da der D-Pad auf dem 360 Controller eine Achse darstellt und nicht mit GetButtonDown angesprochen werden kann, 
 	//stellt changed eine Hilfvariable dar um festzustellen, ob die Kamera schon geändert wurde, solange der Spieler
@@ -45,9 +47,12 @@ public class CameraController : MonoBehaviour
 	//FixedUpdate da die Kameraposition sonst leicht "ruckelt"
 	void FixedUpdate()
 	{
-		//schaue an welcher Position sich die Kamera befinden soll
-		switch(camPos)
+		//falls das Rennen für diese Kamera nicht beendet wurde, soll die Kamera für das eigene Auto gelten
+		if(raceEnded == false)
 		{
+			//schaue an welcher Position sich die Kamera befinden soll
+			switch(camPos)
+			{
 			case CameraPosition.REAR_FLOATING_LOW:
 				chasingCam(false, lookingBack);
 				transform.parent = null;
@@ -61,6 +66,13 @@ public class CameraController : MonoBehaviour
 				//damit die Kamera auf der Motorhaube festsitzt, ist das Zielauto kurzerhand der Parent der Kamera
 				transform.parent = targetCar.transform;
 				break;
+			}
+		}
+		//ansonsten soll möglich sein, ein anderes Auto zu verfolgen
+		else
+		{
+			chasingCam(false, false);
+			transform.parent = null;
 		}
 		//gameObject.GetComponent<Camera>().fieldOfView = Mathf.Lerp(45,90, (targetCar.getVelocityInKmPerHour()-60)/100);
 	}
@@ -152,5 +164,11 @@ public class CameraController : MonoBehaviour
 		//aktuallisiere die rotation
 		//die Kamera soll nicht direkt auf das AUto gucken, sondern ein bischen darüber
 		transform.LookAt(new Vector3(targetCar.transform.position.x, targetCar.transform.position.y + targetHeight, targetCar.transform.position.z));
+	}
+
+	public void changeTargetCar(bool finishedRace, Car newCar)
+	{
+		raceEnded = finishedRace;
+		targetCar = newCar;
 	}
 }

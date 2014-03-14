@@ -152,11 +152,15 @@ public class ArenaMode : MonoBehaviour
 					players.RemoveAt(i);
 					lives.RemoveAt(i);
 					ranks.RemoveAt(i);
+					//beende das Rennen für diesen Controller
+					p.endRace();
 
 					//füge die Infos des gerade zerstörten Spielers der SpielerStats hinzu
 					//Controllernummer, überlebenszeit, restliche leben
 					playerStats.Add(new string[]{p.numberOfControllerString, TimeConverter.floatToString(roundDuration), "RIP"});
 				} else {
+					//deaktiviere den InputController, damit der Spieler das Auto nicht mehr steuern kann
+					car.GetComponent<PlayerInputController>().enabled = false;
 					control.reInstanciatePlayer(p.numberOfControllerString, false);
 				}
 				updateRanks();

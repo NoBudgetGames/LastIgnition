@@ -27,6 +27,12 @@ public class PlayerInputController : MonoBehaviour
 	private CarInventory inv;
 	//hilfsvariable, die überprüft, ob ein Controller für den Spieler angeschloßen wurde oder nicht
 	private bool controllerAttached = false;
+	//hat dieser Controller schon das Rennen beendet? Man soll nach dem Rennen das TargetCar für den CameraConntroller ändern können
+	private bool raceEnded = false;
+	//der twoLocalPlayerController
+	private TwoLocalPlayerGameController twoLocalPlayerCtrl;
+	//wurde nach dem Beendeten Rennen das Zielauto geweschslt?
+	private bool changedTartgetCar = false;
 
 	public GameObject hudPrefab;
 	public HUD hud;
@@ -101,35 +107,91 @@ public class PlayerInputController : MonoBehaviour
 	//in dieser Methode wird der Input des Spielers an die jeweiligen Komponenten weitergereicht
 	void FixedUpdate()
 	{
-		//falls für diesen Spieler kein Controller angeschloßen ist, benutze die Tastatur
-		if(controllerAttached == false)
+		//falls das Rennen noch nicht beendet wurde, soll man das AUto normal steuern können
+		if(raceEnded == false)
 		{
-			car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey"));
-			car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "SteerKey"));
-			car.resetCar(Input.GetButton("Player" + numberOfControllerString + "ResetCarKey"));
-			car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "HandbrakeKey"));
-
-			inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "FireKey"));
-			inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDownKey"));
-			inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUpKey"));
-
-			cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBackKey"));
-			cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCameraKey"));
+			//falls für diesen Spieler kein Controller angeschloßen ist, benutze die Tastatur
+			if(controllerAttached == false)
+			{
+				car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey"));
+				car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "SteerKey"));
+				car.resetCar(Input.GetButton("Player" + numberOfControllerString + "ResetCarKey"));
+				car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "HandbrakeKey"));
+				
+				inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "FireKey"));
+				inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDownKey"));
+				inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUpKey"));
+				
+				cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBackKey"));
+				cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCameraKey"));
+			}
+			//falls Controller benutzt wird
+			else
+			{
+				car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "Throttle"));
+				car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "Steer"));
+				car.resetCar(Input.GetButtonDown("Player" + numberOfControllerString + "ResetCar"));
+				car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "Handbrake"));
+				
+				inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "Fire"));
+				inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDown"));
+				inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUp"));
+				
+				cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBack"));
+				cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCamera"));
+			}
 		}
-		//falls Controller benutzt wird
+		//ansonsten soll man nur die Kamera ändern können
 		else
 		{
-			car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "Throttle"));
-			car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "Steer"));
-			car.resetCar(Input.GetButtonDown("Player" + numberOfControllerString + "ResetCar"));
-			car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "Handbrake"));
+			if(twoLocalPlayerCtrl != null)
+			{
+				//falls der Spieler aufs Gas drückt und er noch keinen Kamerawechslen gemacht hat, soll das ZielAuto ein anderes sein
+				if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") > 0.5f || Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") > 0.5f) && changedTartgetCar == false)
+				{
+					changedTartgetCar = true;
+					//Array mit der Spielerliste
+					GameObject[] playerList = twoLocalPlayerCtrl.playerList.ToArray();
 
-			inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "Fire"));
-			inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDown"));
-			inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUp"));
+					//wir gucken zunäcsht mal, wo das TargetCar der Kamera in der Liste der SPieler befindet
+					int indexOfTargetCar = 0;
+					//suche den Index des TargetCars des CameraControllers in der Liste der Spieler
+					for(int i = 0; i < playerList.Length; i++)
+					{
+						//falls das aktuelle Objekt aus der Lsite das ist, breche die schleife ab
+						if(playerList[i].Equals(cameraCtrl.targetCar.transform.gameObject))
+						{
+							indexOfTargetCar = i;
+							break;
+						}
+					}
 
-			cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBack"));
-			cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCamera"));
+					Debug.Log("PlayerLength" + playerList.Length);
+
+					//falls es das letzte Auto in der Liste ist, gehe wirder zum Anfang
+					if(indexOfTargetCar == playerList.Length-1)
+					{
+						cameraCtrl.changeTargetCar(true, playerList[0].GetComponent<Car>());
+					}
+					//ansonsten ghe eines weiter
+					else
+					{
+						cameraCtrl.changeTargetCar(true, playerList[indexOfTargetCar + 1].GetComponent<Car>());
+					}
+				}
+				//falls der Spieler nun nichts mehr auf einen der Tasten drückt, darf er wieder das Ziel Auto wechseln
+				else if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") + Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") == 0.0f) && changedTartgetCar == true)
+				{
+					changedTartgetCar = false;
+				}
+			}
 		}
+	}
+
+	public void endRace()
+	{
+		raceEnded = true;
+		//suche den TwoLocalPalyerGameConntroller
+		twoLocalPlayerCtrl = GameObject.FindGameObjectWithTag("GameController").GetComponent<TwoLocalPlayerGameController>();
 	}
 }

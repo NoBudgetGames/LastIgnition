@@ -88,6 +88,9 @@ public class CircuitModePlayerStats : MonoBehaviour
 			if(car.getHealth() <= 0.0f)
 			{
 				hasFinishedRace = true;
+				//beende das Rennen für diesen InputController
+				transform.GetComponent<PlayerInputController>().endRace();
+
 				//übergebe die PlayerStats
 				string fastestLapStr = "";
 				//falls das AUto noch keine RUnde gefahren ist, stelle die schlesste Runde auf --:--:--
@@ -112,7 +115,6 @@ public class CircuitModePlayerStats : MonoBehaviour
 				wrongWay = false;
 			}
 		}
-
 		//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
 		HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
 		hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
@@ -186,7 +188,9 @@ public class CircuitModePlayerStats : MonoBehaviour
 			currentLapToDrive--;
 
 			//deaktiviere den InputController
-			transform.GetComponent<PlayerInputController>().enabled = false;
+			//transform.GetComponent<PlayerInputController>().enabled = false;
+			//beende das Rennen für diesen InputController
+			transform.GetComponent<PlayerInputController>().endRace();
 			
 			//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
 			Car car = transform.GetComponent<Car>();
