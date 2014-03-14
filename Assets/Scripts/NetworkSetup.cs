@@ -52,9 +52,50 @@ public class NetworkSetup : MonoBehaviour
 		}
 	}
 
+
+	void testNat(){
+		ConnectionTesterStatus status = Network.TestConnectionNAT(true);
+		switch(status){
+		case ConnectionTesterStatus.Error: 
+			Debug.Log("Error");
+			break;
+		case ConnectionTesterStatus.LimitedNATPunchthroughPortRestricted:
+			Debug.Log("Limited NAT Punchthrough Port restricted");
+			break;
+		case ConnectionTesterStatus.LimitedNATPunchthroughSymmetric:
+			Debug.Log("Limited NAT Punchthrough Port Symmetric");
+			break;
+		case ConnectionTesterStatus.NATpunchthroughAddressRestrictedCone:
+			Debug.Log("NAT Punchthrough Adress Restricted Cone");
+			break;
+		case ConnectionTesterStatus.NATpunchthroughFullCone:
+			Debug.Log("NAT Punchthrough Full Cone");
+			break;
+		case ConnectionTesterStatus.PrivateIPHasNATPunchThrough:
+			Debug.Log("Private Ip has NAT Punch Through");
+			break;
+		case ConnectionTesterStatus.PrivateIPNoNATPunchthrough:
+			Debug.Log("Private Ip has NO NAT Punch Through");
+			break;
+		case ConnectionTesterStatus.PublicIPIsConnectable:
+			Debug.Log("Public IP Connectable");
+			break;
+		case ConnectionTesterStatus.PublicIPNoServerStarted:
+			Debug.Log("Public Ip no server started");
+			break;
+		case ConnectionTesterStatus.PublicIPPortBlocked:
+			Debug.Log("Public IP port blocked");
+			break;
+		case ConnectionTesterStatus.Undetermined:
+			Debug.Log("Undetermined");
+			break;
+		}
+	}
 	void startServer(){
-		Network.InitializeServer(4,25000,!Network.HavePublicAddress());
+		testNat();
+		Network.InitializeServer(4,25000,Network.HavePublicAddress());
 		MasterServer.RegisterHost("TestType","Testgame");
+		testNat();
 	}
 
 	void refreshHostList(){
