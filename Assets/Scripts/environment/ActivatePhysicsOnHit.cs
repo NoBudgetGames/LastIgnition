@@ -12,9 +12,9 @@ public class ActivatePhysicsOnHit : MonoBehaviour
 {
 	void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log("GETREIIIFEF");
 		//das Rigisbody der Einzelteile ist immer in der Hierachier eins weiter oben
-		//nehme alle Contrains zurück
-		//transform.parent.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+		Rigidbody rigid = transform.parent.gameObject.AddComponent<Rigidbody>();
+		rigid.mass = 10.0f;
+		rigid.drag = 0.5f;
 	}
 }

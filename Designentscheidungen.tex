@@ -1,0 +1,194 @@
+% Vorspann: DIESEN TEIL NICHT OHNE NOT verändern:
+%
+%  $Description: Author guidelines and sample document in LaTeX 2.09$
+%
+%  $Author: ienne $
+%  $Date: 1995/09/15 15:20:59 $
+%  $Revision: 1.5 $
+%  $ P. Gemmar $
+\documentclass[a4paper, 11pt,onecolumn,oneside,german]{article}
+%\documentclass[a4paper, 11pt,onecolumn,oneside,german]{article}
+\usepackage{WA-Artikel}
+\usepackage{times}
+\usepackage{babel}
+%\usepackage{amsmath}
+%\usepackage{multicol}
+\usepackage{graphicx}
+%\usepackage[dvips]{epsfig}
+\usepackage{color}
+%{\usepackage[latin1]{inputenc}}
+\IfFileExists{fontenc.def}{\usepackage[T1]{fontenc}}%
+\IfFileExists{isolatin.def}{\usepackage[isolatin]{inputenc}}%
+
+\newcommand{\term}{WS13/14}
+
+% ENDE des Vorspanns
+% -------------------------------------------------------------------------
+
+% DIESE ANGABEN aktualisieren:
+% Titel:
+\newcommand{\gameName}{ \textbf{Last Ignition} }
+\newcommand{\mytitle}{Designentscheidungen zu \gameName -- ein Funracer mit Waffen \\ Interdisziplinäres Teamprojekt \term \\ Betreuung: Prof. Dr. Christof Rezk-Salama }
+% Name:
+\newcommand{\myname}{Christopher Baumann, 953241 \\ Lea Krieger, 952787 \\ Simon Kunze, 952299 \\Stefan Mortari 953275}
+\renewcommand{\baselinestretch}{1.25}\normalsize
+% E-Mail:
+%\newcommand{\myemail}{}
+% ----------------------------------------------------------------------
+
+\newcommand{\hltext}{Designentscheidungen zu \gameName -- ein Funracer mit Waffen}
+
+%-------------------------------------------------------------------------
+
+% Titelseite: DIESEN TEIL NICHT verändern:
+\begin{document}
+\pagestyle{headings}
+
+\title{\mytitle}
+\author{\myname}
+
+\maketitle
+%\thispagestyle{empty}
+
+% ENDE Titelseite
+% -------------------------------------------------------------------------
+% AB HIER kommt Ihr Text:
+%-----------------------------------------------------------------------
+%kopfnote
+%\renewcommand\rightmark{\parbox[b]{0.7\textwidth}{  \hltext }}
+%\renewcommand\leftmark{\parbox[b]{0.7\textwidth}{ \hltext }}
+%-------------------------------------------------------------------------
+
+\section*{Konzept} 
+
+\gameName ist ein Funracer für zwei Leute, indem die Fahrzeuge mit Waffen ausgerüstet sind. Neben dem klassischen Rundkurs-Modus bietet das Spiel auch ein Arena-Modus, ähnlich dem Derby-Mouds aus dem \textbf{FlatOut}-Spielen.
+
+Man kann auf Rundkursen oder Arenen fahren und sich gegenseitig mit Waffen zerstören. Es gibt zwei verschiedene Waffentypen: offensive und defensive. Die Fahrzeuge sowie die Umgebung sollen sich dabei teilweise zerstören lassen. Ist ein Fahrzeug zertört, scheidet es aus dem Rennen aus. 
+
+Es stehen zwei Spielmodi zur Verfügung: Rundkurs und Arena. In ersteren fährt man auf einen üblichen Rundkurs und muss versuchen als erster durch die Ziellinie zu fahren. Im Arena-Modus muss man versuchen, den Gegner mit seinen Waffen zu zerstören. Wer als letzter noch nicht zerstört wurde gewinnt.
+
+Das Fahrverhalten der Fahrzeuge soll arcadelastig ausfallen. Sie sollen sich dennoch wie echte Autos anfühlen. Für die Zerstörung kommt ein einfaches Schadensmodel zum Einsatz.
+
+Das Spiel ist darauf ausgelegt, dass man zu zweit am selben Gerät spielen kann. Der Bildschirm soll dabei per Split-Screen aufgeteilt werden.
+
+Als Grundlage für \gameName dient die Unity-Engine. Das Spiel soll in 3D umgesetzt werden.
+\\
+
+\section*{Gameplay} 
+Eine Beschreinung des Gameplays
+
+
+\section*{Kurzer Einblick in Unity} 
+Um zu verstehen, wie \gameName aufgebaut ist, muss man sich zunächst einen Überblick verschaffen, wie Unity funktioniert. Unity hat einen großen Unterschied zu den meistens anderen Engines: die so genanten \textit{Components} (eng. für Komponenten). Anstatt verschiedene Kategorien von verschiedenen Objekttypen zu haben, wie zum Beispiel statische Meshes, Sound-Effekte, Animationen oder Lichter, bietet Unity Möglichkeit an ein beliebiges Objekt -- in Unity ein  \textit{GameObject} -- eine beliebige Komponente anzuhängen. Das können Scripte, Animationen, Sound-Effekte, ein Rigidbody oder auch ein 3D-Mesh sein. Eine Klassifizierung von Objekten entfällt dabei. Dadurch können die Objekte individueller gestaltet und für den benötigten Zweck angepasst werden. 
+
+Zusätzlich lassen sich die \textit{GameObjects} auch schachteln, es entsteht eine baumartige Hierachie.
+\\
+
+\section*{Aufbau eines Fahrzeugs} 
+Der Aufbau eines Autos lässt sich in zwei wesentliche Teile aufteilen: die \textit{GameObject}-Hierachie und die daran angehängten Scripte. Die \textit{GameObject}-Hierachie besteht aus allen Objekten, die für das Auto benötigt werden, zum Beispiel 3d-Modelle, Kollision, Waffen und Scripte.
+
+\subsection*{Hierachie}
+
+An oberster Stelle steht das eigentliche \textit{GameObject}. Es stellt die Position des Autos in der Welt dar und besitzt eine \textit{Rigidbody}-Komponente, welches ein physikalischen Körper darstellt. Hier werden Werte wie Masse und (Luft-)Widerstand eingestellt. 
+
+Daneben sind eine Reihe wichtiger Scripts angehängt: das \textit{Car-}Script, den \textit{PlayerInputController-}Script, zwei \textit{StabilizerBar-}Scripte und das \textit{CarInventory-}Script. Eine genauere Beschreibung der Scripte findet im nächsten Abschnitt statt. Zum \textit{Car-}Script sei an dieser Stelle nur gesagt, das es Referenzen auf \textit{GameObjects} in der Hierachie besitzt.
+
+Darunter finden sich weitere \textit{GameObjects}, darunter 3d-Modelle, Reifen und Kollisionsmodelle.
+
+\textit{BodyModels} stellt, um eine gute Übersicht zu gewährleisten, nur ein Container für die 3d-Modelle dar. die Meshes sind entsprechend den Schadenszonen (siehe Abschnitt Zerstörung) unterteilt. Diese sind nochmal in den 3 verschiedenen Schadensmodellen unterteilt. \textit{Damage\_x} ist wiederum nur ein Container für die eigentlichen Meshes und wird vom \textit{Car-}Script entsprechend den Lebenspunkten der jeweiligen Schadenszone aktiviert bzw. deaktiviert. Dadurch werdendie richtigen Meshes angezeigt.
+
+Hier wird der Aufbau nun am Beispiel für die Schadenszone \textit{FrontLeft} dargerstellt
+
+
+\begin{itemize}
+	\item BodyModels
+	\begin{itemize}
+		\item FrontLeft
+		\begin{itemize}
+			\item Damage\_0
+			\item Damage\_1
+			\item Damage\_2
+		\end{itemize}
+		\item ...
+	\end{itemize}
+	\item ...	
+\end{itemize}
+
+
+
+\begin{itemize}
+	\item Fahrzeug
+	\begin{itemize}
+		\item BodyModels
+		\item CenterOfMasses
+		\item Cameras
+		\item Wheels
+		\item Colliders
+		\item CollisionTrigger
+		\item MapIcon
+		\item Weapons		
+	\end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+\subsection*{Scripte}
+Wie sind die Scripte für das Auto aufgebaut
+\\
+
+\section*{Funktionsweise des Zerstörungssystems} 
+Wie funktioniert die Zerstörung der Autos? Wie funktionieren die Waffen?
+
+\subsection*{Schadenszonen}
+wie funktioniert eine Schadenszone (auch Script für DestructibleCarPart erklären)
+
+\subsection*{Waffen}
+WIe funktionieren die Waffen im Einzelnen?
+
+\subsection*{Kollision zwischen zwei Fahrzeugen}
+WIe funktioniert die Schadenwirkung zwischen zwei Autos?
+
+%~\cite{RaspAbout}
+
+\section*{Spielmodi}
+Das Spiel besitzt zwei Spielmodi: ein klassischen Rundkurzmodus sowie ein Arenamodus.
+
+\subsection*{Rundkurs}
+Der Standardspielmodus eines jeden Rennspiels.
+
+\subsubsection*{Checkpoints}
+WIe funktionieren die Checkpoints?
+
+\subsubsection*{WIe wird festgestellt, wer gerade führt?}
+Wie wird festgestellt, wer an erster Stelle ist? und wer an zweiter?
+
+\subsection*{Arenamodus}
+WIe ist der Arenamodus aufgebaut und warum haben ihn eingabeut? Was unterscheidet sich zu anderen Spielen iwe z.B. FlatOut?
+
+
+\section*{Levels}
+Es sind zwei Levels vorhanden.
+Eine beschreibung der Levels folgt nun.
+
+\subsection*{Rennstrecke für den Rundkurs}
+Warum die Rennstrecke ein extra Model braucht und warum wir sie nicht auf dem Terrain gemacht haben. Warum haben wir uns für ein Canyon in der Wüste (von Arizona?) entschieden? WIe sieht den ein Canyon aus und wie wurde das umgesetzt?
+
+\subsection*{Arena}
+Warum ist die Arena wie eine DerbyArena aus FlatOut?
+
+\section*{Sonstiges}
+
+\subsection*{Carselector}
+Wie funktioniert der CarSelector?
+
+%-------------------------------------------------------------------------
+
+%\bibliographystyle{WA-Artikel}
+%\bibliography{WA-Artikel}
+
+\end{document}
