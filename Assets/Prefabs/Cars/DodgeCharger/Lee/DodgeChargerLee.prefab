@@ -2223,6 +2223,7 @@ GameObject:
   - 114: {fileID: 11400050}
   - 114: {fileID: 11400048}
   - 114: {fileID: 11400046}
+  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: DodgeChargerLee
   m_TagString: Player
@@ -6662,6 +6663,18 @@ WheelCollider:
     asymptoteValue: 10000
     stiffnessFactor: 1
   m_Enabled: 1
+--- !u!148 &14800000
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100270}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400270}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

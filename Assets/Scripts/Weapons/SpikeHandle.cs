@@ -32,7 +32,12 @@ public class SpikeHandle : Weapon
 				if(buttonPressed){
 					buttonPressed = false;
 					for(int i = 0; i<2; ++i){
-					GameObject spike = (GameObject) GameObject.Instantiate(spikePrefab);
+					GameObject spike;
+					if(Network.connections.Length > 0){
+						spike = (GameObject) Network.Instantiate(spikePrefab,spikePrefab.transform.position,spikePrefab.transform.rotation,0);
+					} else {
+						spike = (GameObject) GameObject.Instantiate(spikePrefab);
+					}
 					spike.transform.position = spikePositionLeft[i].transform.position;
 					spike.transform.rotation = spikePositionLeft[i].transform.rotation;
 					spike.transform.parent = spikePositionLeft[i].transform;

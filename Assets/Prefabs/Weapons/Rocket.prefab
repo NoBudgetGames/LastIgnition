@@ -48,6 +48,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 54: {fileID: 5400000}
   - 64: {fileID: 6400000}
+  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -171,6 +172,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   explosionPrefab: {fileID: 100010, guid: 9bf7ec1a8b0f052438359d3f3b2e6524, type: 2}
+--- !u!148 &14800000
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400004}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

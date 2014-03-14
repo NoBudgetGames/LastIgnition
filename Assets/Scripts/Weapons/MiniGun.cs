@@ -69,7 +69,12 @@ public class MiniGun : Weapon {
 					float x = Random.Range(-0.05f,0.05f);
 					float y = Random.Range(-0.05f,0.05f);
 					bulletDirection= bulletDirection + transform.right*x + transform.up*y;
-					GameObject bulletInstance = (GameObject)GameObject.Instantiate(bullet,this.transform.position,this.transform.rotation);
+					GameObject bulletInstance;
+					if(Network.connections.Length > 0){
+						bulletInstance = (GameObject)Network.Instantiate(bullet,this.transform.position,this.transform.rotation,0);
+					} else {
+						bulletInstance = (GameObject)GameObject.Instantiate(bullet,this.transform.position,this.transform.rotation);
+					}
 					bulletInstance.rigidbody.velocity = bulletDirection*600;
 					if(Physics.Raycast(transform.position,bulletDirection,out hit,300)){
 						if(hit.collider.GetComponent<AbstractDestructibleObject>())

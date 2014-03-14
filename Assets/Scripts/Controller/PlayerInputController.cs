@@ -43,12 +43,12 @@ public class PlayerInputController : MonoBehaviour
 		inv = GetComponentInChildren<CarInventory>();
 		
 		//neuen CameraController aufsetzen
+
+
+		if(this.networkView.isMine || Network.connections.Length == 0){
 		GameObject camObj;
-		if(Network.connections.Length > 0){
-			camObj = (GameObject)Network.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation,0);
-		} else {
-			camObj = (GameObject)GameObject.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation);
-		}
+		camObj = (GameObject)GameObject.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation);
+
 		cameraCtrl = camObj.GetComponent<CameraController>();
 		
 		cameraCtrl.targetCar = car;
@@ -57,15 +57,14 @@ public class PlayerInputController : MonoBehaviour
 		//zweites Element ist Kofferraumkamera
 		cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
 		
+		
 		GameObject hudObj;
-		if(Network.connections.Length > 0){
-			hudObj = (GameObject) Network.Instantiate(hudPrefab,hudPrefab.transform.position,hudPrefab.transform.rotation,0);
-		} else {
-			hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
-		}
+		hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+		
 		hud = hudObj.GetComponent<HUD>();
 		hud.cameraObject = camObj;
 		setupHUD();
+		}
 	}
 
 	//in dieser Methode wird geschaut, ob für den Spieler ein Controller angeschloßen wurde oder nicht
@@ -107,6 +106,8 @@ public class PlayerInputController : MonoBehaviour
 	//in dieser Methode wird der Input des Spielers an die jeweiligen Komponenten weitergereicht
 	void FixedUpdate()
 	{
+		if(!this.networkView.isMine && Network.connections.Length > 0)
+			return;
 		//falls das Rennen noch nicht beendet wurde, soll man das AUto normal steuern können
 		if(raceEnded == false)
 		{

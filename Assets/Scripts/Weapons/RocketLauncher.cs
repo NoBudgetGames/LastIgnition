@@ -25,7 +25,12 @@ public class RocketLauncher : Weapon
 			if(timer == 0.0f){
 				if(buttonPressed){
 					buttonPressed = false;
-					GameObject rocket = (GameObject) GameObject.Instantiate(rocketPrefab);
+					GameObject rocket;
+					if(Network.connections.Length > 0){
+						rocket = (GameObject) Network.Instantiate(rocketPrefab,rocketPrefab.transform.position,rocketPrefab.transform.rotation,0);
+					} else {
+						rocket = (GameObject) GameObject.Instantiate(rocketPrefab);
+					}
 					rocket.transform.position = this.transform.position;
 					rocket.transform.Rotate(rocket.transform.up,this.transform.parent.transform.eulerAngles.y,Space.Self);
 					rocket.GetComponent<Rocket>().parent = transform.root.gameObject;

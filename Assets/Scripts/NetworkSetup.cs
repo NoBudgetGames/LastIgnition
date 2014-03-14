@@ -16,12 +16,13 @@ public class NetworkSetup : MonoBehaviour
 		startGame = false;
 		levelPrefix = 0;
 		this.networkView.group = 1;
+		Application.runInBackground = true;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-
+		Application.runInBackground = true;
 	}
 
 	[RPC]

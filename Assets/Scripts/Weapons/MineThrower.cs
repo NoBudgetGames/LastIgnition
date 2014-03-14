@@ -23,7 +23,12 @@ public class MineThrower : Weapon
 		if(ammo > 0){
 			if(timer == 0.0f){
 				if(buttonPressed){
-					GameObject mine = (GameObject) GameObject.Instantiate(minePrefab);
+					GameObject mine;
+					if(Network.connections.Length > 0){
+						mine = (GameObject) Network.Instantiate(minePrefab,minePrefab.transform.position,minePrefab.transform.rotation,0);
+					} else {
+						mine = (GameObject) GameObject.Instantiate(minePrefab);
+					}
 					mine.transform.position = this.transform.position - this.transform.forward * 2.0f;
 					mine.rigidbody.AddForce(-this.transform.forward * 500.0f);
 					//mine.GetComponent<Mine>().parent = transform.root.gameObject;
