@@ -74,12 +74,15 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
 	public void reInstanciatePlayer(string playerName, bool toBeDestroyed)
 	{
+		//um ein neues Fahrzeug neu zu instanzieren, muss zunächst geschaut werden, wo sich das "alte" Auto in der Spielerliste befindet,
+		//um genau dort wieder das neu instanzierte Fahreug einzufügen
 		//index des Spielers aus der Liste
 		int index = 0;
 		GameObject player = new GameObject("PLayerToDestroy");
 		//finde den richtigen Spieler aus der Liste
 		foreach(GameObject obj in playerList)
 		{
+			//falls es der richtige ist
 			if(obj.GetComponent<PlayerInputController>().numberOfControllerString.Equals(playerName))
 			{
 				player = obj;

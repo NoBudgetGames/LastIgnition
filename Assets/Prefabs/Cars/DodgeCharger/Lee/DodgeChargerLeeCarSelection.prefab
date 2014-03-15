@@ -6385,6 +6385,7 @@ MonoBehaviour:
   suspensionDamper: 50
   suspensionSpringFront: 60000
   suspensionSpringRear: 30000
+  carName: Dodge Charger Lee
   engineTorqueCurve:
     serializedVersion: 2
     m_Curve:

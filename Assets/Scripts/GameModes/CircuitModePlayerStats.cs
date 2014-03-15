@@ -50,7 +50,6 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//Damit die Textur nicht dauerhaft da ist, sonder blinkt
 	private float wrongWayTimer;
 
-	
 	void Start()
 	{
 		lapTime = 0.0f;
@@ -102,9 +101,10 @@ public class CircuitModePlayerStats : MonoBehaviour
 				{
 					fastestLapStr = TimeConverter.floatToString(fastestLap);
 				}
-				//Controllernummer, zeige dsa das AUto zerstört wurde , schnellste Runde
-				circuitMode.addExplodedPlayerData(new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString, 
-					"RIP", fastestLapStr});
+				//Spielername, zeige dsa das AUto zerstört wurde , schnellste Runde
+				circuitMode.addExplodedPlayerData(new string[]{transform.GetComponent<PlayerInputController>().playerName, "RIP", fastestLapStr});
+				//sage dem HUD bescheid, dass das Rennen beendet wurde
+				gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
 			}
 
 			//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
@@ -114,10 +114,10 @@ public class CircuitModePlayerStats : MonoBehaviour
 			} else {
 				wrongWay = false;
 			}
+			//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
+			HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
+			hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
 		}
-		//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
-		HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
-		hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
 	}
 	
 	//die Methode sagt dem Auto quasi Bescheid, dass das Rennen jetzt startet
@@ -187,8 +187,6 @@ public class CircuitModePlayerStats : MonoBehaviour
 			//zähle die RUndenzahl wieder ein runter, sonst steht nacher 3/2 dar, was nicht so gut aussieht
 			currentLapToDrive--;
 
-			//deaktiviere den InputController
-			//transform.GetComponent<PlayerInputController>().enabled = false;
 			//beende das Rennen für diesen InputController
 			transform.GetComponent<PlayerInputController>().endRace();
 			
@@ -203,15 +201,49 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			//übergebe die PlayerStats
 			//Controllernummer, gesamtzeit, schnellste RUnde
-			circuitMode.playerHasFinishedRace(new string[]{transform.GetComponent<PlayerInputController>().numberOfControllerString, 
+			circuitMode.playerHasFinishedRace(new string[]{transform.GetComponent<PlayerInputController>().playerName, 
 												TimeConverter.floatToString(totalTime), TimeConverter.floatToString(fastestLap)});
+			//sage dem HUD bescheid, dass das Rennen beendet wurde
+			gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
 		}
-		//ansonsten resete denRundenzähler
+		//ansonsten resete den Rundenzähler
 		else 
 		{
 			lapTime = 0.0f;
 		}
 		showBestRound = true;
+	}
+
+	public void endRaceBecauseHeIsTooSlow()
+	{
+		//beende das Rennen für diesen InputController
+		transform.GetComponent<PlayerInputController>().endRace();
+		
+		//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
+		Car car = transform.GetComponent<Car>();
+		car.setThrottle(0.0f);
+		car.setHandbrake(true);
+		
+		//das Rennden wurde beendet
+		hasFinishedRace = true;
+		wrongWay = false;
+
+		//übergebe die PlayerStats
+		string fastestLapStr = "";
+		//falls das AUto noch keine RUnde gefahren ist, stelle die schlesste Runde auf --:--:--
+		if(fastestLap == -1.0f)
+		{
+			fastestLapStr = "--:--:--";
+		}
+		else
+		{
+			fastestLapStr = TimeConverter.floatToString(fastestLap);
+		}
+
+		//Controllernummer, war zu langsam, schnellste RUnde
+		circuitMode.playerHasFinishedRace(new string[]{transform.GetComponent<PlayerInputController>().playerName, "Too slow", fastestLapStr});
+		//sage dem HUD bescheid, dass das Rennen beendet wurde
+		gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
 	}
 	
 	//diese Methode überprüft, ob das Auto den richtigen Checkpoint abgefahren hat
@@ -234,52 +266,57 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//Zeichnet bei abgeschlossener Runde die Differenz zur bisher besten Rundenzeit an
 	//Zeichnet außerdem die in Circuitmode zugewiesene Textur, wenn man in die falsche Richtung fährt
 	void OnGUI(){
-		if(showBestRound){
-			string differenceStr = TimeConverter.floatToString(difference);
-			if(currentLapToDrive == 2){
-				GUI.color = new Color(0,0,255);
-				if(carNumber == 0)
-					GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200), differenceStr);
-				else if(carNumber == 1)
-					GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200), differenceStr);
-			} else {
-				if(difference<0){
-					GUI.color = new Color(0,255,0);
+		//falls das Rennen für diesen Spieler noch nicht beendet wurde, zeige die Infos dar
+		//ansonsten zeige nichts
+		if(hasFinishedRace == false)
+		{
+			if(showBestRound){
+				string differenceStr = TimeConverter.floatToString(difference);
+				if(currentLapToDrive == 2){
+					GUI.color = new Color(0,0,255);
 					if(carNumber == 0)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"-" + differenceStr);
+						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200), differenceStr);
 					else if(carNumber == 1)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"-" + differenceStr);
+						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200), differenceStr);
 				} else {
-					GUI.color = new Color(255,0,0);
-					if(carNumber == 0)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"+" + differenceStr);
-					else if(carNumber == 1)
-						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"+" + differenceStr);
+					if(difference<0){
+						GUI.color = new Color(0,255,0);
+						if(carNumber == 0)
+							GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"-" + differenceStr);
+						else if(carNumber == 1)
+							GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"-" + differenceStr);
+					} else {
+						GUI.color = new Color(255,0,0);
+						if(carNumber == 0)
+							GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"+" + differenceStr);
+						else if(carNumber == 1)
+							GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"+" + differenceStr);
+					}
+				}
+				GUI.color = new Color(255,255,255);
+
+				bestRoundTimer+= Time.deltaTime;
+				if(bestRoundTimer>5.0f){
+					showBestRound = false;
+					bestRoundTimer = 0.0f;
 				}
 			}
-			GUI.color = new Color(255,255,255);
 
-			bestRoundTimer+= Time.deltaTime;
-			if(bestRoundTimer>5.0f){
-				showBestRound = false;
-				bestRoundTimer = 0.0f;
-			}
-		}
-
-		if(wrongWay && hasRaceStarted){
-			if(wrongWayTimer >=1.0f){
-				if(carNumber == 0){
-					GUI.DrawTexture(new Rect(Screen.width/2-100,Screen.height*3/4-50,200,200),circuitMode.wrongWayTexture);
+			if(wrongWay && hasRaceStarted){
+				if(wrongWayTimer >=1.0f){
+					if(carNumber == 0){
+						GUI.DrawTexture(new Rect(Screen.width/2-100,Screen.height*3/4-50,200,200),circuitMode.wrongWayTexture);
+					}
+					if(carNumber == 1){
+						GUI.DrawTexture(new Rect(Screen.width/2-100,Screen.height/4-50,200,200),circuitMode.wrongWayTexture);
+					}
+					wrongWayTimer+=Time.deltaTime;
+					if(wrongWayTimer>=2.0f){
+						wrongWayTimer = 0.0f;
+					}
+				} else {
+					wrongWayTimer+=Time.deltaTime;
 				}
-				if(carNumber == 1){
-					GUI.DrawTexture(new Rect(Screen.width/2-100,Screen.height/4-50,200,200),circuitMode.wrongWayTexture);
-				}
-				wrongWayTimer+=Time.deltaTime;
-				if(wrongWayTimer>=2.0f){
-					wrongWayTimer = 0.0f;
-				}
-			} else {
-				wrongWayTimer+=Time.deltaTime;
 			}
 		}
 	}

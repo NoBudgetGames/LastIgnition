@@ -11,6 +11,8 @@ using System.Collections;
 
 public class PlayerInputController : MonoBehaviour 
 {
+	//Name des Spielers
+	public string playerName = "";
 	//Einfüge String für Input, "One" für Spieler 1, "Two" für Spieler 2, es ist nicht der richtige Name des Spielers!
 	public string numberOfControllerString = "One";
 	//refernz auf die CameraControllerPrefab, wird instanziert, NICHT VERÄNDERN!
@@ -87,7 +89,11 @@ public class PlayerInputController : MonoBehaviour
 				controllerAttached = true;
 			}
 		}
-
+		//falls der Name des Spielers Player ist, soll die Nummer seines Controllers angehängt werden
+		if(playerName.Equals(""))
+		{
+			playerName = "Player" + numberOfControllerString;
+		}
 	}
 
 	public void setupHUD(){
@@ -147,14 +153,14 @@ public class PlayerInputController : MonoBehaviour
 		{
 			if(twoLocalPlayerCtrl != null)
 			{
-				//falls der Spieler aufs Gas drückt und er noch keinen Kamerawechslen gemacht hat, soll das ZielAuto ein anderes sein
+				//falls der Spieler aufs Gas drückt und er noch keinen Kamerawechsel gemacht hat, soll das ZielAuto ein anderes sein
 				if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") > 0.5f || Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") > 0.5f) && changedTartgetCar == false)
 				{
 					changedTartgetCar = true;
 					//Array mit der Spielerliste
 					GameObject[] playerList = twoLocalPlayerCtrl.playerList.ToArray();
 
-					//wir gucken zunäcsht mal, wo das TargetCar der Kamera in der Liste der SPieler befindet
+					//wir gucken zunächst mal, wo das TargetCar der Kamera in der Liste der SPieler befindet
 					int indexOfTargetCar = 0;
 					//suche den Index des TargetCars des CameraControllers in der Liste der Spieler
 					for(int i = 0; i < playerList.Length; i++)
@@ -166,8 +172,6 @@ public class PlayerInputController : MonoBehaviour
 							break;
 						}
 					}
-
-					Debug.Log("PlayerLength" + playerList.Length);
 
 					//falls es das letzte Auto in der Liste ist, gehe wirder zum Anfang
 					if(indexOfTargetCar == playerList.Length-1)
