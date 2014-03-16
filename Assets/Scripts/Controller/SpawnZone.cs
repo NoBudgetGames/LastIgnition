@@ -9,7 +9,7 @@ using System.Collections;
 public class SpawnZone : MonoBehaviour 
 {
 	//kann man diese Zone zum Spawnen benutzen?
-	public bool canSpawn;
+	private bool canSpawn;
 	//Anzahl der Fahrzeuge, die sich in der Zone befinden
 	int numberOfCars = 0;
 

@@ -86,7 +86,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300000, guid: 5a908705d91aa094fbc6471169e13cad, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 879f0c288e863d8449439aa34bc96165, type: 3}
 --- !u!64 &6400000
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -108,10 +108,10 @@ Animation:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: d1bdb351b8d98e249863ac6dd239b123, type: 3}
+  m_Animation: {fileID: 7400000, guid: e918bf4bcc03cd447b4fc74d105bbc86, type: 3}
   m_Animations:
-  - {fileID: 7400000, guid: d1bdb351b8d98e249863ac6dd239b123, type: 3}
-  - {fileID: 7400000, guid: 47e8afc15b2a9664d95d16d603d5549a, type: 3}
+  - {fileID: 7400000, guid: e918bf4bcc03cd447b4fc74d105bbc86, type: 3}
+  - {fileID: 7400000, guid: c723fc7cdd8dc0c4e8131bceea82817b, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
