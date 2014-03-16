@@ -112,6 +112,12 @@ public class LANSetup : MonoBehaviour
 		}
 	}
 
+	[RPC]
+	void debug(string message)
+	{
+		Debug.Log(message);
+	}
+
 	void OnGUI()
 	{
 		if(gameRunning == false)
@@ -126,11 +132,11 @@ public class LANSetup : MonoBehaviour
 			//falls er gestartet wurde, zeige IPaddresse und Port an
 			if(Network.isServer == true)
 			{
-				GUI.Label(new Rect(10, 30, 100, 100), "Server Running!");
-				GUI.Label(new Rect(10, 45, 100, 100), "LAN IP: " + serverIP);
-				GUI.Label(new Rect(10, 60, 100, 100), "LAN Port: " + port);
-				//GUI.Label(new Rect(10, 75, 100, 100), "External IP: " + Network.player.externalIP);
-				//GUI.Label(new Rect(10, 90, 100, 100), "External Port: " + Network.player.externalPort);
+				GUI.Label(new Rect(10, 30, 150, 100), "Server Running!");
+				GUI.Label(new Rect(10, 45, 150, 100), "LAN IP: " + serverIP);
+				GUI.Label(new Rect(10, 60, 150, 100), "LAN Port: " + port);
+				//GUI.Label(new Rect(10, 90, 150, 100), "External IP: " + Network.player.externalIP);
+				//GUI.Label(new Rect(10, 105, 150, 100), "External Port: " + Network.player.externalPort);
 			}
 			
 			//Button um mit dem Server zu verbinden
@@ -144,11 +150,16 @@ public class LANSetup : MonoBehaviour
 			{
 				serverIP = GUI.TextField(new Rect(200, 35, 100, 20), serverIP, 15);
 				port = Convert.ToInt32(GUI.TextField(new Rect(200, 55, 100, 20), "" + port, 5));
-				
+
 				if (GUI.Button(new Rect(200, 75, 100, 20), "Join Game"))
 				{
 					connectToServer();
 					initializedServer = false;
+				}
+
+				if (GUI.Button(new Rect(200, 90, 100, 20), "Debug"))
+				{
+					this.networkView.RPC("debug",RPCMode.AllBuffered, "BLUB BLIB");
 				}
 			}
 			
