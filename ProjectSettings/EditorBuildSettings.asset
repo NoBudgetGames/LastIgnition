@@ -6,13 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NetworkTest.unity
-  - enabled: 1
     path: Assets/Scenes/menu/MainMenuScene.unity
   - enabled: 1
     path: Assets/Scenes/menu/ChooseCar.unity
   - enabled: 1
     path: Assets/Scenes/tracks/ArenaStadium.unity
+  - enabled: 1
+    path: Assets/Scenes/NetworkTest.unity
+  - enabled: 1
+    path: Assets/Scenes/LANNetworkTest.unity
   - enabled: 1
     path: Assets/Scenes/tracks/DesertArena.unity
   - enabled: 1
@@ -29,5 +31,3 @@ EditorBuildSettings:
     path: Assets/Scenes/testScenes/SimTestScene.unity
   - enabled: 1
     path: Assets/Scenes/testScenes/StefTestScene2.unity
-  - enabled: 1
-    path: Assets/Scenes/LANNetworkTest.unity

@@ -20,11 +20,26 @@ public class LANSetup : MonoBehaviour
 	//soll ein Server gejoined werden?
 	private bool joinServer = false;
 	//wurde das das Spiel schon gestartet? Wenn ja, sollen die Menüs nicht mehr dargestellt werden
-
+	private bool gameRunning = false;
+	//	
+	private int levelPrefix = 0;
+	//die Anzahl der Spieler, die momentan auf dem Server sind
+	private int numberOfCurrentsPlayers = 0;
+	
 	// Use this for initialization
 	void Start () 
 	{
+		DontDestroyOnLoad(this);
 		Application.runInBackground = true;
+		this.networkView.group = 1;
+		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+		{
+			numberOfCurrentsPlayers = 1;
+		}
+		if(PlayerPrefs.GetInt("LocalPlayers") == 2)
+		{
+			numberOfCurrentsPlayers = 2;
+		}
 	}
 	
 	// Update is called once per frame
@@ -52,8 +67,8 @@ public class LANSetup : MonoBehaviour
 	//Diese Methode wird beim Server aufgerufen, wenn der Server erfolgreich initializiert wurde
 	void OnServerInitialized()
 	{
-		initializedServer = true;
 		Debug.Log ("Server initialized with IP: " + serverIP + " Port: " + port);
+		initializedServer = true;
 	}
 
 	//Diese Methode wird beim Client aufgerufen, wenn sich ein Client mit dem Server verbunden hat
@@ -68,39 +83,85 @@ public class LANSetup : MonoBehaviour
 		Debug.Log("Could not connect to server: " + error);
 	}
 
+	[RPC]
+	void loadLevel(string level, int newLevelPrefix)
+	{
+		StartCoroutine(loadLevelCoroutine(level,newLevelPrefix));
+	}
+	
+	private IEnumerator loadLevelCoroutine(string level, int newLevelPrefix)
+	{
+		levelPrefix = newLevelPrefix;
+		
+		Network.SetSendingEnabled(0,false);
+		
+		Network.isMessageQueueRunning = false;
+		
+		//Network.SetLevelPrefix(levelPrefix);
+		Application.LoadLevel(level);
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
+		
+		Network.isMessageQueueRunning = true;
+		
+		Network.SetSendingEnabled(0, true);
+		
+		foreach( GameObject g in FindObjectsOfType(typeof(GameObject)))
+		{
+			g.SendMessage("OnNetworkLoadedLevel",SendMessageOptions.DontRequireReceiver);
+		}
+	}
+
 	void OnGUI()
 	{
-		//Button für Server starten
-		if(GUI.Button(new Rect(10, 10, 100, 20), "Start Server"))
+		if(gameRunning == false)
 		{
-			//starte den Server
-			startServer();
-			joinServer = false;
-		}
-		//falls er gestartet wurde, zeige IPaddresse und Port an
-		if(initializedServer == true)
-		{
-			GUI.Label(new Rect(10, 30, 100, 100), "Sever Running!");
-			GUI.Label(new Rect(10, 45, 100, 100), "IP: " + serverIP);
-			GUI.Label(new Rect(10, 60, 100, 100), "Port: " + port);
-		}
-
-		//Button um mit dem Server zu verbinden
-		if(GUI.Button(new Rect(200, 10, 150, 20), "Connect To Server"))
-		{
-			joinServer = true;
-		}
-
-		//falls mit einen Server verbunden werden soll, zeige Eingabefelder für IPaddresse und Port an
-		if(joinServer == true)
-		{
-			serverIP = GUI.TextField(new Rect(200, 35, 100, 20), serverIP, 15);
-			port = Convert.ToInt32(GUI.TextField(new Rect(200, 55, 100, 20), "" + port, 5));
-			
-			if (GUI.Button(new Rect(200, 75, 100, 20), "Join Game"))
+			//Button für Server starten
+			if(GUI.Button(new Rect(10, 10, 100, 20), "Server erstellen"))
 			{
-				connectToServer();
-				initializedServer = false;
+				//starte den Server
+				startServer();
+				joinServer = false;
+			}
+			//falls er gestartet wurde, zeige IPaddresse und Port an
+			if(Network.isServer == true)
+			{
+				GUI.Label(new Rect(10, 30, 100, 100), "Server Running!");
+				GUI.Label(new Rect(10, 45, 100, 100), "LAN IP: " + serverIP);
+				GUI.Label(new Rect(10, 60, 100, 100), "LAN Port: " + port);
+				//GUI.Label(new Rect(10, 75, 100, 100), "External IP: " + Network.player.externalIP);
+				//GUI.Label(new Rect(10, 90, 100, 100), "External Port: " + Network.player.externalPort);
+			}
+			
+			//Button um mit dem Server zu verbinden
+			if(GUI.Button(new Rect(200, 10, 150, 20), "Connect To Server"))
+			{
+				joinServer = true;
+			}
+			
+			//falls mit einen Server verbunden werden soll, zeige Eingabefelder für IPaddresse und Port an
+			if(joinServer == true)
+			{
+				serverIP = GUI.TextField(new Rect(200, 35, 100, 20), serverIP, 15);
+				port = Convert.ToInt32(GUI.TextField(new Rect(200, 55, 100, 20), "" + port, 5));
+				
+				if (GUI.Button(new Rect(200, 75, 100, 20), "Join Game"))
+				{
+					connectToServer();
+					initializedServer = false;
+				}
+			}
+			
+			if(Network.isServer && Network.connections.Length > 0)
+			{
+				GUI.Label(new Rect(10, 75, 100, 100), "Connections: " + Network.connections.Length);
+				if(GUI.Button(new Rect(10, 100, 150, 20), "Start Game"))
+				{
+					gameRunning = true;
+					Network.RemoveRPCsInGroup(0);
+					Network.RemoveRPCsInGroup(1);
+					this.networkView.RPC("loadLevel",RPCMode.AllBuffered,"ChooseCar", levelPrefix + 1);
+				}
 			}
 		}
 	}

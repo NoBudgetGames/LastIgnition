@@ -83,8 +83,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 458209537}
   - 114: {fileID: 458209536}
+  - 148: {fileID: 458209538}
   m_Layer: 0
-  m_Name: LANNetworkSetup
+  m_Name: Network
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +113,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &458209538
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 458209535}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 458209537}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &664776339
 GameObject:
   m_ObjectHideFlags: 0

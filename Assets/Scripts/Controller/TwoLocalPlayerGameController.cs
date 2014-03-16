@@ -47,11 +47,11 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	}
 	
 	//diese Methode instanziert einen neuen Spieler und setzt die richtigen Referezen
-	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht dre richtige Name des Spielers!
+	//bei playerInputString handelt es sich um den Einfüestring für die Steuerung
 	//Die Methode liefert den Spieler wieder zurück
-	private GameObject instaciateNewPlayer(GameObject trans, string playerName)
+	private GameObject instaciateNewPlayer(GameObject trans, string playerInputString)
 	{
-		int carIndex = PlayerPrefs.GetInt(playerName);
+		int carIndex = PlayerPrefs.GetInt(playerInputString);
 		//neues Auto
 		GameObject player;
 		if(Network.connections.Length > 0){
@@ -62,17 +62,26 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		
 		//der InputController muss wissen, welcher Spieler er gerade ist
 		PlayerInputController input = player.GetComponent<PlayerInputController>();
-		input.numberOfControllerString = playerName;
+		input.numberOfControllerString = playerInputString;
 		input.setupHUD();
+		//setze den Namen des Spielers
+		if(playerInputString.Equals("One"))
+		{
+			input.playerName = PlayerPrefs.GetString("PlayerOneName");
+		}
+		else
+		{
+			input.playerName = PlayerPrefs.GetString("PlayerTwoName");
+		}
 		//Kamera muss aufgesetzt werden
-		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerName);
+		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerInputString);
 		//playerList.Add(player);
 		return player;
 	}
 	
 	//resete das Auto des SPielers (FULL HEALTH)
-	//bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
-	public void reInstanciatePlayer(string playerName, bool toBeDestroyed)
+	//bei playerInputString handelt es sich um den Einfüestring für die Steuerung
+	public void reInstanciatePlayer(string playerInputString, bool toBeDestroyed)
 	{
 		//um ein neues Fahrzeug neu zu instanzieren, muss zunächst geschaut werden, wo sich das "alte" Auto in der Spielerliste befindet,
 		//um genau dort wieder das neu instanzierte Fahreug einzufügen
@@ -83,7 +92,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		foreach(GameObject obj in playerList)
 		{
 			//falls es der richtige ist
-			if(obj.GetComponent<PlayerInputController>().numberOfControllerString.Equals(playerName))
+			if(obj.GetComponent<PlayerInputController>().numberOfControllerString.Equals(playerInputString))
 			{
 				player = obj;
 				break;
@@ -116,13 +125,13 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				GameObject.Destroy(player.GetComponent<PlayerInputController>());
 			}
 			//instanszere einen neuen Spieler und füge ihn in der List da ein, wo er vorher war
-			playerList.Insert(index, instaciateNewPlayer(getFreeSpawnPoint(), playerName));
+			playerList.Insert(index, instaciateNewPlayer(getFreeSpawnPoint(), playerInputString));
 		}
 	}
 	
 	//diese Methode setzt die Kameraposition/-höhe (für den SliptScreen am Bildschirm) auf die richtigen Werte,
-	//abhängig vom Spieler. Bei playerName wird nur zwischen One und Two unterschieden, es ist nicht der richtige Name des Spielers!
-	private void setCamera(Camera cam, string playerName)
+	//abhängig vom Spieler. bei playerInputString handelt es sich um den Einfüestring für die Steuerung
+	private void setCamera(Camera cam, string playerInputString)
 	{
 		if(cam != null)
 		{
@@ -136,12 +145,12 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			//ansonsten haben wir zwei Spieler und müssen den Bildschirm in zwei Teile aufteilen
 			else 
 			{
-				if(playerName.Equals("One"))
+				if(playerInputString.Equals("One"))
 				{
 					//(left, top, width, height)
 					cam.rect = new Rect(0, 0, 1.0f, 0.5f);
 				}
-				else if(playerName.Equals("Two"))
+				else if(playerInputString.Equals("Two"))
 				{
 					cam.rect = new Rect(0, 0.5f, 1.0f, 0.5f);
 				}
