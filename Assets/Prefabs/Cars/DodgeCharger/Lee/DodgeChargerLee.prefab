@@ -6353,6 +6353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c46bb092e0f34c9635bed05dde72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   numberOfControllerString: One
   cameraCtrlPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
   additionalCameraPositions:
@@ -6416,6 +6417,7 @@ MonoBehaviour:
   suspensionDamper: 50
   suspensionSpringFront: 60000
   suspensionSpringRear: 30000
+  carName: Dodge Charger Lee
   engineTorqueCurve:
     serializedVersion: 2
     m_Curve:

@@ -36,6 +36,11 @@ public class CircuitRaceMode : MonoBehaviour
 	private float leaderboardTimer = 0.0f;
 	//haben alle das Rennen Beendet?
 	private bool haveAllFinishedTheRace = false;
+	//hat einer das das Renne beendet?
+	private bool hasOneFinishedTheRace = false;
+	//Countdown um das Rennen zu beenden, das hat den Hintergrund, dass Trolle in einen Multiplayerspiel nicht einfach das Auto in der Pampa parken können 
+	//und nie ins Ziel fahren und somit das Rennen nicht beendet wird
+	private float endRaceCountdown = 30.0f;
 	//wurde die Kameras zerstört?
 	private bool camerasDestroyed = false;
 	//Countdown für start des Spiels
@@ -115,7 +120,25 @@ public class CircuitRaceMode : MonoBehaviour
 			updateLeaderboard();
 			leaderboardTimer = 0.0f;
 		}
-		
+
+		//falls ein Spieler das Rennen beendet hat, zähle den Countdown runter
+		if(hasOneFinishedTheRace == true)
+		{
+			endRaceCountdown -= Time.deltaTime;
+		}
+
+		if(endRaceCountdown < 0.0f)
+		{
+			for(int i = 0; i < playerPosition.Count; i++)
+			{
+				CircuitModePlayerStats car = playerList[i];
+				if(car.getHasFinishedRace() == false)
+				{
+					car.endRaceBecauseHeIsTooSlow();
+				}
+			}
+		}
+
 		//gehe durch alle Spieler durch und schaue, ob sie das rennen beendet haben
 		if(haveAllFinishedTheRace == false)
 		{
@@ -180,6 +203,7 @@ public class CircuitRaceMode : MonoBehaviour
 	public void playerHasFinishedRace(string[] data)
 	{
 		finishedCam.addPlayerData(data);
+		hasOneFinishedTheRace = true;
 	}
 
 	public void addExplodedPlayerData(string[] data)

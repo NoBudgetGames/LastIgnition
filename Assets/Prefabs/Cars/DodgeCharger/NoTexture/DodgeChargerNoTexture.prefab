@@ -182,6 +182,8 @@ GameObject:
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400016}
   - 114: {fileID: 11400006}
+  - 148: {fileID: 14800000}
+  - 114: {fileID: 11400056}
   m_Layer: 0
   m_Name: DodgeChargerNoTexture
   m_TagString: Player
@@ -6069,6 +6071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c46bb092e0f34c9635bed05dde72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   numberOfControllerString: One
   cameraCtrlPrefab: {fileID: 100000, guid: 9ab7bb472edebb3428c8b639fb8921ea, type: 2}
   additionalCameraPositions:
@@ -6092,6 +6095,7 @@ MonoBehaviour:
   suspensionDamper: 50
   suspensionSpringFront: 60000
   suspensionSpringRear: 30000
+  carName: Dodge Charger NoTexture
   engineTorqueCurve:
     serializedVersion: 2
     m_Curve:
@@ -6542,6 +6546,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyAfterPlayed: 0
+--- !u!114 &11400056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d427e4569031e064d9adcb7fb4f24fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InterpolationBackTime: .10000000000000001
+  m_ExtrapolationLimit: .5
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -6662,6 +6679,18 @@ WheelCollider:
     asymptoteValue: 10000
     stiffnessFactor: 1
   m_Enabled: 1
+--- !u!148 &14800000
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 11400056}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

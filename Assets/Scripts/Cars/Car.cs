@@ -26,7 +26,9 @@ public class Car : MonoBehaviour
 	public float suspensionSpringRear;
 	
 	//// EIGENSCHAFTEN DES AUTOS
-	
+
+	//Name des Autos, z.B. Dodge Charger Lee
+	public string carName;
 	//Motor, Schaltung
 	//Drehmomentkennline des Fahrzeuges. X-Achse entspricht Umdrehungen pro Minute (RPM), Y-Achse enstspricht der daraus resultierende 
 	//Drehmonent in Newtonmeter

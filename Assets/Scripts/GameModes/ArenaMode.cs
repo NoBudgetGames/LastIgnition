@@ -111,8 +111,8 @@ public class ArenaMode : MonoBehaviour
 			PlayerInputController lastPlayer = players[0].GetComponent<PlayerInputController>();
 			
 			//füge die Infos der SpielerStats hinzu
-			//Controllernummer, überlebenszeit, restliche leben
-			playerStats.Add(new string[]{lastPlayer.numberOfControllerString, TimeConverter.floatToString(roundDuration), "" + lives[0]});
+			//Spielername, überlebenszeit, restliche leben
+			playerStats.Add(new string[]{lastPlayer.playerName, TimeConverter.floatToString(roundDuration), "" + lives[0]});
 
 			//drehe die Reihenfolge der playerStats um ,sodass der zuletzt überlebende an erste Stelle steht
 			playerStats.Reverse();
@@ -156,8 +156,8 @@ public class ArenaMode : MonoBehaviour
 					p.endRace();
 
 					//füge die Infos des gerade zerstörten Spielers der SpielerStats hinzu
-					//Controllernummer, überlebenszeit, restliche leben
-					playerStats.Add(new string[]{p.numberOfControllerString, TimeConverter.floatToString(roundDuration), "RIP"});
+					//Spielername, überlebenszeit, restliche leben
+					playerStats.Add(new string[]{p.playerName, TimeConverter.floatToString(roundDuration), "RIP"});
 				} else {
 					//deaktiviere den InputController, damit der Spieler das Auto nicht mehr steuern kann
 					car.GetComponent<PlayerInputController>().enabled = false;
@@ -166,7 +166,6 @@ public class ArenaMode : MonoBehaviour
 				updateRanks();
 			}
 		}
-
 		if(!hasMatchFinished)
 			updateLives();
 	}
