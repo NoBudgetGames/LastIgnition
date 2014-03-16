@@ -63,6 +63,9 @@ public class Rocket : MonoBehaviour
 			if(destr != null)
 			{
 				destr.receiveDamage(damage);
+				if(Network.connections.Length > 0){
+					col.networkView.RPC("receiveDamage",col.networkView.owner,damage);
+				}
 				if(col.GetComponent<DestructibleCarPart>())
 				{
 					col.GetComponent<DestructibleCarPart>().car.rigidbody.AddExplosionForce(force * 2,explosionPosition,radius);

@@ -36,6 +36,9 @@ public class Spike : MonoBehaviour
 		AbstractDestructibleObject  obj = other.GetComponent<AbstractDestructibleObject >();
 		if(obj != null && other.transform.root.gameObject != parent){
 			obj.receiveDamage(damage);
+			if(Network.connections.Length > 0){
+				other.networkView.RPC("receiveDamage",other.networkView.owner,damage);
+			}
 			//falls es ein Auto ist muss über die DestructibleCarPart auf den Rigidbody zugegriffen werden
 			if(other.GetComponent<DestructibleCarPart>())
 			{

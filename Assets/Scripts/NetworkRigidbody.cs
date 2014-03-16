@@ -23,9 +23,11 @@ public class NetworkRigidbody : MonoBehaviour
 	
 	void Start ()
 	{
+		/*
 		foreach (NetworkView n in GetComponents<NetworkView> ()) {
 			n.observed = this;
 		}
+		*/
 	}
 	
 	void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info)

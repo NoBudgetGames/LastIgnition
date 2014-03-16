@@ -13,5 +13,6 @@ using System.Collections;
 public abstract class AbstractDestructibleObject : MonoBehaviour
 {
 	//diese Methode verarbeitet den schaden
+	[RPC]
 	public abstract void receiveDamage(float damage);
 }

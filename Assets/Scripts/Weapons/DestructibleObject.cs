@@ -11,6 +11,7 @@ public class DestructibleObject : AbstractDestructibleObject
 	public float health = 100f;
 
 	//Zieht schaden von Lebenspunkten ab
+	[RPC]
 	public override void receiveDamage(float dmg)
 	{
 		health -= dmg;	

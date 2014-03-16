@@ -9,7 +9,7 @@ using System.Collections;
 public class SpawnZone : MonoBehaviour 
 {
 	//kann man diese Zone zum Spawnen benutzen?
-	private bool canSpawn;
+	public bool canSpawn;
 	//Anzahl der Fahrzeuge, die sich in der Zone befinden
 	int numberOfCars = 0;
 
@@ -51,6 +51,17 @@ public class SpawnZone : MonoBehaviour
 			{
 				canSpawn = true;
 			}
+		}
+	}
+
+	void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info){
+		bool canSpawnSerial = false;
+		if(stream.isWriting){
+			canSpawnSerial = canSpawn;
+			stream.Serialize(ref canSpawnSerial);
+		} else {
+			stream.Serialize(ref canSpawnSerial);
+			canSpawn = canSpawnSerial;
 		}
 	}
 }

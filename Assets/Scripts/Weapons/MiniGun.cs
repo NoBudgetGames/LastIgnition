@@ -77,9 +77,13 @@ public class MiniGun : Weapon {
 					}
 					bulletInstance.rigidbody.velocity = bulletDirection*600;
 					if(Physics.Raycast(transform.position,bulletDirection,out hit,300)){
+
 						if(hit.collider.GetComponent<AbstractDestructibleObject>())
 						{
 							hit.collider.GetComponent<AbstractDestructibleObject>().receiveDamage(5.0f);
+							if(Network.connections.Length > 0){
+								hit.collider.networkView.RPC("receiveDamage",hit.collider.networkView.owner,5.0f);
+							}
 						} 
 						else 
 						{

@@ -35,6 +35,9 @@ public class Mine : MonoBehaviour
 			if(destr != null)
 			{
 				destr.receiveDamage(damage);
+				if(Network.connections.Length > 0){
+					other.networkView.RPC("receiveDamage",other.networkView.owner,damage);
+				}
 				if(col.GetComponent<DestructibleCarPart>())
 				{
 					col.GetComponent<DestructibleCarPart>().car.rigidbody.AddExplosionForce(force * 2,explosionPosition,radius);

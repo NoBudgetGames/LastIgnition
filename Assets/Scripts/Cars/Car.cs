@@ -192,7 +192,7 @@ public class Car : MonoBehaviour
 	//// HEALTH
 	
 	//gesamter Health Wert
-	private float health = 100f;
+	public float health = 100f;
 	//Health Wert für die Front, wird benötigt um das korrekte Schadensmodel anzuzeigen
 	private int frontHealth = 100;
 	//Health Wert für den Heck, wird benötigt um das korrekte Schadensmodel anzuzeigen
@@ -1325,6 +1325,86 @@ public class Car : MonoBehaviour
 		foreach(Wheel wheel in steerWheels)
 		{
 			wheel.wheelCol.steerAngle = currentSteerAngle * steer;
+		}
+	}
+
+//// NETWORK
+
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+		Debug.Log("Serializing");
+		//gesamter Health Wert
+		float healthSerial = 100f;
+		//Health Wert für die Front, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int frontHealthSerial = 100;
+		//Health Wert für den Heck, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int rearHealthSerial = 100;
+		//Health Wert für die linke Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int leftHealthSerial = 100;
+		//Health Wert für die rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int rightHealthSerial = 100;
+		//Health Wert für die vordere linke Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int frontLeftHealthSerial = 100;
+		//Health Wert für die vordere rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int frontRightHealthSerial = 100;
+		//Health Wert für die hintere linke Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int rearLeftHealthSerial = 100;
+		//Health Wert für die hintere rechte Seite, wird benötigt um das korrekte Schadensmodel anzuzeigen
+		int rearRightHealthSerial = 100;
+
+		if(stream.isWriting){
+			healthSerial = health;
+			stream.Serialize(ref healthSerial);
+
+			frontHealthSerial = frontHealth;
+			stream.Serialize(ref frontHealthSerial);
+
+			rearHealthSerial = rearHealth;
+			stream.Serialize(ref rearHealthSerial);
+
+			leftHealthSerial = leftHealth;
+			stream.Serialize(ref leftHealthSerial);
+
+			rightHealthSerial = rightHealth;
+			stream.Serialize(ref rightHealthSerial);
+
+			frontLeftHealthSerial = frontLeftHealth;
+			stream.Serialize(ref frontLeftHealthSerial);
+
+			frontRightHealthSerial = frontRightHealth;
+			stream.Serialize(ref frontRightHealthSerial);
+
+			rearLeftHealthSerial = rearLeftHealth;
+			stream.Serialize(ref rearLeftHealthSerial);
+
+			rearRightHealthSerial = rearRightHealth;
+			stream.Serialize(ref rearRightHealthSerial);
+		} else {
+			stream.Serialize(ref healthSerial);
+			health = healthSerial;
+
+			stream.Serialize(ref frontHealthSerial);
+			frontHealth = frontHealthSerial;
+
+			stream.Serialize(ref rearHealthSerial);
+			rearHealth = rearHealthSerial;
+
+			stream.Serialize(ref leftHealthSerial);
+			leftHealth = leftHealthSerial;
+
+			stream.Serialize(ref rightHealthSerial);
+			rightHealth = rightHealthSerial;
+
+			stream.Serialize(ref frontLeftHealthSerial);
+			frontLeftHealth = frontLeftHealthSerial;
+
+			stream.Serialize(ref frontRightHealthSerial);
+			frontRightHealth = frontRightHealthSerial;
+
+			stream.Serialize(ref rearLeftHealthSerial);
+			rearLeftHealth = rearLeftHealthSerial;
+
+			stream.Serialize(ref rearRightHealthSerial);
+			rearRightHealth = rearRightHealthSerial;
 		}
 	}
 }

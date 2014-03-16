@@ -16,6 +16,7 @@ public class DestructibleCarPart : AbstractDestructibleObject
 	public Car car;
 
 	//diese Methode verarbeitet den eingegangenen Schaden
+	[RPC]
 	public override void receiveDamage(float damage)
 	{
 		car.applyDamage(damageZone, damage);
