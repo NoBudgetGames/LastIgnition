@@ -11,6 +11,9 @@ TagManager:
   - MiniMap
   - VirtAudioListener
   - AudioListener
+  - Invisible Wall
+  - Static
+  - Street
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
