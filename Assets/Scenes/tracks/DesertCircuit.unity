@@ -47869,6 +47869,7 @@ MonoBehaviour:
   rightExhaustPrefab: {fileID: 100002, guid: 0d26d35463ea11f49a84193a71e591b1, type: 2}
   wheelSphereCol: {fileID: 298656039}
   particleSysForExplosion: {fileID: 300059698}
+  health: 100
 --- !u!4 &1217540130
 Transform:
   m_ObjectHideFlags: 0
