@@ -12,7 +12,7 @@ public class Spike : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		damage = 20.0f;
+		damage = 1.0f;
 		force = 15000.0f;
 		elapsedTime = 0.0f;
 

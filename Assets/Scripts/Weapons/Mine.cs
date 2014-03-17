@@ -12,7 +12,7 @@ public class Mine : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		damage = 40.0f;
+		damage = 2.5f;
 		radius = 10.0f;
 		force = 7000.0f;
 	}

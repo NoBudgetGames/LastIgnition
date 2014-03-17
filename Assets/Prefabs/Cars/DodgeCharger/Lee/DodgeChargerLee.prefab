@@ -6052,7 +6052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c72ba61dd529540bf7e284118c2188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudIcon: {fileID: 2800000, guid: e486e7a08152bf14a851b332c2fb6237, type: 3}
+  hudIcon: {fileID: 2800000, guid: b46271c11482771418e1a5885eac385e, type: 3}
   spikePrefab: {fileID: 100002, guid: 19be571ed91ae9845b0b9c83abfb1f40, type: 2}
   spikePositionLeft:
   - {fileID: 100056}

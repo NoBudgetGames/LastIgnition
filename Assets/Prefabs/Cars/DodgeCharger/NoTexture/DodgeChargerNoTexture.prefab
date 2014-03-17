@@ -6233,6 +6233,7 @@ MonoBehaviour:
   rightExhaustPrefab: {fileID: 100002, guid: 0d26d35463ea11f49a84193a71e591b1, type: 2}
   wheelSphereCol: {fileID: 100042}
   particleSysForExplosion: {fileID: 19800008}
+  health: 100
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6328,7 +6329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c72ba61dd529540bf7e284118c2188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudIcon: {fileID: 2800000, guid: e486e7a08152bf14a851b332c2fb6237, type: 3}
+  hudIcon: {fileID: 2800000, guid: b46271c11482771418e1a5885eac385e, type: 3}
   spikePrefab: {fileID: 100002, guid: 19be571ed91ae9845b0b9c83abfb1f40, type: 2}
   spikePositionLeft:
   - {fileID: 100016}
