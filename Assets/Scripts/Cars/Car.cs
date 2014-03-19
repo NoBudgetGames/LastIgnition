@@ -1114,11 +1114,14 @@ public class Car : MonoBehaviour
 		}
 	}
 	
-	//diesse Methode errechnet die momentane Motordrehzahl in abhängigkeit eines der DriveWheels (weil die mit dem Motor verbunden sind)
+	//diesse Methode errechnet die momentane Motordrehzahl in abhängigkeit der DriveWheels (weil die mit dem Motor verbunden sind)
 	private void calculateRPM()
 	{
+		//momentane Motordrehzahl
+		float tmpRPM = currentRPM;
 		//resete den Wert und fang von anfang an zu rechnen
 		currentRPM = 0;
+		//anzahl der Reifen, die auf dem Boden sind
 		int size = 0;
 		foreach(Wheel wheel in driveWheels)
 		{
@@ -1134,6 +1137,11 @@ public class Car : MonoBehaviour
 		if(size != 0)
 		{
 			currentRPM /= size;	
+		}
+		//falls kein Reifen den Boden berüht, nehmen wieder die vorherige Drehzahl
+		else
+		{
+			currentRPM = tmpRPM;
 		}
 		
 		//die Motordrehzahl soll nicht weniger als 1000 sein (sonst würd im Reallife der Motor ausgehen)
