@@ -84,6 +84,7 @@ GameObject:
   - 4: {fileID: 1451221}
   - 65: {fileID: 1451220}
   - 114: {fileID: 1451219}
+  - 148: {fileID: 1451222}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -127,6 +128,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &1451222
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 533197267}
+  m_GameObject: {fileID: 1451218}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1451219}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &45825954
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +151,7 @@ GameObject:
   - 4: {fileID: 45825957}
   - 65: {fileID: 45825956}
   - 114: {fileID: 45825955}
+  - 148: {fileID: 45825958}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -180,6 +195,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &45825958
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1461124052}
+  m_GameObject: {fileID: 45825954}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 45825955}
+  m_ViewID:
+    m_ID: 2
+    m_Type: 1
 --- !u!1001 &47323927
 Prefab:
   m_ObjectHideFlags: 0
@@ -648,7 +676,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 1343820453}
   m_GameObject: {fileID: 56020846}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 879f0c288e863d8449439aa34bc96165, type: 3}
 --- !u!4 &56020852
 Transform:
   m_ObjectHideFlags: 0
@@ -1549,6 +1577,7 @@ GameObject:
   - 4: {fileID: 379395889}
   - 65: {fileID: 379395888}
   - 114: {fileID: 379395887}
+  - 148: {fileID: 379395890}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -1592,6 +1621,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &379395890
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 181578066}
+  m_GameObject: {fileID: 379395886}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 379395887}
+  m_ViewID:
+    m_ID: 3
+    m_Type: 1
 --- !u!1 &410931625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,7 +1821,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 1738775575}
   m_GameObject: {fileID: 465726089}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: a21298cb7987c8d4daa39cc5fba176d6, type: 3}
 --- !u!4 &465726095
 Transform:
   m_ObjectHideFlags: 0
@@ -1957,6 +1999,7 @@ GameObject:
   - 4: {fileID: 553583725}
   - 65: {fileID: 553583724}
   - 114: {fileID: 553583723}
+  - 148: {fileID: 553583726}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -2000,6 +2043,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &553583726
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 259224016}
+  m_GameObject: {fileID: 553583722}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 553583723}
+  m_ViewID:
+    m_ID: 4
+    m_Type: 1
 --- !u!1 &575889898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2670,6 +2726,7 @@ GameObject:
   - 4: {fileID: 929864421}
   - 65: {fileID: 929864420}
   - 114: {fileID: 929864419}
+  - 148: {fileID: 929864422}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -2713,6 +2770,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &929864422
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 2119424293}
+  m_GameObject: {fileID: 929864418}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 929864419}
+  m_ViewID:
+    m_ID: 5
+    m_Type: 1
 --- !u!1 &940048513
 GameObject:
   m_ObjectHideFlags: 0
@@ -3271,6 +3341,7 @@ GameObject:
   - 4: {fileID: 1269175738}
   - 65: {fileID: 1269175737}
   - 114: {fileID: 1269175736}
+  - 148: {fileID: 1269175739}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -3314,6 +3385,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &1269175739
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1096893250}
+  m_GameObject: {fileID: 1269175735}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1269175736}
+  m_ViewID:
+    m_ID: 6
+    m_Type: 1
 --- !u!1 &1273512655
 GameObject:
   m_ObjectHideFlags: 0
@@ -4261,6 +4345,7 @@ GameObject:
   - 4: {fileID: 1598819522}
   - 65: {fileID: 1598819521}
   - 114: {fileID: 1598819520}
+  - 148: {fileID: 1598819523}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -4304,6 +4389,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &1598819523
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 344951032}
+  m_GameObject: {fileID: 1598819519}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1598819520}
+  m_ViewID:
+    m_ID: 7
+    m_Type: 1
 --- !u!1001 &1627001253
 Prefab:
   m_ObjectHideFlags: 0
@@ -4457,6 +4555,7 @@ GameObject:
   - 4: {fileID: 1653842050}
   - 65: {fileID: 1653842049}
   - 114: {fileID: 1653842048}
+  - 148: {fileID: 1653842051}
   m_Layer: 0
   m_Name: SpawnZone
   m_TagString: Untagged
@@ -4500,6 +4599,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!148 &1653842051
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 147e9eefa481c5242898717e1283d8a4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1959339372}
+  m_GameObject: {fileID: 1653842047}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1653842048}
+  m_ViewID:
+    m_ID: 8
+    m_Type: 1
 --- !u!1 &1669349991
 GameObject:
   m_ObjectHideFlags: 0
