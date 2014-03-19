@@ -303,12 +303,15 @@ public class CircuitModePlayerStats : MonoBehaviour
 			}
 
 			if(wrongWay && hasRaceStarted){
+				float optimizedRatio = 1024 * 768;
+				float currentRatio = Screen.width * Screen.height;
+				float aspectRatio = currentRatio / optimizedRatio;
 				if(wrongWayTimer >=1.0f){
 					if(carNumber == 0){
-						GUI.DrawTexture(new Rect(Screen.width/2-100,Screen.height*3/4-50,200,200),circuitMode.wrongWayTexture);
+						GUI.DrawTexture(new Rect(Screen.width/2 - 400*aspectRatio/2,Screen.height *3/4 - 400*aspectRatio/2,400*aspectRatio,400*aspectRatio),circuitMode.wrongWayTexture);
 					}
 					if(carNumber == 1){
-						GUI.DrawTexture(new Rect(Screen.width/2-100,Screen.height/4-50,200,200),circuitMode.wrongWayTexture);
+						GUI.DrawTexture(new Rect(Screen.width/2 - 400*aspectRatio/2,Screen.height/4 - 400*aspectRatio/2,400*aspectRatio,400*aspectRatio),circuitMode.wrongWayTexture);
 					}
 					wrongWayTimer+=Time.deltaTime;
 					if(wrongWayTimer>=2.0f){
