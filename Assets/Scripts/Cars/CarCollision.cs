@@ -14,17 +14,20 @@ public class CarCollision : MonoBehaviour
 {
 	//referenz auf dieses Auto
 	private Car car;
+	public GameObject virtualCrashPrefab;
 
 	void Start()
 	{
 		//Car Komponente ist in der Hierachie eins weiter oben
 		car = transform.parent.gameObject.GetComponent<Car>();
+
 	}
 
 	//Diese Methode soll nur aufgerufen werden, wenn das Auto mit anderen Objecten Kollidiert, 
 	//Waffen werden von diesen Trigger nicht erkannt, da sie in einer anderen Layer liegen (layer-base collision detection)
 	void OnTriggerEnter(Collider other)
 	{
+		GameObject.Instantiate(virtualCrashPrefab,this.transform.position,this.transform.rotation);
 		//falls other ein DestructibleCarPart hat
 		if(other.GetComponent<DestructibleCarPart>())
 		{

@@ -16,6 +16,8 @@ public class VirtualAudioSource : MonoBehaviour
 {
 	//referenz auf die realAudioSource
 	public GameObject realAudioPrefab;
+	//referenz auf die realAudioSource wenn sie als Objekt in der Szene existiert
+	public GameObject realAudioNoPrefab;
 
 	//Liste mit Referenzen auf die VirtuellenAudioListener (der sich am Auto befidnet)
 	private List<GameObject> virtAudioListener;
@@ -32,13 +34,18 @@ public class VirtualAudioSource : MonoBehaviour
 		{
 			//füge sie der Liste hinzu
 			virtAudioListener.Add(obj.transform.root.gameObject);
+			GameObject realAudioSrc;
+			if(realAudioPrefab){
 			//instanziere die echte Soundquelle
-			GameObject realAudioSrc = (GameObject)GameObject.Instantiate(realAudioPrefab);
+				realAudioSrc = (GameObject)GameObject.Instantiate(realAudioPrefab);
+			} else {
+				realAudioSrc = (GameObject)GameObject.Instantiate(realAudioNoPrefab);
+			}
 			//füge sie der Liste hinzu
 			realAudioList.Add(realAudioSrc);
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
