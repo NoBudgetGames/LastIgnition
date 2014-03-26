@@ -10,6 +10,15 @@ public class MainMenu : MonoBehaviour
 	//String, der das aktuell gewählte Menü zeigen soll
 	private string currentMenu = "Main";
 
+	void Start()
+	{
+		//falls noch ein Netzwerk GameObject vorhanden ist (wenn man z.B. vom Multiplayermenü zurückgeht), lösche es
+		if(GameObject.Find("Network") != null)
+		{
+			GameObject.Destroy(GameObject.Find("Network").gameObject);
+		}		
+	}
+
 	void OnGUI () 
 	{
 		//falls aktuelles Menu das Hauptmenü ist
@@ -52,8 +61,23 @@ public class MainMenu : MonoBehaviour
 	//das Hauptmenü
 	private void mainMenu()
 	{
+		//Namen der vorherigen Spieler suchen
+		string tmpOne = PlayerPrefs.GetString("PlayerOneName");
+		string tmpTwo = PlayerPrefs.GetString("PlayerTwoName");
+		//falls noch keine Namen gesetzt wurden, wähle Standardnamen
+		if(tmpOne.Equals(""))
+		{
+			tmpOne = "Spieler 1";
+		}
+		if(tmpTwo.Equals(""))
+		{
+			tmpTwo = "Spieler 2";
+		}
 		//aller bisherigen PlayerPrefs löschen
 		PlayerPrefs.DeleteAll();
+		//Spieleramen setzen
+		PlayerPrefs.SetString("PlayerOneName", tmpOne);
+		PlayerPrefs.SetString("PlayerTwoName", tmpTwo);
 
 		//kleine Hintergrundbox erstellen
 		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 250), "Hauptmenü");
@@ -171,7 +195,7 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 1);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 300), "Einzelspieler");
+		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 250), "Einzelspieler");
 		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
@@ -180,18 +204,13 @@ public class MainMenu : MonoBehaviour
 		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 125, 100, 20), playerOneName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerOneName);
 
-		//Button für LAN Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "LAN (Test)")) 
+		//Button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Weiter")) 
 		{
-			Application.LoadLevel("LANNetworkTest");
+			Application.LoadLevel("Multiplayer");
 		}
 		//Button für Online Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Online (Test)")) 
-		{
-			Application.LoadLevel("NetworkTest");
-		}
-		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 50, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Hauptmenü")) 
 		{
 			currentMenu = "Main";
 		}
@@ -203,7 +222,7 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 2);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 350), "Splitscreen");
+		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 300), "Splitscreen");
 		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
@@ -218,19 +237,14 @@ public class MainMenu : MonoBehaviour
 		string playerTwoName = PlayerPrefs.GetString("PlayerTwoName");
 		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 75, 100, 20), playerTwoName, 15);
 		PlayerPrefs.SetString("PlayerTwoName", playerTwoName);
-		
-		//Button für LAN Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "LAN (Test)")) 
+
+		//Button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Weiter")) 
 		{
-			Application.LoadLevel("LANNetworkTest");
+			Application.LoadLevel("MultiplayerSetup");
 		}
 		//Button für Online Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 50, 100, 20), "Online (Test)")) 
-		{
-			Application.LoadLevel("NetworkTest");
-		}
-		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 100, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 50, 100, 20), "Hauptmenü")) 
 		{
 			currentMenu = "Main";
 		}

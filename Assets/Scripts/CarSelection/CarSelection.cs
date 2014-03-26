@@ -81,6 +81,27 @@ public class CarSelection : MonoBehaviour {
 		}
 		if(acceptButton){
 			playerReady = true;
+			//aktuallisiert die PlayerData
+			if(playerName.Equals("One"))
+			{
+				GameObject data = GameObject.Find("playerDataOne");
+				data.GetComponent<NetworkPlayerData>().setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
+				data.GetComponent<NetworkPlayerData>().setReady();
+				//finde die Netzwerk Objekt
+				NetworkView netView = GameObject.Find("Network").networkView;
+				//update die PlayerInfos auf dem Server
+				netView.RPC("updatePlayerInfo",RPCMode.All, data.GetComponent<NetworkPlayerData>().getPlayerData());
+			}
+			else
+			{
+				GameObject data = GameObject.Find("playerDataTwo");
+				data.GetComponent<NetworkPlayerData>().setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
+				data.GetComponent<NetworkPlayerData>().setReady();
+				//finde die Netzwerk Objekt
+				NetworkView netView = GameObject.Find("Network").networkView;
+				//update die PlayerInfos auf dem Server
+				netView.RPC("updatePlayerInfo",RPCMode.All, data.GetComponent<NetworkPlayerData>().getPlayerData());
+			}
 		}
 		if(cancleButton){
 			if(!playerReady){

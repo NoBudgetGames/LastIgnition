@@ -1091,7 +1091,7 @@ public class Car : MonoBehaviour
 		{
 			foreach(Wheel wheel in wheels)
 			{
-				/*				//wenn die Reifen am durchdrehen sind
+/*				//wenn die Reifen am durchdrehen sind
 				if(wheel.getForwardSlip() > 1.0f)
 				{
 */					//falls es ein Vorderrad ist, sollen die normalen WFC bnutzt werden
@@ -1104,7 +1104,7 @@ public class Car : MonoBehaviour
 				{
 					wheel.setFrictionCurves(forwardWFC, sidewaysRearWFC);
 				}
-				/*				}
+/*				}
 				//ansonsten benutzen normale WFC
 				else
 				{
