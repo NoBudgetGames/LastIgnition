@@ -42,18 +42,18 @@ public class CarSelectionManager : MonoBehaviour
 			for(int i = 0; i<selectors.Length; ++i){
 				PlayerPrefs.SetInt(selectors[i].playerName,selectors[i].getCarTypeIndex());
 			}
-			//falls es eine Netztwerkverbindung gibt, also um ein Netzwerkspiel handelt
-			if(Network.isServer == true || Network.isClient == true)
+			//falls es nicht um ein Netztwerkverbindung gibt, also um ein lokales (Singleplayer-)Spiel handelt
+			if(Network.isServer == false && Network.isClient == false)
+			{
+				Application.LoadLevel(PlayerPrefs.GetString("Level"));
+			}
+			//ansonsten ist es ein Netzwerkspiel
+			else
 			{
 				if(!rpcSent){
 					this.networkView.RPC("finishedSelection",RPCMode.All);
 					rpcSent = true;
 				}
-			}
-			//ansonsten ist es ein lokales (SIngleplayer-)Spiel
-			else
-			{
-				Application.LoadLevel(PlayerPrefs.GetString("Level"));
 			}
 		}
 

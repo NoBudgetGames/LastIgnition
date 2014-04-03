@@ -207,7 +207,7 @@ public class MainMenu : MonoBehaviour
 		//Button für Multiplayer
 		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Weiter")) 
 		{
-			Application.LoadLevel("Multiplayer");
+			Application.LoadLevel("MultiplayerSetup");
 		}
 		//Button für Online Multiplayer
 		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Hauptmenü")) 
