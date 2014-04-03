@@ -84,23 +84,21 @@ public class CarSelection : MonoBehaviour {
 			//aktuallisiert die PlayerData
 			if(playerName.Equals("One"))
 			{
-				GameObject data = GameObject.Find("playerDataOne");
-				data.GetComponent<NetworkPlayerData>().setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
-				data.GetComponent<NetworkPlayerData>().setReady();
+				NetworkPlayerData data = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();
+				data.setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
 				//finde die Netzwerk Objekt
 				NetworkView netView = GameObject.Find("Network").networkView;
 				//update die PlayerInfos auf dem Server
-				netView.RPC("updatePlayerInfo",RPCMode.All, data.GetComponent<NetworkPlayerData>().getPlayerData());
+				netView.RPC("updatePlayerInfo",RPCMode.All, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
 			}
 			else
 			{
-				GameObject data = GameObject.Find("playerDataTwo");
-				data.GetComponent<NetworkPlayerData>().setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
-				data.GetComponent<NetworkPlayerData>().setReady();
+				NetworkPlayerData data = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();;
+				data.setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
 				//finde die Netzwerk Objekt
 				NetworkView netView = GameObject.Find("Network").networkView;
 				//update die PlayerInfos auf dem Server
-				netView.RPC("updatePlayerInfo",RPCMode.All, data.GetComponent<NetworkPlayerData>().getPlayerData());
+				netView.RPC("updatePlayerInfo",RPCMode.All, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
 			}
 		}
 		if(cancleButton){

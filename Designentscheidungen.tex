@@ -16,6 +16,8 @@
 \usepackage{graphicx}
 %\usepackage[dvips]{epsfig}
 \usepackage{color}
+\usepackage{listings} % für code schipsel
+\usepackage{menukeys} % für Tastaturtasten
 %{\usepackage[latin1]{inputenc}}
 \IfFileExists{fontenc.def}{\usepackage[T1]{fontenc}}%
 \IfFileExists{isolatin.def}{\usepackage[isolatin]{inputenc}}%
@@ -30,7 +32,7 @@
 \newcommand{\gameName}{ \textbf{Last Ignition} }
 \newcommand{\mytitle}{Designentscheidungen zu \gameName -- ein Funracer mit Waffen \\ Interdisziplinäres Teamprojekt \term \\ Betreuung: Prof. Dr. Christof Rezk-Salama }
 % Name:
-\newcommand{\myname}{Christopher Baumann, 953241 \\ Lea Krieger, 952787 \\ Simon Kunze, 952299 \\Stefan Mortari 953275}
+\newcommand{\myname}{Christopher Baumann, 953241 \\ Lea Krieger, 952787 \\ Simon Kunze, 952299 \\Stefan Mortari, 953275}
 \renewcommand{\baselinestretch}{1.25}\normalsize
 % E-Mail:
 %\newcommand{\myemail}{}
@@ -59,27 +61,41 @@
 %\renewcommand\leftmark{\parbox[b]{0.7\textwidth}{ \hltext }}
 %-------------------------------------------------------------------------
 
+\section*{Übersicht / Einleitung} 
+
+Im Zuge des Teamprojekts soll ein Projekt realisiert werden. 
+
+Alle vier Teammitglieder sind aus dem DMS-Studiengang, daher konnte wir uns sofort für ein Spiel als Projekt einigen. In der Brainstorming-Phase haben wir verschiedene Ideen gesammelt, kehrten jedoch immer wieder zu einer Idee zurück: Ein Funracer mit Waffen. 
+
+Als Engine haben wir uns für Unity entschieden. Drei von uns hatten im vorangegangenen Semester bei den Medienprojekten Unity verwendet und sehr gute Erfahrungen mit der Engine gemacht. Daher war es eine naheliegende Entscheidung, auch bei diesen Projekt Unity zu verwenden. Der große Vorteil war, dass  wir so gut wie keine Einarbeitungszeit hatten und wussten, was mit Unity möglich ist. Wir konnten uns sehr früh über die Umsetzung der einzelnen Elemente Gedanken machen.
+
 \section*{Konzept} 
 
-\gameName ist ein Funracer für zwei Leute, indem die Fahrzeuge mit Waffen ausgerüstet sind. Neben dem klassischen Rundkurs-Modus bietet das Spiel auch ein Arena-Modus, ähnlich dem Derby-Mouds aus dem \textbf{FlatOut}-Spielen.
+\gameName ist ein Funracer für zwei Leute, indem die Fahrzeuge mit Waffen ausgerüstet sind. Neben dem klassischen Rundkurs-Modus bietet das Spiel auch ein Arena-Modus, ähnlich dem Derby-Mouds aus dem \textbf{FlatOut}-Spielen. 
 
-Man kann auf Rundkursen oder Arenen fahren und sich gegenseitig mit Waffen zerstören. Es gibt zwei verschiedene Waffentypen: offensive und defensive. Die Fahrzeuge sowie die Umgebung sollen sich dabei teilweise zerstören lassen. Ist ein Fahrzeug zertört, scheidet es aus dem Rennen aus. 
+Da viele von uns große \textbf{FlatOut}-Fans sind, und wir nicht nur einfach ein Klon machen wollten, haben wir uns entschieden, die Fahrzeuge mit Waffen auszurüsten, wie zum Beispiel in \textbf{N.I.C.E. 2} und \textbf{Twisted Black Metal}. Das Spiel hat dadurch auch ein besonderen Feature. Das Hauptfeature sozusagen ist die Zerstörung. Wir wollten ein Materialschlacht veranstalten, wo sehr viele Dinge zu Bruch gehen.
+
+Wie funktioniert das Pick-Up System?
+
+Ein weiterer Fokus des Spiels ist auf dem Mit- und Gegeneinander-spielen von echten Personen. Daher kann man zu zweit an einen Rechner per Splitscreen spielen. Außerdem haben wir uns gegen den Einbau einer Künstlichen Intelligenz und für einen Multiplayer entschieden. Unsere Idee ist, das sich Leute auf einer LAN Party oder sich Online verabreden, um ein paar Runden \gameName zu spielen. Das Spiel lebt von der Zerstörung der Fahrzeuge, und gegen eine KI zu spielen schien uns weniger spaßig zu sein, da man bei einen Multiplayer-Spiel auch gemeinsam lachen kann.
+
+
+
+Man kann auf Rundkursen oder Arenen fahren und sich gegenseitig mit Waffen zerstören. Es gibt zwei verschiedene Waffentypen: offensive und defensive. Die Fahrzeuge sowie die Umgebung sollen sich dabei teilweise zerstören lassen. Ist ein Fahrzeug zerstört, scheidet es aus dem Rennen aus. 
 
 Es stehen zwei Spielmodi zur Verfügung: Rundkurs und Arena. In ersteren fährt man auf einen üblichen Rundkurs und muss versuchen als erster durch die Ziellinie zu fahren. Im Arena-Modus muss man versuchen, den Gegner mit seinen Waffen zu zerstören. Wer als letzter noch nicht zerstört wurde gewinnt.
 
 Das Fahrverhalten der Fahrzeuge soll arcadelastig ausfallen. Sie sollen sich dennoch wie echte Autos anfühlen. Für die Zerstörung kommt ein einfaches Schadensmodel zum Einsatz.
 
 Das Spiel ist darauf ausgelegt, dass man zu zweit am selben Gerät spielen kann. Der Bildschirm soll dabei per Split-Screen aufgeteilt werden.
-
-Als Grundlage für \gameName dient die Unity-Engine. Das Spiel soll in 3D umgesetzt werden.
 \\
 
-\section*{Gameplay} 
-Eine Beschreinung des Gameplays
+\subsection*{Gameplay} 
+Eine Beschreibung des Gameplays
 
 
 \section*{Kurzer Einblick in Unity} 
-Um zu verstehen, wie \gameName aufgebaut ist, muss man sich zunächst einen Überblick verschaffen, wie Unity funktioniert. Unity hat einen großen Unterschied zu den meistens anderen Engines: die so genanten \textit{Components} (eng. für Komponenten). Anstatt verschiedene Kategorien von verschiedenen Objekttypen zu haben, wie zum Beispiel statische Meshes, Sound-Effekte, Animationen oder Lichter, bietet Unity Möglichkeit an ein beliebiges Objekt -- in Unity ein  \textit{GameObject} -- eine beliebige Komponente anzuhängen. Das können Scripte, Animationen, Sound-Effekte, ein Rigidbody oder auch ein 3D-Mesh sein. Eine Klassifizierung von Objekten entfällt dabei. Dadurch können die Objekte individueller gestaltet und für den benötigten Zweck angepasst werden. 
+Um zu verstehen, wie \gameName aufgebaut ist, muss man sich zunächst einen Überblick verschaffen, wie Unity funktioniert. Unity hat einen großen Unterschied zu den meistens anderen Engines: die so genanten \textit{Components} (eng. für Komponenten). Anstatt verschiedene Kategorien von verschiedenen Objekttypen zu haben, wie zum Beispiel statische Meshes, Sound-Effekte, Animationen oder Lichter, bietet Unity die Möglichkeit an ein beliebiges Objekt -- in Unity ein  \textit{GameObject} -- eine beliebige Komponente anzuhängen. Das können Scripte, Animationen, Sound-Effekte, ein Rigidbody oder auch ein 3D-Mesh sein. Eine Klassifizierung von Objekten entfällt dabei. Dadurch können die Objekte individueller gestaltet und für den benötigten Zweck angepasst werden. 
 
 Zusätzlich lassen sich die \textit{GameObjects} auch schachteln, es entsteht eine baumartige Hierachie.
 \\
@@ -95,9 +111,9 @@ Daneben sind eine Reihe wichtiger Scripts angehängt: das \textit{Car-}Script, de
 
 Darunter finden sich weitere \textit{GameObjects}, darunter 3d-Modelle, Reifen und Kollisionsmodelle.
 
-\textit{BodyModels} stellt, um eine gute Übersicht zu gewährleisten, nur ein Container für die 3d-Modelle dar. die Meshes sind entsprechend den Schadenszonen (siehe Abschnitt Zerstörung) unterteilt. Diese sind nochmal in den 3 verschiedenen Schadensmodellen unterteilt. \textit{Damage\_x} ist wiederum nur ein Container für die eigentlichen Meshes und wird vom \textit{Car-}Script entsprechend den Lebenspunkten der jeweiligen Schadenszone aktiviert bzw. deaktiviert. Dadurch werdendie richtigen Meshes angezeigt.
+\textit{BodyModels} stellt, um eine gute Übersicht zu gewährleisten, nur ein Container für die 3d-Modelle dar. die Meshes sind entsprechend den Schadenszonen (siehe Abschnitt Zerstörung) unterteilt. Diese sind nochmal in den 3 verschiedenen Schadensmodellen unterteilt. \textit{Damage\_x} ist wiederum nur ein Container für die eigentlichen Meshes und wird vom \textit{Car-}Script entsprechend den Lebenspunkten der jeweiligen Schadenszone aktiviert bzw. deaktiviert. Dadurch werden die richtigen Meshes angezeigt.
 
-Hier wird der Aufbau nun am Beispiel für die Schadenszone \textit{FrontLeft} dargerstellt
+Hier wird der Aufbau nun am Beispiel für die Schadenszone \textit{FrontLeft} dargestellt
 
 
 \begin{itemize}
@@ -145,13 +161,13 @@ Wie sind die Scripte für das Auto aufgebaut
 Wie funktioniert die Zerstörung der Autos? Wie funktionieren die Waffen?
 
 \subsection*{Schadenszonen}
-wie funktioniert eine Schadenszone (auch Script für DestructibleCarPart erklären)
+Wie funktioniert eine Schadenszone (auch Script für DestructibleCarPart erklären)
 
 \subsection*{Waffen}
-WIe funktionieren die Waffen im Einzelnen?
+Wie funktionieren die Waffen im Einzelnen?
 
 \subsection*{Kollision zwischen zwei Fahrzeugen}
-WIe funktioniert die Schadenwirkung zwischen zwei Autos?
+Wie funktioniert die Schadenwirkung zwischen zwei Autos?
 
 %~\cite{RaspAbout}
 
@@ -162,26 +178,37 @@ Das Spiel besitzt zwei Spielmodi: ein klassischen Rundkurzmodus sowie ein Arenam
 Der Standardspielmodus eines jeden Rennspiels.
 
 \subsubsection*{Checkpoints}
-WIe funktionieren die Checkpoints?
+Wie funktionieren die Checkpoints?
 
 \subsubsection*{WIe wird festgestellt, wer gerade führt?}
 Wie wird festgestellt, wer an erster Stelle ist? und wer an zweiter?
 
 \subsection*{Arenamodus}
-WIe ist der Arenamodus aufgebaut und warum haben ihn eingabeut? Was unterscheidet sich zu anderen Spielen iwe z.B. FlatOut?
+Wie ist der Arenamodus aufgebaut und warum haben ihn eingebaut? Was unterscheidet sich zu anderen Spielen iwe z.B. FlatOut?
+
+\section*{Netzwerk}
+Wieso haben  wir uns entschieden, Netzwerk-Multiplayer einzubauen?
+Wie ist die Philosophie dahinter?
 
 
 \section*{Levels}
 Es sind zwei Levels vorhanden.
-Eine beschreibung der Levels folgt nun.
+Eine Beschreibung der Levels folgt nun.
 
 \subsection*{Rennstrecke für den Rundkurs}
-Warum die Rennstrecke ein extra Model braucht und warum wir sie nicht auf dem Terrain gemacht haben. Warum haben wir uns für ein Canyon in der Wüste (von Arizona?) entschieden? WIe sieht den ein Canyon aus und wie wurde das umgesetzt?
+Warum die Rennstrecke ein extra Model braucht und warum wir sie nicht auf dem Terrain gemacht haben. Warum haben wir uns für ein Canyon in der Wüste (von Arizona?) entschieden? Wie sieht den ein Canyon aus und wie wurde das umgesetzt?
 
 \subsection*{Arena}
 Warum ist die Arena wie eine DerbyArena aus FlatOut?
 
 \section*{Sonstiges}
+Alle Sachen, die erwähnenswert sind, aber nicht in eine der großen Kategorien passen
+
+\subsection*{Kamera}
+Welche Gedanken haben wir uns bei der Kamera gemacht?
+
+\subsection*{HUD}
+Wie haben wir das HUD designt? Was waren unseren Gedanken dabei?
 
 \subsection*{Carselector}
 Wie funktioniert der CarSelector?

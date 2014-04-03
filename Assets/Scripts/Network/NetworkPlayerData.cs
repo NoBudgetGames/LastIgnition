@@ -23,9 +23,21 @@ public class NetworkPlayerData : MonoBehaviour
 		playerData = new string[]{netView.viewID.ToString(), PlayerPrefs.GetString("PlayerOneName"), "nicht gewählt", "nicht bereit"};
 	}
 
+	void Update()
+	{
+		//Objekt soll bestehen bleiben
+		DontDestroyOnLoad(this);
+	}
+
 	public void setAll(string[] data)
 	{
 		playerData = data;
+	}
+
+	//setzt die NetworkID, bzw. den string davon
+	public void setID(string ID)
+	{
+		playerData[0] = ID;
 	}
 
 	//Diese Methode setzt den Spielernamen in abhängigkeit vom ControllerString
@@ -48,9 +60,16 @@ public class NetworkPlayerData : MonoBehaviour
 	}
 
 	//diese Methode macht den Spieler bereit
-	public void setReady()
+	public void setReady(bool ready)
 	{
-		playerData[3] = "bereit";
+		if(ready == true)
+		{
+			playerData[3] = "bereit";
+		}
+		else
+		{
+			playerData[3] = "nicht bereit";
+		}
 	}
 
 	public string[] getPlayerData()

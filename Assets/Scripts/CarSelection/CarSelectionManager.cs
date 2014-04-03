@@ -42,13 +42,18 @@ public class CarSelectionManager : MonoBehaviour
 			for(int i = 0; i<selectors.Length; ++i){
 				PlayerPrefs.SetInt(selectors[i].playerName,selectors[i].getCarTypeIndex());
 			}
-			if(Network.connections.Length == 0){
-				Application.LoadLevel(PlayerPrefs.GetString("Level"));
-			} else {
+			//falls es eine Netztwerkverbindung gibt, also um ein Netzwerkspiel handelt
+			if(Network.isServer == true || Network.isClient == true)
+			{
 				if(!rpcSent){
 					this.networkView.RPC("finishedSelection",RPCMode.All);
 					rpcSent = true;
 				}
+			}
+			//ansonsten ist es ein lokales (SIngleplayer-)Spiel
+			else
+			{
+				Application.LoadLevel(PlayerPrefs.GetString("Level"));
 			}
 		}
 
@@ -59,9 +64,13 @@ public class CarSelectionManager : MonoBehaviour
 			axis*=-1;
 		}
 
-		if(allDoneNetwork() && (Network.connections.Length > 0)){
-			NetworkView netView = GameObject.Find("Network").networkView;
-			netView.RPC("loadLevel",RPCMode.All,PlayerPrefs.GetString("Level"),2);
+		//falls Netzwerkspiel und die jeweiligen Spieler ihre Autos gewählt haben
+		if(allDoneNetwork() == true)// && (Network.connections.Length > 0))
+		{
+			//NetworkView netView = GameObject.Find("Network").networkView;
+			//netView.RPC("loadLevel",RPCMode.All,PlayerPrefs.GetString("Level"),2);
+			NetworkSetup netSet = GameObject.Find("Network").GetComponent<NetworkSetup>();
+			netSet.setLobby();
 		}
 	}
 
@@ -82,6 +91,4 @@ public class CarSelectionManager : MonoBehaviour
 			}
 		}
 	}
-
 }
-

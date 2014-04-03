@@ -101,7 +101,6 @@ public class HUD : MonoBehaviour
 		if(raceEnded == false)
 		{
 			float angle = car.getVelocityInKmPerHour();
-			float x = Screen.width/initialScreenWidth;
 			if(numberOfHuds > 1){
 				if(player != "One"){
 					
