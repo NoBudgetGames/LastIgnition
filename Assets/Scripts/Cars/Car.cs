@@ -1265,7 +1265,6 @@ public class Car : MonoBehaviour
 			previousVel = currentVelocity;
 			//maximal Zulässige Beschleunigung
 			int maxAccelleration = 60;
-			//Debug.Log ("Accel " + deltaAccelleration);
 			
 /*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
 			//abhängig vom neigungswinkel des Autos ist
@@ -1307,8 +1306,6 @@ public class Car : MonoBehaviour
 				//motorTorque = -motorTorque;
 			}
 
-			Debug.Log("MT " + motorTorque);
-						
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
