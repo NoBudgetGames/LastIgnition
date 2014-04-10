@@ -110,8 +110,7 @@ public class PauseMenu : MonoBehaviour
 			{
 				if(isThisANetworkGame == true)
 				{
-					Network.Disconnect();
-					//alles weitere passiert im NetworkSetup-Script, Methode OnDisconnectedFromServer
+					GameObject.Find("Network").GetComponent<NetworkSetup>().leaveServer();
 				}
 				else
 				{

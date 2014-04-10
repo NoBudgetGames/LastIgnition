@@ -45,27 +45,25 @@ public class PlayerInputController : MonoBehaviour
 		inv = GetComponentInChildren<CarInventory>();
 		
 		//neuen CameraController aufsetzen
-
-
 		if(this.networkView.isMine || Network.connections.Length == 0){
-		GameObject camObj;
-		camObj = (GameObject)GameObject.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation);
+			GameObject camObj;
+			camObj = (GameObject)GameObject.Instantiate(cameraCtrlPrefab, car.transform.position, car.transform.rotation);
 
-		cameraCtrl = camObj.GetComponent<CameraController>();
-		
-		cameraCtrl.targetCar = car;
-		//erstes Element ist Motorhaubenkamera
-		cameraCtrl.hoodCamera = additionalCameraPositions[0];
-		//zweites Element ist Kofferraumkamera
-		cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
-		
-		
-		GameObject hudObj;
-		hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
-		
-		hud = hudObj.GetComponent<HUD>();
-		hud.cameraObject = camObj;
-		setupHUD();
+			cameraCtrl = camObj.GetComponent<CameraController>();
+			
+			cameraCtrl.targetCar = car;
+			//erstes Element ist Motorhaubenkamera
+			cameraCtrl.hoodCamera = additionalCameraPositions[0];
+			//zweites Element ist Kofferraumkamera
+			cameraCtrl.hoodCameraLookBack = additionalCameraPositions[1];
+			
+			
+			GameObject hudObj;
+			hudObj = (GameObject) GameObject.Instantiate(hudPrefab);
+			
+			hud = hudObj.GetComponent<HUD>();
+			hud.cameraObject = camObj;
+			setupHUD();
 		}
 	}
 
@@ -121,6 +119,7 @@ public class PlayerInputController : MonoBehaviour
 			if(controllerAttached == false)
 			{
 				car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey"));
+				car.setBrake(Input.GetAxis("Player" + numberOfControllerString + "BrakeKey"));
 				car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "SteerKey"));
 				car.resetCar(Input.GetButton("Player" + numberOfControllerString + "ResetCarKey"));
 				car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "HandbrakeKey"));
@@ -136,6 +135,7 @@ public class PlayerInputController : MonoBehaviour
 			else
 			{
 				car.setThrottle(Input.GetAxis("Player" + numberOfControllerString + "Throttle"));
+				car.setBrake(Input.GetAxis("Player" + numberOfControllerString + "Brake"));
 				car.setSteer(Input.GetAxis("Player" + numberOfControllerString + "Steer"));
 				car.resetCar(Input.GetButtonDown("Player" + numberOfControllerString + "ResetCar"));
 				car.setHandbrake(Input.GetButton("Player" + numberOfControllerString + "Handbrake"));

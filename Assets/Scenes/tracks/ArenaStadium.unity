@@ -139,7 +139,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1451219}
   m_ViewID:
-    m_ID: 1
+    m_ID: 19
     m_Type: 1
 --- !u!1 &45825954
 GameObject:
@@ -206,7 +206,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 45825955}
   m_ViewID:
-    m_ID: 2
+    m_ID: 20
     m_Type: 1
 --- !u!1001 &47323927
 Prefab:
@@ -1632,7 +1632,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 379395887}
   m_ViewID:
-    m_ID: 3
+    m_ID: 21
     m_Type: 1
 --- !u!1 &410931625
 GameObject:
@@ -2054,7 +2054,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 553583723}
   m_ViewID:
-    m_ID: 4
+    m_ID: 22
     m_Type: 1
 --- !u!1 &575889898
 GameObject:
@@ -2781,7 +2781,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 929864419}
   m_ViewID:
-    m_ID: 5
+    m_ID: 23
     m_Type: 1
 --- !u!1 &940048513
 GameObject:
@@ -3396,7 +3396,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1269175736}
   m_ViewID:
-    m_ID: 6
+    m_ID: 24
     m_Type: 1
 --- !u!1 &1273512655
 GameObject:
@@ -4400,7 +4400,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1598819520}
   m_ViewID:
-    m_ID: 7
+    m_ID: 25
     m_Type: 1
 --- !u!1001 &1627001253
 Prefab:
@@ -4610,7 +4610,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1653842048}
   m_ViewID:
-    m_ID: 8
+    m_ID: 26
     m_Type: 1
 --- !u!1 &1669349991
 GameObject:

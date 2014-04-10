@@ -34,6 +34,8 @@ public class NetworkSetup : MonoBehaviour
 	private List<NetworkPlayerData> localPlayerInfos;
 	//liste mit den Infos der Spieler auf dem Server
 	private List<NetworkPlayerData> serverPlayerInfos;
+	//Ping Timer
+	private float pingTimer = 4.0f;
 
 	//Online
 	//eine Liste der Hosts, die sich beim MasterServer angeldet haben
@@ -78,6 +80,21 @@ public class NetworkSetup : MonoBehaviour
 	void Update ()
 	{
 		Application.runInBackground = true;
+
+		//zähle den PingTimer runter
+		pingTimer -= Time.deltaTime;
+		if(pingTimer < 0.0f)
+		{
+			//überprüfe, ob man noch mit dem Server verbunden ist
+			if(isThisAOnlineGame == true)
+			{
+						
+			}
+			if(isLANGame == true)
+			{
+				Ping ping = new Ping(LANIPAddress);
+			}
+		}
 	}
 
 	//diese Method soll vom CarSelectionManager aufgerufen werden, wenn die jeweiligen SPieler ihre Autos gewählt haben
@@ -162,10 +179,48 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 	//diese Methode
-	void joinOnlineServer(HostData hd)
+	private void joinOnlineServer(HostData hd)
 	{
 		Network.Connect(hd);
 		isThisAOnlineGame = true;
+	}
+
+	//diese Methoder disconnected vomServer
+	public void leaveServer()
+	{
+		//falls es sich um den Client handelt, sage dem Server bescheid, das wir ihn verlassen und gehe ins Hauptmenü
+		if(Network.isClient == true)
+		{
+			//Anzahl der lokalen (an einen PC) Spieler
+			if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+			{
+				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();						
+				networkView.RPC("removePlayerInfo",RPCMode.Server, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
+			}
+			if(PlayerPrefs.GetInt("LocalPlayers") == 2)
+			{
+				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();						
+				networkView.RPC("removePlayerInfo",RPCMode.Server, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
+				
+				NetworkPlayerData dataTwo = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();						
+				networkView.RPC("removePlayerInfo",RPCMode.Server, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
+			}
+			//Server soll SpielerInfos aktualliseren
+			networkView.RPC("updatePlayersForClients",RPCMode.Server);
+		}
+		//falls wir Server sind, disconnecte alle 
+		if(Network.isServer == true)
+		{
+			networkView.RPC("clientsLeaveServer",RPCMode.Others);
+			for(int i = 0; i < Network.connections.Length; i++)
+			{
+				Network.CloseConnection(Network.connections[i], true);
+			}
+		}		
+		//schließe die Verbindung
+		Network.Disconnect();
+		//kehre zum Hauptmenü zurück
+		Application.LoadLevel("MainMenuScene");
 	}
 
 //// EVENT METHODEN
@@ -233,28 +288,7 @@ public class NetworkSetup : MonoBehaviour
 	//Called on client during disconnection from server, but also on the server when the connection has disconnected.
 	void OnDisconnectedFromServer()
 	{
-		//falls es sich um den Client handelt, sage dem Server bescheid, das wir ihn verlassen und gehe ins Hauptmenü
-		if(Network.isClient == true)
-		{
-			//Anzahl der lokalen (an einen PC) Spieler
-			if(PlayerPrefs.GetInt("LocalPlayers") == 1)
-			{
-				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();						
-				networkView.RPC("removePlayerInfo",RPCMode.Server, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
-			}
-			if(PlayerPrefs.GetInt("LocalPlayers") == 2)
-			{
-				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();						
-				networkView.RPC("removePlayerInfo",RPCMode.Server, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
-				
-				NetworkPlayerData dataTwo = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();						
-				networkView.RPC("removePlayerInfo",RPCMode.Server, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
-			}
-			//Server soll SpielerInfos aktualliseren
-			networkView.RPC("updatePlayersForClients",RPCMode.Server);
-			//kehre zum Hauptmenü zurück
-			Application.LoadLevel("MainMenuScene");
-		}
+
 	}
 
 	//Diese Methode wird beim CLient aufgerufen, wenn sich der CLient nicht mit dem Server verbindne konnte
@@ -266,13 +300,6 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 //// RPC METHODEN
-
-	//nur um z gucken, ob sich nachrichten verschicken lassen
-	[RPC]
-	void debug(string message)
-	{
-		Debug.Log(message);
-	}
 
 	[RPC]
 	void loadLevel(string level, int newLevelPrefix)
@@ -350,7 +377,7 @@ public class NetworkSetup : MonoBehaviour
 		serverPlayerInfos.Add(data);
 	}
 
-	//diese Methode entfert den Spieler aus der Liste, z.B. wenn ein Client den Server verlässt
+	//diese Methode entfert den Spieler aus der Liste, z.B. wenn ein Client den Server verlässt, sollte nur beim Server aufgerufen werden
 	[RPC]
 	private void removePlayerInfo(string dataID, string dataName, string dataCar, string dataReady)
 	{
@@ -359,7 +386,7 @@ public class NetworkSetup : MonoBehaviour
 		int index = -1;
 		foreach(NetworkPlayerData player in serverPlayerInfos)
 		{
-			//falls die Network ID die selbe ist, ist der Spieler bereits in der Liste und wir müssen die Daten austauschen
+			//falls die Network ID die selbe ist, haben wir den Spieler zum löschen gefunden
 			if(player.getPlayerData()[0] == playerData[0])
 			{
 				index = serverPlayerInfos.IndexOf(player);
@@ -372,7 +399,10 @@ public class NetworkSetup : MonoBehaviour
 		{
 			serverPlayerInfos.RemoveAt(index);
 		}
+		//CLients sollen SpielerInfos synchronisieren
+		networkView.RPC("synchronisePlayersForClients",RPCMode.OthersBuffered);
 		//hier muss man nun alle mit dem SPieler verbundenen Objekte löschen
+		//TO DO
 	}
 
 	//diese Methode sorgt dafür, das auf dem Server und allen Clients die SpielerInfos aktuallisiert werden
@@ -383,6 +413,29 @@ public class NetworkSetup : MonoBehaviour
 		{
 			networkView.RPC("updatePlayerInfo",RPCMode.AllBuffered, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
 		}
+	}
+
+	//diese Methode sorgt dafür, das auf allen Clients die SpielerInfos synchroniosiert werden
+	[RPC]
+	private void synchronisePlayersForClients()
+	{
+		//fall es der CLient ist, müsst zunächst die Liste auf dem Client gelöscht werden
+		if(Network.isClient == true)
+		{
+			serverPlayerInfos.Clear();
+		}
+		//Bitte an der Server, die aktuelle SpielerInfos zu schicken
+		networkView.RPC("updatePlayersForClients",RPCMode.Server);
+	}
+
+	//diese Methode sorgt dafür, das allen Clients zum Hauptmenü zurückkehren, weil der Server beendet worden ist
+	[RPC]
+	private void clientsLeaveServer()
+	{
+		//schließe die Verbindung
+		Network.Disconnect();
+		//kehre zum Hauptmenü zurück
+		Application.LoadLevel("MainMenuScene");
 	}
 
 //// GUI METHODEN
@@ -466,7 +519,7 @@ public class NetworkSetup : MonoBehaviour
 			currentMenu = "LAN";
 		}
 		//button um zum Hauptmenü zurückzukehren
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Hauptmenü"))
 		{
 			Application.LoadLevel("MainMenuScene");
 		}
@@ -555,7 +608,8 @@ public class NetworkSetup : MonoBehaviour
 		//button um zum Netzwerkmenü zurückzukehren
 		if(GUI.Button(new Rect(30, Screen.height - 40, 200, 20), "zürück zum Hauptmenü")) 
 		{
-			Application.LoadLevel("MainMenuScene");
+			//verlasse den Server
+			leaveServer();
 		}
 	}
 
@@ -767,19 +821,10 @@ public class NetworkSetup : MonoBehaviour
 				this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
 			}
 		}
-
-		//DebugButton
-		if(GUI.Button(new Rect(Screen.width - 450, Screen.height - 40, 100, 20), "Debug"))
-		{
-			this.networkView.RPC("debug",RPCMode.All, "BLUB BLIB");
-		}
-
 		//button um zum Netzwerkmenü zurückzukehren
 		if(GUI.Button(new Rect(30, Screen.height - 40, 200, 20), "zürück zum Hauptmenü")) 
 		{
-			//alle Verbindungen schließen
-			Network.Disconnect();
-			Application.LoadLevel("MainMenuScene");
+			leaveServer();
 		}
 	}
 }
