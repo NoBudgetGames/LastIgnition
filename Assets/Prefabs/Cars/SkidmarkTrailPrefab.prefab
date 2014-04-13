@@ -50,8 +50,8 @@ TrailRenderer:
   m_SortingOrder: 0
   m_SortingLayerID: 0
   m_Time: 10
-  m_StartWidth: 1
-  m_EndWidth: 1
+  m_StartWidth: .699999988
+  m_EndWidth: .699999988
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
@@ -68,7 +68,7 @@ TrailRenderer:
     m_Color[4]:
       serializedVersion: 2
       rgba: 4291690751
-  m_MinVertexDistance: .100000001
+  m_MinVertexDistance: 1
   m_Autodestruct: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -81,11 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee259b2fef757c640b109799d76c159e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorSandNormal: {r: .87429893, g: .882352948, b: .29844293, a: 1}
-  colorSandLose: {r: .834888518, g: .875, b: .147977918, a: 1}
-  colorRubble: {r: .779411793, g: .779411793, b: .779411793, a: 1}
-  colorDirt: {r: .632352948, g: .48664242, b: .302227497, a: 1}
-  colorGrass: {r: 0, g: .669117689, b: .0599898547, a: 1}
+  colorSandNormal: {r: .823529422, g: .788116038, b: .502595127, a: 1}
+  colorSandLose: {r: .735294104, g: .704271555, b: .454152226, a: 1}
+  colorRubble: {r: .784313738, g: .78039217, b: .643137276, a: 1}
+  colorDirt: {r: .796078444, g: .56078434, b: .36470589, a: 1}
+  colorGrass: {r: .297361612, g: .735294104, b: .336624503, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

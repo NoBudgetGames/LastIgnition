@@ -90,19 +90,19 @@ public class Wheel : MonoBehaviour
 				{
 					case 9:
 						//fester Sand, SandNormal
-						particleSys.startColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
+						particleSys.startColor = new Color(0.823f, 0.788f, 0.5f, 1.0f);
 						break;
 					case 10:
 						//loser Sand, SandLose
-						particleSys.startColor = new Color(0.8f, 0.8f, 0.0f, 1.0f);
+						particleSys.startColor = new Color(0.737f, 0.705f, 0.455f, 1.0f);
 						break;
 					case 11:
 						//Schotter, Rubble
-						particleSys.startColor = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+						particleSys.startColor = new Color(0.784f, 0.78f, 0.643f, 1.0f);
 						break;
 					case 12:
 						//Erdweg, Dirt
-						particleSys.startColor = new Color(0.8f, 0.6f, 0.1f, 1.0f);
+						particleSys.startColor = new Color(0.796f, 0.572f, 0.364f, 1.0f);
 						break;
 					case 13:
 					 	//Grass, Grass, es sollen keine Partikel erzeugt werden
