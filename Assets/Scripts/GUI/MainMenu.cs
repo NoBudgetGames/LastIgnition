@@ -16,7 +16,16 @@ public class MainMenu : MonoBehaviour
 		if(GameObject.Find("Network") != null)
 		{
 			GameObject.Destroy(GameObject.Find("Network").gameObject);
-		}		
+		}
+		//lösche ebenfalls die eventuell noch vorhandenen NetworkPlayerDatas
+		if(GameObject.Find("playerDataOne") != null)
+		{
+			GameObject.Destroy(GameObject.Find("playerDataOne"));
+		}
+		if(GameObject.Find("playerDataTwo") != null)
+		{
+			GameObject.Destroy(GameObject.Find("playerDataTwo"));
+		}
 	}
 
 	void OnGUI () 
@@ -46,12 +55,12 @@ public class MainMenu : MonoBehaviour
 		{
 			localLevelSelection();
 		}
-		//falls die Levelauswahl für ein lokales Spiel gewählt wurde
+		//falls ein Multiplayer mit einen lokalen Spieler gewählt wurde
 		if(currentMenu.Equals("multiSingleplayer"))
 		{
 			multiSinglePlayer();
 		}
-		//falls die Levelauswahl für ein lokales Spiel gewählt wurde
+		//falls ein Multiplayer mit zwei lokalen Spielern gewählt wurde
 		if(currentMenu.Equals("multiSplitscreen"))
 		{
 			multiSplitScreen();

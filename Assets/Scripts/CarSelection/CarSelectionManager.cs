@@ -6,7 +6,6 @@ public class CarSelectionManager : MonoBehaviour
 	public CarSelection[] selectors;
 	public GameObject[] presentators;
 	bool[] networkFinished;
-	bool rpcSent = false;
 
 	// Use this for initialization
 	void Start ()
@@ -42,18 +41,16 @@ public class CarSelectionManager : MonoBehaviour
 			for(int i = 0; i<selectors.Length; ++i){
 				PlayerPrefs.SetInt(selectors[i].playerName,selectors[i].getCarTypeIndex());
 			}
-			//falls es nicht um ein Netztwerkverbindung gibt, also um ein lokales (Singleplayer-)Spiel handelt
+			//falls es keine Netztwerkverbindung gibt, also um ein lokales (Singleplayer-)Spiel handelt, lade das gewählte Level
 			if(Network.isServer == false && Network.isClient == false)
 			{
 				Application.LoadLevel(PlayerPrefs.GetString("Level"));
 			}
-			//ansonsten ist es ein Netzwerkspiel
+			//ansonsten ist es ein Netzwerkspiel, und kehre zur Lobby zurück
 			else
 			{
-				if(!rpcSent){
-					this.networkView.RPC("finishedSelection",RPCMode.All);
-					rpcSent = true;
-				}
+				NetworkSetup netSet = GameObject.Find("Network").GetComponent<NetworkSetup>();
+				netSet.loadLobby();
 			}
 		}
 
@@ -67,10 +64,12 @@ public class CarSelectionManager : MonoBehaviour
 		//falls Netzwerkspiel und die jeweiligen Spieler ihre Autos gewählt haben
 		if(allDoneNetwork() == true)// && (Network.connections.Length > 0))
 		{
-			//NetworkView netView = GameObject.Find("Network").networkView;
-			//netView.RPC("loadLevel",RPCMode.All,PlayerPrefs.GetString("Level"),2);
+			//gehe zur Lobby zurück
 			NetworkSetup netSet = GameObject.Find("Network").GetComponent<NetworkSetup>();
-			netSet.setLobby();
+			if(netSet != null)
+			{
+				netSet.loadLobby();
+			}
 		}
 	}
 
@@ -80,15 +79,5 @@ public class CarSelectionManager : MonoBehaviour
 				return false;
 		} 
 		return true;
-	}
-
-	[RPC]
-	void finishedSelection(){
-		for(int i = 0; i < networkFinished.Length; ++i){
-			if(networkFinished[i] == false){
-				networkFinished[i] = true;
-				return;
-			}
-		}
 	}
 }

@@ -30,10 +30,12 @@ public class NetworkSetup : MonoBehaviour
 	private string currentMenu = "NetworkMain";
 	//soll ein Onlinespiel oder ein LAN Spiel erstellt werden?
 	private bool isThisAOnlineGame = false;
-	//liste mit den Infos der Spieler
-	private List<NetworkPlayerData> playerInfos;
-	//Scrollview für die Lobby
-	//private Vector2 lobbyScrollView = Vector2.zero;
+	//liste mit den Infos der Spieler auf dem Client
+	private List<NetworkPlayerData> localPlayerInfos;
+	//liste mit den Infos der Spieler auf dem Server
+	private List<NetworkPlayerData> serverPlayerInfos;
+	//Ping Timer
+	private float pingTimer = 4.0f;
 
 	//Online
 	//eine Liste der Hosts, die sich beim MasterServer angeldet haben
@@ -49,12 +51,6 @@ public class NetworkSetup : MonoBehaviour
 	//ist dieses Spiel ein LAN Spiel?
 	private bool isLANGame = false;
 
-	//soll ein Server aufgesetzt werden?
-	//private bool wantToStartServer = false;
-	//wurde der Server initialisiert?
-	//private bool initializedServer = false;
-	//soll ein Server gejoined werden?
-	//private bool wantToJoinServer = false;
 	//wurde das das Spiel schon gestartet? Wenn ja, sollen die Menüs nicht mehr dargestellt werden
 	private bool gameRunning = false;
 	//
@@ -66,17 +62,14 @@ public class NetworkSetup : MonoBehaviour
 	//die Referenz auf das NetworkPlayerData Object für Spieler 1
 	private GameObject playerDataTwo;
 
-	private bool startGameBool;
-	private bool setup;
-	private bool levelSelect;
-
 	// Use this for initialization
 	void Start ()
 	{
 		//dieses GameObject soll weiterhin existieren
 		DontDestroyOnLoad(this);
 		//maximal 8 Spieler
-		playerInfos = new List<NetworkPlayerData>();
+		serverPlayerInfos = new List<NetworkPlayerData>();
+		localPlayerInfos = new List<NetworkPlayerData>();
 		levelPrefix = 0;
 		this.networkView.group = 1;
 		//Spiel soll auch im Hintergrund laufen
@@ -87,10 +80,25 @@ public class NetworkSetup : MonoBehaviour
 	void Update ()
 	{
 		Application.runInBackground = true;
+
+		//zähle den PingTimer runter
+		pingTimer -= Time.deltaTime;
+		if(pingTimer < 0.0f)
+		{
+			//überprüfe, ob man noch mit dem Server verbunden ist
+			if(isThisAOnlineGame == true)
+			{
+						
+			}
+			if(isLANGame == true)
+			{
+				Ping ping = new Ping(LANIPAddress);
+			}
+		}
 	}
 
 	//diese Method soll vom CarSelectionManager aufgerufen werden, wenn die jeweiligen SPieler ihre Autos gewählt haben
-	public void setLobby()
+	public void loadLobby()
 	{
 		//falls der der Server aufgesetzt wurde, gehe zur Lobby
 		currentMenu = "Lobby";
@@ -126,7 +134,7 @@ public class NetworkSetup : MonoBehaviour
 			//PlayerData für Spieler 1
 			playerDataOne = (GameObject)Network.Instantiate(playerDataPrefab, this.transform.position, this.transform.rotation, 1);
 			playerDataOne.name = "playerDataOne";
-			playerInfos.Add(playerDataOne.GetComponent<NetworkPlayerData>());
+			localPlayerInfos.Add(playerDataOne.GetComponent<NetworkPlayerData>());
 		}
 		if(PlayerPrefs.GetInt("LocalPlayers") == 2)
 		{
@@ -134,14 +142,14 @@ public class NetworkSetup : MonoBehaviour
 			//PlayerData für Spieler 1
 			playerDataOne = (GameObject)Network.Instantiate(playerDataPrefab, this.transform.position, this.transform.rotation, 1);
 			playerDataOne.name = "playerDataOne";
-			playerInfos.Add(playerDataOne.GetComponent<NetworkPlayerData>());
+			localPlayerInfos.Add(playerDataOne.GetComponent<NetworkPlayerData>());
 			
 			//PlayerData für Spieler 2
 			playerDataTwo = (GameObject)Network.Instantiate(playerDataPrefab, this.transform.position, this.transform.rotation, 1);
 			playerDataTwo.name = "playerDataTwo";
 			//ConntrolerString muss noch gesetzr werden
 			playerDataTwo.GetComponent<NetworkPlayerData>().setControllerString("Two");
-			playerInfos.Add(playerDataTwo.GetComponent<NetworkPlayerData>());
+			localPlayerInfos.Add(playerDataTwo.GetComponent<NetworkPlayerData>());
 		}
 	}
 
@@ -161,6 +169,7 @@ public class NetworkSetup : MonoBehaviour
 		Network.RemoveRPCsInGroup(0);
 		Network.RemoveRPCsInGroup(1);
 		this.networkView.RPC("loadLevel", RPCMode.AllBuffered, PlayerPrefs.GetString("Level"), levelPrefix+1);
+		this.networkView.RPC("leavingLobby", RPCMode.AllBuffered);
 	}
 
 	//diese Methode aktuallisiert die verfügbaren Server
@@ -170,10 +179,48 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 	//diese Methode
-	void joinOnlineServer(HostData hd)
+	private void joinOnlineServer(HostData hd)
 	{
 		Network.Connect(hd);
 		isThisAOnlineGame = true;
+	}
+
+	//diese Methoder disconnected vomServer
+	public void leaveServer()
+	{
+		//falls es sich um den Client handelt, sage dem Server bescheid, das wir ihn verlassen und gehe ins Hauptmenü
+		if(Network.isClient == true)
+		{
+			//Anzahl der lokalen (an einen PC) Spieler
+			if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+			{
+				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();						
+				networkView.RPC("removePlayerInfo",RPCMode.Server, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
+			}
+			if(PlayerPrefs.GetInt("LocalPlayers") == 2)
+			{
+				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();						
+				networkView.RPC("removePlayerInfo",RPCMode.Server, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
+				
+				NetworkPlayerData dataTwo = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();						
+				networkView.RPC("removePlayerInfo",RPCMode.Server, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
+			}
+			//Server soll SpielerInfos aktualliseren
+			networkView.RPC("updatePlayersForClients",RPCMode.Server);
+		}
+		//falls wir Server sind, disconnecte alle 
+		if(Network.isServer == true)
+		{
+			networkView.RPC("clientsLeaveServer",RPCMode.Others);
+			for(int i = 0; i < Network.connections.Length; i++)
+			{
+				Network.CloseConnection(Network.connections[i], true);
+			}
+		}		
+		//schließe die Verbindung
+		Network.Disconnect();
+		//kehre zum Hauptmenü zurück
+		Application.LoadLevel("MainMenuScene");
 	}
 
 //// EVENT METHODEN
@@ -189,8 +236,13 @@ public class NetworkSetup : MonoBehaviour
 	{
 		Debug.Log ("Server initialized");
 
-		//instanziere die NetworkPlayerData
+		//instanziere die lokale NetworkPlayerData
 		intanciateNetPlayerData();
+		//update die PlayerData auf dem Server
+		foreach(NetworkPlayerData player in localPlayerInfos)
+		{
+			this.networkView.RPC("updatePlayerInfo",RPCMode.All, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
+		}
 		
 		//falls der der Server aufgesetzt wurde, gehe zur Lobby
 		currentMenu = "Lobby";
@@ -199,43 +251,48 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 	//diese Methode wird auf dem Server aufgerufen, wenn sich ein Spieler erfolgreich mit dem Server verbunden hat
+	//Called on the server whenever a new player has successfully connected.
 	void OnPlayerConnected(NetworkPlayer player)
 	{
-		Debug.Log("Player " + " connected from " + player.ipAddress);
-		this.networkView.RPC("receiveLevelName",RPCMode.AllBuffered,PlayerPrefs.GetString("Level"));
+		this.networkView.RPC("receiveLevelName", RPCMode.AllBuffered, PlayerPrefs.GetString("Level"));
+		//Debug.Log("Player " + " connected from " + player.ipAddress);
+	}
+
+	//diese Methode wird auf dem Server aufgerufen, wenn sich ein Spieler vom Server getrennt hat
+	//Called on the server whenever a player is disconnected from the server.
+	void OnPlayerDisconnected()
+	{
+
 	}
 
 	//Diese Methode wird beim Client aufgerufen, wenn sich ein Client mit dem Server verbunden hat
+	//Called on the client when you have successfully connected to a server.
 	void OnConnectedToServer() 
 	{
-		Debug.Log("Connected to server");
-			
+		//sage dem Server bescheid, wie viele Spieler der Client hat
+		this.networkView.RPC("updatePlayerNumber",RPCMode.Server, PlayerPrefs.GetInt("LocalPlayers"));
+
 		//instanziere die NetworkPlayerData
 		intanciateNetPlayerData();
-
-		//sage dem Server bescheid, wie viele Spieler der Client hat
-		this.networkView.RPC("updatePlayerNumber",RPCMode.AllBuffered, PlayerPrefs.GetInt("LocalPlayers"));
-
-		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+		//update die PlayerData auf dem Server
+		foreach(NetworkPlayerData player in localPlayerInfos)
 		{
-			NetworkPlayerData dataOne = playerDataOne.GetComponent<NetworkPlayerData>();
-			//sage dem Server bescheid, wie die playerData ausieht
-			this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
-		}
-		else
-		{
-			//sage dem Server bescheid, wie die playerData ausieht
-			NetworkPlayerData dataOne = playerDataOne.GetComponent<NetworkPlayerData>();
-			this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
-
-			//sage dem Server bescheid, wie die playerData ausieht
-			NetworkPlayerData dataTwo = playerDataTwo.GetComponent<NetworkPlayerData>();
-			this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
+			this.networkView.RPC("updatePlayerInfo",RPCMode.Server, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
 		}
 		currentMenu = "Lobby";
+		//Server soll spielerinfos für alle aktuallisieren
+		networkView.RPC("updatePlayersForClients",RPCMode.Server);
+	}
+
+	//diese Methode wird beim verlassen des Servers aufgerufen
+	//Called on client during disconnection from server, but also on the server when the connection has disconnected.
+	void OnDisconnectedFromServer()
+	{
+
 	}
 
 	//Diese Methode wird beim CLient aufgerufen, wenn sich der CLient nicht mit dem Server verbindne konnte
+	//Called on the client when a connection attempt fails for some reason.
 	void OnFailedToConnect(NetworkConnectionError error)
 	{
 		//Debug.Log("Could not connect to server: " + error);
@@ -244,15 +301,9 @@ public class NetworkSetup : MonoBehaviour
 
 //// RPC METHODEN
 
-	//nur um z gucken, ob sich nachrichten verschicken lassen
 	[RPC]
-	void debug(string message)
+	void loadLevel(string level, int newLevelPrefix)
 	{
-		Debug.Log(message);
-	}
-
-	[RPC]
-	void loadLevel(string level, int newLevelPrefix){
 		StartCoroutine(loadLevelCoroutine(level,newLevelPrefix));
 	}
 	
@@ -282,9 +333,18 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 	[RPC]
-	void receiveLevelName(string level){
+	void receiveLevelName(string level)
+	{
 		PlayerPrefs.SetString("Level",level);
 		Debug.Log("RECEIVED");
+	}
+
+	//diese Method dient dazu, das die Lobby auf den Clients nicht mehr angezeigt wird
+	[RPC]
+	void leavingLobby()
+	{
+		//stelle kein Menü dar
+		currentMenu ="Nothing";
 	}
 
 	//diese Methode aktuallisiert die Anzahl der Spieler,
@@ -299,12 +359,12 @@ public class NetworkSetup : MonoBehaviour
 		}
 	}
 
-	//diese Methode aktuallisiert die Spieler Infos, sodass der Server weiss, wie viele tatsächliche Spieler am Renne teilnehmen
+	//diese Methode aktuallisiert die Spieler Infos, sodass der Server und Clients weiss, wie viele tatsächliche Spieler am Rennen teilnehmen
 	[RPC]
 	private void updatePlayerInfo(string dataID, string dataName, string dataCar, string dataReady)
 	{
 		string[] playerData = new string[]{dataID, dataName, dataCar, dataReady};
-		foreach(NetworkPlayerData player in playerInfos)
+		foreach(NetworkPlayerData player in serverPlayerInfos)
 		{
 			//falls die Network ID die selbe ist, ist der Spieler bereits in der Liste und wir müssen die Daten austauschen
 			if(player.getPlayerData()[0] == playerData[0])
@@ -317,7 +377,68 @@ public class NetworkSetup : MonoBehaviour
 		//ansonsten befindet sich der Spieler noch nicht in der Liste
 		NetworkPlayerData data = new NetworkPlayerData();
 		data.setAll(playerData);
-		playerInfos.Add(data);
+		serverPlayerInfos.Add(data);
+	}
+
+	//diese Methode entfert den Spieler aus der Liste, z.B. wenn ein Client den Server verlässt, sollte nur beim Server aufgerufen werden
+	[RPC]
+	private void removePlayerInfo(string dataID, string dataName, string dataCar, string dataReady)
+	{
+		string[] playerData = new string[]{dataID, dataName, dataCar, dataReady};
+		//index des zu löschenden Spielers
+		int index = -1;
+		foreach(NetworkPlayerData player in serverPlayerInfos)
+		{
+			//falls die Network ID die selbe ist, haben wir den Spieler zum löschen gefunden
+			if(player.getPlayerData()[0] == playerData[0])
+			{
+				index = serverPlayerInfos.IndexOf(player);
+				//wir könne die suche abbrechen
+				break;
+			}
+		}
+		//falls der zu löschende Spieler gefunden wurde
+		if(index != -1)
+		{
+			serverPlayerInfos.RemoveAt(index);
+		}
+		//CLients sollen SpielerInfos synchronisieren
+		networkView.RPC("synchronisePlayersForClients",RPCMode.OthersBuffered);
+		//hier muss man nun alle mit dem SPieler verbundenen Objekte löschen
+		//TO DO
+	}
+
+	//diese Methode sorgt dafür, das auf dem Server und allen Clients die SpielerInfos aktuallisiert werden
+	[RPC]
+	private void updatePlayersForClients()
+	{
+		foreach(NetworkPlayerData player in serverPlayerInfos)
+		{
+			networkView.RPC("updatePlayerInfo",RPCMode.AllBuffered, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
+		}
+	}
+
+	//diese Methode sorgt dafür, das auf allen Clients die SpielerInfos synchroniosiert werden
+	[RPC]
+	private void synchronisePlayersForClients()
+	{
+		//fall es der CLient ist, müsst zunächst die Liste auf dem Client gelöscht werden
+		if(Network.isClient == true)
+		{
+			serverPlayerInfos.Clear();
+		}
+		//Bitte an der Server, die aktuelle SpielerInfos zu schicken
+		networkView.RPC("updatePlayersForClients",RPCMode.Server);
+	}
+
+	//diese Methode sorgt dafür, das allen Clients zum Hauptmenü zurückkehren, weil der Server beendet worden ist
+	[RPC]
+	private void clientsLeaveServer()
+	{
+		//schließe die Verbindung
+		Network.Disconnect();
+		//kehre zum Hauptmenü zurück
+		Application.LoadLevel("MainMenuScene");
 	}
 
 //// GUI METHODEN
@@ -358,7 +479,7 @@ public class NetworkSetup : MonoBehaviour
 				lobby();
 			}
 			//falls gerade die Fahrzeuge gewählt werden sollen, zeige kein Menü an
-			if(currentMenu.Equals("CarSelection"))
+			if(currentMenu.Equals("Nothing"))
 			{
 				//tue nichts
 			}
@@ -401,7 +522,7 @@ public class NetworkSetup : MonoBehaviour
 			currentMenu = "LAN";
 		}
 		//button um zum Hauptmenü zurückzukehren
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Hauptmenü"))
 		{
 			Application.LoadLevel("MainMenuScene");
 		}
@@ -490,7 +611,8 @@ public class NetworkSetup : MonoBehaviour
 		//button um zum Netzwerkmenü zurückzukehren
 		if(GUI.Button(new Rect(30, Screen.height - 40, 200, 20), "zürück zum Hauptmenü")) 
 		{
-			Application.LoadLevel("MainMenuScene");
+			//verlasse den Server
+			leaveServer();
 		}
 	}
 
@@ -567,7 +689,7 @@ public class NetworkSetup : MonoBehaviour
 
 		//stelle die Infos dar
 		int i = 0;
-		foreach(NetworkPlayerData player in playerInfos)
+		foreach(NetworkPlayerData player in serverPlayerInfos)
 		{
 			GUI.Label(new Rect(40, 60 + (25 * i), 500, 25), player.getPlayerData()[1]);
 			GUI.Label(new Rect(160, 60 + (25 * i), 500, 25), player.getPlayerData()[2]);
@@ -609,7 +731,7 @@ public class NetworkSetup : MonoBehaviour
 			//Überprüfe, ob die Spieler bereit sind
 			bool playersReady = true;
 			//gehe alle Spieler durch
-			foreach(NetworkPlayerData player in playerInfos)
+			foreach(NetworkPlayerData player in serverPlayerInfos)
 			{
 				//getPlayerData leifert ein string Array zurück, an letzer Position steht, ob der spieler bereit ist
 				if(player.getPlayerData()[3].Equals("nicht bereit"))
@@ -649,8 +771,8 @@ public class NetworkSetup : MonoBehaviour
 		//Button, um bereit zu sein
 		if(GUI.Button(new Rect(Screen.width - 350, Screen.height - 40, 100, 20), "Auto wählen"))
 		{
-			//momentanes "Menü" soll der CarChooser sein
-			currentMenu ="CarSelection";
+			//momentanes "Menü" soll nichts sein
+			currentMenu ="Nothing";
 
 			//Server bescheid sagen, dass man nicht bereit ist
 			//falls nur ein lokaler Spieler
@@ -702,19 +824,10 @@ public class NetworkSetup : MonoBehaviour
 				this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
 			}
 		}
-
-		//DebugButton
-		if(GUI.Button(new Rect(Screen.width - 450, Screen.height - 40, 100, 20), "Debug"))
-		{
-			this.networkView.RPC("debug",RPCMode.All, "BLUB BLIB");
-		}
-
 		//button um zum Netzwerkmenü zurückzukehren
 		if(GUI.Button(new Rect(30, Screen.height - 40, 200, 20), "zürück zum Hauptmenü")) 
 		{
-			//alle Verbindungen schließen
-			Network.Disconnect();
-			Application.LoadLevel("MainMenuScene");
+			leaveServer();
 		}
 	}
 }

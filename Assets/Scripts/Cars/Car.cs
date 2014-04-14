@@ -123,6 +123,8 @@ public class Car : MonoBehaviour
 	public GameObject wheelSphereCol;
 	//Referenz auf den ParticleSystem, der das Feuer erzeugt, wenn das AUto explodiert ist
 	public ParticleSystem particleSysForExplosion;
+	//Referenz auf Bremslichter
+	public GameObject brakeLight;
 	
 	//Referenz auf ein GameObject, zu dem das Auto bei einen drücken der Reset Taste teleportiert wird,
 	//normalerweise wäre das die Aktuelle Position des Autos, 
@@ -153,8 +155,10 @@ public class Car : MonoBehaviour
 	
 	//// INPUT WERTE
 	
-	// Wert für die Beschleinigung, von -1 (rückwärts beschleunigen bzw. bremsen) bis 1 (vorwärts beschleunigen)
+	// Wert für die Beschleinigung, von 0 bis 1 (vorwärts beschleunigen)
 	private float throttle = 0.0f;
+	// Wert für die Beschleinigung, von 0  bis 1 (rückwärts beschleunigen bzw. bremsen)
+	private float brake = 0.0f;
 	//Wert für den Lenker, von -1 (links) bis 1 (rechts)
 	private float steer = 0.0f;
 	//bool für die Handbremse
@@ -242,6 +246,11 @@ public class Car : MonoBehaviour
 			applyVisualDamage(damZone, 0);
 		}
 		resetPosition = this.gameObject;
+		//fall es null ist, die AUtos im CarSelektor brauchen keine Lichter
+		if(brakeLight == null)
+		{
+			brakeLight = new GameObject();
+		}
 	}
 	
 	//in dieser Methode wird das Lenkrad gedreht
@@ -361,6 +370,12 @@ public class Car : MonoBehaviour
 	public void setThrottle(float th)
 	{
 		throttle = th;
+	}
+
+	//Der Wert wird vom PlayerInputController geändert
+	public void setBrake(float brk)
+	{
+		brake = brk;
 	}
 	
 	//Der Wert wird vom PlayerInputController geändert
@@ -944,37 +959,57 @@ public class Car : MonoBehaviour
 	private void calculateStatus(Vector3 relVelocity)
 	{
 		//Überprüfe Gaspedal und Bremse
-		//weder Gaspedal nich Bremse sind gedrückt
-		if(throttle == 0.0f)
+		//wenn gaspedal gedrückt ist
+		if(throttle > 0.0f)
+		{
+			isAccelearting = true;
+			isReversing = false;
+		}
+		else
+		{
+			isAccelearting = false;
+		}
+		//falls bremse oder rückwärts gefahren wird
+		if(brake > 0.0f)
+		{
+			//nur bremsen, wenn wir vorwärtsfahren
+			if(relVelocity.z > 0.01f)
+			{
+				isBraking = true;
+				isReversing = false;
+				//bremslichter einschalten
+				if(brake > 0.1f)
+				{
+					brakeLight.SetActive(true);
+				}
+			}
+			//rückwärtsfahren
+			else
+			{
+				//fall rückwärtsgefahren wird und der Gaspedal nicht grdückt wird
+				if(isAccelearting == false)
+				{
+					isBraking = false;
+					isReversing = true;
+					//bremslichter ausschalten
+					brakeLight.SetActive(false);
+				}
+				//ansosnten geben wir Gas
+				else
+				{
+					isReversing = false;	
+				}
+			}	
+		}
+		else
+		{
+			brakeLight.SetActive(false);
+		}
+		if(throttle == 0.0f && brake == 0.0f)
 		{
 			isAccelearting = false;
 			isBraking = false;
 			isReversing = false;
-		}
-		//wenn gaspedal gedrückt ist
-		else if(throttle > 0.0f)
-		{
-			isAccelearting = true;
-			isBraking = false;
-			isReversing = false;
-		}
-		//falls bremse oder rückwärts gefahren wird
-		else if(throttle < 0.0f)
-		{
-			//bremsen
-			if(relVelocity.z > 0)
-			{
-				isAccelearting = false;
-				isBraking = true;
-				isReversing = false;	
-			}
-			//rückwärtsfahren
-			else if(relVelocity.z <= 0)
-			{
-				isAccelearting = false;
-				isBraking = false;
-				isReversing = true;	
-			}	
 		}
 		
 		//Überprüfe Reifen
@@ -1218,7 +1253,7 @@ public class Car : MonoBehaviour
 	//auf die Reifen übertragen
 	private void applyMotorTorque(Vector3 relVelocity)
 	{
-		//gaspedal gedrückt?
+		//gaspedal oder rückwaärtsfahren gedrückt?
 		if(isAccelearting || isReversing)
 		{
 			//um das plötzliche beschleunigen des Autos an Hügeln zu verhindern (Unity Bug, siehe
@@ -1230,7 +1265,6 @@ public class Car : MonoBehaviour
 			previousVel = currentVelocity;
 			//maximal Zulässige Beschleunigung
 			int maxAccelleration = 60;
-			//Debug.Log ("Accel " + deltaAccelleration);
 			
 /*			//da das Auto z.B. an den Arena Wänden immer noch zu stark beschleuinigt, wird als gegenmaßnahme eine gegenkraft erzeugt, die
 			//abhängig vom neigungswinkel des Autos ist
@@ -1256,16 +1290,22 @@ public class Car : MonoBehaviour
 */
 			//Drehmoment, der auch auf die Reifen übertragen wird. Setzt sich zusammen aus: wie weit ist das Gaspedal/Bremspedal (fürs Rückwärtsfahren) 
 			//durchgedrückt * Drehmomentkurve * aktueller Gang * Gang Koeffizient * Differenzial Koeffizient * Effizienz des Getriebes 
-			float motorTorque = Mathf.Abs(throttle) * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * gearMultiplier[currentGear]
-			* differentialMultiplier * transmissionEfficiency;
-			
-			//falls wir am rückwärtsfahren sind, soll die Motorkraft negativ sein
-			if(isReversing)
+			//falls wir am vorwärtsfahren sind
+			float motorTorque = 0.0f;
+			if(isAccelearting == true)
 			{
-				motorTorque = -motorTorque;
-				//beim rückwärtafahren entstehen größere Beschleunigungen, Ursache noch nicht gefunden
+				motorTorque = throttle * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * gearMultiplier[currentGear]
+				* differentialMultiplier * transmissionEfficiency;
 			}
-			
+			//ansonsten soll der Motortorque negativ sein und von der Bremstaste abhängen
+			else if(isReversing == true)
+			{
+				motorTorque = -brake * engineTorqueCurve.Evaluate(currentRPM) * gearRatio[currentGear] * gearMultiplier[currentGear]
+				* differentialMultiplier * transmissionEfficiency;
+				//falls wir am rückwärtsfahren sind, soll die Motorkraft negativ sein
+				//motorTorque = -motorTorque;
+			}
+
 			//geh jedes DriveWheel durch und füge Drehmoment hinzu
 			foreach(Wheel wheel in driveWheels)
 			{
@@ -1287,7 +1327,7 @@ public class Car : MonoBehaviour
 	private void applyBrakeTorque(Vector3 relVelocity)
 	{
 		//falls die Handbremse gezogen wird, soll auf jeden Reifendie maximale Bremskraft ausgeübt werden
-		if(handbrake)
+		if(handbrake == true)
 		{
 			foreach(Wheel wheel in wheels)
 			{
@@ -1303,19 +1343,19 @@ public class Car : MonoBehaviour
 			}	
 		}
 		//bremsen
-		else if(isBraking)
+		else if(isBraking == true && isReversing == false)
 		{
 			//gehe jedes Rad durch und bremse
 			foreach(Wheel wheel in wheels)
 			{
 				//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
 				wheel.wheelCol.motorTorque = 0;
-				//throttle ist < 0 daher mit -1 multiplizieren
-				wheel.wheelCol.brakeTorque = brakeTorque * -throttle;
+				//bremsen
+				wheel.wheelCol.brakeTorque = brakeTorque * brake;
 			}	
 		}
 		//Motorbremse, nur wenn kein Gas gegeben und nicht gebremst wird
-		else if(throttle == 0.0f)
+		else if(isAccelearting == false && isBraking == false && isReversing == false)
 		{
 			foreach(Wheel wheel in driveWheels)
 			{

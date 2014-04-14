@@ -13,7 +13,6 @@ public class SkidmarkWithTrailRenderer : MonoBehaviour
 //// FARBEN DER VERSCHIEDENEN UNTERGRÜNDE
 
 	//fester Sand, SandNormal
-	//Color erwarte float Werte von 0.0f bis 1.0f, daher immer mit 255 teilen (wer macht denn sowas?!)
 	public Color colorSandNormal;
 	//loser Sand, SandLose
 	public Color colorSandLose;

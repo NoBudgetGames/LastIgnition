@@ -89,7 +89,7 @@ public class CarSelection : MonoBehaviour {
 				//finde die Netzwerk Objekt
 				NetworkView netView = GameObject.Find("Network").networkView;
 				//update die PlayerInfos auf dem Server
-				netView.RPC("updatePlayerInfo",RPCMode.All, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
+				netView.RPC("updatePlayerInfo",RPCMode.Server, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
 			}
 			else
 			{
@@ -98,8 +98,10 @@ public class CarSelection : MonoBehaviour {
 				//finde die Netzwerk Objekt
 				NetworkView netView = GameObject.Find("Network").networkView;
 				//update die PlayerInfos auf dem Server
-				netView.RPC("updatePlayerInfo",RPCMode.All, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
+				netView.RPC("updatePlayerInfo",RPCMode.Server, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
 			}
+			//bitte an der Server, die Infos für alle zu aktualliesieren
+			networkView.RPC("updatePlayersForClients",RPCMode.Server);
 		}
 		if(cancleButton){
 			if(!playerReady){
