@@ -17,6 +17,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	public GameObject[] carPrefabs;
 	//Liste mit Spielern, wird vom Script selber gefüllt,
 	public List<GameObject> playerList;
+
 	
 	// Use this for initialization
 	void Awake()
@@ -24,13 +25,22 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		playerList = new List<GameObject>();
 		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
 		{
-			playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "One"));
-			this.enabled = false;
+			if(Network.isServer || Network.connections.Length == 0){
+				playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "One"));
+				//this.enabled = false;
+			} else {
+				this.networkView.RPC("requestPlayerSpawn",RPCMode.Server,Network.player,"One",0);
+			}
 		}
 		else
 		{
-			playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "One"));
-			playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "Two"));
+			if(Network.isServer || Network.connections.Length == 0){
+				playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "One"));
+				playerList.Add(instaciateNewPlayer(getFreeSpawnPoint(), "Two"));
+			} else {
+				this.networkView.RPC("requestPlayerSpawn",RPCMode.Server,Network.player,"One",0);
+				this.networkView.RPC("requestPlayerSpawn",RPCMode.Server,Network.player,"Two",1);
+			}
 		}
 	}
 	
@@ -77,6 +87,43 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerInputString);
 		//playerList.Add(player);
 		return player;
+	}
+
+	//Anfrage an den Server um einen freien Spawn Punkt zu finden
+	[RPC]
+	void requestPlayerSpawn(NetworkPlayer client, string playerInputString,int listIndex){
+		GameObject spawn = getFreeSpawnPoint();
+		spawn.GetComponent<SpawnZone>().spawnIsNotFree();
+		this.networkView.RPC("instantiateNetworkPlayer",client,spawn.transform.position,spawn.transform.rotation
+		                     ,playerInputString,listIndex);
+	}
+	//Client spawnt einen neuen Spieler basierend auf den Koordinaten vom Server
+	[RPC]
+	void instantiateNetworkPlayer(Vector3 spawnPosition,Quaternion spawnRotation, string playerInputString,int listIndex){
+		int carIndex = PlayerPrefs.GetInt(playerInputString);
+		//neues Auto
+		GameObject player;
+		player = (GameObject)Network.Instantiate(carPrefabs[carIndex], spawnPosition, spawnRotation,0);
+		
+		
+		//der InputController muss wissen, welcher Spieler er gerade ist
+		PlayerInputController input = player.GetComponent<PlayerInputController>();
+		input.numberOfControllerString = playerInputString;
+		input.setupHUD();
+		//setze den Namen des Spielers
+		if(playerInputString.Equals("One"))
+		{
+			input.playerName = PlayerPrefs.GetString("PlayerOneName");
+		}
+		else
+		{
+			input.playerName = PlayerPrefs.GetString("PlayerTwoName");
+		}
+		//Kamera muss aufgesetzt werden
+		setCamera(input.cameraCtrl.GetComponent<Camera>(), playerInputString);
+
+		playerList.Insert(listIndex,player);
+
 	}
 	
 	//resete das Auto des SPielers (FULL HEALTH)
@@ -125,7 +172,11 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 				GameObject.Destroy(player.GetComponent<PlayerInputController>());
 			}
 			//instanszere einen neuen Spieler und füge ihn in der List da ein, wo er vorher war
-			playerList.Insert(index, instaciateNewPlayer(getFreeSpawnPoint(), playerInputString));
+			if(Network.isServer || Network.connections.Length == 0){
+				playerList.Insert(index, instaciateNewPlayer(getFreeSpawnPoint(), playerInputString));
+			} else {
+				this.networkView.RPC("requestPlayerSpawn",RPCMode.Server,Network.player,playerInputString,index);
+			}
 		}
 	}
 	
@@ -162,17 +213,20 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	private GameObject getFreeSpawnPoint()
 	{
 		GameObject obj = new GameObject();
+		
 		//gehe alle Spawnpunkte durch und schaue, ob einer frei ist
-		foreach(SpawnZone spawnPoint in spawnPoints)
-		{
-			//falls einer frei ist, returne das GameObject zum Spawnpunkt
-			if(spawnPoint.isSpawnZoneFree() == true)
+			foreach(SpawnZone spawnPoint in spawnPoints)
 			{
-				obj = spawnPoint.gameObject;
-				spawnPoint.spawnIsNotFree();
-				break;
+				//falls einer frei ist, returne das GameObject zum Spawnpunkt
+				if(spawnPoint.isSpawnZoneFree() == true)
+				{
+					obj = spawnPoint.gameObject;
+					spawnPoint.spawnIsNotFree();
+					break;
+				}
 			}
-		}
-		return obj; 
+			return obj; 
+
 	}
+
 }

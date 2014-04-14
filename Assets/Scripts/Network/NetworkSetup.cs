@@ -266,12 +266,15 @@ public class NetworkSetup : MonoBehaviour
 		
 		Network.SetLevelPrefix(levelPrefix);
 		Application.LoadLevel(level);
-		yield return new WaitForEndOfFrame();
-		yield return new WaitForEndOfFrame();
-		
+
+		while(Application.isLoadingLevel){
+			yield return new WaitForEndOfFrame();
+		}
+	
 		Network.isMessageQueueRunning = true;
 		
 		Network.SetSendingEnabled(0, true);
+
 		
 		foreach( GameObject g in FindObjectsOfType(typeof(GameObject))){
 			g.SendMessage("OnNetworkLoadedLevel",SendMessageOptions.DontRequireReceiver);
