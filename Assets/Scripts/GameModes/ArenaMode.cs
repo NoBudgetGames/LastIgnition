@@ -30,6 +30,8 @@ public class ArenaMode : MonoBehaviour
 	bool initialised;
 	const int MAX_LIVES = 3;
 
+	Hashtable connectedPlayerLivesTable;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -38,6 +40,8 @@ public class ArenaMode : MonoBehaviour
 		ranks = new List<int>();
 		camerasDestroyed = false;
 		playerStats = new List<string[]>();
+
+		connectedPlayerLivesTable = new Hashtable();
 	}
 
 	// Update is called once per frame
@@ -50,6 +54,7 @@ public class ArenaMode : MonoBehaviour
 				ranks.Add(1);
 			}	
 			updateRanks();
+			initialised = true;
 		}
 
 		//falls Match noch nicht gestartet, zähle Countdown runter und freeze Spieler
@@ -83,17 +88,20 @@ public class ArenaMode : MonoBehaviour
 		}
 
 		//falls nur noch ein Spieler übrig ist
-		if(players.Count == 1)
+		if((Network.connections.Length == 0 && players.Count == 1) || 
+		   (Network.connections.Length > 0 && onlyOnePlayerRemaining()))
 		{
-			PlayerInputController p = players[0].GetComponent<PlayerInputController>();
-			Debug.Log("Player " + p.numberOfControllerString + " won the Battle!");
+			if(players.Count == 1){
+				PlayerInputController p = players[0].GetComponent<PlayerInputController>();
+				Debug.Log("Player " + p.numberOfControllerString + " won the Battle!");
 
-			//deaktiviere den InputController, damit das Auto nicht meh weiterfahren kann
-			p.enabled = false;
-			//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
-			Car car = p.gameObject.GetComponent<Car>();
-			car.setThrottle(0.0f);
-			car.setHandbrake(true);
+				//deaktiviere den InputController, damit das Auto nicht meh weiterfahren kann
+				p.enabled = false;
+				//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
+				Car car = p.gameObject.GetComponent<Car>();
+				car.setThrottle(0.0f);
+				car.setHandbrake(true);
+			}
 			//das Match wurde beendet
 			hasMatchFinished = true;
 		}
@@ -108,11 +116,13 @@ public class ArenaMode : MonoBehaviour
 		if(camerasDestroyed == false && finishCountdown <0.0f)
 		{
 			//es gibt nur noch einen Player im Feld
-			PlayerInputController lastPlayer = players[0].GetComponent<PlayerInputController>();
-			
-			//füge die Infos der SpielerStats hinzu
-			//Spielername, überlebenszeit, restliche leben
-			playerStats.Add(new string[]{lastPlayer.playerName, TimeConverter.floatToString(roundDuration), "" + lives[0]});
+			if(players.Count>0){
+				PlayerInputController lastPlayer = players[0].GetComponent<PlayerInputController>();
+				
+				//füge die Infos der SpielerStats hinzu
+				//Spielername, überlebenszeit, restliche leben
+				playerStats.Add(new string[]{lastPlayer.playerName, TimeConverter.floatToString(roundDuration), "" + lives[0]});
+			}
 
 			//drehe die Reihenfolge der playerStats um ,sodass der zuletzt überlebende an erste Stelle steht
 			playerStats.Reverse();
@@ -164,8 +174,18 @@ public class ArenaMode : MonoBehaviour
 					control.reInstanciatePlayer(p.numberOfControllerString, false);
 				}
 				updateRanks();
+
 			}
 		}
+		//updateRanks();
+		if(Network.connections.Length > 0){
+			string rpcLivesString ="";
+			for(int j = 0; j<lives.Count; ++j){
+				rpcLivesString += lives[j] + " ";
+			}
+			this.networkView.RPC("sendLivesToConnected",RPCMode.Others,Network.player,rpcLivesString);
+		}
+
 		if(!hasMatchFinished)
 			updateLives();
 	}
@@ -197,6 +217,18 @@ public class ArenaMode : MonoBehaviour
 					}
 					rankChanged = true;
 				}
+				for(int j=0; j < Network.connections.Length; ++j){ 
+					int[] connectedPlayerLives = new int[0];
+
+					if(Network.connections[j] != Network.player &&
+					   connectedPlayerLivesTable.ContainsKey(Network.connections[j]))
+						connectedPlayerLives = (int[]) connectedPlayerLivesTable[Network.connections[j]];
+
+					foreach(int l in connectedPlayerLives){
+						if(currentLives == l)
+							rankChanged = true;
+					}
+				}
 			}
 			currentLives--;
 			if(rankChanged)
@@ -211,5 +243,37 @@ public class ArenaMode : MonoBehaviour
 		for(int i = 0; i < players.Count; ++i){
 			players[i].GetComponent<PlayerInputController>().hud.modeInfo.text = ""+lives[i]+" Lives";
 		}
+	}
+
+	bool onlyOnePlayerRemaining(){
+		int count = players.Count;
+		for(int i = 0; i<Network.connections.Length; ++i){
+			if(Network.connections[i] != Network.player && 
+			   connectedPlayerLivesTable.ContainsKey(Network.connections[i])){
+				int[] temp = (int[])connectedPlayerLivesTable[Network.connections[i]];
+				count+= temp.Length;
+			}
+		}
+		Debug.Log (count);
+		return count == 1;
+
+	}
+
+	[RPC]
+	public void sendLivesToConnected(NetworkPlayer player, string lives){
+		if(lives.Length>0){
+			int[] livesArray = new int[lives.Length/2];
+			int count = 0;
+			for(int i = 0; i<lives.Length; ++i){
+				if(i%2 == 0){
+					livesArray[count] = int.Parse(lives[i]+"");
+					count++;
+				}
+			}
+			connectedPlayerLivesTable[player]=livesArray;
+		} else {
+			connectedPlayerLivesTable.Remove(player);
+		}
+		updateRanks();
 	}
 }
