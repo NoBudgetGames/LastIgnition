@@ -101,6 +101,7 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Splitscreen";
 		}
+		GUI.Label(new Rect(Screen.width/2 - 30, Screen.height/2 - 70, 100, 20), "(ALPHA)");
 		//button für Multiplayer
 		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Multiplayer")) 
 		{
@@ -270,26 +271,20 @@ public class MainMenu : MonoBehaviour
 			PlayerPrefs.SetString("Level","ArenaStadium");
 			Application.LoadLevel("ChooseCar");
 		}
-		//zweites Level
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 100, 160, 20), "Wüsten-Arena")) 
-		{
-			PlayerPrefs.SetString("Level","DesertArena");
-			Application.LoadLevel("ChooseCar");
-		}
 		//drittes Level
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 50, 160, 20), "Wüsten-Strecke")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 100, 160, 20), "Wüsten-Strecke 1")) 
 		{
 			PlayerPrefs.SetString("Level","DesertCircuit");
 			Application.LoadLevel("ChooseCar");
 		}
 		//....
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2, 160, 20), "Stefs Test-Strecke")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 50, 160, 20), "Wüsten-Strecke 2")) 
 		{
-			PlayerPrefs.SetString("Level","StefTestScene2");
+			PlayerPrefs.SetString("Level","DesertCircuit02");
 			Application.LoadLevel("ChooseCar");
 		}
 		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 50, 160, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2, 160, 20), "Hauptmenü")) 
 		{
 			currentMenu = "Main";
 		}

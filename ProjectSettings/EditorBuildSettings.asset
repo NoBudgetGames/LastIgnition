@@ -16,8 +16,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/menu/MultiplayerLobby.unity
   - enabled: 1
-    path: Assets/Scenes/tracks/DesertArena.unity
-  - enabled: 1
     path: Assets/Scenes/tracks/DesertCircuit02.unity
   - enabled: 1
     path: Assets/Scenes/tracks/DesertCircuit.unity
@@ -29,5 +27,3 @@ EditorBuildSettings:
     path: Assets/Scenes/testScenes/DesertArenaCTest.unity
   - enabled: 1
     path: Assets/Scenes/testScenes/SimTestScene.unity
-  - enabled: 1
-    path: Assets/Scenes/testScenes/StefTestScene2.unity
