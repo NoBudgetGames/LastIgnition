@@ -115,7 +115,7 @@ public class CircuitRaceMode : MonoBehaviour
 		//da die updateLeaderboard Methode nur alle x Sekunden aufgerufen werden soll, Platzierung muss nicht ständig aktuallisert werden
 		//wird hier ein "sleep"Timer verwendet
 		leaderboardTimer += Time.deltaTime;
-		if(leaderboardTimer >= 3.0f)
+		if(leaderboardTimer >= 1.0f)
 		{
 			updateLeaderboard();
 			leaderboardTimer = 0.0f;

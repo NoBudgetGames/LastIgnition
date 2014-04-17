@@ -72,6 +72,9 @@ public class NetworkSetup : MonoBehaviour
 		this.networkView.group = 1;
 		//Spiel soll auch im Hintergrund laufen
 		Application.runInBackground = true;
+
+		//default Strecke ist Arena
+		PlayerPrefs.SetString("Level","ArenaStadium");
 	}
 
 	// Update is called once per frame
@@ -673,20 +676,22 @@ public class NetworkSetup : MonoBehaviour
 			// kleine Hintergrundbox erstellen
 			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "Levelauswahl");
 
+			//zeige gewählte Strecke
+			GUI.Label(new Rect(Screen.width/2 + 120, 90, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
 			//Derby-Arena, falls gedrückt, wird das erste Level geladen
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 90, 160, 20), "Derby-Arena im Stadium")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 120, 160, 20), "Derby-Arena im Stadium")) 
 			{
 				PlayerPrefs.SetString("Level","ArenaStadium");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Wüstensterke 1
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 120, 160, 20), "Wüsten-Strecke 1")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 150, 160, 20), "Wüsten-Strecke 1")) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Wüstenstreke 2
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 150, 160, 20), "Wüsten-Strecke 2")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 180, 160, 20), "Wüsten-Strecke 2")) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit02");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
@@ -700,7 +705,7 @@ public class NetworkSetup : MonoBehaviour
 				//getPlayerData leifert ein string Array zurück, an letzer Position steht, ob der spieler bereit ist
 				if(player.getPlayerData()[3].Equals("nicht bereit"))
 				{
-					//falls einer nicht bereit ist, breche abdd
+					//falls einer nicht bereit ist, breche ab
 					playersReady = false;
 					break;
 				}
