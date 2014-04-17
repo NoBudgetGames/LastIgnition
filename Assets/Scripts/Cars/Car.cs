@@ -1348,8 +1348,6 @@ public class Car : MonoBehaviour
 			//gehe jedes Rad durch und bremse
 			foreach(Wheel wheel in wheels)
 			{
-				//werte reseten, da sich das Auto möglicherweise noch fortbewegt, da er noch den Wert vom vorherigen Frame hat
-				wheel.wheelCol.motorTorque = 0;
 				//bremsen
 				wheel.wheelCol.brakeTorque = brakeTorque * brake;
 			}	

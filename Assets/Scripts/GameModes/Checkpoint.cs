@@ -55,6 +55,8 @@ public class Checkpoint : MonoBehaviour
 	{
 		//erreche position des Autos zum Checkpoint in localspace des CHeckpoints um,
 		//hier ist nur der y-Wert interresant, da er den Abstand zum Checkpoint parallel zur Straße darstellt
+
+		//da die Autos aus der negative Achse kommen, muss hier ,it - 1 multipliziert werden, damit der Abstand auch korrekt ist
 		return -transform.InverseTransformDirection(carPos).y;
 	}
 }

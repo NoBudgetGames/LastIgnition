@@ -34,8 +34,6 @@ public class NetworkSetup : MonoBehaviour
 	private List<NetworkPlayerData> localPlayerInfos;
 	//liste mit den Infos der Spieler auf dem Server
 	private List<NetworkPlayerData> serverPlayerInfos;
-	//Ping Timer
-	private float pingTimer = 4.0f;
 
 	//Online
 	//eine Liste der Hosts, die sich beim MasterServer angeldet haben
@@ -74,27 +72,15 @@ public class NetworkSetup : MonoBehaviour
 		this.networkView.group = 1;
 		//Spiel soll auch im Hintergrund laufen
 		Application.runInBackground = true;
+
+		//default Strecke ist Arena
+		PlayerPrefs.SetString("Level","ArenaStadium");
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
 		Application.runInBackground = true;
-
-		//zähle den PingTimer runter
-		pingTimer -= Time.deltaTime;
-		if(pingTimer < 0.0f)
-		{
-			//überprüfe, ob man noch mit dem Server verbunden ist
-			if(isThisAOnlineGame == true)
-			{
-						
-			}
-			if(isLANGame == true)
-			{
-				Ping ping = new Ping(LANIPAddress);
-			}
-		}
 	}
 
 	//diese Method soll vom CarSelectionManager aufgerufen werden, wenn die jeweiligen SPieler ihre Autos gewählt haben
@@ -557,6 +543,7 @@ public class NetworkSetup : MonoBehaviour
 	private void onlineServerBrowser()
 	{
 		refreshHostList();
+		hostList = MasterServer.PollHostList();
 
 		//die Liste der regristrierten Host auf dem MasterServer
 		hostList = MasterServer.PollHostList();
@@ -579,20 +566,6 @@ public class NetworkSetup : MonoBehaviour
 			// Begin the ScrollView
 			serverBrowserScrollView = GUI.BeginScrollView (new Rect(30, 60, Screen.width - 60, Screen.height - 110), serverBrowserScrollView, new Rect (0, 0, Screen.width - 90, 1000), false, true);
 			//alle nachfolgenden Positionsangaben bis zu EnsScrolView sind relativ zur Scrollview
-
-			//zum testen
-			if(hostList.Length == 0)
-			{
-				for(int i = 0; i < 100; i++)
-				{
-					if(GUI.Button(new Rect(360, 0 + (30 * i), 100, 25), "Beitreten"))
-					{
-						joinOnlineServer(hostList[i]);
-					}
-					GUI.Label(new Rect(10, 0 + (30 * i), 500, 25), "Hier steht ein Name");
-					GUI.Label(new Rect(210, 0 + (30 * i), 500, 25), "anzahl der Spieler/8");
-				}
-			}
 
 			//Liste der gefundenen Servers
 			for(int i = 0; i < hostList.Length; i++)
@@ -703,28 +676,24 @@ public class NetworkSetup : MonoBehaviour
 			// kleine Hintergrundbox erstellen
 			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "Levelauswahl");
 
-			//erster Button, falls gedrückt, wird das erste Level geladen
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 90, 160, 20), "Derby-Arena im Stadium")) 
+			//zeige gewählte Strecke
+			GUI.Label(new Rect(Screen.width/2 + 120, 90, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
+			//Derby-Arena, falls gedrückt, wird das erste Level geladen
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 120, 160, 20), "Derby-Arena im Stadium")) 
 			{
 				PlayerPrefs.SetString("Level","ArenaStadium");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
-			//zweites Level
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 120, 160, 20), "Wüsten-Arena")) 
-			{
-				PlayerPrefs.SetString("Level","DesertArena");
-				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
-			}
-			//drittes Level
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 150, 160, 20), "Wüsten-Strecke")) 
+			//Wüstensterke 1
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 150, 160, 20), "Wüsten-Strecke 1")) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
-			//....
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 180, 160, 20), "Stefs Test-Strecke")) 
+			//Wüstenstreke 2
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 180, 160, 20), "Wüsten-Strecke 2")) 
 			{
-				PlayerPrefs.SetString("Level","StefTestScene2");
+				PlayerPrefs.SetString("Level","DesertCircuit02");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 
@@ -736,7 +705,7 @@ public class NetworkSetup : MonoBehaviour
 				//getPlayerData leifert ein string Array zurück, an letzer Position steht, ob der spieler bereit ist
 				if(player.getPlayerData()[3].Equals("nicht bereit"))
 				{
-					//falls einer nicht bereit ist, breche abdd
+					//falls einer nicht bereit ist, breche ab
 					playersReady = false;
 					break;
 				}
@@ -757,7 +726,7 @@ public class NetworkSetup : MonoBehaviour
 				GUI.Label(new Rect(Screen.width - 150, Screen.height - 40, 150, 20), "Nicht alle bereit");
 			}
 		}
-		//falls wir Client sind
+		//falls wir Client sind, soll das gewählte LEvel angezeigt werden
 		if(Network.isClient == true)
 		{
 			// kleine Hintergrundbox erstellen
@@ -775,53 +744,36 @@ public class NetworkSetup : MonoBehaviour
 			currentMenu ="Nothing";
 
 			//Server bescheid sagen, dass man nicht bereit ist
-			//falls nur ein lokaler Spieler
-			if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+			foreach(NetworkPlayerData localPlayer in localPlayerInfos)
 			{
-				NetworkPlayerData data = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();
-				data.setReady(false);
-				//update die PlayerInfos auf dem Server
-				this.networkView.RPC("updatePlayerInfo",RPCMode.All, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
-			}
-			//ansonsten sind es zwei Spieler
-			else
-			{
-				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();;
-				dataOne.setReady(false);
-				//update die PlayerInfos auf dem Server
-				this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
-				
-				NetworkPlayerData dataTwo = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();;
-				dataTwo.setReady(false);
-				//update die PlayerInfos auf dem Server
-				this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
+				localPlayer.setReady(false);
+				this.networkView.RPC("updatePlayerInfo",RPCMode.All, localPlayer.getPlayerData()[0], localPlayer.getPlayerData()[1], localPlayer.getPlayerData()[2], localPlayer.getPlayerData()[3]);
 			}
 			//lade den CarChooser
 			Application.LoadLevel("ChooseCar");
 		}
 
-		//Button, um bereit zu sein
-		if(GUI.Button(new Rect(Screen.width - 250, Screen.height - 40, 100, 20), "Bereit!"))
+		//überprüfe, ob die lokalen SPieler schon ein Autogewählt haben
+		bool localReady = true;
+		foreach(NetworkPlayerData localPlayer in localPlayerInfos)
 		{
-			if(PlayerPrefs.GetInt("LocalPlayers") == 1)
+			if(localPlayer.getPlayerData()[2].Equals("nicht gewählt"))
 			{
-				NetworkPlayerData data = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();
-				data.setReady(true);
-				//update die PlayerInfos auf dem Server
-				this.networkView.RPC("updatePlayerInfo",RPCMode.All, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
+				localReady = false;
 			}
-			//ansonsten sind es zwei Spieler
-			else
+		}
+
+		//Spieler sollen nur bereit sein, wen sie ein AUto gewählt haben
+		if(localReady == true)
+		{
+			//Button, um bereit zu sein
+			if(GUI.Button(new Rect(Screen.width - 250, Screen.height - 40, 100, 20), "Bereit!"))
 			{
-				NetworkPlayerData dataOne = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();;
-				dataOne.setReady(true);
-				//update die PlayerInfos auf dem Server
-				this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataOne.getPlayerData()[0], dataOne.getPlayerData()[1], dataOne.getPlayerData()[2], dataOne.getPlayerData()[3]);
-				
-				NetworkPlayerData dataTwo = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();;
-				dataTwo.setReady(true);
-				//update die PlayerInfos auf dem Server
-				this.networkView.RPC("updatePlayerInfo",RPCMode.All, dataTwo.getPlayerData()[0], dataTwo.getPlayerData()[1], dataTwo.getPlayerData()[2], dataTwo.getPlayerData()[3]);
+				foreach(NetworkPlayerData localPlayer in localPlayerInfos)
+				{
+					localPlayer.setReady(true);
+					this.networkView.RPC("updatePlayerInfo",RPCMode.All, localPlayer.getPlayerData()[0], localPlayer.getPlayerData()[1], localPlayer.getPlayerData()[2], localPlayer.getPlayerData()[3]);
+				}
 			}
 		}
 		//button um zum Netzwerkmenü zurückzukehren
