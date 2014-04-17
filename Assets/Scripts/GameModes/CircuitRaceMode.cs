@@ -50,10 +50,15 @@ public class CircuitRaceMode : MonoBehaviour
 	//countDown zum anzeigen der SpielerInfos nachdem das Rennen vorbei ist
 	private float finishedRaceCountdown = 4.0f;
 
+	bool initialized = false;
+
+	public GameObject playerStatsPrefab;
+
 
 	// Use this for initialization
 	void Start () 
 	{
+		this.networkView.viewID = Network.AllocateViewID();
 		playerList = new List<CircuitModePlayerStats>();
 		explodedPlayerData = new List<string[]>();
 		playerPosition = new List<int>();
@@ -73,20 +78,82 @@ public class CircuitRaceMode : MonoBehaviour
 		//gehe die Playerlist durch und initialisiere die CircuitModePlayerStats
 		for(int i = 0; i < playerCtrl.playerList.Count; i++)
 		{
-			//füge an jeden Player einen CircuitModePlayerStats hinzu
-			CircuitModePlayerStats player = playerCtrl.playerList[i].AddComponent("CircuitModePlayerStats") as CircuitModePlayerStats;
-			player.circuitMode = this;
-			player.setNumberOfCheckpoints(checkpoints.Length);
-			player.carNumber = i;
-			player.setFirstCheckpoint(firstCheckpoint);
-			playerList.Add(player);
-			//erstes Auto ist erstmal erster
-			playerPosition.Add(i);
+			addPlayerStatsComponentToPlayer(playerCtrl.playerList[i],i);
+			initialized = true;
+		}
+
+		for(int i = 0; i<playerPosition.Count; ++i){
+			playerList[i].currentPosition = playerPosition[i];
 		}
 	}
-	
+
+	[RPC]
+	public void addStatsComponentInNetwork(NetworkViewID id,int index){
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		GameObject correctPlayer = null;
+		foreach(GameObject p in players){
+			if(p.networkView.viewID == id){
+				correctPlayer = p;
+			}
+		}
+		addPlayerStatsComponentToPlayer(correctPlayer,index);
+	}
+
+	void addPlayerStatsComponentToPlayer(GameObject playerObject,int index){
+		//CircuitModePlayerStats player = playerObject.AddComponent("CircuitModePlayerStats") as CircuitModePlayerStats;
+		CircuitModePlayerStats player;
+		NetworkView netV;
+		GameObject g;
+		if(Network.connections.Length>0){
+			g = (GameObject) Network.Instantiate(playerStatsPrefab,playerObject.transform.position,playerObject.transform.rotation,0);
+		} else {
+			g = (GameObject) GameObject.Instantiate(playerStatsPrefab,playerObject.transform.position,playerObject.transform.rotation);
+		}
+		g.transform.parent = playerObject.transform;
+		player = g.GetComponent<CircuitModePlayerStats>();
+		netV = g.GetComponent<NetworkView>();
+		
+		player.circuitMode = this;
+		player.setNumberOfCheckpoints(checkpoints.Length);
+		player.carNumber = findUniqueCarNumber();
+		player.setFirstCheckpoint(firstCheckpoint);
+		player.carIndex = index;
+		playerList.Add(player);
+		//erstes Auto ist erstmal erster
+		playerPosition.Add(index);
+		
+		//NetworkView netV = playerCtrl.playerList[index].AddComponent<NetworkView>();
+		//netV.viewID = Network.AllocateViewID();
+		netV.observed = player;
+
+		g.networkView.RPC("setParent",RPCMode.OthersBuffered,playerObject.networkView.viewID,player.networkView.viewID);
+	}
+
+	int findUniqueCarNumber(){
+		List<CircuitModePlayerStats> l = new List<CircuitModePlayerStats>();
+		foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){
+			if(g.GetComponentInChildren<CircuitModePlayerStats>() != null){
+				l.Add(g.GetComponentInChildren<CircuitModePlayerStats>());
+			}
+    	}
+		int nextIndex = -1;
+		for(int i = 0; i < l.Count; ++i){
+			if(l[i].carNumber != -1){
+				nextIndex++;
+			}
+		}
+		return nextIndex;
+	}
 	void Update()
 	{
+		if(!initialized){
+			//gehe die Playerlist durch und initialisiere die CircuitModePlayerStats
+			for(int i = 0; i < playerCtrl.playerList.Count; i++)
+			{
+				addPlayerStatsComponentToPlayer(playerCtrl.playerList[i],i);
+				initialized = true;
+			}
+		}
 		//falls das Rennen nicht gestartet wurde, verhindere, das die AUtos sich bewegen
 		if(hasRaceStarted == false)
 		{
@@ -94,7 +161,7 @@ public class CircuitRaceMode : MonoBehaviour
 			foreach(CircuitModePlayerStats player in playerList)
 			{
 				//blokiere alle Bewegungen
-				player.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+				player.gameObject.transform.parent.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 			}
 			//zähle Timer runter
 			countDown -= Time.deltaTime;
@@ -105,22 +172,24 @@ public class CircuitRaceMode : MonoBehaviour
 				foreach(CircuitModePlayerStats player in playerList)
 				{
 					//blokiere nicht mehr alle Bewegungen
-					player.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+					player.gameObject.transform.parent.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 					//starte das Rennen
 					player.startRace();
 				}
 			}
 		}
 
+		updateLeaderboard();
 		//da die updateLeaderboard Methode nur alle x Sekunden aufgerufen werden soll, Platzierung muss nicht ständig aktuallisert werden
 		//wird hier ein "sleep"Timer verwendet
+		/*
 		leaderboardTimer += Time.deltaTime;
 		if(leaderboardTimer >= 3.0f)
 		{
 			updateLeaderboard();
 			leaderboardTimer = 0.0f;
 		}
-
+		*/
 		//falls ein Spieler das Rennen beendet hat, zähle den Countdown runter
 		if(hasOneFinishedTheRace == true)
 		{
@@ -183,10 +252,10 @@ public class CircuitRaceMode : MonoBehaviour
 			foreach(CircuitModePlayerStats player in playerList)
 			{
 				//zerstöre die Kamera, das HUD und die CircuitModePlayerStats
-				GameObject.Destroy(player.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
-				GameObject.Destroy(player.GetComponent<PlayerInputController>().hud.gameObject);
+				GameObject.Destroy(player.transform.parent.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
+				GameObject.Destroy(player.transform.parent.GetComponent<PlayerInputController>().hud.gameObject);
 				//circuitModePlayerStats deswegen, weil sonst ein großer WRONG WAY erscheint
-				GameObject.Destroy(player.GetComponent<CircuitModePlayerStats>());
+				GameObject.Destroy(player.transform.parent.GetComponent<CircuitModePlayerStats>());
 			}
 			//gehe alle Objekte mit dem Tag MiniMap durch und lösche sie
 			GameObject[] minimaps = GameObject.FindGameObjectsWithTag("MiniMap");
@@ -219,27 +288,46 @@ public class CircuitRaceMode : MonoBehaviour
 		{
 			return;
 		}
+		List<int> allPlayerPositions;
+		List<CircuitModePlayerStats> allPlayerStats = new List<CircuitModePlayerStats>();
+		if(Network.connections.Length > 0){
+			List<int> l = new List<int>();
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){
+				l.Add(g.GetComponentInChildren<CircuitModePlayerStats>().carNumber);
+				allPlayerStats.Add(g.GetComponentInChildren<CircuitModePlayerStats>());
+			}
+			allPlayerPositions = l;
+		} else {
+			allPlayerPositions = playerPosition;
+			for(int i = 0; i<playerCtrl.playerList.Count; ++i){
+				allPlayerStats.Add(playerCtrl.playerList[i].GetComponentInChildren<CircuitModePlayerStats>());
+			}
+		}
+		playerList = allPlayerStats;
 		//sortieren die Liste nach meiner eigenen sortierfunktion
-		playerPosition.Sort(comparePlayerCheckpoints);
-		
+		allPlayerPositions.Sort(comparePlayerCheckpoints);
+
 		//hier müsste man dem HUD bescheidsagen, das er sich aktuallisieren soll
 		//eventuell könnte man das als StringArray mit den Spielernamen machen
-		for(int i = 0; i < playerPosition.Count; i++)
+		for(int i = 0; i < allPlayerPositions.Count; i++)
 		{
+			if(Network.connections.Length == 0 || allPlayerStats[allPlayerPositions[i]].networkView.owner == Network.player){
 			//Debug.Log (i + ". Pos: " + playerPosition[i]);	
-			HUD hud = playerCtrl.playerList[i].GetComponent<PlayerInputController>().hud;
-			string postfix;
-			switch(playerPosition[i]){
-				case 0: postfix="st";
-					break;
-				case 1: postfix="nd";
-					break;
-				case 2: postfix="rd";
-					break;
-				default: postfix="th";
-					break;
+				HUD hud = allPlayerStats[allPlayerPositions[i]].transform.parent.GetComponent<PlayerInputController>().hud;
+				string postfix;
+				switch(i){
+					case 0: postfix="st";
+						break;
+					case 1: postfix="nd";
+						break;
+					case 2: postfix="rd";
+						break;
+					default: postfix="th";
+						break;
+				}
+				hud.rank.text = ""+ (i+1)+ postfix +" Place";
+				allPlayerStats[allPlayerPositions[i]].currentPosition = i;
 			}
-			hud.rank.text = ""+ (playerPosition[i]+1)+ postfix +" Place";
 		}
 	}
 	

@@ -16,10 +16,16 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//Referenz auf den LapRaceMode
 	public CircuitRaceMode circuitMode;
 	//nummer der Autos (wichtig bei mehreren Spielern)
-	public int carNumber;
+	public int carNumber = -1;
+
+	public int carIndex;
+
+	public int currentPosition;
 	
 	//aktueller (zuletzt erfolgreich durchgefahrener) CheckPoint, in Fahrtrichtung
 	private Checkpoint currentCheckpoint;
+	//index des aktuellen Checkpoints
+	public int currentCheckpointNumber;
 	//die Anzahl der Checkpoints
 	private int numberOfCheckpoints;
 	//timer, der anspringen soll, wenn sich das Auto nach x sekunden in die falsche richtung fährt
@@ -35,7 +41,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//schnellste Runde
 	private float fastestLap;
 	//anzahl durchgefahrerer Checkpoints
-	private int numberOfDrivenCheckpoints = 0;
+	public int numberOfDrivenCheckpoints = 0;
 	//aktuell zu durchfahrende RUnde
 	private int currentLapToDrive = 1;
 
@@ -72,7 +78,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			//überprüfe, ob das AUto in die falsche RIchtung fährt
 			//falls wir in die richtige Richtung fahren, resete den Timer
-			if (currentCheckpoint.isDrivingInRightDirection(transform.GetComponent<Rigidbody>().velocity) == true)
+			if (currentCheckpoint.isDrivingInRightDirection(transform.parent.GetComponent<Rigidbody>().velocity) == true)
 			{
 				directionTimer = 0.0f;
 			}
@@ -83,12 +89,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 			}
 
 			//schaue, ob das Auto bereits exploriert ist, wenn ja, beende das Rennen für diesen Fahrzeug
-			Car car = transform.GetComponent<Car>();
+			Car car = transform.parent.GetComponent<Car>();
 			if(car.getHealth() <= 0.0f)
 			{
 				hasFinishedRace = true;
 				//beende das Rennen für diesen InputController
-				transform.GetComponent<PlayerInputController>().endRace();
+				transform.parent.GetComponent<PlayerInputController>().endRace();
 
 				//übergebe die PlayerStats
 				string fastestLapStr = "";
@@ -102,7 +108,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 					fastestLapStr = TimeConverter.floatToString(fastestLap);
 				}
 				//Spielername, zeige dsa das AUto zerstört wurde , schnellste Runde
-				circuitMode.addExplodedPlayerData(new string[]{transform.GetComponent<PlayerInputController>().playerName, "RIP", fastestLapStr});
+				circuitMode.addExplodedPlayerData(new string[]{transform.parent.GetComponent<PlayerInputController>().playerName, "RIP", fastestLapStr});
 				//sage dem HUD bescheid, dass das Rennen beendet wurde
 				gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
 			}
@@ -114,9 +120,11 @@ public class CircuitModePlayerStats : MonoBehaviour
 			} else {
 				wrongWay = false;
 			}
-			//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
-			HUD hud = circuitMode.playerCtrl.playerList[carNumber].GetComponent<PlayerInputController>().hud;
-			hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
+			if(networkView.isMine || Network.connections.Length == 0){
+				//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
+				HUD hud = circuitMode.playerCtrl.playerList[carIndex].GetComponent<PlayerInputController>().hud;
+				hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
+			}
 		}
 	}
 	
@@ -130,6 +138,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 	public void setFirstCheckpoint(Checkpoint chk)
 	{
 		currentCheckpoint = chk;
+		currentCheckpointNumber = currentCheckpoint.checkpointNumber;
 	}
 	
 	//die Anzahl der CHeckpoiints wird gesetzt
@@ -147,7 +156,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//gibt die Nummer des momentanens Checkpoint zurück
 	public int getCurrentCheckpointNumber()
 	{
-		return currentCheckpoint.checkpointNumber;
+		return currentCheckpointNumber;
 	}
 	
 	//liefert den aktuellen Checkpoint zurück
@@ -188,7 +197,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 			currentLapToDrive--;
 
 			//beende das Rennen für diesen InputController
-			transform.GetComponent<PlayerInputController>().endRace();
+			transform.parent.GetComponent<PlayerInputController>().endRace();
 			
 			//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
 			Car car = transform.GetComponent<Car>();
@@ -201,7 +210,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			//übergebe die PlayerStats
 			//Controllernummer, gesamtzeit, schnellste RUnde
-			circuitMode.playerHasFinishedRace(new string[]{transform.GetComponent<PlayerInputController>().playerName, 
+			circuitMode.playerHasFinishedRace(new string[]{transform.parent.GetComponent<PlayerInputController>().playerName, 
 												TimeConverter.floatToString(totalTime), TimeConverter.floatToString(fastestLap)});
 			//sage dem HUD bescheid, dass das Rennen beendet wurde
 			gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
@@ -217,10 +226,10 @@ public class CircuitModePlayerStats : MonoBehaviour
 	public void endRaceBecauseHeIsTooSlow()
 	{
 		//beende das Rennen für diesen InputController
-		transform.GetComponent<PlayerInputController>().endRace();
+		transform.parent.GetComponent<PlayerInputController>().endRace();
 		
 		//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
-		Car car = transform.GetComponent<Car>();
+		Car car = transform.parent.GetComponent<Car>();
 		car.setThrottle(0.0f);
 		car.setHandbrake(true);
 		
@@ -241,7 +250,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 		}
 
 		//Controllernummer, war zu langsam, schnellste RUnde
-		circuitMode.playerHasFinishedRace(new string[]{transform.GetComponent<PlayerInputController>().playerName, "Too slow", fastestLapStr});
+		circuitMode.playerHasFinishedRace(new string[]{transform.parent.GetComponent<PlayerInputController>().playerName, "Too slow", fastestLapStr});
 		//sage dem HUD bescheid, dass das Rennen beendet wurde
 		gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
 	}
@@ -253,6 +262,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 		if(currentCheckpoint.checkpointNumber + 1 == chkPoint.checkpointNumber)
 		{
 			currentCheckpoint = chkPoint;
+			currentCheckpointNumber = currentCheckpoint.checkpointNumber;
 			numberOfDrivenCheckpoints++;
 		}
 		//falls es die Checkpointmummer 0 ist (Startcheckpoint) und wir vom letzten gekommen sind
@@ -260,6 +270,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 		{
 			finishedLap();
 			currentCheckpoint = chkPoint;
+			currentCheckpointNumber = currentCheckpoint.checkpointNumber;
 		}
 	}
 
@@ -308,10 +319,10 @@ public class CircuitModePlayerStats : MonoBehaviour
 				float aspectRatio = currentRatio / optimizedRatio;
 				if(wrongWayTimer >=1.0f){
 					if(carNumber == 0){
-						GUI.DrawTexture(new Rect(Screen.width/2 - 400*aspectRatio/2,Screen.height *3/4 - 400*aspectRatio/2,400*aspectRatio,400*aspectRatio),circuitMode.wrongWayTexture);
+						GUI.DrawTexture(new Rect(Screen.width/2 - 300*aspectRatio/2,Screen.height *3/4 - 300*aspectRatio/2,300*aspectRatio,300*aspectRatio),circuitMode.wrongWayTexture);
 					}
 					if(carNumber == 1){
-						GUI.DrawTexture(new Rect(Screen.width/2 - 400*aspectRatio/2,Screen.height/4 - 400*aspectRatio/2,400*aspectRatio,400*aspectRatio),circuitMode.wrongWayTexture);
+						GUI.DrawTexture(new Rect(Screen.width/2 - 300*aspectRatio/2,Screen.height/4 - 300*aspectRatio/2,300*aspectRatio,300*aspectRatio),circuitMode.wrongWayTexture);
 					}
 					wrongWayTimer+=Time.deltaTime;
 					if(wrongWayTimer>=2.0f){
@@ -322,5 +333,57 @@ public class CircuitModePlayerStats : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info){
+
+		int currentCheckpointNumberSerial = -1;
+		int currentPositionSerial = -1;
+		int carNumberSerial = -1;
+		int numberOfCheckpointsSerial = -1;
+
+		if(stream.isWriting){
+			currentCheckpointNumberSerial = currentCheckpointNumber;
+			stream.Serialize(ref currentCheckpointNumberSerial);
+
+			currentPositionSerial = currentPosition;
+			stream.Serialize(ref currentPositionSerial);
+
+			carNumberSerial = carNumber;
+			stream.Serialize(ref carNumberSerial);
+
+			numberOfCheckpointsSerial = numberOfCheckpoints;
+			stream.Serialize(ref numberOfCheckpointsSerial);
+		} else {
+			stream.Serialize(ref currentCheckpointNumberSerial);
+			currentCheckpointNumber = currentCheckpointNumberSerial;
+
+			stream.Serialize(ref currentPositionSerial);
+			currentPosition = currentPositionSerial;
+
+			stream.Serialize(ref carNumberSerial);
+			carNumber = carNumberSerial;
+
+			stream.Serialize(ref numberOfCheckpointsSerial);
+			numberOfCheckpoints = numberOfCheckpointsSerial;
+		}
+	}
+
+	[RPC]
+	void setParent(NetworkViewID carID, NetworkViewID playerStatsID){
+		if(this.networkView.viewID != playerStatsID){
+			Debug.Log(playerStatsID);
+			return;
+
+		}
+
+		foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){
+			if(g.networkView.viewID == carID){
+				this.transform.parent = g.transform;
+			}
+		}
+
+		circuitMode = GameObject.FindGameObjectWithTag("CircuitMode").GetComponent<CircuitRaceMode>();
+		setFirstCheckpoint(circuitMode.firstCheckpoint);
 	}
 }

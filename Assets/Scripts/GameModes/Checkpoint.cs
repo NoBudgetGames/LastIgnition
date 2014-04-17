@@ -29,7 +29,7 @@ public class Checkpoint : MonoBehaviour
 	{
 		//gucke auf die Wurzel des other, da sich dort der CheckpointCounter befindet, das das Auto keinen Parent hat
 		//wird allerdings für jeden DestructibleCarPart aufgerufen....
-		CircuitModePlayerStats chkPointCount = other.gameObject.transform.root.GetComponent<CircuitModePlayerStats>();
+		CircuitModePlayerStats chkPointCount = other.gameObject.transform.root.GetComponentInChildren<CircuitModePlayerStats>();
 		if(chkPointCount != null)
 		{
 			chkPointCount.updateCheckpoint(this);
@@ -55,6 +55,6 @@ public class Checkpoint : MonoBehaviour
 	{
 		//erreche position des Autos zum Checkpoint in localspace des CHeckpoints um,
 		//hier ist nur der y-Wert interresant, da er den Abstand zum Checkpoint parallel zur Straße darstellt
-		return transform.InverseTransformDirection(carPos).y;
+		return -transform.InverseTransformDirection(carPos).y;
 	}
 }
