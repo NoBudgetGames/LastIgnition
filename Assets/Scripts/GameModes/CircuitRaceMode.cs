@@ -44,7 +44,7 @@ public class CircuitRaceMode : MonoBehaviour
 	//wurde die Kameras zerstört?
 	private bool camerasDestroyed = false;
 	//Countdown für start des Spiels
-	private float countDown = 4.0f;
+	public float countDown = 4.0f;
 	//wurd das Rennen gestartet?
 	private bool hasRaceStarted = false;
 	//countDown zum anzeigen der SpielerInfos nachdem das Rennen vorbei ist
@@ -58,7 +58,7 @@ public class CircuitRaceMode : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		this.networkView.viewID = Network.AllocateViewID();
+		//this.networkView.viewID = Network.AllocateViewID();
 		playerList = new List<CircuitModePlayerStats>();
 		explodedPlayerData = new List<string[]>();
 		playerPosition = new List<int>();
@@ -144,6 +144,12 @@ public class CircuitRaceMode : MonoBehaviour
 		}
 		return nextIndex;
 	}
+
+	[RPC]
+	public void transmitRaceStartCountdown(float cTimer){
+		countDown = cTimer;
+	}
+
 	void Update()
 	{
 		if(!initialized){
@@ -164,7 +170,13 @@ public class CircuitRaceMode : MonoBehaviour
 				player.gameObject.transform.parent.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 			}
 			//zähle Timer runter
-			countDown -= Time.deltaTime;
+			if(Network.connections.Length == 0 || Network.isServer){
+				countDown -= Time.deltaTime;
+			}
+			if(Network.connections.Length > 0 && Network.isServer){
+				this.networkView.RPC("transmitRaceStartCountdown",RPCMode.Others,countDown);
+			}
+
 			if(countDown <= 0.0f)
 			{
 				hasRaceStarted = true;

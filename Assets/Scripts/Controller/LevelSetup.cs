@@ -25,6 +25,7 @@ public class LevelSetup : MonoBehaviour
 		loadedPlayers = new bool[Network.connections.Length];
 		twoLocalPlayerObject.SetActive(false);
 		modeObject.SetActive(false);
+
 	}
 
 	// Update is called once per frame
@@ -45,6 +46,7 @@ public class LevelSetup : MonoBehaviour
 		for(int i = 0; i<loadedPlayers.Length;++i){
 			if(!loadedPlayers[i]){
 				loadedPlayers[i] = true;
+				return;
 			}
 		}
 	}
@@ -63,7 +65,14 @@ public class LevelSetup : MonoBehaviour
 	//Wird aufgerufen sobald das Level geladen wurde und der Nachrichten Stream wieder aktiv ist
 	void OnNetworkLoadedLevel(){
 		
-		this.networkView.RPC("notifyLevelLoad",RPCMode.AllBuffered);
+		this.networkView.RPC("notifyLevelLoad",RPCMode.OthersBuffered);
 	}
+	/*
+ 	void OnGUI(){
+		if(GUI.Button(new Rect(Screen.width/2,Screen.height/2,100,100),"Bereit")){
+			this.networkView.RPC("notifyLevelLoad",RPCMode.OthersBuffered);
+		}
+	}
+	*/
 }
 

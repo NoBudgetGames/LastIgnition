@@ -56,13 +56,39 @@ public class CircuitModePlayerStats : MonoBehaviour
 	//Damit die Textur nicht dauerhaft da ist, sonder blinkt
 	private float wrongWayTimer;
 
+	public float networkTimeInitial;
+	public float networkLapStartTime;
+
 	void Start()
 	{
+		//this.networkView.viewID = Network.AllocateViewID();
 		lapTime = 0.0f;
 		totalTime = 0.0f;
 		fastestLap = -1.0f;
+
+		if(Network.connections.Length > 0){
+			if(Network.isServer){
+			   if(networkTimeInitial == 0.0f){
+					GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+					for(int i = 0; i < players.Length; ++i){
+						CircuitModePlayerStats stats = players[i].GetComponentInChildren<CircuitModePlayerStats>();
+						stats.networkTimeInitial = (float)(Network.time);
+						stats.networkLapStartTime = networkTimeInitial;
+					}
+				}
+				this.networkView.RPC("transmitNetworkTime",RPCMode.OthersBuffered,networkTimeInitial);
+			}
+		}
 	}
-	
+
+	[RPC]
+	public void transmitNetworkTime(float time){
+		networkTimeInitial = time;
+		networkLapStartTime = networkTimeInitial;
+	}
+
+
+
 	// Update is called once per frame
 	//hier wird überprüft, ob sich das AUto in der falschen Richtung bewegt
 	//dazu wird geschaut, ob der Geschwindindigkeitsvektor mit der (Fahrt-)Richtung des Checkpoints übereinstimmt
@@ -73,8 +99,13 @@ public class CircuitModePlayerStats : MonoBehaviour
 		if(hasRaceStarted == true && hasFinishedRace == false)
 		{
 			//zähle die Rundenzeit hoch,
-			lapTime += Time.deltaTime;
-			totalTime += Time.deltaTime;
+			if(Network.connections.Length == 0){
+				lapTime += Time.deltaTime;
+				totalTime += Time.deltaTime;
+			} else {
+				lapTime = (float)(Network.time) - networkTimeInitial;
+				totalTime = (float)(Network.time) - networkLapStartTime;
+			}
 
 			//überprüfe, ob das AUto in die falsche RIchtung fährt
 			//falls wir in die richtige Richtung fahren, resete den Timer
@@ -127,7 +158,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 			}
 		}
 	}
-	
+
 	//die Methode sagt dem Auto quasi Bescheid, dass das Rennen jetzt startet
 	public void startRace()
 	{
@@ -219,6 +250,9 @@ public class CircuitModePlayerStats : MonoBehaviour
 		else 
 		{
 			lapTime = 0.0f;
+			if(Network.connections.Length>0){
+				networkLapStartTime = (float)Network.time;
+			}
 		}
 		showBestRound = true;
 	}
@@ -341,6 +375,8 @@ public class CircuitModePlayerStats : MonoBehaviour
 		int currentPositionSerial = -1;
 		int carNumberSerial = -1;
 		int numberOfCheckpointsSerial = -1;
+		float networkTimeInitialSerial = -1.0f;
+		float networkLapTimeSerial = -1.0f;
 
 		if(stream.isWriting){
 			currentCheckpointNumberSerial = currentCheckpointNumber;
@@ -354,6 +390,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			numberOfCheckpointsSerial = numberOfCheckpoints;
 			stream.Serialize(ref numberOfCheckpointsSerial);
+
+			networkTimeInitialSerial = networkTimeInitial;
+			stream.Serialize(ref networkTimeInitialSerial);
+
+			networkLapTimeSerial = networkLapStartTime;
+			stream.Serialize(ref networkLapTimeSerial);
 		} else {
 			stream.Serialize(ref currentCheckpointNumberSerial);
 			currentCheckpointNumber = currentCheckpointNumberSerial;
@@ -366,6 +408,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			stream.Serialize(ref numberOfCheckpointsSerial);
 			numberOfCheckpoints = numberOfCheckpointsSerial;
+
+			stream.Serialize(ref networkTimeInitialSerial);
+			networkTimeInitial = networkTimeInitialSerial;
+
+			stream.Serialize(ref networkLapTimeSerial);
+			networkLapStartTime = networkLapTimeSerial;
 		}
 	}
 

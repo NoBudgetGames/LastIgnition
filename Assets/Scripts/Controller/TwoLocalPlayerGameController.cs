@@ -22,6 +22,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
+		//this.networkView.viewID = Network.AllocateViewID();
 		playerList = new List<GameObject>();
 		if(PlayerPrefs.GetInt("LocalPlayers") == 1)
 		{

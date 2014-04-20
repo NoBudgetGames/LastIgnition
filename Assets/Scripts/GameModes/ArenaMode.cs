@@ -52,9 +52,9 @@ public class ArenaMode : MonoBehaviour
 			for(int i = 0; i < players.Count; ++i){
 				lives.Add(MAX_LIVES);
 				ranks.Add(1);
+				initialised = true;
 			}	
 			updateRanks();
-			initialised = true;
 		}
 
 		//falls Match noch nicht gestartet, zähle Countdown runter und freeze Spieler
@@ -67,7 +67,11 @@ public class ArenaMode : MonoBehaviour
 				player.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 			}
 			//zähle den Counter runter
-			countDown -= Time.deltaTime;
+			if(Network.connections.Length == 0 || Network.isServer){
+				countDown -= Time.deltaTime;
+				this.networkView.RPC("transmitStartCountdown",RPCMode.Others,countDown);
+
+			}
 
 			//wenn countDown abgelaufen, starte das Match
 			if(countDown <= 0.0f)
@@ -188,6 +192,11 @@ public class ArenaMode : MonoBehaviour
 
 		if(!hasMatchFinished)
 			updateLives();
+	}
+
+	[RPC]
+	public void transmitStartCountdown(float cTimer){
+		countDown = cTimer;
 	}
 
 	//Berechnet den Aktuellen Rang der Spieler basierend auf den verbleibenden Leben
