@@ -26,9 +26,8 @@ public class Rocket : MonoBehaviour
 		force = 7000.0f;
 		speed = 500.0f;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+	void FixedUpdate ()
 	{
 		//Simpler gerader Bahnverlauf
 		transform.position += forwardVector*Time.deltaTime*speed;

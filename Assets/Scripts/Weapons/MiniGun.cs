@@ -26,7 +26,12 @@ public class MiniGun : Weapon {
 	// Update is called once per frame
 	void Update () {
 
-		this.GetComponentInChildren<RealAudioSource>().setPosition(new Vector3());
+		if(Network.connections.Length == 0 || this.transform.root.networkView.owner == Network.player){
+			this.GetComponentInChildren<RealAudioSource>().setPosition(new Vector3(0,0,1));
+		} else {
+			this.GetComponentInChildren<RealAudioSource>().setPosition(this.transform.root.position);
+		}
+
 		//Sobald der Button gedrückt wird schießt die Minigun
 		//EVTL DELAY EINFÜGEN, WEGEN ANLAUFEN
 		if(buttonPressed){

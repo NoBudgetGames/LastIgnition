@@ -6871,6 +6871,14 @@ Prefab:
       propertyPath: spawnPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1010889249}
+    - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
+      propertyPath: m_ViewID.m_ID
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
+      propertyPath: m_ViewID.m_Type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
   m_RootGameObject: {fileID: 1795911546}
@@ -7666,6 +7674,14 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
+      propertyPath: m_ViewID.m_ID
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
+      propertyPath: m_ViewID.m_Type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
   m_RootGameObject: {fileID: 1441144884}
@@ -8375,13 +8391,27 @@ GameObject:
   m_Component:
   - 4: {fileID: 1441144887}
   - 114: {fileID: 1441144886}
+  - 148: {fileID: 1441144885}
   m_Layer: 0
   m_Name: CircuitModeController
-  m_TagString: Untagged
+  m_TagString: CircuitMode
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!148 &1441144885
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1362452740}
+  m_GameObject: {fileID: 1441144884}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1441144886}
+  m_ViewID:
+    m_ID: 13
+    m_Type: 1
 --- !u!114 &1441144886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8421,6 +8451,8 @@ MonoBehaviour:
   playerCtrl: {fileID: 1795911547}
   finishedCam: {fileID: 367678628}
   wrongWayTexture: {fileID: 2800000, guid: b29c133450d5bc74cac2f76eec27b9d1, type: 3}
+  countDown: 4
+  playerStatsPrefab: {fileID: 100000, guid: c52dd3fbb909981418735504a99ae98d, type: 2}
 --- !u!4 &1441144887
 Transform:
   m_ObjectHideFlags: 0
@@ -11114,11 +11146,11 @@ NetworkView:
   m_PrefabInternal: {fileID: 1226243873}
   m_GameObject: {fileID: 1795911546}
   m_Enabled: 1
-  m_StateSynchronization: 0
+  m_StateSynchronization: 1
   m_Observed: {fileID: 1795911547}
   m_ViewID:
-    m_ID: 0
-    m_Type: 0
+    m_ID: 12
+    m_Type: 1
 --- !u!1001 &1796902940
 Prefab:
   m_ObjectHideFlags: 0
