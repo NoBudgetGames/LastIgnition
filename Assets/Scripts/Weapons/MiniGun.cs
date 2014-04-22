@@ -38,6 +38,7 @@ public class MiniGun : Weapon {
 			//firing = true;
 			if(firingDelayTimer == 0.0f){
 				audio.Stop();
+				audio.loop = false;
 				audio.clip = audioClips[0];
 				audio.Play();
 			}
@@ -48,6 +49,7 @@ public class MiniGun : Weapon {
 			firingDelayTimer = 0.0f;
 			if(audio.isPlaying && audio.clip != audioClips[2]){
 				audio.Stop();
+				audio.loop = false;
 				audio.clip = audioClips[2];
 				audio.Play();
 			}
@@ -63,6 +65,7 @@ public class MiniGun : Weapon {
 			if(firing){
 				if(!audio.isPlaying){
 					audio.clip = audioClips[1];
+					audio.loop = true;
 					audio.Play();
 				}
 				timer+=Time.deltaTime;
@@ -99,6 +102,7 @@ public class MiniGun : Weapon {
 			}
 		}else {
 			timer = 0.0f;
+			audio.loop = false;
 		}
 	}
 
