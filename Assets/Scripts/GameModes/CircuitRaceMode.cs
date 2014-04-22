@@ -263,11 +263,13 @@ public class CircuitRaceMode : MonoBehaviour
 			//gehe durch alle Spieler durch
 			foreach(CircuitModePlayerStats player in playerList)
 			{
+				if(player.networkView.isMine){
 				//zerstöre die Kamera, das HUD und die CircuitModePlayerStats
 				GameObject.Destroy(player.transform.parent.GetComponent<PlayerInputController>().cameraCtrl.gameObject);
 				GameObject.Destroy(player.transform.parent.GetComponent<PlayerInputController>().hud.gameObject);
+				}
 				//circuitModePlayerStats deswegen, weil sonst ein großer WRONG WAY erscheint
-				GameObject.Destroy(player.transform.parent.GetComponent<CircuitModePlayerStats>());
+				GameObject.Destroy(player);
 			}
 			//gehe alle Objekte mit dem Tag MiniMap durch und lösche sie
 			GameObject[] minimaps = GameObject.FindGameObjectsWithTag("MiniMap");
@@ -318,7 +320,7 @@ public class CircuitRaceMode : MonoBehaviour
 		playerList = allPlayerStats;
 		//sortieren die Liste nach meiner eigenen sortierfunktion
 		allPlayerPositions.Sort(comparePlayerCheckpoints);
-
+		playerPosition = allPlayerPositions;
 		//hier müsste man dem HUD bescheidsagen, das er sich aktuallisieren soll
 		//eventuell könnte man das als StringArray mit den Spielernamen machen
 		for(int i = 0; i < allPlayerPositions.Count; i++)

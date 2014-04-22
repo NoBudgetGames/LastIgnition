@@ -19386,6 +19386,10 @@ Prefab:
       propertyPath: m_ViewID.m_Type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
+      propertyPath: lapsToDrive
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
   m_RootGameObject: {fileID: 1208119036}

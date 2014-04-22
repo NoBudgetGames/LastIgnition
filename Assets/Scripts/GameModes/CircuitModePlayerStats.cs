@@ -231,7 +231,7 @@ public class CircuitModePlayerStats : MonoBehaviour
 			transform.parent.GetComponent<PlayerInputController>().endRace();
 			
 			//Setze den Throttle vom Auto auf 0 und bremse mit der Handbremse
-			Car car = transform.GetComponent<Car>();
+			Car car = transform.parent.GetComponent<Car>();
 			car.setThrottle(0.0f);
 			car.setHandbrake(true);
 			
@@ -244,7 +244,9 @@ public class CircuitModePlayerStats : MonoBehaviour
 			circuitMode.playerHasFinishedRace(new string[]{transform.parent.GetComponent<PlayerInputController>().playerName, 
 												TimeConverter.floatToString(totalTime), TimeConverter.floatToString(fastestLap)});
 			//sage dem HUD bescheid, dass das Rennen beendet wurde
-			gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
+			if(this.networkView.isMine){
+				gameObject.transform.parent.GetComponent<PlayerInputController>().hud.raceEnded = true;
+			}
 		}
 		//ansonsten resete den Rundenzähler
 		else 
@@ -286,7 +288,9 @@ public class CircuitModePlayerStats : MonoBehaviour
 		//Controllernummer, war zu langsam, schnellste RUnde
 		circuitMode.playerHasFinishedRace(new string[]{transform.parent.GetComponent<PlayerInputController>().playerName, "Too slow", fastestLapStr});
 		//sage dem HUD bescheid, dass das Rennen beendet wurde
-		gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
+		if(this.networkView.isMine){
+			gameObject.transform.parent.GetComponent<PlayerInputController>().hud.raceEnded = true;
+		}
 	}
 	
 	//diese Methode überprüft, ob das Auto den richtigen Checkpoint abgefahren hat
