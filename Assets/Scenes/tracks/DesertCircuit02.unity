@@ -6871,6 +6871,14 @@ Prefab:
       propertyPath: spawnPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1010889249}
+    - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
+      propertyPath: m_ViewID.m_ID
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
+      propertyPath: m_ViewID.m_Type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
   m_RootGameObject: {fileID: 1795911546}
@@ -7666,6 +7674,14 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
+      propertyPath: m_ViewID.m_ID
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
+      propertyPath: m_ViewID.m_Type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
   m_RootGameObject: {fileID: 1441144884}
@@ -8394,8 +8410,8 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1441144886}
   m_ViewID:
-    m_ID: 0
-    m_Type: 0
+    m_ID: 18
+    m_Type: 1
 --- !u!114 &1441144886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11133,8 +11149,8 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1795911547}
   m_ViewID:
-    m_ID: 0
-    m_Type: 0
+    m_ID: 19
+    m_Type: 1
 --- !u!1001 &1796902940
 Prefab:
   m_ObjectHideFlags: 0
