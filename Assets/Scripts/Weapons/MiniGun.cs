@@ -8,6 +8,8 @@ public class MiniGun : Weapon {
 	public AudioSource audio;
 	public GameObject bullet;
 	public AudioClip[] audioClips = new AudioClip[3];
+
+	Animation animation;
 	// Use this for initialization
 	void Start () {
 		timer = 0.0f;
@@ -20,6 +22,8 @@ public class MiniGun : Weapon {
 
 		audio = this.GetComponentInChildren<AudioSource>();
 		firingDelayTimer = 0.0f;
+
+		animation = this.GetComponentInChildren<Animation>();
 		
 	}
 	
@@ -43,6 +47,7 @@ public class MiniGun : Weapon {
 				audio.Play();
 			}
 			firingDelayTimer += Time.deltaTime;
+			animation.Play();
 		}
 		else {
 			firing = false;
@@ -53,6 +58,7 @@ public class MiniGun : Weapon {
 				audio.clip = audioClips[2];
 				audio.Play();
 			}
+			animation.Stop();
 		}
 
 		if(firingDelayTimer>0.6f){
