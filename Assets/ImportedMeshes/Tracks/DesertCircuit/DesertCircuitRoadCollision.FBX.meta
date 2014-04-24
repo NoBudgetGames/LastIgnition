@@ -4,10 +4,20 @@ ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
+    100002: DesertCircuitCollisionAsphalt
+    100004: DesertCircuitCollisionDirt
     400000: //RootNode
+    400002: DesertCircuitCollisionAsphalt
+    400004: DesertCircuitCollisionDirt
     2300000: //RootNode
+    2300002: DesertCircuitCollisionAsphalt
+    2300004: DesertCircuitCollisionDirt
     3300000: //RootNode
+    3300002: DesertCircuitCollisionAsphalt
+    3300004: DesertCircuitCollisionDirt
     4300000: DesertCircuitRoadCollision
+    4300002: DesertCircuitCollisionAsphalt
+    4300004: DesertCircuitCollisionDirt
     9500000: //RootNode
   materials:
     importMaterials: 0

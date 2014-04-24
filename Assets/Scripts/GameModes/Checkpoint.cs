@@ -8,7 +8,7 @@ using System.Collections;
  * um festzustellen, ob das Auto in die Falsche RIchtung fährt.
  * DIe RIchtung ist dabei immer die y-Komponente im LocalSpace (die Prefab ist 
  * enstprechend mit einer Pyramide gekennzeichnet)
- * BITTE BEIM SETZTEN IN DIE SZENE DIE CHEKPOINTNUMMER IM NAMEN ÄNDERN
+ * BITTE BEIM SETZTEN IN DIE SZENE DIE CHEKPOINTNUMMER IM NAMEN ÄNDERN (ist zwar nicht nötig, macht die Sache aber übersichtlicher)
  */
 
 public class Checkpoint : MonoBehaviour 
