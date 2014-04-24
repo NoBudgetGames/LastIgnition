@@ -6,17 +6,36 @@ ModelImporter:
     100000: DodgeCollision
     100002: //RootNode
     100004: Street
+    100006: Cylinder001
+    100008: Box006
+    100010: Camera001
+    100012: Camera001.Target
+    100014: Bridge
     400000: DodgeCollision
     400002: //RootNode
     400004: Street
+    400006: Cylinder001
+    400008: Box006
+    400010: Camera001
+    400012: Camera001.Target
+    400014: Bridge
     2300000: DodgeCollision
     2300002: Street
     2300004: //RootNode
+    2300006: Cylinder001
+    2300008: Box006
+    2300010: Bridge
     3300000: DodgeCollision
     3300002: Street
     3300004: //RootNode
+    3300006: Cylinder001
+    3300008: Box006
+    3300010: Bridge
     4300000: DodgeCollision
     4300002: Street
+    4300004: Cylinder001
+    4300006: Box006
+    4300008: Bridge
     7400000: Take 001
     9500000: //RootNode
   materials:
@@ -37,7 +56,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .0199999996
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
