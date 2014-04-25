@@ -99,10 +99,6 @@ public class MiniGun : Weapon {
 								hit.collider.networkView.RPC("receiveDamage",hit.collider.networkView.owner,5.0f);
 							}
 						} 
-						else 
-						{
-							Debug.Log("Minigun hit something, but could't apply damage!");	
-						}
 					}
 				}
 			}

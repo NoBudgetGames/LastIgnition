@@ -8,7 +8,7 @@ using System.Collections;
  * um festzustellen, ob das Auto in die Falsche RIchtung fährt.
  * DIe RIchtung ist dabei immer die y-Komponente im LocalSpace (die Prefab ist 
  * enstprechend mit einer Pyramide gekennzeichnet)
- * BITTE BEIM SETZTEN IN DIE SZENE DIE CHEKPOINTNUMMER IM NAMEN ÄNDERN
+ * BITTE BEIM SETZTEN IN DIE SZENE DIE CHEKPOINTNUMMER IM NAMEN ÄNDERN (ist zwar nicht nötig, macht die Sache aber übersichtlicher)
  */
 
 public class Checkpoint : MonoBehaviour 
@@ -23,11 +23,11 @@ public class Checkpoint : MonoBehaviour
 	}
 
 	//wird ausgeführt, sobald ein Collider durchfährt,
-	//hier muss geschaut werden, ob der Collider einen Checkpointcouter hat und ihn wenn ja,
+	//hier muss geschaut werden, ob der Collider einen CircuitModePlayerStat hat und ihn wenn ja,
 	//ihn "hochzählen"
 	void OnTriggerEnter(Collider other)
 	{
-		//gucke auf die Wurzel des other, da sich dort der CheckpointCounter befindet, das das Auto keinen Parent hat
+		//gucke auf die Wurzel des other, da sich unterhalb von ihr der CircuitModePlayerStat befindet
 		//wird allerdings für jeden DestructibleCarPart aufgerufen....
 		CircuitModePlayerStats chkPointCount = other.gameObject.transform.root.GetComponentInChildren<CircuitModePlayerStats>();
 		if(chkPointCount != null)

@@ -1437,7 +1437,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294918143
+    m_Bits: 65536
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -2147,7 +2147,11 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 553583723}
   m_ViewID:
+<<<<<<< HEAD
     m_ID: 33
+=======
+    m_ID: 21
+>>>>>>> ba1d3140d2bb37552dd3306430fd1052eb2fd429
     m_Type: 1
 --- !u!1 &556215385
 GameObject:
@@ -3042,7 +3046,11 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 929864419}
   m_ViewID:
+<<<<<<< HEAD
     m_ID: 34
+=======
+    m_ID: 22
+>>>>>>> ba1d3140d2bb37552dd3306430fd1052eb2fd429
     m_Type: 1
 --- !u!1 &940048513
 GameObject:
@@ -3657,7 +3665,11 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1269175736}
   m_ViewID:
+<<<<<<< HEAD
     m_ID: 35
+=======
+    m_ID: 23
+>>>>>>> ba1d3140d2bb37552dd3306430fd1052eb2fd429
     m_Type: 1
 --- !u!1 &1273512655
 GameObject:
@@ -4716,7 +4728,11 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1598819520}
   m_ViewID:
+<<<<<<< HEAD
     m_ID: 36
+=======
+    m_ID: 24
+>>>>>>> ba1d3140d2bb37552dd3306430fd1052eb2fd429
     m_Type: 1
 --- !u!1 &1637844025
 GameObject:
@@ -4886,7 +4902,11 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1653842048}
   m_ViewID:
+<<<<<<< HEAD
     m_ID: 37
+=======
+    m_ID: 25
+>>>>>>> ba1d3140d2bb37552dd3306430fd1052eb2fd429
     m_Type: 1
 --- !u!1 &1669349991
 GameObject:
@@ -5819,6 +5839,10 @@ Prefab:
     - target: {fileID: 100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
       propertyPath: m_TagString
       value: MiniMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 65536
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}

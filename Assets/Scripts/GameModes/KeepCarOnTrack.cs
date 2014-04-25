@@ -11,16 +11,16 @@ public class KeepCarOnTrack : MonoBehaviour
 	//solange der Spieler sich im Trigger befindet, wird der Timer hochgezählt
 	void OnTriggerEnter(Collider other)
 	{
-		//falls es sich um einen Auto handelt
-		CircuitModePlayerStats player = other.gameObject.transform.root.GetComponent<CircuitModePlayerStats>();
+		//falls es sich um einen Auto handelt, CircuitModePlayerStats befinden sich unterhalb dem Root-Object
+		CircuitModePlayerStats player = other.gameObject.transform.root.GetComponentInChildren<CircuitModePlayerStats>();
 		if(player != null)
 		{
 			//neue resetPosition soll der zuletzt durchgefahrene Checkpoitn sein
-			player.GetComponent<Car>().setResetPosition(player.getCurrentCheckpoint().gameObject);
+			player.transform.root.gameObject.GetComponent<Car>().setResetPosition(player.getCurrentCheckpoint().gameObject);
 			//resete das Auto
-			player.GetComponent<Car>().resetCar(true);
+			player.transform.root.gameObject.GetComponent<Car>().resetCar(true);
 			//setzte die resetPositionzurück
-			player.GetComponent<Car>().setResetPosition(player.gameObject);
+			player.transform.root.gameObject.GetComponent<Car>().setResetPosition(player.gameObject);
 		}
 	}
 }
