@@ -139,7 +139,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1451219}
   m_ViewID:
-    m_ID: 1
+    m_ID: 2
     m_Type: 1
 --- !u!1 &45825954
 GameObject:
@@ -206,7 +206,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 45825955}
   m_ViewID:
-    m_ID: 2
+    m_ID: 3
     m_Type: 1
 --- !u!1001 &47323927
 Prefab:
@@ -1437,7 +1437,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -1656,7 +1656,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 379395887}
   m_ViewID:
-    m_ID: 3
+    m_ID: 4
     m_Type: 1
 --- !u!1 &410931625
 GameObject:
@@ -2147,7 +2147,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 553583723}
   m_ViewID:
-  m_ID: 33
+    m_ID: 1
     m_Type: 1
 --- !u!1 &556215385
 GameObject:
@@ -3042,8 +3042,8 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 929864419}
   m_ViewID:
-  m_ID: 34
-  m_Type: 1
+    m_ID: 40
+    m_Type: 1
 --- !u!1 &940048513
 GameObject:
   m_ObjectHideFlags: 0
@@ -3657,8 +3657,8 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1269175736}
   m_ViewID:
-  m_ID: 35
-  m_Type: 1
+    m_ID: 41
+    m_Type: 1
 --- !u!1 &1273512655
 GameObject:
   m_ObjectHideFlags: 0
@@ -4716,8 +4716,8 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1598819520}
   m_ViewID:
-  m_ID: 36
-  m_Type: 1
+    m_ID: 42
+    m_Type: 1
 --- !u!1 &1637844025
 GameObject:
   m_ObjectHideFlags: 0
@@ -4886,8 +4886,8 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1653842048}
   m_ViewID:
-  m_ID: 37
-  m_Type: 1
+    m_ID: 43
+    m_Type: 1
 --- !u!1 &1669349991
 GameObject:
   m_ObjectHideFlags: 0
@@ -5227,10 +5227,10 @@ Transform:
   m_LocalPosition: {x: 500, y: 19.9963379, z: 500}
   m_LocalScale: {x: 1.28999996, y: 1.28999996, z: 1.28999996}
   m_Children:
-  - {fileID: 1367216055}
   - {fileID: 237039197}
   - {fileID: 83635438}
   - {fileID: 1637844026}
+  - {fileID: 1367216055}
   m_Father: {fileID: 0}
 --- !u!1 &1897928815
 GameObject:
@@ -5822,7 +5822,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
       propertyPath: m_CullingMask.m_Bits
-      value: 65536
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
