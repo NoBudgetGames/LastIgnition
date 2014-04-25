@@ -263,34 +263,40 @@ public class MainMenu : MonoBehaviour
 	private void localLevelSelection()
 	{
 		// kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 100, Screen.height/2 - 200, 200, 300), "Levelauswahl");
+		GUI.Box(new Rect(Screen.width/2 - 100, Screen.height/2 - 200, 200, 350), "Levelauswahl");
 		
 		//erster Button, falls gedrückt, wird das erste Level geladen
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 150, 160, 20), "Derby-Arena im Stadium")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 150, 160, 20), "Derby-Arena 1")) 
 		{
 			PlayerPrefs.SetString("Level","ArenaStadium");
 			Application.LoadLevel("ChooseCar");
 		}
+		//Derby 2
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 100, 160, 20), "Derby-Arena 2")) 
+		{
+			PlayerPrefs.SetString("Level","ArenaStadium02");
+			Application.LoadLevel("ChooseCar");
+		}
 		//drittes Level
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 100, 160, 20), "Wüsten-Strecke 1")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 50, 160, 20), "Wüsten-Strecke 1")) 
 		{
 			PlayerPrefs.SetString("Level","DesertCircuit");
 			Application.LoadLevel("ChooseCar");
 		}
 		//....
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 50, 160, 20), "Wüsten-Strecke 2")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2, 160, 20), "Wüsten-Strecke 2")) 
 		{
 			PlayerPrefs.SetString("Level","DesertCircuit02");
 			Application.LoadLevel("ChooseCar");
 		}
-		/*if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2, 160, 20), "Wald-Strecke")) 
+		/*if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 50, 160, 20), "Wald-Strecke")) 
 		{
 			PlayerPrefs.SetString("Level","ForestCircuit");
 			Application.LoadLevel("ChooseCar");
 		}
 		*/
 		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 50, 160, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 100, 160, 20), "Hauptmenü")) 
 		{
 			currentMenu = "Main";
 		}

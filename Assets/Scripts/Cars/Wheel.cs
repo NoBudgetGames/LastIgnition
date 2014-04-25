@@ -90,7 +90,7 @@ public class Wheel : MonoBehaviour
 				{
 					case 9:
 						//fester Sand, SandNormal
-						particleSys.startColor = new Color(0.823f, 0.788f, 0.5f, 1.0f);
+						particleSys.startColor = new Color(37/255.0f, 27/255.0f, 18/255.0f, 1.0f);
 						break;
 					case 10:
 						//loser Sand, SandLose
