@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 111: {fileID: 11100000}
   - 64: {fileID: 6400000}
+  - 148: {fileID: 14800002}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -137,6 +138,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 1
   m_Observed: {fileID: 400002}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800002
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400000}
   m_ViewID:
     m_ID: 0
     m_Type: 0

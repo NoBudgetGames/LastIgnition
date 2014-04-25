@@ -146,6 +146,7 @@ GameObject:
   - 4: {fileID: 400040}
   - 114: {fileID: 11400030}
   - 146: {fileID: 14600000}
+  - 148: {fileID: 14800020}
   m_Layer: 0
   m_Name: RearRightWheel
   m_TagString: Untagged
@@ -231,6 +232,7 @@ GameObject:
   - 4: {fileID: 400044}
   - 114: {fileID: 11400034}
   - 146: {fileID: 14600002}
+  - 148: {fileID: 14800024}
   m_Layer: 0
   m_Name: FrontRightWheel
   m_TagString: Untagged
@@ -248,6 +250,7 @@ GameObject:
   - 4: {fileID: 400042}
   - 114: {fileID: 11400032}
   - 146: {fileID: 14600004}
+  - 148: {fileID: 14800022}
   m_Layer: 0
   m_Name: RearLeftWheel
   m_TagString: Untagged
@@ -491,6 +494,7 @@ GameObject:
   - 4: {fileID: 400048}
   - 114: {fileID: 11400036}
   - 146: {fileID: 14600006}
+  - 148: {fileID: 14800026}
   m_Layer: 0
   m_Name: FrontLeftWheel
   m_TagString: Untagged
@@ -7170,6 +7174,54 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 0
   m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800020
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400040}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800022
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100028}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400042}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800024
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100026}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400044}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800026
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100056}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400048}
   m_ViewID:
     m_ID: 0
     m_Type: 0

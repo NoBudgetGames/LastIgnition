@@ -33,6 +33,10 @@ public class Spike : MonoBehaviour
 	}
 	
 	void OnTriggerEnter(Collider other){
+		if(parent == null){
+			return;
+		}
+
 		AbstractDestructibleObject  obj = other.GetComponent<AbstractDestructibleObject >();
 		if(obj != null && other.transform.root.gameObject != parent){
 			obj.receiveDamage(damage);
@@ -51,6 +55,24 @@ public class Spike : MonoBehaviour
 			}
 
 			//GameObject.Destroy(this.gameObject);
+		}
+	}
+
+	[RPC]
+	public void setParent(NetworkViewID id, NetworkViewID spikeId){
+		if(this.networkView.viewID != spikeId)
+			return;
+
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject p in players){
+			Wheel[] wheels = p.GetComponentsInChildren<Wheel>();
+			foreach(Wheel w in wheels){
+				if(w.networkView.viewID == id){
+					this.transform.parent.transform.parent = w.transform;
+					this.parent = w.transform.root.gameObject;
+					return;
+				}
+			}
 		}
 	}
 }

@@ -481,7 +481,11 @@ public class Car : MonoBehaviour
 			steerWheels.Remove(wheel);
 		}
 		//neues Rad um in der Welt rumzufliegen
-		GameObject.Instantiate(loseWheel, wheel.transform.position, wheel.transform.rotation);
+		if(Network.connections.Length == 0){
+			GameObject.Instantiate(loseWheel, wheel.transform.position, wheel.transform.rotation);
+		} else {
+			Network.Instantiate(loseWheel, wheel.transform.position, wheel.transform.rotation,0);
+		}
 		
 		//den Collider dahin stellen, wo vorher das Rad war (um ein absenken des Auto an dieser Stelle zu verhindern)
 		wheelSphereCol.transform.localPosition = wheel.transform.localPosition;
@@ -597,7 +601,11 @@ public class Car : MonoBehaviour
 				//deaktiviere das Model
 				frontBumper.SetActive(false);
 				//instantiere das Prefab, damit es in der Welt rumfliegen kann
-				GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
+				if(Network.connections.Length == 0){
+					GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
+				} else {
+					Network.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation,0);
+				}
 			}
 		}
 		//ansonsten sind die Lebenspunkt unterhalb von thirdDamageModelHealthLimit und somit wird das 3. Schadensmodel angezeigt
@@ -611,7 +619,11 @@ public class Car : MonoBehaviour
 				//deaktiviere das Model
 				frontBumper.SetActive(false);
 				//instantiere das Prefab, damit es in der Welt rumfliegen kann
-				GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
+				if(Network.connections.Length == 0){
+					GameObject.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation);
+				} else {
+					Network.Instantiate(frontBumperPrefab, thisTransform.position, thisTransform.rotation,0);
+				}
 			}
 		}
 		//gehe durch die Damage Models durch und aktiviere das richtige
@@ -648,7 +660,11 @@ public class Car : MonoBehaviour
 				//deaktiviere das Model
 				rearBumper.SetActive(false);
 				//instantiere das Prefab, damit es in der Welt rumfliegen kann
-				GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
+				if(Network.connections.Length == 0){
+					GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
+				} else {
+					Network.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation,0);
+				}
 			}
 		}
 		else
@@ -662,8 +678,12 @@ public class Car : MonoBehaviour
 				leftExhaust.SetActive(false);
 				rightExhaust.SetActive(false);
 				//instantiere das Prefab, damit es in der Welt rumfliegen kann
-				GameObject.Instantiate(rightExhaustPrefab, thisTransform.position, thisTransform.rotation);
-				GameObject.Instantiate(leftExhaustPrefab, thisTransform.position, thisTransform.rotation);
+				if(Network.connections.Length == 0){
+					GameObject.Instantiate(rightExhaustPrefab, thisTransform.position, thisTransform.rotation);
+					GameObject.Instantiate(leftExhaustPrefab, thisTransform.position, thisTransform.rotation);
+				} else {
+					Network.Instantiate(leftExhaustPrefab, thisTransform.position, thisTransform.rotation,0);
+				}
 			}
 			//falls Stoßstange nocht nicht verloren
 			if(hasLostRearBumper == false)
@@ -672,7 +692,11 @@ public class Car : MonoBehaviour
 				//deaktiviere das Model
 				rearBumper.SetActive(false);
 				//instantiere das Prefab, damit es in der Welt rumfliegen kann
-				GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
+				if(Network.connections.Length == 0){
+					GameObject.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation);
+				} else {
+					Network.Instantiate(rearBumperPrefab, thisTransform.position, thisTransform.rotation,0);
+				}
 			}
 		}
 		for(int i = 0; i < rearDamageModels.Length; i++)
