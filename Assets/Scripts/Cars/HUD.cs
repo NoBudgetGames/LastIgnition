@@ -85,6 +85,9 @@ public class HUD : MonoBehaviour
 				Vector3 newVec = new Vector3(w,health.transform.localScale.y,health.transform.localScale.z);
 				health.transform.localScale = newVec;
 				//health.pixelInset = new Rect(health.pixelInset.x,health.pixelInset.y,w,health.pixelInset.height);
+			} else {
+				Vector3 newVec = new Vector3(0,health.transform.localScale.y,health.transform.localScale.z);
+				health.transform.localScale = newVec;
 			}
 		}
 		//ansonsten muss es nicht mehr dargestellt werden
