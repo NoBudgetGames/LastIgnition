@@ -651,15 +651,6 @@ public class NetworkSetup : MonoBehaviour
 		GUI.Label(new Rect(160, 30, 500, 25), "Gewähltes Auto");
 		GUI.Label(new Rect(320, 30, 500, 25), "Bereit");
 
-		//falls es sich um einen LAN SPiel handelt, stelle die IP Addresse dar
-		if(Network.isServer == true && isLANGame == true)
-		{
-			GUI.Label(new Rect(400, 30, 500, 25), "LAN IP: " + LANIPAddress);
-			GUI.Label(new Rect(580, 30, 500, 25), "LAN Port: " + LANPort);
-			//GUI.Label(new Rect(660, 30, 500, 25), "External IP: " + Network.player.externalIP);
-			//GUI.Label(new Rect(880, 30, 500, 250), "External Port: " + Network.player.externalPort);
-		}
-
 		//stelle die Infos dar
 		int i = 0;
 		foreach(NetworkPlayerData player in serverPlayerInfos)
