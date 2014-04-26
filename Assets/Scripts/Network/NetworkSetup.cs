@@ -703,12 +703,12 @@ public class NetworkSetup : MonoBehaviour
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Waldstrecke
-			/*if(GUI.Button(new Rect(Screen.width/2 + 120, 240, 160, 20), "Wald-Strecke")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 120, 240, 160, 20), "Wald-Strecke")) 
 			{
 				PlayerPrefs.SetString("Level","ForestCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
-			*/
+
 			//Überprüfe, ob die Spieler bereit sind
 			bool playersReady = true;
 			//gehe alle Spieler durch

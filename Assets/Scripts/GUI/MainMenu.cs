@@ -289,12 +289,12 @@ public class MainMenu : MonoBehaviour
 			PlayerPrefs.SetString("Level","DesertCircuit02");
 			Application.LoadLevel("ChooseCar");
 		}
-		/*if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 50, 160, 20), "Wald-Strecke")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 50, 160, 20), "Wald-Strecke")) 
 		{
 			PlayerPrefs.SetString("Level","ForestCircuit");
 			Application.LoadLevel("ChooseCar");
 		}
-		*/
+
 		//button, um zurück zum Hauptmenü zu gehen
 		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 100, 160, 20), "Hauptmenü")) 
 		{
