@@ -27,7 +27,7 @@ public class CarCollision : MonoBehaviour
 	//Waffen werden von diesen Trigger nicht erkannt, da sie in einer anderen Layer liegen (layer-base collision detection)
 	void OnTriggerEnter(Collider other)
 	{
-		if(car.GetComponent<Rigidbody>().velocity.magnitude > 10.0f){
+		if(car.GetComponent<Rigidbody>().velocity.magnitude > 10.0f && other.tag != "Checkpoint"){
 			if(Network.connections.Length == 0){
 				GameObject.Instantiate(virtualCrashPrefab,this.transform.position,this.transform.rotation);
 			} else {
