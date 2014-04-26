@@ -6102,6 +6102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4995e6154faa8794682e7d4a0a975a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCrashPrefab: {fileID: 0}
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6523,6 +6524,8 @@ MonoBehaviour:
   rightExhaustPrefab: {fileID: 100002, guid: e1b2bc832e10841498a26e411cd4af55, type: 2}
   wheelSphereCol: {fileID: 100036}
   particleSysForExplosion: {fileID: 19800008}
+  brakeLight: {fileID: 0}
+  health: 100
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

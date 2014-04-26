@@ -2329,6 +2329,7 @@ GameObject:
   - 4: {fileID: 400282}
   - 82: {fileID: 8200000}
   - 114: {fileID: 11400008}
+  - 148: {fileID: 14800028}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -3931,7 +3932,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100258}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.00999999, y: 1.00999999, z: 1.00999999}
   m_Children: []
   m_Father: {fileID: 400270}
@@ -7321,6 +7322,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 0
   m_Observed: {fileID: 400048}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800028
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100282}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400282}
   m_ViewID:
     m_ID: 0
     m_Type: 0

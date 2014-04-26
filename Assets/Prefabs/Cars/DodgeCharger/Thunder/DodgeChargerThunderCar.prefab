@@ -2316,6 +2316,7 @@ GameObject:
   - 4: {fileID: 400282}
   - 82: {fileID: 8200000}
   - 114: {fileID: 11400008}
+  - 148: {fileID: 14800002}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -6454,7 +6455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4995e6154faa8794682e7d4a0a975a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCrashPrefab: {fileID: 0}
+  virtualCrashPrefab: {fileID: 100000, guid: 45e3f68ad5f867a499e15be218f7346e, type: 2}
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7040,6 +7041,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 1
   m_Observed: {fileID: 11400056}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800002
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100282}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400282}
   m_ViewID:
     m_ID: 0
     m_Type: 0

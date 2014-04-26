@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: HUD Player1
+  m_Name: HUD Player
   m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.52999973, y: -3, z: -.519197524}
-  m_LocalScale: {x: .129999995, y: .150000006, z: .889999986}
+  m_LocalScale: {x: .200000003, y: .300000012, z: .889999986}
   m_Children: []
   m_Father: {fileID: 400004}
 --- !u!4 &400004
@@ -219,6 +219,7 @@ MonoBehaviour:
   modeInfo: {fileID: 13200000}
   health: {fileID: 13100002}
   healthFrame: {fileID: 13100000}
+  raceEnded: 0
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1
