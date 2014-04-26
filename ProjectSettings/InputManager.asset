@@ -377,7 +377,7 @@ InputManager:
     descriptiveName: Pause Game
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 
+    positiveButton: joystick button 7
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -387,7 +387,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 1
+    joyNum: 0
   - serializedVersion: 3
     m_Name: PlayerOneSteer
     descriptiveName: Player One Steer

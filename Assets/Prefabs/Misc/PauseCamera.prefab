@@ -11,6 +11,7 @@ GameObject:
   - 20: {fileID: 2000000}
   - 92: {fileID: 9200000}
   - 114: {fileID: 11400000}
+  - 45: {fileID: 4500000}
   m_Layer: 0
   m_Name: PauseCamera
   m_TagString: Untagged
@@ -58,6 +59,14 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
   m_OcclusionCulling: 1
+--- !u!45 &4500000
+Skybox:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: da976b1a4f7ebb949b0f71341e4f1821, type: 2}
 --- !u!92 &9200000
 Behaviour:
   m_ObjectHideFlags: 1
