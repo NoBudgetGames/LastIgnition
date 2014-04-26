@@ -101,7 +101,6 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Splitscreen";
 		}
-		GUI.Label(new Rect(Screen.width/2 - 30, Screen.height/2 - 70, 100, 20), "(ALPHA)");
 		//button für Multiplayer
 		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Multiplayer")) 
 		{
