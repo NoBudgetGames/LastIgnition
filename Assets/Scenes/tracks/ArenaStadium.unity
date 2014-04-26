@@ -3870,7 +3870,7 @@ Skybox:
   m_PrefabInternal: {fileID: 1968352599}
   m_GameObject: {fileID: 1349955343}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 53412155bc1016547b1a77b2333c0380, type: 2}
+  m_CustomSkybox: {fileID: 2100000, guid: da976b1a4f7ebb949b0f71341e4f1821, type: 2}
 --- !u!81 &1349955346
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3905,7 +3905,7 @@ Camera:
   m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_BackGroundColor: {r: .992647052, g: .818921804, b: .401981086, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -3920,7 +3920,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294852607
+    m_Bits: 4294852351
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -3931,8 +3931,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
   m_PrefabInternal: {fileID: 1968352599}
   m_GameObject: {fileID: 1349955343}
-  m_LocalRotation: {x: .242409274, y: 0, z: 0, w: .970174134}
-  m_LocalPosition: {x: 481.431488, y: 142.707413, z: 139.803589}
+  m_LocalRotation: {x: .150476709, y: 0, z: 0, w: .988613605}
+  m_LocalPosition: {x: 521.612183, y: 78.1350327, z: 179.945572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5430,19 +5430,19 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 481.431488
+      value: 521.612183
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 142.707413
+      value: 78.1350327
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 139.803589
+      value: 179.945572
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_LocalRotation.x
-      value: .242409274
+      value: .150476709
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_LocalRotation.y
@@ -5454,13 +5454,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .970174134
+      value: .988613605
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8100000, guid: 3945dcc9d99a8f54f8b60550aa2333f7, type: 2}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}

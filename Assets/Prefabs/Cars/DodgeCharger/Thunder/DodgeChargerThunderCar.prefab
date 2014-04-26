@@ -2220,7 +2220,7 @@ GameObject:
   - 148: {fileID: 14800000}
   - 114: {fileID: 11400056}
   m_Layer: 0
-  m_Name: DodgeChargerThunder
+  m_Name: DodgeChargerThunderCar
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

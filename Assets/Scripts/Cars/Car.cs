@@ -1184,13 +1184,9 @@ public class Car : MonoBehaviour
 		int size = 0;
 		foreach(Wheel wheel in driveWheels)
 		{
-			//falls sich das Rad in der Luft befindet soll es nicht zu Berechnung beitragen
-			if(wheel.wheelCol.isGrounded)
-			{
-				//berechne die RPM abhängig von der umdrehungszahl des Rades, da die Reifen mit dem Motor verbunden sind
-				currentRPM += Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier;
-				size++;	
-			}	
+			//berechne die RPM abhängig von der umdrehungszahl des Rades, da die Reifen mit dem Motor verbunden sind
+			currentRPM += Mathf.Abs(wheel.wheelCol.rpm) * gearRatio[currentGear] * differentialMultiplier;
+			size++;	
 		}
 		//bereche den Durchschnitt der driveWheels
 		if(size != 0)
