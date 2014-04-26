@@ -1025,6 +1025,12 @@ public class Car : MonoBehaviour
 				}
 			}	
 		}
+		//bei Handbremse sollen auch die Bremslichter leuchten
+		else if(handbrake == true)
+		{
+			brakeLight.SetActive(true);
+		}
+		//ansonten nicht
 		else
 		{
 			brakeLight.SetActive(false);
