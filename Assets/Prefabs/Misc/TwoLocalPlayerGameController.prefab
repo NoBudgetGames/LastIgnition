@@ -45,7 +45,6 @@ MonoBehaviour:
   carPrefabs:
   - {fileID: 100270, guid: a47be2df3ca720148981cdf1f78e082e, type: 2}
   - {fileID: 100270, guid: 57aa2b4b405abf94b81b7856ac638e58, type: 2}
-  - {fileID: 100020, guid: c09aab8ede61b004ca4a90f499de2e8b, type: 2}
   playerList: []
 --- !u!148 &14800000
 NetworkView:
