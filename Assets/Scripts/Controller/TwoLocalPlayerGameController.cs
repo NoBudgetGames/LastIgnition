@@ -197,12 +197,12 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			//ansonsten haben wir zwei Spieler und müssen den Bildschirm in zwei Teile aufteilen
 			else 
 			{
-				if(playerInputString.Equals("One"))
+				if(playerInputString.Equals("Two"))
 				{
 					//(left, top, width, height)
 					cam.rect = new Rect(0, 0, 1.0f, 0.5f);
 				}
-				else if(playerInputString.Equals("Two"))
+				else if(playerInputString.Equals("One"))
 				{
 					cam.rect = new Rect(0, 0.5f, 1.0f, 0.5f);
 				}

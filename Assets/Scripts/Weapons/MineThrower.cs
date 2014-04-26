@@ -11,8 +11,8 @@ public class MineThrower : Weapon
 			timer = 0.0f;
 			maxTime = 0.5f;
 			minAmmo = 1;
-			maxAmmo = 3;
-			incAmmo = 1;
+			maxAmmo = 6;
+			incAmmo = 2;
 
 			_weaponType = WeaponType.MINE_THROWER;
 		}

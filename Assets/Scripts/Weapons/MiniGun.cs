@@ -14,9 +14,9 @@ public class MiniGun : Weapon {
 	void Start () {
 		timer = 0.0f;
 		maxTime = 0.1f;
-		minAmmo = 64;
-		maxAmmo = 256;
-		incAmmo = 64;
+		minAmmo = 128;
+		maxAmmo = 512;
+		incAmmo = 128;
 
 		_weaponType = WeaponType.MINIGUN;
 

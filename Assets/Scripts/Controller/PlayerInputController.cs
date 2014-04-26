@@ -95,7 +95,7 @@ public class PlayerInputController : MonoBehaviour
 	}
 
 	public void setupHUD(){
-		if(numberOfControllerString == "One"){
+		if(numberOfControllerString != "One"){
 			hud.layer = LayerMask.NameToLayer("Test");
 			cameraCtrl.camera.cullingMask |= 1 << LayerMask.NameToLayer("Test");
 			cameraCtrl.camera.cullingMask ^= 1 << LayerMask.NameToLayer("Test2");

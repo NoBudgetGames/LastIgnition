@@ -81,11 +81,11 @@ public class ItemPickup : MonoBehaviour
 			CarInventory inv = other.transform.root.GetComponentInChildren<CarInventory>();
 			if(inv != null){
 				if(inv.equippedWeapon != null){
-					if(inv.equippedWeapon.weaponType != optainableWeapon){
+					//if(inv.equippedWeapon.weaponType != optainableWeapon){
 						inv.increaseAmmo(optainableWeapon);
 						if(inv.equippedWeapon.remainingAmmo() <= 0)
 							inv.activateWeapon(optainableWeapon);
-					} 
+					//} 
 				} else {
 					inv.activateWeapon(optainableWeapon);
 					inv.increaseAmmo(optainableWeapon);
