@@ -323,22 +323,22 @@ public class CircuitModePlayerStats : MonoBehaviour
 				string differenceStr = TimeConverter.floatToString(difference);
 				if(currentLapToDrive == 2){
 					GUI.color = new Color(0,0,255);
-					if(carNumber == 0)
+					if(carNumber == 1)
 						GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200), differenceStr);
-					else if(carNumber == 1)
+					else if(carNumber == 0)
 						GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200), differenceStr);
 				} else {
 					if(difference<0){
 						GUI.color = new Color(0,255,0);
-						if(carNumber == 0)
+						if(carNumber == 1)
 							GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"-" + differenceStr);
-						else if(carNumber == 1)
+						else if(carNumber == 0)
 							GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"-" + differenceStr);
 					} else {
 						GUI.color = new Color(255,0,0);
-						if(carNumber == 0)
+						if(carNumber == 1)
 							GUI.Label(new Rect(Screen.width/2-30,Screen.height*3/4-50,100,200),"+" + differenceStr);
-						else if(carNumber == 1)
+						else if(carNumber == 0)
 							GUI.Label(new Rect(Screen.width/2-30,Screen.height/4-50,100,200),"+" + differenceStr);
 					}
 				}
