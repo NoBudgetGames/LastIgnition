@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee259b2fef757c640b109799d76c159e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorSandNormal: {r: .333333343, g: .243137255, b: .0156862754, a: 1}
+  colorSandNormal: {r: .610294104, g: .464900494, b: .0287197214, a: 1}
   colorSandLose: {r: .735294104, g: .704271555, b: .454152226, a: 1}
   colorRubble: {r: .784313738, g: .78039217, b: .643137276, a: 1}
   colorDirt: {r: .796078444, g: .56078434, b: .36470589, a: 1}

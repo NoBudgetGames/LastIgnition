@@ -665,7 +665,7 @@ public class NetworkSetup : MonoBehaviour
 		if(Network.isServer == true)
 		{
 			// kleine Hintergrundbox erstellen
-			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "Levelauswahl");
+			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "");
 
 			//zeige gewählte Strecke
 			GUI.Label(new Rect(Screen.width/2 + 120, 90, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
@@ -706,7 +706,7 @@ public class NetworkSetup : MonoBehaviour
 			foreach(NetworkPlayerData player in serverPlayerInfos)
 			{
 				//getPlayerData leifert ein string Array zurück, an letzer Position steht, ob der spieler bereit ist
-				if(player.getPlayerData()[3].Equals("nicht bereit"))
+				if(player.getPlayerData()[3].Equals("nicht bereit") == true)
 				{
 					//falls einer nicht bereit ist, breche ab
 					playersReady = false;
