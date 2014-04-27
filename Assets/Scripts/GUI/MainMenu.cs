@@ -10,6 +10,15 @@ public class MainMenu : MonoBehaviour
 	//String, der das aktuell gewählte Menü zeigen soll
 	private string currentMenu = "Main";
 
+	//styles for customParts
+	public GUIStyle customBox;
+	public GUIStyle customButton;
+	//main menu styles
+	public GUIStyle singleplayerButton;
+	public GUIStyle multiplayerButton;
+	public GUIStyle exit;
+	public GUIStyle splitscreen;
+
 	void Start()
 	{
 		//falls noch ein Netzwerk GameObject vorhanden ist (wenn man z.B. vom Multiplayermenü zurückgeht), lösche es
@@ -89,25 +98,25 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetString("PlayerTwoName", tmpTwo);
 
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 250), "Hauptmenü");
-
+		//GUI.Box(new Rect((Screen.width/3)*2 - 80, Screen.height/2 - 200, 160, 250), "Hauptmenü", customBox);
+		
 		//Button für Singleplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Einzelspieler")) 
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
 			currentMenu = "Singleplayer";
 		}
 		//button für splitscreen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "Splitscreen")) 
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
 		{
 			currentMenu = "Splitscreen";
 		}
 		//button für Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Multiplayer")) 
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
 		{
 			currentMenu = "Multiplayer";
 		}
 		//button, um das Spiel zu beenden
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Spiel beenden")) 
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
 		{
 			Application.Quit();
 		}
@@ -119,22 +128,22 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 1);
 
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 250), "Einzelspieler");
-
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Einzelspieler", customBox);
+		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
 		//Eingabefeld
 		string playerName = PlayerPrefs.GetString("PlayerOneName");
-		playerName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 125, 100, 20), playerName, 15);
+		playerName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerName);
-
+		
 		//Button für Levelauswahl
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Levelauswahl")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 75, 350, 65), "Levelauswahl", customButton)) 
 		{
 			currentMenu = "SelectLevel";
 		}
 		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton)) 
 		{
 			currentMenu = "Main";
 		}
@@ -146,29 +155,29 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 2);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 300), "Splitscreen");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Splitscreen", customBox);
 		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
 		//Eingabefeld
 		string playerOneName = PlayerPrefs.GetString("PlayerOneName");
-		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 125, 100, 20), playerOneName, 15);
+		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerOneName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerOneName);
-
+		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 100, 160, 20), "Name von Spieler 2");
+		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 65, 160, 20), "Name von Spieler 2");
 		//Eingabefeld
 		string playerTwoName = PlayerPrefs.GetString("PlayerTwoName");
-		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 75, 100, 20), playerTwoName, 15);
+		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 35, 320, 55), playerTwoName, 15);
 		PlayerPrefs.SetString("PlayerTwoName", playerTwoName);
 		
 		//Button für Levelauswahl
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Levelauswahl")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 75, 350, 65), "Levelauswahl", customButton)) 
 		{
 			currentMenu = "SelectLevel";
 		}
 		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 50, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton)) 
 		{
 			currentMenu = "Main";
 		}
@@ -178,20 +187,20 @@ public class MainMenu : MonoBehaviour
 	private void multiplayer()
 	{
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Multiplayer");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Multiplayer", customBox);
 		
 		//Button für Singleplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Einzelspieler")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 150, 350, 65), "Einzelspieler", customButton)) 
 		{
 			currentMenu = "multiSingleplayer";
 		}
 		//button für splitscreen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "Splitscreen")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 90, 350, 65), "Splitscreen", customButton)) 
 		{
 			currentMenu = "multiSplitscreen";
 		}
 		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton)) 
 		{
 			currentMenu = "Main";
 		}
@@ -204,22 +213,22 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 1);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 250), "Einzelspieler");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Einzelspieler", customBox);
 		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
 		//Eingabefeld
 		string playerOneName = PlayerPrefs.GetString("PlayerOneName");
-		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 125, 100, 20), playerOneName, 15);
+		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerOneName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerOneName);
-
+		
 		//Button für Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Weiter")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 75, 350, 65), "Weiter", customButton)) 
 		{
 			Application.LoadLevel("MultiplayerSetup");
 		}
-		//Button für Online Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Hauptmenü")) 
+		//button, um zurück zum Hauptmenü zu gehen
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton)) 
 		{
 			currentMenu = "Main";
 		}
@@ -231,29 +240,29 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 2);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 300), "Splitscreen");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Einzelspieler", customBox);
 		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
 		//Eingabefeld
 		string playerOneName = PlayerPrefs.GetString("PlayerOneName");
-		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 125, 100, 20), playerOneName, 15);
+		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerOneName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerOneName);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 100, 160, 20), "Name von Spieler 2");
+		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 65, 160, 20), "Name von Spieler 2");
 		//Eingabefeld
 		string playerTwoName = PlayerPrefs.GetString("PlayerTwoName");
-		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 75, 100, 20), playerTwoName, 15);
+		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 35, 320, 55), playerTwoName, 15);
 		PlayerPrefs.SetString("PlayerTwoName", playerTwoName);
-
+		
 		//Button für Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2, 100, 20), "Weiter")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 75, 350, 65), "Weiter", customButton)) 
 		{
 			Application.LoadLevel("MultiplayerSetup");
 		}
-		//Button für Online Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 50, 100, 20), "Hauptmenü")) 
+		//button, um zurück zum Hauptmenü zu gehen
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton)) 
 		{
 			currentMenu = "Main";
 		}
@@ -262,40 +271,40 @@ public class MainMenu : MonoBehaviour
 	private void localLevelSelection()
 	{
 		// kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 100, Screen.height/2 - 200, 200, 350), "Levelauswahl");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Levelauswahl", customBox);
 		
 		//erster Button, falls gedrückt, wird das erste Level geladen
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 150, 160, 20), "Derby-Arena 1")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 220, 350, 65), "Derby-Arena 1", customButton)) 
 		{
 			PlayerPrefs.SetString("Level","ArenaStadium");
 			Application.LoadLevel("ChooseCar");
 		}
 		//Derby 2
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 100, 160, 20), "Derby-Arena 2")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 150, 350, 65), "Derby-Arena 2", customButton)) 
 		{
 			PlayerPrefs.SetString("Level","ArenaStadium02");
 			Application.LoadLevel("ChooseCar");
 		}
 		//drittes Level
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 - 50, 160, 20), "Wüsten-Strecke 1")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 80, 350, 65), "Wüsten-Strecke 1", customButton)) 
 		{
 			PlayerPrefs.SetString("Level","DesertCircuit");
 			Application.LoadLevel("ChooseCar");
 		}
 		//....
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2, 160, 20), "Wüsten-Strecke 2")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 10, 350, 65), "Wüsten-Strecke 2", customButton)) 
 		{
 			PlayerPrefs.SetString("Level","DesertCircuit02");
 			Application.LoadLevel("ChooseCar");
 		}
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 50, 160, 20), "Wald-Strecke")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 60, 350, 65), "Wald-Strecke", customButton)) 
 		{
 			PlayerPrefs.SetString("Level","ForestCircuit");
 			Application.LoadLevel("ChooseCar");
 		}
 
 		//button, um zurück zum Hauptmenü zu gehen
-		if(GUI.Button(new Rect(Screen.width/2 - 80, Screen.height/2 + 100, 160, 20), "Hauptmenü")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton))
 		{
 			currentMenu = "Main";
 		}
