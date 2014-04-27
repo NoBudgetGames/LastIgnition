@@ -38,6 +38,7 @@ public class ArenaMode : MonoBehaviour
 		initialised = false;
 		lives = new List<int>();
 		ranks = new List<int>();
+		players = new List<GameObject>();
 		camerasDestroyed = false;
 		playerStats = new List<string[]>();
 
@@ -92,8 +93,9 @@ public class ArenaMode : MonoBehaviour
 		}
 
 		//falls nur noch ein Spieler übrig ist
-		if((Network.connections.Length == 0 && players.Count == 1) || 
-		   (Network.connections.Length > 0 && onlyOnePlayerRemaining()))
+		if(((Network.connections.Length == 0 && players.Count == 1) || 
+		   (Network.connections.Length > 0 && onlyOnePlayerRemaining())) 
+		   && hasMatchStarted)
 		{
 			if(players.Count == 1){
 				PlayerInputController p = players[0].GetComponent<PlayerInputController>();
@@ -263,7 +265,8 @@ public class ArenaMode : MonoBehaviour
 				count+= temp.Length;
 			}
 		}
-		Debug.Log (count);
+		if(count == 1 && hasMatchStarted)
+			Debug.Log (count);
 		return count == 1;
 
 	}

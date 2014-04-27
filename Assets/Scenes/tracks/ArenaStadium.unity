@@ -762,7 +762,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
       propertyPath: m_ViewID.m_ID
-      value: 39
+      value: 66
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
       propertyPath: m_ViewID.m_Type
@@ -1526,7 +1526,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 8ce492c4d8ac8e34396ffa68467d078c, type: 2}
       propertyPath: m_ViewID.m_ID
-      value: 38
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 8ce492c4d8ac8e34396ffa68467d078c, type: 2}
       propertyPath: m_ViewID.m_Type
@@ -2618,7 +2618,7 @@ NetworkView:
   m_StateSynchronization: 0
   m_Observed: {fileID: 410931626}
   m_ViewID:
-    m_ID: 38
+    m_ID: 65
     m_Type: 1
 --- !u!1 &419039069
 GameObject:
@@ -3945,7 +3945,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 604653054}
   m_ViewID:
-    m_ID: 39
+    m_ID: 66
     m_Type: 1
 --- !u!1 &606735572
 GameObject:
