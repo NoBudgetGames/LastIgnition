@@ -21,9 +21,8 @@ public class PauseMenu : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		//suche alle HUDs, diese zeichnen noch das Tacho
-		hudList = GameObject.FindGameObjectsWithTag("HUD");
-		gameObject.GetComponent<Camera>().enabled = false;
+		//dekativiere die Kamera von this
+		gameObject.GetComponent<Camera>().enabled = false;	
 		//falls es sich nicht um ein Netzwerkspiel handelt
 		if(Network.isClient == false && Network.isServer == false)
 		{
@@ -36,10 +35,12 @@ public class PauseMenu : MonoBehaviour
 	{
 		//zähle den PauseTimer runter
 		pauseTimer -= Time.deltaTime;
-		//falls nicht pauseirt wurde, und wir auf P drücken, pausiere
-		if(Input.GetKeyDown(KeyCode.P) && paused == false && pauseTimer < 0.0f)
+		//falls nicht pauseirt wurde, und wir auf P oder ESC drücken, pausiere
+		if(Input.GetKeyDown(KeyCode.Escape) && paused == false && pauseTimer < 0.0f)
 		{
 			paused = true;
+			//suche alle HUDs und deaktivieren sie, diese zeichnen noch das Tacho
+			hudList = GameObject.FindGameObjectsWithTag("HUD");
 			//falls es kein Netzwerkspiel ist, sol tatsächnlich pausiert werden
 			if(isThisANetworkGame == false)
 			{
@@ -71,21 +72,21 @@ public class PauseMenu : MonoBehaviour
 			GUI.Box(new Rect(width/2 - offsetWidth, height/2 - offsetHeight, offsetWidth * 2, offsetHeight * 2), "Pause");
 			
 			//was soll gemacht werden, wenn das Rennen pausiert wurde?
-			GUI.Label(new Rect(width/2 - 80, height/2 - 20, offsetWidth * 2, offsetHeight*2), "[P] Rennen fortsetzen");
+			GUI.Label(new Rect(width/2 - 80, height/2 - 20, offsetWidth * 2, offsetHeight*2), "[ESC] Rennen fortsetzen");
 			if(isThisANetworkGame == false)
 			{
 				//aktiviere die Pausenkamera
 				gameObject.GetComponent<Camera>().enabled = true;
-				GUI.Label(new Rect(width/2 - 80, height/2, offsetWidth * 2, offsetHeight*2), "[ESC] Zurück zum Hauptmenü");
+				GUI.Label(new Rect(width/2 - 80, height/2, offsetWidth * 2, offsetHeight*2), "[ENTER] Zurück zum Hauptmenü");
 				//GUI.Label(new Rect(width/2 - 80, height/2 + 20, offsetWidth * 2, offsetHeight*2), "[ENTER] Rennen wiederholen");
 			}
 			else
 			{
-				GUI.Label(new Rect(width/2 - 80, height/2, offsetWidth * 2, offsetHeight*2), "[ESC] Zurück zum Hauptmenü (Server verlassen)");
+				GUI.Label(new Rect(width/2 - 80, height/2, offsetWidth * 2, offsetHeight*2), "[ENTER] Zurück zum Hauptmenü (Server verlassen)");
 			}
 
-			//falls wieder Pause gedrückt, 
-			if(Input.GetKeyDown(KeyCode.P) && paused == true)
+			//falls wieder ESC Pause gedrückt, mach weiter
+			if(Input.GetKeyDown(KeyCode.Escape) && paused == true)
 			{
 				paused = false;
 
@@ -105,8 +106,8 @@ public class PauseMenu : MonoBehaviour
 					obj.SetActive(true);
 				}
 			}
-			//Falls ESC Taste, kehre zum Hauptmenü zurück
-			if(Input.GetKeyDown(KeyCode.Escape))
+			//Falls ENTER Taste, kehre zum Hauptmenü zurück
+			if(Input.GetKeyDown(KeyCode.Return))
 			{
 				if(isThisANetworkGame == true)
 				{
@@ -116,11 +117,6 @@ public class PauseMenu : MonoBehaviour
 				{
 					Application.LoadLevel("MainMenuScene");
 				}
-			}
-			//ansonsten wiederhole das Rennen
-			if(Input.GetKeyDown(KeyCode.Return))
-			{
-				//Application.LoadLevel(Application.loadedLevel); //PlayerPrefs.GetString("Level"));
 			}
 		}
 	}

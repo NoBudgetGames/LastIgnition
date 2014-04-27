@@ -46,8 +46,6 @@ public class NetworkSetup : MonoBehaviour
 	private string LANIPAddress = "127.0.0.1";
 	//Port des Servers / lokalen Spielers
 	private int LANPort = 25000;
-	//ist dieses Spiel ein LAN Spiel?
-	private bool isLANGame = false;
 
 	//wurde das das Spiel schon gestartet? Wenn ja, sollen die Menüs nicht mehr dargestellt werden
 	private bool gameRunning = false;
@@ -100,14 +98,12 @@ public class NetworkSetup : MonoBehaviour
 		//port = Network.player.port;
 		//initialliziere den Server
 		Network.InitializeServer(32, LANPort, false);
-		isLANGame = true;
 	}
 
 	//diese Methode verbindet einen Client mit dem Server
 	void connectToLANServer()
 	{
 		Network.Connect(LANIPAddress, LANPort);
-		isLANGame = true;
 	}
 
 	//Diese Methode instanziert die NetworkPlayerData für die lokalen Spieler
@@ -476,7 +472,6 @@ public class NetworkSetup : MonoBehaviour
 	private void networkMainMenu()
 	{
 		isThisAOnlineGame = false;
-		isLANGame = false;
 		//Verbindung schließen
 		Network.Disconnect();
 		//falls nötig, Host am Master Server abmelden
