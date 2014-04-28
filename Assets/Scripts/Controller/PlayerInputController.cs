@@ -127,9 +127,12 @@ public class PlayerInputController : MonoBehaviour
 				inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "FireKey"));
 				inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDownKey"));
 				inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUpKey"));
-				
-				cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBackKey"));
-				cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCameraKey"));
+
+				if(cameraCtrl != null)
+				{
+					cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBackKey"));
+					cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCameraKey"));
+				}
 			}
 			//falls Controller benutzt wird
 			else
@@ -143,9 +146,13 @@ public class PlayerInputController : MonoBehaviour
 				inv.setFiring(Input.GetButton("Player" + numberOfControllerString + "Fire"));
 				inv.prevWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponDown"));
 				inv.nextWeapon(Input.GetButtonDown("Player" + numberOfControllerString + "CycleWeaponUp"));
+
 				
-				cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBack"));
-				cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCamera"));
+				if(cameraCtrl != null)
+				{
+					cameraCtrl.lookBack(Input.GetButton("Player" + numberOfControllerString + "LookBack"));
+					cameraCtrl.cycleCamera(Input.GetAxis("Player" + numberOfControllerString + "ChangeCamera"));
+				}
 			}
 		}
 		//ansonsten soll man nur die Kamera ändern können
