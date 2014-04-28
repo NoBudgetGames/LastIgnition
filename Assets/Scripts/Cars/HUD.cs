@@ -141,7 +141,7 @@ public class HUD : MonoBehaviour
 			//falls mehrere HUDs vorhanden sind
 			if(numberOfHuds > 1)
 			{
-				if(player != "One")
+				if(player == "One")
 				{
 					GUI.Box(new Rect(Screen.width/2 - 100, 50, 200, 25), "Spectating: " + camControl.targetCar.GetComponent<PlayerInputController>().playerName);
 				} 
@@ -156,8 +156,5 @@ public class HUD : MonoBehaviour
 				GUI.Box(new Rect(Screen.width/2 - 100, 50, 200, 25), "Spectating: " + camControl.targetCar.GetComponent<PlayerInputController>().playerName);
 			}
 		}
-
-
 	}
-
 }

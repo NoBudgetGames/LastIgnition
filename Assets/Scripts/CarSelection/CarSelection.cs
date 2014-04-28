@@ -81,24 +81,28 @@ public class CarSelection : MonoBehaviour {
 		if(acceptButton){
 			playerReady = true;
 			//finde die Netzwerk Objekt
-			NetworkView netView = GameObject.Find("Network").networkView;
-			//aktuallisiert die PlayerData
-			if(playerName.Equals("One"))
+			GameObject network = GameObject.Find("Network");
+			if(network != null)
 			{
-				NetworkPlayerData data = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();
-				data.setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
-				//update die PlayerInfos auf dem Server
-				netView.RPC("updatePlayerInfo",RPCMode.Server, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
+				NetworkView netView = network.networkView;
+				//aktuallisiert die PlayerData
+				if(playerName.Equals("One"))
+				{
+					NetworkPlayerData data = GameObject.Find("playerDataOne").GetComponent<NetworkPlayerData>();
+					data.setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
+					//update die PlayerInfos auf dem Server
+					netView.RPC("updatePlayerInfo",RPCMode.Server, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
+				}
+				else
+				{
+					NetworkPlayerData data = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();;
+					data.setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
+					//update die PlayerInfos auf dem Server
+					netView.RPC("updatePlayerInfo",RPCMode.Server, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
+				}
+				//bitte an der Server, die Infos für alle zu aktualliesieren
+				netView.RPC("updatePlayersForClients",RPCMode.Server);
 			}
-			else
-			{
-				NetworkPlayerData data = GameObject.Find("playerDataTwo").GetComponent<NetworkPlayerData>();;
-				data.setChoosenCar(choosableCars[currentSelectedCarIndex].GetComponent<Car>().carName);
-				//update die PlayerInfos auf dem Server
-				netView.RPC("updatePlayerInfo",RPCMode.Server, data.getPlayerData()[0], data.getPlayerData()[1], data.getPlayerData()[2], data.getPlayerData()[3]);
-			}
-			//bitte an der Server, die Infos für alle zu aktualliesieren
-			netView.RPC("updatePlayersForClients",RPCMode.Server);
 		}
 		if(cancleButton){
 			if(!playerReady){

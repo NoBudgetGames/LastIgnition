@@ -408,6 +408,7 @@ public class Car : MonoBehaviour
 				tempPos.y = rayHit.point.y + 3;
 				thisTransform.position = tempPos;
 			}
+			thisRigidBody.AddForce(thisTransform.forward * 20, ForceMode.VelocityChange);
 		}
 	}
 	
@@ -1120,7 +1121,7 @@ public class Car : MonoBehaviour
 		}
 		
 		//Angular Drag soll größer sein, wenn das Auto eine hohe Geschwindigkeit hat
-		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 50;
+		thisRigidBody.angularDrag = Mathf.Abs(relativeVelocity.z) / 25;
 		
 		thisRigidBody.drag = 0.1f;
 		//falls sich das Auto in der Luft befindet, soll der Luftwiederstand steigen

@@ -357,7 +357,9 @@ public class NetworkSetup : MonoBehaviour
 			}
 		}
 		//ansonsten befindet sich der Spieler noch nicht in der Liste
-		NetworkPlayerData data = new NetworkPlayerData();
+		//von MonoBehaivior abgeleitete Klassen dürfen nicht mit new erzeugt werden
+		GameObject obj = (GameObject)Network.Instantiate(playerDataPrefab, gameObject.transform.position, gameObject.transform.rotation,0);
+		NetworkPlayerData data = (NetworkPlayerData) obj.GetComponent<NetworkPlayerData>();
 		data.setAll(playerData);
 		serverPlayerInfos.Add(data);
 	}

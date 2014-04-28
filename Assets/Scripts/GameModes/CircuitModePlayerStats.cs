@@ -125,11 +125,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 			{
 				hasFinishedRace = true;
 				//beende das Rennen für diesen InputController
-				transform.parent.GetComponent<PlayerInputController>().endRace();
+				PlayerInputController playerInput = transform.root.GetComponent<PlayerInputController>();
+				playerInput.endRace();
 
 				//übergebe die PlayerStats
 				string fastestLapStr = "";
-				//falls das AUto noch keine RUnde gefahren ist, stelle die schlesste Runde auf --:--:--
+				//falls das AUto noch keine RUnde gefahren ist, stelle die schnelste Runde auf --:--:--
 				if(fastestLap == -1.0f)
 				{
 					fastestLapStr = "--:--:--";
@@ -139,9 +140,9 @@ public class CircuitModePlayerStats : MonoBehaviour
 					fastestLapStr = TimeConverter.floatToString(fastestLap);
 				}
 				//Spielername, zeige dsa das AUto zerstört wurde , schnellste Runde
-				circuitMode.addExplodedPlayerData(new string[]{transform.parent.GetComponent<PlayerInputController>().playerName, "RIP", fastestLapStr});
+				circuitMode.addExplodedPlayerData(new string[]{playerInput.playerName, "RIP", fastestLapStr});
 				//sage dem HUD bescheid, dass das Rennen beendet wurde
-				gameObject.GetComponent<PlayerInputController>().hud.raceEnded = true;
+				playerInput.hud.raceEnded = true;
 			}
 
 			//gucke, ob wir lange genug in die falsche Richtung fahren, um den HUD bescheid zu sagen
@@ -153,8 +154,12 @@ public class CircuitModePlayerStats : MonoBehaviour
 			}
 			if(networkView.isMine || Network.connections.Length == 0){
 				//HUD bescheidsagen, das er die Rundenzeit aktuellisieren soll
-				HUD hud = circuitMode.playerCtrl.playerList[carIndex].GetComponent<PlayerInputController>().hud;
-				hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
+				//aber nur, wenn das Auto noch "lebt"
+				if(car.getHealth() > 0.0f)
+				{
+					HUD hud = circuitMode.playerCtrl.playerList[carIndex].GetComponent<PlayerInputController>().hud;
+					hud.modeInfo.text = "Lap " +currentLapToDrive+"/"+(circuitMode.lapsToDrive)+"\n"+ TimeConverter.floatToString(lapTime);
+				}
 			}
 		}
 	}

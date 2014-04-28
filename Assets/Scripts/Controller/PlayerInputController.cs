@@ -31,10 +31,10 @@ public class PlayerInputController : MonoBehaviour
 	private bool controllerAttached = false;
 	//hat dieser Controller schon das Rennen beendet? Man soll nach dem Rennen das TargetCar für den CameraConntroller ändern können
 	private bool raceEnded = false;
-	//der twoLocalPlayerController
-	private TwoLocalPlayerGameController twoLocalPlayerCtrl;
+	//referenz auf den CircuitMode
+	private CircuitRaceMode circuitMode;
 	//wurde nach dem Beendeten Rennen das Zielauto geweschslt?
-	private bool changedTartgetCar = false;
+	private bool changedTargetCar = false;
 
 	public GameObject hudPrefab;
 	public HUD hud;
@@ -151,14 +151,14 @@ public class PlayerInputController : MonoBehaviour
 		//ansonsten soll man nur die Kamera ändern können
 		else
 		{
-			if(twoLocalPlayerCtrl != null)
+			if(circuitMode != null)
 			{
 				//falls der Spieler aufs Gas drückt und er noch keinen Kamerawechsel gemacht hat, soll das ZielAuto ein anderes sein
-				if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") > 0.5f || Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") > 0.5f) && changedTartgetCar == false)
+				if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") > 0.5f || Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") > 0.5f) && changedTargetCar == false)
 				{
-					changedTartgetCar = true;
+					changedTargetCar = true;
 					//Array mit der Spielerliste
-					GameObject[] playerList = twoLocalPlayerCtrl.playerList.ToArray();
+					GameObject[] playerList = circuitMode.getCarPlayerList().ToArray();
 
 					//wir gucken zunächst mal, wo das TargetCar der Kamera in der Liste der SPieler befindet
 					int indexOfTargetCar = 0;
@@ -185,9 +185,9 @@ public class PlayerInputController : MonoBehaviour
 					}
 				}
 				//falls der Spieler nun nichts mehr auf einen der Tasten drückt, darf er wieder das Ziel Auto wechseln
-				else if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") + Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") == 0.0f) && changedTartgetCar == true)
+				else if((Input.GetAxis("Player" + numberOfControllerString + "Throttle") + Input.GetAxis("Player" + numberOfControllerString + "ThrottleKey") == 0.0f) && changedTargetCar == true)
 				{
-					changedTartgetCar = false;
+					changedTargetCar = false;
 				}
 			}
 		}
@@ -196,7 +196,7 @@ public class PlayerInputController : MonoBehaviour
 	public void endRace()
 	{
 		raceEnded = true;
-		//suche den TwoLocalPalyerGameConntroller
-		twoLocalPlayerCtrl = GameObject.FindGameObjectWithTag("GameController").GetComponent<TwoLocalPlayerGameController>();
+		//suche den CircuitRaceMode
+		circuitMode = GameObject.FindGameObjectWithTag("CircuitMode").GetComponent<CircuitRaceMode>();
 	}
 }

@@ -191,7 +191,6 @@ public class CircuitRaceMode : MonoBehaviour
 			}
 		}
 
-		updateLeaderboard();
 		//da die updateLeaderboard Methode nur alle x Sekunden aufgerufen werden soll, Platzierung muss nicht ständig aktuallisert werden
 		//wird hier ein "sleep"Timer verwendet
 		leaderboardTimer += Time.deltaTime;
@@ -207,6 +206,7 @@ public class CircuitRaceMode : MonoBehaviour
 			endRaceCountdown -= Time.deltaTime;
 		}
 
+		//falls der Endcount runtergelaufen ist, beende das Rennen für alle
 		if(endRaceCountdown < 0.0f)
 		{
 			for(int i = 0; i < playerPosition.Count; i++)
@@ -293,6 +293,17 @@ public class CircuitRaceMode : MonoBehaviour
 		explodedPlayerData.Add(data);
 	}
 
+	//diese MEthode leifert eine Liste mit allen Spieler zurück, wichtig für Spectetor Camera
+	public List<GameObject> getCarPlayerList()
+	{
+		List<GameObject> cars = new List<GameObject>();
+		foreach(CircuitModePlayerStats player in playerList)
+		{
+			cars.Add(player.transform.root.gameObject);
+		}
+		return cars;
+	}
+
 	//diese Methode aktuallisiert die Positionsanzeige (wer grad erster ist)
 	private void updateLeaderboard()
 	{
@@ -325,10 +336,12 @@ public class CircuitRaceMode : MonoBehaviour
 		for(int i = 0; i < allPlayerPositions.Count; i++)
 		{
 			if(Network.connections.Length == 0 || allPlayerStats[allPlayerPositions[i]].networkView.owner == Network.player){
-			//Debug.Log (i + ". Pos: " + playerPosition[i]);	
-				HUD hud = allPlayerStats[allPlayerPositions[i]].transform.parent.GetComponent<PlayerInputController>().hud;
-				string postfix;
-				switch(i){
+				//falls der betreffenden Spieler schon kaputt ist, update die Position nicht
+				if(allPlayerStats[allPlayerPositions[i]].transform.root.GetComponent<Car>().getHealth() > 0.0f)
+				{
+					HUD hud = allPlayerStats[allPlayerPositions[i]].transform.parent.GetComponent<PlayerInputController>().hud;
+					string postfix;
+					switch(i){
 					case 0: postfix="st";
 						break;
 					case 1: postfix="nd";
@@ -337,8 +350,9 @@ public class CircuitRaceMode : MonoBehaviour
 						break;
 					default: postfix="th";
 						break;
+					}
+					hud.rank.text = ""+ (i+1)+ postfix +" Place";
 				}
-				hud.rank.text = ""+ (i+1)+ postfix +" Place";
 				allPlayerStats[allPlayerPositions[i]].currentPosition = i;
 			}
 		}
