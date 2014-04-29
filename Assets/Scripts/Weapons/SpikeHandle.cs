@@ -41,7 +41,7 @@ public class SpikeHandle : Weapon
 						spike.transform.position = spikePositionLeft[i].transform.position;
 						spike.transform.rotation = spikePositionLeft[i].transform.rotation;
 						spike.transform.parent = spikePositionLeft[i].transform;
-						spike.transform.Rotate(this.transform.up,180.0f,Space.Self);
+						spike.transform.Rotate(this.transform.up,180.0f,Space.World);
 						spike.GetComponentInChildren<Spike>().parent = spikePositionLeft[i].transform.root.gameObject;
 						if(Network.connections.Length > 0){
 							spike.GetComponentInChildren<Spike>().networkView.RPC("setParent", RPCMode.OthersBuffered, spikePositionLeft[i].networkView.viewID,spike.GetComponentInChildren<Spike>().networkView.viewID);
