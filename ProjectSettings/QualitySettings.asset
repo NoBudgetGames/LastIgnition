@@ -64,7 +64,7 @@ QualitySettings:
     particleRaycastBudget: 64
     excludedTargetPlatforms: []
   - serializedVersion: 2
-    name: Good
+    name: Awesome
     pixelLightCount: 2
     shadows: 2
     shadowResolution: 0
@@ -83,7 +83,7 @@ QualitySettings:
     particleRaycastBudget: 256
     excludedTargetPlatforms: []
   - serializedVersion: 2
-    name: Beautiful
+    name: DoubleAwesome
     pixelLightCount: 3
     shadows: 2
     shadowResolution: 2
@@ -102,7 +102,7 @@ QualitySettings:
     particleRaycastBudget: 1024
     excludedTargetPlatforms: []
   - serializedVersion: 2
-    name: Fantastic
+    name: Triple Awesome
     pixelLightCount: 4
     shadows: 2
     shadowResolution: 2
