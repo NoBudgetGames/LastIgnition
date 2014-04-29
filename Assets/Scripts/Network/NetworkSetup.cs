@@ -550,17 +550,9 @@ public class NetworkSetup : MonoBehaviour
 		PlayerPrefs.SetString("Level","ArenaStadium");
 
 		//kleine Hintergrundbox erstellen
-<<<<<<< HEAD
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Multiplayer");
-
-		bool reachability = false;
-
-
-=======
-		//GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Multiplayer", customBox);
 		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Multiplayer", customBox);
 		
->>>>>>> 2456eddd1740e365cad615ff9441bfb5f5e3118a
+		bool reachability = false;
 		//Button für Online Multiplayer
 		//if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Online", customButton)) 
 		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 200, 350, 65), "Online", customButton))
