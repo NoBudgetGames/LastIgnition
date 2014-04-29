@@ -13,11 +13,14 @@ public class MainMenu : MonoBehaviour
 	//styles for customParts
 	public GUIStyle customBox;
 	public GUIStyle customButton;
+	public GUIStyle customLabel;
 	//main menu styles
 	public GUIStyle singleplayerButton;
 	public GUIStyle multiplayerButton;
 	public GUIStyle exit;
 	public GUIStyle splitscreen;
+	//The Logo
+	public GUIStyle logo;
 
 	void Start()
 	{
@@ -99,7 +102,11 @@ public class MainMenu : MonoBehaviour
 
 		//kleine Hintergrundbox erstellen
 		//GUI.Box(new Rect((Screen.width/3)*2 - 80, Screen.height/2 - 200, 160, 250), "Hauptmenü", customBox);
-		
+
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
+
+
 		//Button für Singleplayer
 		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
@@ -127,11 +134,14 @@ public class MainMenu : MonoBehaviour
 	{
 		PlayerPrefs.SetInt("LocalPlayers", 1);
 
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
+
 		//kleine Hintergrundbox erstellen
 		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Einzelspieler", customBox);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
+		GUI.Label(new Rect(Screen.width/2 - 65, Screen.height/2 - 150, 160, 20), "Name von Spieler 1", customLabel);
 		//Eingabefeld
 		string playerName = PlayerPrefs.GetString("PlayerOneName");
 		playerName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerName, 15);
@@ -147,25 +157,50 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Main";
 		}
+
+		//Button für Singleplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
+		{
+			currentMenu = "Singleplayer";
+		}
+		//button für splitscreen
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
+		{
+			currentMenu = "Splitscreen";
+		}
+		//button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
+		{
+			currentMenu = "Multiplayer";
+		}
+		//button, um das Spiel zu beenden
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
+		{
+			Application.Quit();
+		}
+
 	}
 
 	//das Menü für den lokalen Splitscreen
 	private void localSplitScreen()
 	{
 		PlayerPrefs.SetInt("LocalPlayers", 2);
+
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
 		
 		//kleine Hintergrundbox erstellen
 		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Splitscreen", customBox);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
+		GUI.Label(new Rect(Screen.width/2 - 65, Screen.height/2 - 150, 160, 20), "Name von Spieler 1", customLabel);
 		//Eingabefeld
 		string playerOneName = PlayerPrefs.GetString("PlayerOneName");
 		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerOneName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerOneName);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 65, 160, 20), "Name von Spieler 2");
+		GUI.Label(new Rect(Screen.width/2 - 65, Screen.height/2 - 65, 160, 20), "Name von Spieler 2", customLabel);
 		//Eingabefeld
 		string playerTwoName = PlayerPrefs.GetString("PlayerTwoName");
 		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 35, 320, 55), playerTwoName, 15);
@@ -181,11 +216,36 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Main";
 		}
+
+		//Button für Singleplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
+		{
+			currentMenu = "Singleplayer";
+		}
+		//button für splitscreen
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
+		{
+			currentMenu = "Splitscreen";
+		}
+		//button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
+		{
+			currentMenu = "Multiplayer";
+		}
+		//button, um das Spiel zu beenden
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
+		{
+			Application.Quit();
+		}
+
 	}
 
 	//das Menü, das angezeigt werden soll, wenn Multiplayer gewählt wurde
 	private void multiplayer()
 	{
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
+
 		//kleine Hintergrundbox erstellen
 		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Multiplayer", customBox);
 		
@@ -204,19 +264,44 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Main";
 		}
+
+		//Button für Singleplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
+		{
+			currentMenu = "Singleplayer";
+		}
+		//button für splitscreen
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
+		{
+			currentMenu = "Splitscreen";
+		}
+		//button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
+		{
+			currentMenu = "Multiplayer";
+		}
+		//button, um das Spiel zu beenden
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
+		{
+			Application.Quit();
+		}
+
 	}
 
 
 	//das Menü, für den multiplayer einzelspieler
 	private void multiSinglePlayer()
 	{
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
+
 		PlayerPrefs.SetInt("LocalPlayers", 1);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Einzelspieler", customBox);
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Netzwerk - Einzelspieler", customBox);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
+		GUI.Label(new Rect(Screen.width/2 - 65, Screen.height/2 - 150, 160, 20), "Name von Spieler 1", customLabel);
 		//Eingabefeld
 		string playerOneName = PlayerPrefs.GetString("PlayerOneName");
 		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerOneName, 15);
@@ -232,25 +317,50 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Main";
 		}
+
+		//Button für Singleplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
+		{
+			currentMenu = "Singleplayer";
+		}
+		//button für splitscreen
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
+		{
+			currentMenu = "Splitscreen";
+		}
+		//button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
+		{
+			currentMenu = "Multiplayer";
+		}
+		//button, um das Spiel zu beenden
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
+		{
+			Application.Quit();
+		}
+
 	}
 	
 	//das Menü für den multiplayer Splitscreen
 	private void multiSplitScreen()
 	{
 		PlayerPrefs.SetInt("LocalPlayers", 2);
+
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Splitscreen", customBox);
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Netzwerk - Splitscreen", customBox);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");
+		GUI.Label(new Rect(Screen.width/2 - 65, Screen.height/2 - 150, 160, 20), "Name von Spieler 1", customLabel);
 		//Eingabefeld
 		string playerOneName = PlayerPrefs.GetString("PlayerOneName");
 		playerOneName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 125, 320, 55), playerOneName, 15);
 		PlayerPrefs.SetString("PlayerOneName", playerOneName);
 		
 		//name des Spielers
-		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 65, 160, 20), "Name von Spieler 2");
+		GUI.Label(new Rect(Screen.width/2 - 65, Screen.height/2 - 65, 160, 20), "Name von Spieler 2", customLabel);
 		//Eingabefeld
 		string playerTwoName = PlayerPrefs.GetString("PlayerTwoName");
 		playerTwoName = GUI.TextField(new Rect(Screen.width/2 - 160, Screen.height/2 - 35, 320, 55), playerTwoName, 15);
@@ -266,10 +376,34 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Main";
 		}
+
+		//Button für Singleplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
+		{
+			currentMenu = "Singleplayer";
+		}
+		//button für splitscreen
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
+		{
+			currentMenu = "Splitscreen";
+		}
+		//button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
+		{
+			currentMenu = "Multiplayer";
+		}
+		//button, um das Spiel zu beenden
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
+		{
+			Application.Quit();
+		}
 	}
 
 	private void localLevelSelection()
 	{
+		//the logo - box
+		GUI.Box(new Rect(0,0, 425, 310), "", logo);
+
 		// kleine Hintergrundbox erstellen
 		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Levelauswahl", customBox);
 		
