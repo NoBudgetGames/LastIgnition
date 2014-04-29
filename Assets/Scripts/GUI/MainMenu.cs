@@ -240,7 +240,7 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("LocalPlayers", 2);
 		
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Einzelspieler", customBox);
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Splitscreen", customBox);
 		
 		//name des Spielers
 		GUI.Label(new Rect(Screen.width/2 - 55, Screen.height/2 - 150, 160, 20), "Name von Spieler 1");

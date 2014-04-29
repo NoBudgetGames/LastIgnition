@@ -20,6 +20,13 @@ using System.Collections.Generic;
 
 public class NetworkSetup : MonoBehaviour
 {
+	//custom UI parts
+	public GUIStyle customBox;
+	public GUIStyle LobbyBox;
+	public GUIStyle customButton;
+	public GUIStyle customButton2;
+	public GUIStyle customLabel;
+
 	//die Prefab für das NetworkPlayerData Objekt
 	public GameObject playerDataPrefab;
 
@@ -543,13 +550,20 @@ public class NetworkSetup : MonoBehaviour
 		PlayerPrefs.SetString("Level","ArenaStadium");
 
 		//kleine Hintergrundbox erstellen
+<<<<<<< HEAD
 		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Multiplayer");
 
 		bool reachability = false;
 
 
+=======
+		//GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Multiplayer", customBox);
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Multiplayer", customBox);
+		
+>>>>>>> 2456eddd1740e365cad615ff9441bfb5f5e3118a
 		//Button für Online Multiplayer
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Online")) 
+		//if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Online", customButton)) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 200, 350, 65), "Online", customButton))
 		{
 			//falls der PC Netzwerkfähig ist, gehe weiter
 			if(Application.internetReachability != NetworkReachability.NotReachable)
@@ -582,12 +596,13 @@ public class NetworkSetup : MonoBehaviour
 		}
 
 		//button für LAN
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "LAN")) 
+		//if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "LAN", customButton)) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 130, 350, 65), "LAN", customButton))
 		{
 			currentMenu = "LAN";
 		}
 		//button um zum Hauptmenü zurückzukehren
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "Hauptmenü"))
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "Hauptmenü", customButton))
 		{
 			Application.LoadLevel("MainMenuScene");
 		}
@@ -597,21 +612,21 @@ public class NetworkSetup : MonoBehaviour
 	private void onlineMultiplayer()
 	{
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Online");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Online", customBox);
 		isThisAOnlineGame = true;
 
 		//Button um Online Server zu erstellen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Server erstellen"))
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 200, 350, 65), "Server erstellen", customButton))
 		{
 			startOnlineServer();
 		}
 		//button um Online Server zu suchen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "Server finden")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 130, 350, 65), "Server finden", customButton))
 		{
 			currentMenu = "OnlineServerBrowser";
 		}
 		//button um zum Netzwerjmenü zurückzukehren
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "zürück")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "zurück", customButton))
 		{
 			isThisAOnlineGame = false;
 			currentMenu = "NetworkMain";
@@ -627,23 +642,23 @@ public class NetworkSetup : MonoBehaviour
 		//die Liste der regristrierten Host auf dem MasterServer
 		hostList = MasterServer.PollHostList();
 		//HintergrundBox
-		GUI.Box(new Rect(10, 10, Screen.width - 20, Screen.height - 20), "Server Browser");
+		GUI.Box(new Rect(40, 20, Screen.width - 80, Screen.height - 40), "Server Browser", LobbyBox);
 		if(hostList != null)
 		{
 			//Infos für die Spalten
-			GUI.Label(new Rect(40, 30, 500, 25), "Servername");
-			GUI.Label(new Rect(240, 30, 500, 25), "Anzahl Spieler");
+			GUI.Label(new Rect(40, 80, 200, 35), "Servername", customLabel);
+			GUI.Label(new Rect(240, 80, 200, 35), "Anzahl Spieler", customLabel);
 
-			if(GUI.Button(new Rect(400, 30, 100, 25), "Aktuallisieren"))
+			if(GUI.Button(new Rect(460, 80, 200, 35), "Aktualisieren", customButton2))
 			{
 				refreshHostList();
 				//die Liste der regristrierten Host auf dem MasterServer
 				hostList = MasterServer.PollHostList();
 			}
 			
-			GUI.Box(new Rect(30, 60, Screen.width - 60, Screen.height - 110), "");
+			GUI.Box(new Rect(52, 120, Screen.width - 106, Screen.height - 200), "");
 			// Begin the ScrollView
-			serverBrowserScrollView = GUI.BeginScrollView (new Rect(30, 60, Screen.width - 60, Screen.height - 110), serverBrowserScrollView, new Rect (0, 0, Screen.width - 90, 1000), false, true);
+			serverBrowserScrollView = GUI.BeginScrollView (new Rect(52, 120, Screen.width - 106, Screen.height - 200), serverBrowserScrollView, new Rect (0, 0, Screen.width - 128, 1000), false, true);
 			//alle nachfolgenden Positionsangaben bis zu EnsScrolView sind relativ zur Scrollview
 
 			//Liste der gefundenen Servers
@@ -661,7 +676,7 @@ public class NetworkSetup : MonoBehaviour
 			GUI.EndScrollView();
 		}
 		//button um zum Netzwerkmenü zurückzukehren
-		if(GUI.Button(new Rect(30, Screen.height - 40, 200, 20), "zürück zum Hauptmenü")) 
+		if(GUI.Button(new Rect(50, Screen.height - 70, 250, 35), "zurück zum Hauptmenü", customButton2)) 
 		{
 			//verlasse den Server
 			leaveServer();
@@ -671,20 +686,20 @@ public class NetworkSetup : MonoBehaviour
 	private void LANMultiplayer()
 	{
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "LAN");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "LAN", customBox);
 		
 		//Button um Online Server zu erstellen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Server erstellen"))
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 200, 350, 65), "Server erstellen", customButton))
 		{
 			startLANServer();
 		}
 		//button um Online Server zu suchen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "Server finden")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 - 130, 350, 65), "Server finden", customButton)) 
 		{
 			currentMenu = "LANConnect";
 		}
 		//button um zum Netzwerkmenü zurückzukehren
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 50, 100, 20), "zürück")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "zurück", customButton)) 
 		{
 			currentMenu = "NetworkMain";
 		}
@@ -693,25 +708,25 @@ public class NetworkSetup : MonoBehaviour
 	private void LANConnectToServer()
 	{
 		//kleine Hintergrundbox erstellen
-		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 270), "Verbinde zu LAN-Server");
+		GUI.Box(new Rect(Screen.width/2 - 235, Screen.height/2 - 265, 470, 530), "Verbinde zu LAN-Server", customBox);
 
 		//Label für IP
-		GUI.Label(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "IP Addresse");
+		GUI.Label(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "IP Addresse:", customLabel);
 		//Eingabefeld für IP
-		LANIPAddress = GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 130, 100, 20), LANIPAddress, 15);
+		LANIPAddress = GUI.TextField(new Rect(Screen.width/2 - 175, Screen.height/2 - 120, 350, 20), LANIPAddress, 15);
 
 		//label für Port
-		GUI.Label(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "Port Nummer:");
+		GUI.Label(new Rect(Screen.width/2 - 50, Screen.height/2 - 90, 100, 20), "Port Nummer:", customLabel);
 		//Eingabefeld für Port
-		LANPort = Convert.ToInt32(GUI.TextField(new Rect(Screen.width/2 - 50, Screen.height/2 - 80, 100, 20), "" + LANPort, 5));
+		LANPort = Convert.ToInt32(GUI.TextField(new Rect(Screen.width/2 - 175, Screen.height/2 - 60, 350, 20), "" + LANPort, 5));
 
 		//Button um Online Server zu erstellen
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 30, 100, 20), "Verbinde"))
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 75, 350, 65), "Verbinde", customButton))
 		{
 			connectToLANServer();
 		}
 		//button um zum Netzwerkmenü zurückzukehren
-		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 + 20, 100, 20), "zürück")) 
+		if(GUI.Button(new Rect(Screen.width/2 - 175, Screen.height/2 + 135, 350, 65), "zurück", customButton))
 		{
 			currentMenu = "NetworkMain";
 		}
@@ -722,21 +737,21 @@ public class NetworkSetup : MonoBehaviour
 	private void lobby()
 	{
 		//HintergrundBox
-		GUI.Box(new Rect(10, 10, Screen.width - 20, Screen.height - 20), "Lobby");
+		GUI.Box(new Rect(40, 20, Screen.width - 80, Screen.height - 40), "Lobby", LobbyBox);
 
-		GUI.Box(new Rect(30, 60, Screen.width/2 + 60, Screen.height - 110), "");
+		GUI.Box(new Rect(52, 120, Screen.width/2 - 52, Screen.height - 200), "");
 		//Infos für die Spalten
-		GUI.Label(new Rect(40, 30, 500, 25), "Name");
-		GUI.Label(new Rect(160, 30, 500, 25), "Gewähltes Auto");
-		GUI.Label(new Rect(320, 30, 500, 25), "Bereit");
+		GUI.Label(new Rect(70, 80, 40, 25), "Name", customLabel);
+		GUI.Label(new Rect(190, 80, 110, 25), "Gewähltes Auto", customLabel);
+		GUI.Label(new Rect(350, 80, 40, 25), "Bereit", customLabel);
 
 		//stelle die Infos dar
 		int i = 0;
 		foreach(NetworkPlayerData player in serverPlayerInfos)
 		{
-			GUI.Label(new Rect(40, 60 + (25 * i), 500, 25), player.getPlayerData()[1]);
-			GUI.Label(new Rect(160, 60 + (25 * i), 500, 25), player.getPlayerData()[2]);
-			GUI.Label(new Rect(320, 60 + (25 * i), 500, 25), player.getPlayerData()[3]);
+			GUI.Label(new Rect(70, 120 + (25 * i), 500, 25), player.getPlayerData()[1]);
+			GUI.Label(new Rect(190, 120 + (25 * i), 500, 25), player.getPlayerData()[2]);
+			GUI.Label(new Rect(350, 120 + (25 * i), 500, 25), player.getPlayerData()[3]);
 			i++;
 		}
 
@@ -744,36 +759,36 @@ public class NetworkSetup : MonoBehaviour
 		if(Network.isServer == true)
 		{
 			// kleine Hintergrundbox erstellen
-			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "");
+			GUI.Box(new Rect(Screen.width/2 + 10, 120, Screen.width/2 - 62, Screen.height - 200), "");
 
 			//zeige gewählte Strecke
-			GUI.Label(new Rect(Screen.width/2 + 120, 90, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
+			GUI.Label(new Rect(Screen.width/2 + 30, 140, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
 			//Derby-Arena Asphalt
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 120, 160, 20), "Derby-Arena 1")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 20, 180, 160, 35), "Derby-Arena 1", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","ArenaStadium");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Derby-Arena Matsch
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 150, 160, 20), "Derby-Arena 2")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 20, 220, 160, 35), "Derby-Arena 2", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","ArenaStadium02");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Wüstensterke 1
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 180, 160, 20), "Wüsten-Strecke 1")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 20, 260, 160, 35), "Wüsten-Strecke 1", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Wüstenstreke 2
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 210, 160, 20), "Wüsten-Strecke 2")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 20, 300, 160, 35), "Wüsten-Strecke 2", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit02");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Waldstrecke
-			if(GUI.Button(new Rect(Screen.width/2 + 120, 240, 160, 20), "Wald-Strecke")) 
+			if(GUI.Button(new Rect(Screen.width/2 + 20, 340, 160, 35), "Wald-Strecke", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","ForestCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
@@ -797,7 +812,7 @@ public class NetworkSetup : MonoBehaviour
 			if(playersReady == true)
 			{
 				//button um das Spiel zu starten
-				if(GUI.Button(new Rect(Screen.width - 130, Screen.height - 40, 100, 20), "Spiel starten")) 
+				if(GUI.Button(new Rect(Screen.width - 200, Screen.height - 70, 120, 35), "Spiel starten", customButton2)) 
 				{
 					startGame();
 				}
@@ -805,7 +820,7 @@ public class NetworkSetup : MonoBehaviour
 			//ansonsten verbiete es
 			else
 			{
-				GUI.Label(new Rect(Screen.width - 150, Screen.height - 40, 150, 20), "Nicht alle bereit");
+				GUI.Label(new Rect(Screen.width - 200, Screen.height - 70, 120, 35), "Nicht alle bereit", customLabel);
 			}
 		}
 		//falls wir Client sind, soll das gewählte LEvel angezeigt werden
@@ -825,7 +840,7 @@ public class NetworkSetup : MonoBehaviour
 		//Button, um Auto zu wechslen
 		//netView.RPC("loadLevel",RPCMode.All,PlayerPrefs.GetString("Level"),2);
 		//Button, um bereit zu sein
-		if(GUI.Button(new Rect(Screen.width - 350, Screen.height - 40, 100, 20), "Auto wählen"))
+		if(GUI.Button(new Rect(Screen.width - 420, Screen.height - 70, 120, 35), "Auto wählen", customButton2))
 		{
 			//momentanes "Menü" soll nichts sein
 			currentMenu ="Nothing";
@@ -854,7 +869,7 @@ public class NetworkSetup : MonoBehaviour
 		if(localReady == true)
 		{
 			//Button, um bereit zu sein
-			if(GUI.Button(new Rect(Screen.width - 250, Screen.height - 40, 100, 20), "Bereit!"))
+			if(GUI.Button(new Rect(Screen.width - 300, Screen.height - 70, 100, 35), "Bereit!", customButton2))
 			{
 				foreach(NetworkPlayerData localPlayer in localPlayerInfos)
 				{
@@ -864,7 +879,7 @@ public class NetworkSetup : MonoBehaviour
 			}
 		}
 		//button um zum Netzwerkmenü zurückzukehren
-		if(GUI.Button(new Rect(30, Screen.height - 40, 200, 20), "zürück zum Hauptmenü")) 
+		if(GUI.Button(new Rect(70, Screen.height - 70, 250, 35), "zurück zum Hauptmenü", customButton2)) 
 		{
 			leaveServer();
 		}
