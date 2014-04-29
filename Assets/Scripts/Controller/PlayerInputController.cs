@@ -158,6 +158,8 @@ public class PlayerInputController : MonoBehaviour
 		//ansonsten soll man nur die Kamera ändern können
 		else
 		{
+			//soll nicht mehr schießen
+			inv.setFiring(false);
 			if(circuitMode != null)
 			{
 				//falls der Spieler aufs Gas drückt und er noch keinen Kamerawechsel gemacht hat, soll das ZielAuto ein anderes sein
@@ -204,6 +206,10 @@ public class PlayerInputController : MonoBehaviour
 	{
 		raceEnded = true;
 		//suche den CircuitRaceMode
-		circuitMode = GameObject.FindGameObjectWithTag("CircuitMode").GetComponent<CircuitRaceMode>();
+		GameObject obj = GameObject.FindGameObjectWithTag("CircuitMode");
+		if(obj != null)
+		{
+			circuitMode = obj.GetComponent<CircuitRaceMode>();
+		}
 	}
 }

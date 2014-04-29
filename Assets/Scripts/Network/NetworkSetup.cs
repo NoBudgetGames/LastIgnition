@@ -49,6 +49,8 @@ public class NetworkSetup : MonoBehaviour
 
 	//wurde das das Spiel schon gestartet? Wenn ja, sollen die Menüs nicht mehr dargestellt werden
 	private bool gameRunning = false;
+	//läuft auf dem Server grad das Spiel?
+	private bool currentlyRunning = false;
 	//
 	private int levelPrefix = 0;
 	//die Anzahl der Spieler, die momentan auf dem Server sind
@@ -57,6 +59,14 @@ public class NetworkSetup : MonoBehaviour
 	private GameObject playerDataOne;
 	//die Referenz auf das NetworkPlayerData Object für Spieler 1
 	private GameObject playerDataTwo;
+	//error Nachricht, falls es Fehler bei der verbindung git
+	private string errorMessage = "";
+	//kann man mit dem Interner verbinden?
+	private bool reachability = false;
+	//testenwir gerade das Netzwerk?
+	private bool testingNetwork = false;
+	//möchte ich online gehen?
+	private bool wantToGoOnline = false;
 
 	// Use this for initialization
 	void Start ()
@@ -82,10 +92,13 @@ public class NetworkSetup : MonoBehaviour
 	}
 
 	//diese Method soll vom CarSelectionManager aufgerufen werden, wenn die jeweiligen SPieler ihre Autos gewählt haben
+	//außerdem nach einen Rennen, wenn die Spieler zu Lobby zurückkehren
 	public void loadLobby()
 	{
 		//falls der der Server aufgesetzt wurde, gehe zur Lobby
 		currentMenu = "Lobby";
+		//wenn man in die Lobby wechslen kann, läuft das Rennen noch nicht
+		gameRunning = false;
 		//die Lobby Szene ist dabei eine leere Szene mit einer Kamera, damit man nach einen Rennen wieder zur Lobby wechslen kann
 		Application.LoadLevel("MultiplayerLobby");
 	}
@@ -150,8 +163,11 @@ public class NetworkSetup : MonoBehaviour
 		gameRunning = true;
 		Network.RemoveRPCsInGroup(0);
 		Network.RemoveRPCsInGroup(1);
-		this.networkView.RPC("loadLevel", RPCMode.AllBuffered, PlayerPrefs.GetString("Level"), levelPrefix+1);
-		this.networkView.RPC("leavingLobby", RPCMode.AllBuffered);
+		this.networkView.RPC("setRunning", RPCMode.AllBuffered, true);
+		//hier soll nicht gebuffert werden, damit spätere Spieler, die den Server joinen, nicht auch die Nachriht bekommen (sonst würden sie dsLevel laden,
+		//stadtdessen sollen sie in der Lobby warten)
+		this.networkView.RPC("loadLevel", RPCMode.All, PlayerPrefs.GetString("Level"), levelPrefix+1);
+		this.networkView.RPC("leavingLobby", RPCMode.All);
 	}
 
 	//diese Methode aktuallisiert die verfügbaren Server
@@ -205,6 +221,27 @@ public class NetworkSetup : MonoBehaviour
 		Application.LoadLevel("MainMenuScene");
 	}
 
+	//diese Methode überprüft das Netzwerk
+	private bool checkNetworkReachabilty()
+	{
+		try
+		{
+			using (var client = new System.Net.WebClient())
+			using (var stream = client.OpenRead("http://www.hochschule-trier.de"))
+			{
+				testingNetwork = false;
+				reachability = true;
+				return true;
+			}
+		}
+		catch
+		{
+			testingNetwork = false;
+			reachability = false;
+			return false;
+		}
+	}
+
 //// EVENT METHODEN
 
 	void OnMasterServerEvent(MasterServerEvent msEvent)
@@ -236,7 +273,7 @@ public class NetworkSetup : MonoBehaviour
 	//Called on the server whenever a new player has successfully connected.
 	void OnPlayerConnected(NetworkPlayer player)
 	{
-		this.networkView.RPC("receiveLevelName", RPCMode.AllBuffered, PlayerPrefs.GetString("Level"));
+		this.networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 		//Debug.Log("Player " + " connected from " + player.ipAddress);
 	}
 
@@ -278,6 +315,8 @@ public class NetworkSetup : MonoBehaviour
 	void OnFailedToConnect(NetworkConnectionError error)
 	{
 		//Debug.Log("Could not connect to server: " + error);
+		errorMessage = "Konnte nicht mit dem Serer verbinden. Fehler: " + error;
+		reachability = false;
 		GUI.Label(new Rect(Screen.width/2 - 250, Screen.height/2 + 150, 500, 30), "Konnte nicht mit dem Serer verbinden. Fehler: " + error);
 	}
 
@@ -318,7 +357,6 @@ public class NetworkSetup : MonoBehaviour
 	void receiveLevelName(string level)
 	{
 		PlayerPrefs.SetString("Level",level);
-		Debug.Log("RECEIVED");
 	}
 
 	//diese Method dient dazu, das die Lobby auf den Clients nicht mehr angezeigt wird
@@ -327,6 +365,19 @@ public class NetworkSetup : MonoBehaviour
 	{
 		//stelle kein Menü dar
 		currentMenu ="Nothing";
+	}
+
+	[RPC]
+	void endRace()
+	{
+		//setze jeden Spieler auf nicht bereit
+		foreach(NetworkPlayerData player in serverPlayerInfos)
+		{
+			player.getPlayerData()[3] = "nicht bereit";
+			networkView.RPC("updatePlayerInfo",RPCMode.All, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
+		}
+		//sage allen CLients, dass das Rennen vorbei ist
+		this.networkView.RPC("setRunning", RPCMode.All, false);
 	}
 
 	//diese Methode aktuallisiert die Anzahl der Spieler,
@@ -387,7 +438,7 @@ public class NetworkSetup : MonoBehaviour
 			serverPlayerInfos.RemoveAt(index);
 		}
 		//CLients sollen SpielerInfos synchronisieren
-		networkView.RPC("synchronisePlayersForClients",RPCMode.OthersBuffered);
+		networkView.RPC("synchronisePlayersForClients",RPCMode.Others);
 		//hier muss man nun alle mit dem SPieler verbundenen Objekte löschen
 		//TO DO
 	}
@@ -398,7 +449,7 @@ public class NetworkSetup : MonoBehaviour
 	{
 		foreach(NetworkPlayerData player in serverPlayerInfos)
 		{
-			networkView.RPC("updatePlayerInfo",RPCMode.AllBuffered, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
+			networkView.RPC("updatePlayerInfo",RPCMode.All, player.getPlayerData()[0], player.getPlayerData()[1], player.getPlayerData()[2], player.getPlayerData()[3]);
 		}
 	}
 
@@ -423,6 +474,15 @@ public class NetworkSetup : MonoBehaviour
 		Network.Disconnect();
 		//kehre zum Hauptmenü zurück
 		Application.LoadLevel("MainMenuScene");
+	}
+
+
+	
+	//diese Methode sorgt dafür, das allen Clients zum Hauptmenü zurückkehren, weil der Server beendet worden ist
+	[RPC]
+	private void setRunning(bool running)
+	{
+		currentlyRunning = running;
 	}
 
 //// GUI METHODEN
@@ -484,21 +544,43 @@ public class NetworkSetup : MonoBehaviour
 
 		//kleine Hintergrundbox erstellen
 		GUI.Box(new Rect(Screen.width/2 - 80, Screen.height/2 - 200, 160, 200), "Multiplayer");
-		
+
+		bool reachability = false;
+
+
 		//Button für Online Multiplayer
 		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 150, 100, 20), "Online")) 
 		{
-			//falls man eine Verbindung zum Internet herstellen kann, gehe weiter
+			//falls der PC Netzwerkfähig ist, gehe weiter
 			if(Application.internetReachability != NetworkReachability.NotReachable)
 			{
-				currentMenu = "Online";
+				wantToGoOnline = true;
+				//überprüfe Internatfähigkeit
+				testingNetwork = true;
+				GUI.Label(new Rect(Screen.width/2 - 250, Screen.height/2 + 150, 500, 60),"Überprüfe Verbindung. Bitte warten...");
+				if(checkNetworkReachabilty() == true)
+				{
+					currentMenu = "Online";
+				}
+				else
+				{
+					errorMessage = "Verbindung fehlgeschlagen, konnte keine Verbindung herstellen.";
+					reachability = false;
+				}
 			}
 			//Ansonsten zeige Fehler an 
 			else
 			{
-				GUI.Label(new Rect(Screen.width/2 - 250, Screen.height/2 + 150, 500, 30), "Es wurde keine Internetverbindung gefunden! Bitte Verbindung überprüfen!");
+				errorMessage = "Kein Netzwerkadapter gefunden! Verbindung fehlgeschlagen.";
+				reachability = false;
 			}
 		}
+		//ansonsten zeige Fehlermeldung an
+		if(reachability == false && wantToGoOnline == true)
+		{
+			GUI.Label(new Rect(Screen.width/2 - 250, Screen.height/2 + 150, 500, 60), errorMessage);
+		}
+
 		//button für LAN
 		if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 20), "LAN")) 
 		{
@@ -730,9 +812,14 @@ public class NetworkSetup : MonoBehaviour
 		if(Network.isClient == true)
 		{
 			// kleine Hintergrundbox erstellen
-			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "Level");
+			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "");
 			//Levelname anzeigen
 			GUI.Label(new Rect(Screen.width/2 + 120, 90, 160, 20), PlayerPrefs.GetString("Level"));
+			//falls das SPiel geraäde läuft, soll das angezeigt werden (für nachzügler)
+			if(currentlyRunning == true)
+			{
+				GUI.Label(new Rect(Screen.width/2 + 120, 110, 160, 20), "Rennen läuft gerade, bitte warten...");
+			}
 		}
 
 		//Button, um Auto zu wechslen
@@ -743,7 +830,7 @@ public class NetworkSetup : MonoBehaviour
 			//momentanes "Menü" soll nichts sein
 			currentMenu ="Nothing";
 
-			//Server bescheid sagen, dass man nicht bereit ist
+			//allen anderen bescheid sagen, dass man nicht bereit ist
 			foreach(NetworkPlayerData localPlayer in localPlayerInfos)
 			{
 				localPlayer.setReady(false);

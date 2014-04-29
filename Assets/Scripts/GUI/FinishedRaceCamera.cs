@@ -17,12 +17,32 @@ public class FinishedRaceCamera : MonoBehaviour
 	private bool camActive = false;
 	//Arenamodus oder Rundkurdmodus?
 	private bool arenaMode = false;
+	//timer zum runterzählen, danach wird bei einen Multiplyerspiel wieder zur lobby zurückkehert
+	float goToLobbyTimer = 30.0f;
 
 	// Use this for initialization
 	void Start () 
 	{
 		playerData = new List<string[]>();
 		gameObject.GetComponent<Camera>().enabled = false;
+	}
+
+	//nach xSekunden sollen alle zur Lobby zurückkehren
+	void Update()
+	{
+		if(camActive == true)
+		{
+			//falls man im Netzwerk ist, soll Timer runtergezählt werden, um zu lobby zurückzukehren
+			if(Network.isServer == true || Network.isClient == true)
+			{
+				goToLobbyTimer -= Time.deltaTime;
+				if(goToLobbyTimer < 0.0f)
+				{
+					NetworkSetup netSet = GameObject.Find("Network").GetComponent<NetworkSetup>();
+					netSet.loadLobby();
+				}
+			}
+		}
 	}
 
 	public void addPlayerData(string[] data)
@@ -33,6 +53,16 @@ public class FinishedRaceCamera : MonoBehaviour
 	public void activateCamera()
 	{
 		camActive = true;
+		//falls es ein netzwerk spiel ist, sollt der Server bescheid wissen
+		if(Network.isServer == true)
+		{
+			GameObject network = GameObject.Find("Network");
+			if(network != null)
+			{
+				NetworkView netView = network.networkView;
+				netView.RPC("endRace",RPCMode.Server);
+			}
+		}
 	}
 
 	public void setArenaMode(bool mode)
@@ -71,18 +101,42 @@ public class FinishedRaceCamera : MonoBehaviour
 				}
 				i++;
 			}
+			//falls kein Netzwerkspiel
+			if(Network.isClient == false && Network.isServer == false)
+			{
+				//was soll gemacht werden, wenn das Rennen vorbei ist?
+				GUI.Label(new Rect(60, 30 + (i*20),400,100), "[ESC] Zurück zum Hauptmenü");
+				GUI.Label(new Rect(60, 50 + (i*20),400,100), "[ENTER] Rennen wiederholen");
 
-			//was soll gemacht werden, wenn das Rennen vorbei ist?
-			GUI.Label(new Rect(60, 30 + (i*20),400,100), "Zurück zum Hauptmenü: [ESC], Rennen wiederholen: [ENTER]");
-			//Falls ESC Taste, kehre zum Hauptmenü zurück
-			if(Input.GetKeyDown(KeyCode.Escape))
-			{
-				Application.LoadLevel("MainMenuScene");
+				//Falls ESC Taste, kehre zum Hauptmenü zurück
+				if(Input.GetKeyDown(KeyCode.Escape))
+				{
+					Application.LoadLevel("MainMenuScene");
+				}
+				//ansonsten wiederhole das Rennen
+				if(Input.GetKeyDown(KeyCode.Return))
+				{
+					Application.LoadLevel(PlayerPrefs.GetString("Level"));
+				}
 			}
-			//ansonsten wiederhole das Rennen
-			if(Input.GetKeyDown(KeyCode.Return))
+			//ansonsten ist ers ein Netzwerkspiel
+			else
 			{
-				Application.LoadLevel(PlayerPrefs.GetString("Level"));
+				//was soll gemacht werden, wenn das Rennen vorbei ist?
+				GUI.Label(new Rect(60, 30 + (i*20),400,100), "[ESC] Zurück zum Hauptmenü (Server verlassen)");
+				GUI.Label(new Rect(60, 30 + (i*40),400,100), "[ENTER] Zurück zur Lobby");
+
+				//Falls ESC Taste, kehre zum Hauptmenü zurück
+				if(Input.GetKeyDown(KeyCode.Escape))
+				{
+					GameObject.Find("Network").GetComponent<NetworkSetup>().leaveServer();
+				}
+				//ansonsten kehre zur Lobby zurück
+				if(Input.GetKeyDown(KeyCode.Return))
+				{
+					NetworkSetup netSet = GameObject.Find("Network").GetComponent<NetworkSetup>();
+					netSet.loadLobby();
+				}
 			}
 		}
 	}
