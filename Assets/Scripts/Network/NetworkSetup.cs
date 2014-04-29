@@ -731,7 +731,7 @@ public class NetworkSetup : MonoBehaviour
 		//HintergrundBox
 		GUI.Box(new Rect(40, 20, Screen.width - 80, Screen.height - 40), "Lobby", LobbyBox);
 
-		GUI.Box(new Rect(52, 120, Screen.width/2 - 52, Screen.height - 200), "");
+		GUI.Box(new Rect(52, 120, Screen.width/2 + 88, Screen.height - 200), "");
 		//Infos für die Spalten
 		GUI.Label(new Rect(70, 80, 40, 25), "Name", customLabel);
 		GUI.Label(new Rect(190, 80, 110, 25), "Gewähltes Auto", customLabel);
@@ -751,36 +751,36 @@ public class NetworkSetup : MonoBehaviour
 		if(Network.isServer == true)
 		{
 			// kleine Hintergrundbox erstellen
-			GUI.Box(new Rect(Screen.width/2 + 10, 120, Screen.width/2 - 62, Screen.height - 200), "");
+			GUI.Box(new Rect(Screen.width/2 + 160, 120, Screen.width/2 - 212, Screen.height - 200), "");
 
 			//zeige gewählte Strecke
-			GUI.Label(new Rect(Screen.width/2 + 30, 140, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
+			GUI.Label(new Rect(Screen.width/2 + 180, 140, 160, 20), "Level: " + PlayerPrefs.GetString("Level"));
 			//Derby-Arena Asphalt
-			if(GUI.Button(new Rect(Screen.width/2 + 20, 180, 160, 35), "Derby-Arena 1", customButton2)) 
+			if(GUI.Button(new Rect(Screen.width/2 + 170, 180, 160, 35), "Derby-Arena 1", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","ArenaStadium");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Derby-Arena Matsch
-			if(GUI.Button(new Rect(Screen.width/2 + 20, 220, 160, 35), "Derby-Arena 2", customButton2)) 
+			if(GUI.Button(new Rect(Screen.width/2 + 170, 220, 160, 35), "Derby-Arena 2", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","ArenaStadium02");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Wüstensterke 1
-			if(GUI.Button(new Rect(Screen.width/2 + 20, 260, 160, 35), "Wüsten-Strecke 1", customButton2)) 
+			if(GUI.Button(new Rect(Screen.width/2 + 170, 260, 160, 35), "Wüsten-Strecke 1", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Wüstenstreke 2
-			if(GUI.Button(new Rect(Screen.width/2 + 20, 300, 160, 35), "Wüsten-Strecke 2", customButton2)) 
+			if(GUI.Button(new Rect(Screen.width/2 + 170, 300, 160, 35), "Wüsten-Strecke 2", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","DesertCircuit02");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
 			}
 			//Waldstrecke
-			if(GUI.Button(new Rect(Screen.width/2 + 20, 340, 160, 35), "Wald-Strecke", customButton2)) 
+			if(GUI.Button(new Rect(Screen.width/2 + 170, 340, 160, 35), "Wald-Strecke", customButton2)) 
 			{
 				PlayerPrefs.SetString("Level","ForestCircuit");
 				networkView.RPC("receiveLevelName", RPCMode.Others, PlayerPrefs.GetString("Level"));
