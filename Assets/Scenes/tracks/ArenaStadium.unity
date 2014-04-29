@@ -212,7 +212,7 @@ GameObject:
   - 114: {fileID: 27589761}
   m_Layer: 0
   m_Name: DodgeChargerRusted
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3051,7 +3051,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 2483ff8305fb2f6498fa623821af01ca, type: 2}
+  - {fileID: 2100000, guid: 3b45d41a3a36669499aee6c337ebb58c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3746,7 +3746,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 7dff2d324e316d242a2d2a56074f0507, type: 2}
+  - {fileID: 2100000, guid: 3b45d41a3a36669499aee6c337ebb58c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3960,7 +3960,7 @@ GameObject:
   - 114: {fileID: 606735574}
   m_Layer: 0
   m_Name: DodgeChargerRusted
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5541,7 +5541,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 2483ff8305fb2f6498fa623821af01ca, type: 2}
+  - {fileID: 2100000, guid: 3b45d41a3a36669499aee6c337ebb58c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -6070,7 +6070,7 @@ GameObject:
   - 114: {fileID: 1100456819}
   m_Layer: 0
   m_Name: DodgeChargerRusted
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6601,7 +6601,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 2483ff8305fb2f6498fa623821af01ca, type: 2}
+  - {fileID: 2100000, guid: 3b45d41a3a36669499aee6c337ebb58c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -7644,6 +7644,10 @@ Prefab:
       propertyPath: m_ViewID.m_Type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b4eaecee74b264c45991cec490f4808a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4eaecee74b264c45991cec490f4808a, type: 2}
   m_RootGameObject: {fileID: 515279423}
@@ -7689,7 +7693,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 2d365ef5d26428c41a66400c890aac25, type: 2}
+  - {fileID: 2100000, guid: 1e2caae1b922ffb40878b0c1539f29b1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -7718,7 +7722,7 @@ GameObject:
   - 114: {fileID: 1414367049}
   m_Layer: 0
   m_Name: DodgeChargerRusted
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8505,7 +8509,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 2483ff8305fb2f6498fa623821af01ca, type: 2}
+  - {fileID: 2100000, guid: 3b45d41a3a36669499aee6c337ebb58c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -10505,6 +10509,10 @@ Prefab:
     - target: {fileID: 2000000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
       propertyPath: m_CullingMask.m_Bits
       value: 65536
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}

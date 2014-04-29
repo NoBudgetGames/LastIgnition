@@ -16333,6 +16333,10 @@ Prefab:
       propertyPath: modeObject
       value: 
       objectReference: {fileID: 1208119036}
+    - target: {fileID: 100000, guid: b4eaecee74b264c45991cec490f4808a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4eaecee74b264c45991cec490f4808a, type: 2}
   m_RootGameObject: {fileID: 1354203184}
@@ -49014,6 +49018,10 @@ Prefab:
       propertyPath: m_CullingMask.m_Bits
       value: 4294901992
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
   m_RootGameObject: {fileID: 276810302}
@@ -57263,6 +57271,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
       propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -66237,7 +66261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1497316932
 Transform:
   m_ObjectHideFlags: 0
@@ -80206,7 +80230,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 8dc0a69b2f23cae488e15dadba151f6f, type: 2}
   m_PrefabInternal: {fileID: 302386322}
   m_GameObject: {fileID: 1791760979}
-  m_LocalRotation: {x: 0, y: -.999638915, z: 0, w: -.0268701743}
+  m_LocalRotation: {x: 0, y: -.999638975, z: 0, w: -.0268701762}
   m_LocalPosition: {x: 1245.01147, y: .280290127, z: -200.15007}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:

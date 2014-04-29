@@ -3198,6 +3198,10 @@ Prefab:
       propertyPath: m_CullingMask.m_Bits
       value: 4294901992
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd6eecd730cb9174b847e89c9fe5ee39, type: 2}
   m_RootGameObject: {fileID: 705791579}
@@ -3854,6 +3858,10 @@ Prefab:
       value: 
       objectReference: {fileID: -2065832391, guid: 0000000000000000d000000000000000,
         type: 0}
+    - target: {fileID: 100000, guid: b4eaecee74b264c45991cec490f4808a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4eaecee74b264c45991cec490f4808a, type: 2}
   m_RootGameObject: {fileID: 701365861}
@@ -5867,13 +5875,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
       propertyPath: far clip plane
-      value: 100000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
       propertyPath: m_Icon
       value: 
       objectReference: {fileID: 266726316, guid: 0000000000000000d000000000000000,
         type: 0}
+    - target: {fileID: 100000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2178944b38215cd458532fed9e44c731, type: 2}
   m_RootGameObject: {fileID: 1954168447}
@@ -9494,7 +9506,7 @@ GameObject:
   - 33: {fileID: 1561999531}
   - 23: {fileID: 1561999530}
   m_Layer: 16
-  m_Name: Street
+  m_Name: Street_Minimap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11806,7 +11818,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 100000
+  far clip plane: 10000
   field of view: 36.0999985
   orthographic: 0
   orthographic size: 5
