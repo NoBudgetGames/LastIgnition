@@ -25,6 +25,8 @@ public class CircuitRaceMode : MonoBehaviour
 	public FinishedRaceCamera finishedCam;
 	//Textur für falsche Richtung
 	public Texture wrongWayTexture;
+	//Style für die CountDown Zahlen
+	public GUIStyle countDownStyle;
 
 	//Liste der Spieler mit dem CircuitModePlayerStats
 	private List<CircuitModePlayerStats> playerList;
@@ -160,6 +162,20 @@ public class CircuitRaceMode : MonoBehaviour
 				initialized = true;
 			}
 		}
+
+		if(countDown > -1.0f)
+		{
+			//zähle Timer runter
+			if(Network.connections.Length == 0 || Network.isServer)
+			{
+				countDown -= Time.deltaTime;
+			}
+			if(Network.connections.Length > 0 && Network.isServer)
+			{
+				this.networkView.RPC("transmitRaceStartCountdown",RPCMode.Others,countDown);
+			}
+		}
+
 		//falls das Rennen nicht gestartet wurde, verhindere, das die AUtos sich bewegen
 		if(hasRaceStarted == false)
 		{
@@ -169,14 +185,7 @@ public class CircuitRaceMode : MonoBehaviour
 				//blokiere alle Bewegungen
 				player.gameObject.transform.parent.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 			}
-			//zähle Timer runter
-			if(Network.connections.Length == 0 || Network.isServer){
-				countDown -= Time.deltaTime;
-			}
-			if(Network.connections.Length > 0 && Network.isServer){
-				this.networkView.RPC("transmitRaceStartCountdown",RPCMode.Others,countDown);
-			}
-
+			//falls Countdown abgelaufen
 			if(countDown <= 0.0f)
 			{
 				hasRaceStarted = true;
@@ -277,6 +286,34 @@ public class CircuitRaceMode : MonoBehaviour
 				GameObject.Destroy(obj);
 			}
 			camerasDestroyed = true;
+		}
+	}
+
+	void OnGUI()
+	{
+		//3
+		if(countDown <= 3.0f && countDown > 2.5f)
+		{
+			GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/2 - 100, 200, 200), "3", countDownStyle);	
+		}
+		//2
+		if(countDown <= 2.0f && countDown > 1.5f)
+		{
+			countDownStyle.normal.textColor = new Color(1.0f, 0.5f, 0.0f);
+			GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/2 - 100, 200, 200), "2", countDownStyle);	
+		}
+		//1
+		if(countDown <= 1.0f && countDown > 0.5f)
+		{
+			countDownStyle.normal.textColor = new Color(1.0f, 1.0f, 0.0f);
+			GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/2 - 100, 200, 200), "1", countDownStyle);	
+		}
+		//LOS!!!
+		if(countDown <= 0.0f && countDown >= -0.5f)
+		{
+			countDownStyle.normal.textColor = new Color(0.0f, 1.0f, 0.0f);
+			countDownStyle.fontSize = 250;
+			GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/2 - 100, 200, 200), "LOS", countDownStyle);	
 		}
 	}
 
