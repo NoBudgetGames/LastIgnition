@@ -95,7 +95,7 @@ public class MiniGun : Weapon {
 						if(hit.collider.GetComponent<AbstractDestructibleObject>())
 						{
 							hit.collider.GetComponent<AbstractDestructibleObject>().receiveDamage(5.0f);
-							if(Network.connections.Length > 0){
+							if(hit.collider.networkView != null && Network.connections.Length > 0){
 								hit.collider.networkView.RPC("receiveDamage",hit.collider.networkView.owner,5.0f);
 							}
 						} 

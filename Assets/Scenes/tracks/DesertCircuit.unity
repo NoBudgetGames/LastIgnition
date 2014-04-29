@@ -15213,7 +15213,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
       propertyPath: m_ViewID.m_ID
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
       propertyPath: m_ViewID.m_Type
@@ -19676,11 +19676,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: lapsToDrive
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: m_ViewID.m_ID
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: m_ViewID.m_Type
@@ -20388,7 +20388,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 580776158}
   m_ViewID:
-    m_ID: 11
+    m_ID: 13
     m_Type: 1
 --- !u!1 &581966921
 GameObject:
@@ -41468,7 +41468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8359c30a0314849b894aad21b439ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lapsToDrive: 3
+  lapsToDrive: 1
   firstCheckpoint: {fileID: 143051608}
   checkpoints:
   - {fileID: 143051608}
@@ -41516,7 +41516,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1208119037}
   m_ViewID:
-    m_ID: 10
+    m_ID: 14
     m_Type: 1
 --- !u!1 &1210515563
 GameObject:

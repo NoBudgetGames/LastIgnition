@@ -387,6 +387,10 @@ public class CircuitModePlayerStats : MonoBehaviour
 		float networkTimeInitialSerial = -1.0f;
 		float networkLapTimeSerial = -1.0f;
 
+		float lapTimeSerial = -1.0f;
+		float totalTimeSerial = -1.0f;
+		float fastestLapSerial = -1.0f;
+
 		if(stream.isWriting){
 			currentCheckpointNumberSerial = currentCheckpointNumber;
 			stream.Serialize(ref currentCheckpointNumberSerial);
@@ -405,6 +409,15 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			networkLapTimeSerial = networkLapStartTime;
 			stream.Serialize(ref networkLapTimeSerial);
+
+			lapTimeSerial = lapTime;
+			stream.Serialize(ref lapTimeSerial);
+
+			totalTimeSerial = totalTime;
+			stream.Serialize(ref totalTimeSerial);
+
+			fastestLapSerial = fastestLap;
+			stream.Serialize(ref fastestLapSerial);
 		} else {
 			stream.Serialize(ref currentCheckpointNumberSerial);
 			currentCheckpointNumber = currentCheckpointNumberSerial;
@@ -423,6 +436,15 @@ public class CircuitModePlayerStats : MonoBehaviour
 
 			stream.Serialize(ref networkLapTimeSerial);
 			networkLapStartTime = networkLapTimeSerial;
+
+			stream.Serialize(ref lapTimeSerial);
+			lapTime = lapTimeSerial;
+
+			stream.Serialize(ref totalTimeSerial);
+			totalTime = totalTimeSerial;
+
+			stream.Serialize(ref fastestLapSerial);
+			fastestLap = fastestLapSerial;
 		}
 	}
 

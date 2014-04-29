@@ -68,7 +68,9 @@ public class ItemPickup : MonoBehaviour
 		if(objectUsed){
 			timer+=Time.deltaTime;
 			if(timer >= MAX_TIME){
-				this.GetComponentInChildren<Renderer>().enabled = true;
+				for(int i = 0; i < this.GetComponentsInChildren<Renderer>().Length; ++i){
+					this.GetComponentsInChildren<Renderer>()[i].enabled = true;
+				}
 				this.GetComponent<Collider>().enabled = true;
 				timer = 0.0f;
 				objectUsed = false;
@@ -92,7 +94,9 @@ public class ItemPickup : MonoBehaviour
 				}
 
 				objectUsed = true;
-				this.GetComponentInChildren<Renderer>().enabled = false;
+				for(int i = 0; i < this.GetComponentsInChildren<Renderer>().Length; ++i){
+					this.GetComponentsInChildren<Renderer>()[i].enabled = false;
+				}
 				this.GetComponent<Collider>().enabled = false;
 			}
 		}
