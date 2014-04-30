@@ -219,6 +219,7 @@ public class Car : MonoBehaviour
 	private int secondDamageModelHealthLimit = 70;
 	//Healthwert ab dem das dritte Schadensmodell angezeigt werden soll (erste Schadensmodell hat keinen sichtbaren Schaden)
 	private int thirdDamageModelHealthLimit = 30;
+
 	
 	//// START UND UPDATE METHODEN
 	
@@ -540,6 +541,8 @@ public class Car : MonoBehaviour
 		GameObject.Destroy(thisTransform.GetComponent<CarInventory>());
 		//lösche die CarCollision Komponente
 		thisTransform.GetComponentInChildren<CarCollision>().enabled = false;
+	
+		GameObject.Destroy(this.GetComponentInChildren<MiniMapElement>().gameObject);
 
 		//aktiviere den ParticleSystem
 		particleSysForExplosion.gameObject.SetActive(true);

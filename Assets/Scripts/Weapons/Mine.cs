@@ -12,9 +12,9 @@ public class Mine : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		damage = 2.5f;
-		radius = 10.0f;
-		force = 7000.0f;
+		damage = 7.5f;
+		radius = 20.0f;
+		force = 4500000.0f;
 	}
 
 	// Update is called once per frame
@@ -40,7 +40,7 @@ public class Mine : MonoBehaviour
 				}
 				if(col.GetComponent<DestructibleCarPart>())
 				{
-					col.GetComponent<DestructibleCarPart>().car.rigidbody.AddExplosionForce(force * 2,explosionPosition,radius);
+					col.GetComponent<DestructibleCarPart>().car.rigidbody.AddExplosionForce(force,explosionPosition,radius,1.0f,ForceMode.Force);
 				}
 				GameObject.Destroy(this.gameObject);
 			}	

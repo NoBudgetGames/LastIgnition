@@ -7000,6 +7000,7 @@ MonoBehaviour:
   particleSysForExplosion: {fileID: 19800008}
   brakeLight: {fileID: 100272}
   health: 100
+  mapIcon: {fileID: 100256}
 --- !u!114 &11400056
 MonoBehaviour:
   m_ObjectHideFlags: 1

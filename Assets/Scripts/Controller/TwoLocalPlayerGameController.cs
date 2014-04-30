@@ -168,7 +168,7 @@ public class TwoLocalPlayerGameController : MonoBehaviour
 			else
 			{
 				//lösche den Minimal Icon GameObject
-				GameObject.Destroy(player.GetComponentInChildren<MiniMapElement>().gameObject);
+				//GameObject.Destroy(player.GetComponentInChildren<MiniMapElement>().gameObject);
 				//lösche den inputController
 				GameObject.Destroy(player.GetComponent<PlayerInputController>());
 			}
