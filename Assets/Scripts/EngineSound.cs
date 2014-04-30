@@ -20,6 +20,7 @@ public class EngineSound : MonoBehaviour
 			this.GetComponent<RealAudioSource>().setPosition(new Vector3(0,0,1));
 		} else {
 			this.GetComponent<RealAudioSource>().setPosition(this.transform.root.position);
+			this.enabled = false;
 		}
 		pitch = 0 + 1 * car.getRPM()/3000;
 		audio.pitch = pitch;

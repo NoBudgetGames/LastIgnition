@@ -144,6 +144,7 @@ GameObject:
   - 4: {fileID: 400040}
   - 114: {fileID: 11400030}
   - 146: {fileID: 14600000}
+  - 148: {fileID: 14800004}
   m_Layer: 0
   m_Name: RearRightWheel
   m_TagString: Untagged
@@ -229,6 +230,7 @@ GameObject:
   - 4: {fileID: 400044}
   - 114: {fileID: 11400034}
   - 146: {fileID: 14600002}
+  - 148: {fileID: 14800008}
   m_Layer: 0
   m_Name: FrontRightWheel
   m_TagString: Untagged
@@ -246,6 +248,7 @@ GameObject:
   - 4: {fileID: 400042}
   - 114: {fileID: 11400032}
   - 146: {fileID: 14600004}
+  - 148: {fileID: 14800006}
   m_Layer: 0
   m_Name: RearLeftWheel
   m_TagString: Untagged
@@ -481,6 +484,7 @@ GameObject:
   - 4: {fileID: 400048}
   - 114: {fileID: 11400036}
   - 146: {fileID: 14600006}
+  - 148: {fileID: 14800010}
   m_Layer: 0
   m_Name: FrontLeftWheel
   m_TagString: Untagged
@@ -6531,7 +6535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 100270}
-  color: {r: 1, g: 0, b: 0, a: 1}
+  color: {r: .121568628, g: .250980407, b: .733333349, a: 1}
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6987,7 +6991,6 @@ MonoBehaviour:
   particleSysForExplosion: {fileID: 19800008}
   brakeLight: {fileID: 100276}
   health: 100
-  mapIcon: {fileID: 100256}
 --- !u!114 &11400056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7166,6 +7169,54 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 1
   m_Observed: {fileID: 400282}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800004
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400040}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800006
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100028}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400042}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800008
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100026}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400044}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800010
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100056}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 400048}
   m_ViewID:
     m_ID: 0
     m_Type: 0

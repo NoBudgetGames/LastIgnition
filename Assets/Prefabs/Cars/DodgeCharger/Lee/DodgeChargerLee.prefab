@@ -6544,7 +6544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 100270}
-  color: {r: 1, g: 1, b: 1, a: 1}
+  color: {r: .996078432, g: .36470589, b: .0901960805, a: 1}
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7000,7 +7000,6 @@ MonoBehaviour:
   particleSysForExplosion: {fileID: 19800008}
   brakeLight: {fileID: 100272}
   health: 100
-  mapIcon: {fileID: 100256}
 --- !u!114 &11400056
 MonoBehaviour:
   m_ObjectHideFlags: 1

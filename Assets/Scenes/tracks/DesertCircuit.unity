@@ -18978,7 +18978,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
       propertyPath: m_ViewID.m_ID
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 3ea3dd60b6d0aa24ab8f86572a08af34, type: 2}
       propertyPath: m_ViewID.m_Type
@@ -26647,7 +26647,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 580776158}
   m_ViewID:
-    m_ID: 13
+    m_ID: 15
     m_Type: 1
 --- !u!1 &582153830
 GameObject:
@@ -52957,6 +52957,65 @@ MonoBehaviour:
   playerCtrl: {fileID: 580776158}
   finishedCam: {fileID: 2121672555}
   wrongWayTexture: {fileID: 2800000, guid: b29c133450d5bc74cac2f76eec27b9d1, type: 3}
+  countDownStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 1, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_FontSize: 300
+    m_FontStyle: 3
+    m_Alignment: 4
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
   countDown: 4
   playerStatsPrefab: {fileID: 100000, guid: c52dd3fbb909981418735504a99ae98d, type: 2}
 --- !u!4 &1208119038
