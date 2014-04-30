@@ -170,11 +170,11 @@ public class NetworkSetup : MonoBehaviour
 		gameRunning = true;
 		Network.RemoveRPCsInGroup(0);
 		Network.RemoveRPCsInGroup(1);
-		this.networkView.RPC("setRunning", RPCMode.AllBuffered, true);
 		//hier soll nicht gebuffert werden, damit spätere Spieler, die den Server joinen, nicht auch die Nachriht bekommen (sonst würden sie dsLevel laden,
 		//stadtdessen sollen sie in der Lobby warten)
 		this.networkView.RPC("loadLevel", RPCMode.All, PlayerPrefs.GetString("Level"), levelPrefix+1);
 		this.networkView.RPC("leavingLobby", RPCMode.All);
+		this.networkView.RPC("setRunning", RPCMode.AllBuffered, true);
 	}
 
 	//diese Methode aktuallisiert die verfügbaren Server
