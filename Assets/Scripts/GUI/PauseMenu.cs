@@ -18,6 +18,10 @@ public class PauseMenu : MonoBehaviour
 	//ist dies ein Netzwerkspiel?
 	private bool isThisANetworkGame = true;
 
+	//GUI
+	public GUIStyle customBox;
+	public GUIStyle bulletHole;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -67,22 +71,24 @@ public class PauseMenu : MonoBehaviour
 
 			int offsetWidth = 120;
 			int offsetHeight = 70;
+			//bullet hole
+			GUI.Box(new Rect(width - 380, height - 350, 330, 300), "", bulletHole);
 
 			//zeichne eine Box
-			GUI.Box(new Rect(width/2 - offsetWidth, height/2 - offsetHeight, offsetWidth * 2, offsetHeight * 2), "Pause");
+			GUI.Box(new Rect(width/2 - offsetWidth, height/2 - offsetHeight, offsetWidth * 2, offsetHeight * 2), "Pause", customBox);
 			
 			//was soll gemacht werden, wenn das Rennen pausiert wurde?
-			GUI.Label(new Rect(width/2 - 80, height/2 - 20, offsetWidth * 2, offsetHeight*2), "[ESC] Rennen fortsetzen");
+			GUI.Label(new Rect(width/2 - 100, height/2 - 20, offsetWidth * 2, offsetHeight*2), "[ESC] Rennen fortsetzen");
 			if(isThisANetworkGame == false)
 			{
 				//aktiviere die Pausenkamera
 				gameObject.GetComponent<Camera>().enabled = true;
-				GUI.Label(new Rect(width/2 - 80, height/2, offsetWidth * 2, offsetHeight*2), "[ENTER] Zurück zum Hauptmenü");
+				GUI.Label(new Rect(width/2 - 100, height/2, offsetWidth * 2, offsetHeight*2), "[ENTER] Zurück zum Hauptmenü");
 				//GUI.Label(new Rect(width/2 - 80, height/2 + 20, offsetWidth * 2, offsetHeight*2), "[ENTER] Rennen wiederholen");
 			}
 			else
 			{
-				GUI.Label(new Rect(width/2 - 80, height/2, offsetWidth * 2, offsetHeight*2), "[ENTER] Zurück zum Hauptmenü (Server verlassen)");
+				GUI.Label(new Rect(width/2 - 100, height/2, offsetWidth * 2, offsetHeight*2), "[ENTER] Zurück zum Hauptmenü (Server verlassen)");
 			}
 
 			//falls wieder ESC Pause gedrückt, mach weiter

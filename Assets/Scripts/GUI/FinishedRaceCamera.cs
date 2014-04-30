@@ -11,6 +11,10 @@ using System.Collections.Generic;
 
 public class FinishedRaceCamera : MonoBehaviour 
 {
+	public GUIStyle customBox;
+	public GUIStyle customLabel;
+	public GUIStyle bulletHole;
+
 	//Liste String-Array mit Spielerinfos, z.B. Spielername und Rundezeit
 	private List<string[]> playerData;
 	//ist die Kamera aktiviert?
@@ -76,28 +80,32 @@ public class FinishedRaceCamera : MonoBehaviour
 		if(camActive == true)
 		{
 			gameObject.GetComponent<Camera>().enabled = true;
+
+			GUI.Box(new Rect(50,50,330,300), "", bulletHole);
+			GUI.Box(new Rect(Screen.width - 360, Screen.height/2 - 120 ,280,250), "", bulletHole);
+
 			//zeichne eine Box
-			GUI.Box(new Rect(10,10,500,300), "");
+			GUI.Box(new Rect(Screen.width/2 - 260, 10,520,400), "Game Over", customBox);
 			//fall es ein Rundkursrennen ist, stelle Rundkursinfos dar
 			if(arenaMode == false)
 			{
-				GUI.Label(new Rect(45,15,400,100), "Player       Total time      Fastest lap");
+				GUI.Label(new Rect(Screen.width/2 - 240, 45,400,100), "Player      Total time      Fastest lap", customLabel);
 			}
 			//ansonsten Arenainfos
 			else
 			{
-				GUI.Label(new Rect(45,15,400,100), "Player       Survival Time   Lives");
+				GUI.Label(new Rect(Screen.width/2 - 240, 45,400,100), "Player           Survival Time    Lives", customLabel);
 			}
 
 			int i = 0;
 			//gehe jedes Auto durch
 			foreach(string[] str in playerData)
 			{
-				GUI.Label(new Rect(45, 30 + (i*15),400,100), i + ".");
+				GUI.Label(new Rect(Screen.width/2 - 235, 65 + (i*15),400,100), i + ".");
 				//gebe die Infos aus
 				for(int j = 0; j < str.Length; j++)
 				{
-					GUI.Label(new Rect(60 + (j*70),30 + (i*15),400,100), str[j]);
+					GUI.Label(new Rect(Screen.width/2 - 220 + (j*100),65 + (i*15),400,100), str[j]);
 				}
 				i++;
 			}
@@ -105,8 +113,8 @@ public class FinishedRaceCamera : MonoBehaviour
 			if(Network.isClient == false && Network.isServer == false)
 			{
 				//was soll gemacht werden, wenn das Rennen vorbei ist?
-				GUI.Label(new Rect(60, 30 + (i*20),400,100), "[ESC] Zurück zum Hauptmenü");
-				GUI.Label(new Rect(60, 50 + (i*20),400,100), "[ENTER] Rennen wiederholen");
+				GUI.Label(new Rect(Screen.width/2 - 245, 80 + (i*20),400,100), "[ESC] Zurück zum Hauptmenü");
+				GUI.Label(new Rect(Screen.width/2 - 245, 95 + (i*20),400,100), "[ENTER] Rennen wiederholen");
 
 				//Falls ESC Taste, kehre zum Hauptmenü zurück
 				if(Input.GetKeyDown(KeyCode.Escape))
