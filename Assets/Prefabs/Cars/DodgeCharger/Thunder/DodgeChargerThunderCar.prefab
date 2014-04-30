@@ -6918,8 +6918,8 @@ MonoBehaviour:
   - .800000012
   - .899999976
   - 1
-  - 1
-  - 1
+  - 1.20000005
+  - 1.39999998
   differentialMultiplier: 2.5
   brakeTorque: 1000
   slipMultiplier: .800000012

@@ -1360,7 +1360,7 @@ public class Car : MonoBehaviour
 			{
 				if(wheel.isFrontWheel)
 				{
-					wheel.wheelCol.brakeTorque = brakeTorque * 1.5f;	
+					wheel.wheelCol.brakeTorque = brakeTorque;	
 				}
 				else
 				{
