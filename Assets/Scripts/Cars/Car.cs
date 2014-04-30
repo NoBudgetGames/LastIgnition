@@ -264,6 +264,12 @@ public class Car : MonoBehaviour
 			tempRot.z = -steer * 120;
 			steeringWheel.transform.localEulerAngles = tempRot;	
 		}
+
+		if(Network.connections.Length > 0){
+			if(Network.isServer){
+				this.networkView.RPC("setHealthOnCLient",RPCMode.Others,health);
+			}
+		}
 	}
 	
 	//in dieser Methode werden die Physikberechnungen durchgeführt
@@ -1484,5 +1490,10 @@ public class Car : MonoBehaviour
 			stream.Serialize(ref rearRightHealthSerial);
 			rearRightHealth = rearRightHealthSerial;
 		}
+	}
+
+	[RPC]
+	public void setHealthOnCLient(float healthValue){
+		health = healthValue;
 	}
 }
