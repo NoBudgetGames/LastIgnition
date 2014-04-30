@@ -134,6 +134,27 @@ public class MainMenu : MonoBehaviour
 	{
 		PlayerPrefs.SetInt("LocalPlayers", 1);
 
+		//Button für Singleplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
+		{
+			currentMenu = "Singleplayer";
+		}
+		//button für splitscreen
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 100, 455, 90), "", splitscreen)) 
+		{
+			currentMenu = "Splitscreen";
+		}
+		//button für Multiplayer
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2, 455, 90), "", multiplayerButton)) 
+		{
+			currentMenu = "Multiplayer";
+		}
+		//button, um das Spiel zu beenden
+		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 + 100, 455, 90), "", exit)) 
+		{
+			Application.Quit();
+		}
+
 		//the logo - box
 		GUI.Box(new Rect(0,0, 425, 310), "", logo);
 
@@ -158,6 +179,13 @@ public class MainMenu : MonoBehaviour
 			currentMenu = "Main";
 		}
 
+	}
+
+	//das Menü für den lokalen Splitscreen
+	private void localSplitScreen()
+	{
+		PlayerPrefs.SetInt("LocalPlayers", 2);
+
 		//Button für Singleplayer
 		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
@@ -178,13 +206,6 @@ public class MainMenu : MonoBehaviour
 		{
 			Application.Quit();
 		}
-
-	}
-
-	//das Menü für den lokalen Splitscreen
-	private void localSplitScreen()
-	{
-		PlayerPrefs.SetInt("LocalPlayers", 2);
 
 		//the logo - box
 		GUI.Box(new Rect(0,0, 425, 310), "", logo);
@@ -217,6 +238,12 @@ public class MainMenu : MonoBehaviour
 			currentMenu = "Main";
 		}
 
+	}
+
+	//das Menü, das angezeigt werden soll, wenn Multiplayer gewählt wurde
+	private void multiplayer()
+	{
+
 		//Button für Singleplayer
 		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
@@ -238,11 +265,6 @@ public class MainMenu : MonoBehaviour
 			Application.Quit();
 		}
 
-	}
-
-	//das Menü, das angezeigt werden soll, wenn Multiplayer gewählt wurde
-	private void multiplayer()
-	{
 		//the logo - box
 		GUI.Box(new Rect(0,0, 425, 310), "", logo);
 
@@ -265,6 +287,12 @@ public class MainMenu : MonoBehaviour
 			currentMenu = "Main";
 		}
 
+	}
+
+
+	//das Menü, für den multiplayer einzelspieler
+	private void multiSinglePlayer()
+	{
 		//Button für Singleplayer
 		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
@@ -286,12 +314,6 @@ public class MainMenu : MonoBehaviour
 			Application.Quit();
 		}
 
-	}
-
-
-	//das Menü, für den multiplayer einzelspieler
-	private void multiSinglePlayer()
-	{
 		//the logo - box
 		GUI.Box(new Rect(0,0, 425, 310), "", logo);
 
@@ -318,6 +340,13 @@ public class MainMenu : MonoBehaviour
 			currentMenu = "Main";
 		}
 
+	}
+	
+	//das Menü für den multiplayer Splitscreen
+	private void multiSplitScreen()
+	{
+		PlayerPrefs.SetInt("LocalPlayers", 2);
+
 		//Button für Singleplayer
 		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
@@ -338,13 +367,6 @@ public class MainMenu : MonoBehaviour
 		{
 			Application.Quit();
 		}
-
-	}
-	
-	//das Menü für den multiplayer Splitscreen
-	private void multiSplitScreen()
-	{
-		PlayerPrefs.SetInt("LocalPlayers", 2);
 
 		//the logo - box
 		GUI.Box(new Rect(0,0, 425, 310), "", logo);
@@ -376,7 +398,10 @@ public class MainMenu : MonoBehaviour
 		{
 			currentMenu = "Main";
 		}
+	}
 
+	private void localLevelSelection()
+	{
 		//Button für Singleplayer
 		if(GUI.Button(new Rect(Screen.width - 455, Screen.height/2 - 200, 455, 90), "", singleplayerButton)) 
 		{
@@ -397,10 +422,7 @@ public class MainMenu : MonoBehaviour
 		{
 			Application.Quit();
 		}
-	}
 
-	private void localLevelSelection()
-	{
 		//the logo - box
 		GUI.Box(new Rect(0,0, 425, 310), "", logo);
 

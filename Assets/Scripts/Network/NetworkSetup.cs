@@ -819,9 +819,9 @@ public class NetworkSetup : MonoBehaviour
 		if(Network.isClient == true)
 		{
 			// kleine Hintergrundbox erstellen
-			GUI.Box(new Rect(Screen.width/2 + 100, 60, Screen.width/2 - 120, Screen.height - 110), "");
+			GUI.Box(new Rect(Screen.width/2 + 160, 120, Screen.width/2 - 212, Screen.height - 200), "");
 			//Levelname anzeigen
-			GUI.Label(new Rect(Screen.width/2 + 120, 90, 160, 20), PlayerPrefs.GetString("Level"));
+			GUI.Label(new Rect(Screen.width/2 + 180, 140, 160, 20), PlayerPrefs.GetString("Level"));
 			//falls das SPiel geraäde läuft, soll das angezeigt werden (für nachzügler)
 			if(currentlyRunning == true)
 			{
