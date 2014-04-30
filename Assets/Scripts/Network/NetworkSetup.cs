@@ -847,29 +847,16 @@ public class NetworkSetup : MonoBehaviour
 			Application.LoadLevel("ChooseCar");
 		}
 
-		//überprüfe, ob die lokalen SPieler schon ein Autogewählt haben
-		bool localReady = true;
-		foreach(NetworkPlayerData localPlayer in localPlayerInfos)
+		//Button, um bereit zu sein
+		if(GUI.Button(new Rect(Screen.width - 300, Screen.height - 70, 100, 35), "Bereit!", customButton2))
 		{
-			if(localPlayer.getPlayerData()[2].Equals("nicht gewählt"))
+			foreach(NetworkPlayerData localPlayer in localPlayerInfos)
 			{
-				localReady = false;
+				localPlayer.setReady(true);
+				this.networkView.RPC("updatePlayerInfo",RPCMode.All, localPlayer.getPlayerData()[0], localPlayer.getPlayerData()[1], localPlayer.getPlayerData()[2], localPlayer.getPlayerData()[3]);
 			}
 		}
 
-		//Spieler sollen nur bereit sein, wen sie ein AUto gewählt haben
-		if(localReady == true)
-		{
-			//Button, um bereit zu sein
-			if(GUI.Button(new Rect(Screen.width - 300, Screen.height - 70, 100, 35), "Bereit!", customButton2))
-			{
-				foreach(NetworkPlayerData localPlayer in localPlayerInfos)
-				{
-					localPlayer.setReady(true);
-					this.networkView.RPC("updatePlayerInfo",RPCMode.All, localPlayer.getPlayerData()[0], localPlayer.getPlayerData()[1], localPlayer.getPlayerData()[2], localPlayer.getPlayerData()[3]);
-				}
-			}
-		}
 		//button um zum Netzwerkmenü zurückzukehren
 		if(GUI.Button(new Rect(70, Screen.height - 70, 250, 35), "zurück zum Hauptmenü", customButton2)) 
 		{

@@ -20,7 +20,8 @@ public class NetworkPlayerData : MonoBehaviour
 		//Objekt soll bestehen bleiben
 		DontDestroyOnLoad(this);
 		netView = gameObject.GetComponent<NetworkView>();
-		playerData = new string[]{netView.viewID.ToString(), PlayerPrefs.GetString("PlayerOneName"), "nicht gewählt", "nicht bereit"};
+		// NetworkView ID | Spielername | gewähltes Autos (Default: Dodge Charger Lee), abhängig vom ersten Auto in Carselection | ist Spieler bereit?
+		playerData = new string[]{netView.viewID.ToString(), PlayerPrefs.GetString("PlayerOneName"), "Dodge Charger Lee", "nicht bereit"};
 	}
 
 	void Update()
