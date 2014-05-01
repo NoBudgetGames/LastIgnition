@@ -33,11 +33,19 @@ public class LevelSetup : MonoBehaviour
 	{
 		//Wenn alle geladen haben wird der Modus und der Spieler Spawner aktiviert
 		if(allPlayersLoaded()){ 
+			if(Network.isClient){
+				wait();
+			}
 			twoLocalPlayerObject.SetActive(true);
 			modeObject.SetActive(true);
 			GameObject.Destroy(this.gameObject);
 		}
 		
+	}
+
+	IEnumerator wait(){
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
 	}
 
 	//Wird von einem Spieler zur Benachrichtigung wenn er das Level geladen hat an andere gesendet

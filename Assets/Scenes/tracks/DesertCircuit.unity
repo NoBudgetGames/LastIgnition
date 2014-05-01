@@ -24376,7 +24376,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: lapsToDrive
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 14800000, guid: 0cb14d45e65509c41b314262f3b81ef7, type: 2}
       propertyPath: m_ViewID.m_ID
@@ -50546,7 +50546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8359c30a0314849b894aad21b439ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lapsToDrive: 1
+  lapsToDrive: 3
   firstCheckpoint: {fileID: 143051608}
   checkpoints:
   - {fileID: 143051608}
