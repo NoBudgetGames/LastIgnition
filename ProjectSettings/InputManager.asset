@@ -313,9 +313,9 @@ InputManager:
     descriptiveName: Player Two Look Back
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 
+    positiveButton: y
     altNegativeButton: 
-    altPositiveButton: x
+    altPositiveButton: 
     gravity: 3
     dead: .00100000005
     sensitivity: 3
