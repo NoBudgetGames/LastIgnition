@@ -22,7 +22,7 @@ public class Rocket : MonoBehaviour
 		forwardVector = parent.transform.forward;
 		
 		damage = 7.5f;
-		radius = 20.0f;
+		radius = 33.0f;
 		force = 500000.0f;
 		speed = 250.0f;
 	}
